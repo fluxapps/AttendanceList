@@ -1,0 +1,51 @@
+tab_content#:#Inhalt
+tab_overview#:#Übersicht
+tab_settings#:#Einstellungen
+table_column_name#:#Name
+table_column_login#:#Benutzername
+table_column_status#:#Status
+table_column_date#:#Datum
+table_column_tutor#:#Dozent
+table_column_present#:#Anwesend
+table_column_excused#:#Entschuldigt
+table_column_unexcused#:#Unentschuldigt
+table_column_actions#:#Aktionen
+table_column_percentage#:#Anteil Anwesend / Mindestanwesenheit
+table_column_no_status#:#Nicht Ausgefüllt
+table_checklist_title_today#:#Anwesenheitsliste von heute, %s
+table_checklist_title#:#Anwesenheitsliste vom %s
+label_unexcused#:#Abwesend Unentschuldigt
+label_excused#:#Abwesend Entschuldigt
+label_present#:#Anwesend
+list_unsaved#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
+msg_checklist_saved#:#Die Anwesenheitsliste wurde gespeichert.
+msg_confirm_delete_list#:#Möchten Sie wirklich folgende Anwesenheitsliste unwiderruflich löschen?
+msg_list_deleted#:#Anwesenheitsliste gelöscht.
+msg_list_created#:#Anwesenheitsliste erstellt.
+msg_date_already_used#:#Für den %s existiert bereits eine Anwesenheitsliste. Bitte bearbeiten Sie diese Liste oder wählen Sie ein anderes Datum.
+msg_incomplete_lists#:#Es existieren eine oder mehrere unvollständig ausgefüllte Anwesenheitslisten mit bereits vergangenem Datum. Bitte vervollständigen oder löschen Sie diese in der <a href="%s">Listenübersicht</a>, um eine falsche Berechnung der Mindestanwesenheit zu vermeiden.
+msg_creation_failed#:#Erstellung nicht möglich: Anwesenheitslisten können nur in Kursen oder Gruppen erstellt werden.
+warning_list_incomplete#:#Speichern fehlgeschlagen: Es muss für jeden Teilnehmer ein Status ausgewählt werden.
+warning_not_filled_out#:#Bitte Status auswählen.
+table_title_users#:#Benutzer
+subtab_users#:#Benutzer
+table_title_lists#:#Listen
+subtab_lists#:#Listen
+table_title_prefix#:#Übersicht:
+status_1#:#Abwesend Unentschuldigt
+status_2#:#Abwesend Entschuldigt
+status_3#:#Anwesend
+button_add_list#:#Neue Liste Hinzufügen
+form_input_date#:#Datum der zu erstellenden Liste
+xali_new#:#Neue Anwesenheitsliste anlegen
+minimum_attendance#:#Mindestanwesenheit
+activation_from#:#Verfügbar von
+activation_to#:#Verfügbar bis
+obj_xali#:#Anwesenheitsliste
+objs_xali#:#Anwesenheitslisten
+xali_add#:#Anwesenheitsliste anlegen
+activation#:#Veranstaltungszeitraum
+create_lists#:#Leere Listen erstellen
+weekdays#:#Wochentage
+all_users#:#Alle Mitglieder anzeigen
+automatically_created#:#(automatisch erstellt)
