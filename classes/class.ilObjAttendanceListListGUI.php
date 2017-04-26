@@ -45,6 +45,64 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		return $commands;
 	}
 
+	/**
+	 * Get item properties
+	 *
+	 * @return    array        array of property arrays:
+	 *                        'alert' (boolean) => display as an alert property (usually in red)
+	 *                        'property' (string) => property name
+	 *                        'value' (string) => property value
+	 */
+	public function getCustomProperties() {
+
+		$props = parent::getCustomProperties(array());
+
+		try {
+			/** @var xaliSetting $settings */
+			$settings = xaliSetting::find($this->obj_id);
+			if ($settings->getActivation()) {
+				$activation_from = date('d. M Y', strtotime($settings->getActivationFrom()));
+				$activation_to = date('d. M Y', strtotime($settings->getActivationTo()));
+				$props[] = array(
+					'alert' => false,
+					'newline' => true,
+					'property' => $this->lng->txt('activation'),
+					'value' => $activation_from . ' - ' . $activation_to,
+					'propertyNameVisible' => true
+				);
+			}
+			if (!$settings->getIsOnline()) {
+				$props[] = array(
+					'alert' => true,
+					'newline' => true,
+					'property' => 'Status',
+					'value' => 'Offline',
+					'propertyNameVisible' => true
+				);
+			}
+		} catch (Exception $e) {
+
+		}
+
+
+		return $props;
+	}
+
+	/**
+	 * get all alert properties
+	 *
+	 * @return array
+	 */
+	public function getAlertProperties() {
+		$alert = array();
+		foreach ((array)$this->getCustomProperties() as $prop) {
+			if ($prop['alert'] == true) {
+				$alert[] = $prop;
+			}
+		}
+
+		return $alert;
+	}
 
 	function initType() {
 		$this->setType('xali');

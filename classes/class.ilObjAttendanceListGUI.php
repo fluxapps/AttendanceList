@@ -91,8 +91,9 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		if (!$this->getCreationMode()) {
 			$this->tpl->setTitle($this->object->getTitle());
 			$this->tpl->setTitleIcon(ilObject::_getIcon($this->object->getId()));
-			$this->ctrl->saveParameterByClass('xlvoresultsgui', 'round_id');
 
+//			$list_gui = ilObjectListGUIFactory::_getListGUIByType('xali');
+//			$this->tpl->setAlertProperties($list_gui->getAlertProperties());
 			// set tabs
 			if (strtolower($_GET['baseClass']) != 'iladministrationgui') {
 				$this->setTabs();

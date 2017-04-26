@@ -37,10 +37,10 @@ class xaliChecklistGUI extends xaliGUI {
 	 * standard command
 	 */
 	public function show() {
-		if (!$this->isListEditable()) {
-			ilUtil::sendInfo($this->pl->txt('msg_list_not_editable'), true);
-			return;
-		}
+//		if (!$this->isListEditable()) {
+//			ilUtil::sendInfo($this->pl->txt('msg_list_not_editable'), true);
+//			return;
+//		}
 		if (!$this->checklist->getId()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}
@@ -76,18 +76,18 @@ class xaliChecklistGUI extends xaliGUI {
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	public function isListEditable() {
-		static $editable;
-		if ($editable === null) {
-			/** @var xaliSetting $settings */
-			$settings = xaliSetting::find($this->parent_gui->obj_id);
-			$today = date('Y-m-d');
-			$editable = ($today >= $settings->getActivationFrom()) && ($today <= $settings->getActivationTo());
-		}
-		return $editable;
-	}
+//	/**
+//	 * @return bool
+//	 */
+//	public function isListEditable() {
+//		static $editable;
+//		if ($editable === null) {
+//			/** @var xaliSetting $settings */
+//			$settings = xaliSetting::find($this->parent_gui->obj_id);
+//			$today = date('Y-m-d');
+//			$editable = !$settings->getActivation() || ($today >= $settings->getActivationFrom()) && ($today <= $settings->getActivationTo());
+//		}
+//		return $editable;
+//	}
 
 }

@@ -22,7 +22,9 @@ class xaliSettingsGUI extends xaliGUI {
 		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->object);
 		$xaliSettingsFormGUI->setValuesByPost();
 		if ($xaliSettingsFormGUI->saveSettings()) {
-			ilUtil::sendSuccess($this->lng->txt('saved_successfully'));
+			ilUtil::sendSuccess($this->lng->txt('saved_successfully'), true);
+			$this->ctrl->redirect($this, self::CMD_STANDARD);
+			return;
 		}
 		$this->tpl->setContent($xaliSettingsFormGUI->getHTML());
 	}
