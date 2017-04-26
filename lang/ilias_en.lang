@@ -25,6 +25,7 @@ msg_list_created#:#Attendance list created.
 msg_date_already_used#:#A list for the %s exists already. Please edit that list or choose another date.
 msg_incomplete_lists#:#There are one or several incomplete lists with a passed date. Please complete or delete them via the list overview to avoid wrong calculation of attendance ratio.
 msg_creation_failed#:#Creation failed: attendance lists can only be created in courses or groups.
+msg_list_not_editable#:#No further lists can be created since the activation time range is over.
 warning_list_incomplete#:#Could not save: a status must be chosen for every member.
 warning_not_filled_out#:#Please select status.
 table_title_users#:#Users

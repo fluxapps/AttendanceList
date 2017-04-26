@@ -124,32 +124,37 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	function &executeCommand() {
 		$this->initHeaderAndLocator();
 
-		$cmd = $this->ctrl->getCmd();
+		$cmd = $this->ctrl->getCmd(self::CMD_STANDARD);
 
 
 		$next_class = $this->ctrl->getNextClass($this);
 
 		switch ($next_class) {
 			case 'xalichecklistgui':
+				$this->checkPermission("read");
 				$xaliChecklistGUI = new xaliChecklistGUI($this);
 				$this->tabs->setTabActive(self::TAB_CONTENT);
 				$this->ctrl->forwardCommand($xaliChecklistGUI);
 				break;
 			case "ilinfoscreengui":
+				// cmd here is showSummary
 				$this->checkPermission("visible");
-				$this->infoScreen();    // forwards command
+				parent::infoScreen();    // forwards command
 				break;
 			case 'xalioverviewgui':
+				$this->checkPermission("write");
 				$xaliOverviewGUI = new xaliOverviewGUI($this);
 				$this->tabs->setTabActive(self::TAB_OVERVIEW);
 				$this->ctrl->forwardCommand($xaliOverviewGUI);
 				break;
 			case 'xalisettingsgui':
+				$this->checkPermission("write");
 				$xaliSettingsGUI = new xaliSettingsGUI($this);
 				$this->tabs->setTabActive(self::TAB_SETTINGS);
 				$this->ctrl->forwardCommand($xaliSettingsGUI);
 				break;
 			case 'ilpermissiongui':
+				$this->checkPermission("edit_permission");
 				include_once("Services/AccessControl/classes/class.ilPermissionGUI.php");
 				$perm_gui = new ilPermissionGUI($this);
 				$this->tabs->setTabActive("id_permissions");
@@ -162,6 +167,15 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		if ($cmd != 'create') {
 			$this->tpl->show();
 		}
+	}
+
+	/**
+	 * show information screen
+	 */
+	function infoScreen() {
+		$this->ctrl->setCmd('showSummary');
+		$this->ctrl->setCmdClass("ilinfoscreengui");
+		parent::infoScreen();
 	}
 
 
@@ -186,6 +200,13 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$this->ctrl->redirectByClass('xaliChecklistGUI', xaliChecklistGUI::CMD_STANDARD);
 	}
 
+
+	/**
+	 *
+	 */
+	public function showOverview() {
+		$this->ctrl->redirectByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_STANDARD);
+	}
 
 	/**
 	 *

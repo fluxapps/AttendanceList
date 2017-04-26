@@ -25,6 +25,7 @@ msg_list_created#:#Anwesenheitsliste erstellt.
 msg_date_already_used#:#Für den %s existiert bereits eine Anwesenheitsliste. Bitte bearbeiten Sie diese Liste oder wählen Sie ein anderes Datum.
 msg_incomplete_lists#:#Es existieren eine oder mehrere unvollständig ausgefüllte Anwesenheitslisten mit bereits vergangenem Datum. Bitte vervollständigen oder löschen Sie diese in der <a href="%s">Listenübersicht</a>, um eine falsche Berechnung der Mindestanwesenheit zu vermeiden.
 msg_creation_failed#:#Erstellung nicht möglich: Anwesenheitslisten können nur in Kursen oder Gruppen erstellt werden.
+msg_list_not_editable#:#Es können keine Anwesenheitslisten mehr erstellt werden, da der Veranstaltungszeitraum vorüber ist.
 warning_list_incomplete#:#Speichern fehlgeschlagen: Es muss für jeden Teilnehmer ein Status ausgewählt werden.
 warning_not_filled_out#:#Bitte Status auswählen.
 table_title_users#:#Benutzer

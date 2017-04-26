@@ -33,7 +33,6 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	 */
 	protected $ctrl;
 
-
 	/**
 	 * xaliChecklistTableGUI constructor.
 	 *

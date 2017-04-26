@@ -16,7 +16,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 	function initCommands() {
 		// Always set
-		$this->timings_enabled = true;
+		$this->timings_enabled = false;
 		$this->subscribe_enabled = true;
 		$this->payment_enabled = false;
 		$this->link_enabled = false;
@@ -37,12 +37,12 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 			),
 			array(
 				'permission' => 'write',
-				'cmd' => ilObjAttendanceListGUI::CMD_STANDARD,
+				'cmd' => ilObjAttendanceListGUI::CMD_EDIT_SETTINGS,
 				'lang_var' => 'edit'
 			)
 		);
 
-		return $commands;// TODO: Implement initCommands() method.
+		return $commands;
 	}
 
 
