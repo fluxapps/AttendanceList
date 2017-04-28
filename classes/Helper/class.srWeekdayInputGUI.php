@@ -57,7 +57,7 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 
 
 	function checkInput() {
-		return is_array($_POST[$this->getPostVar()]) && (count($_POST[$this->getPostVar()]) <= 7);
+		return ($_POST[$this->getPostVar()] == null) || (count($_POST[$this->getPostVar()]) <= 7);
 	}
 
 	/**

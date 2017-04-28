@@ -254,13 +254,52 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
+	public function initCreateForm($a_new_type) {
+		$form = parent::initCreateForm($a_new_type);
+
+		$from = new ilDateTimeInputGUI($this->pl->txt(xaliSettingsFormGUI::F_ACTIVATION_FROM), xaliSettingsFormGUI::F_ACTIVATION_FROM);
+		$form->addItem($from);
+
+		$to = new ilDateTimeInputGUI($this->pl->txt(xaliSettingsFormGUI::F_ACTIVATION_TO), xaliSettingsFormGUI::F_ACTIVATION_TO);
+		$form->addItem($to);
+
+		$wd = new srWeekdayInputGUI($this->pl->txt(xaliSettingsFormGUI::F_WEEKDAYS), xaliSettingsFormGUI::F_WEEKDAYS);
+		$form->addItem($wd);
+
+		return $form;
+	}
+
+
+	public function save() {
+		$form = $this->initCreateForm($this->getType());
+		$form->setValuesByPost();
+		$form->checkInput();
+
+		$xaliSetting = new xaliSetting();
+		$xaliSetting->setActivation(true);
+
+		$from = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_FROM);
+		$xaliSetting->setActivationFrom($from['date']);
+
+		$to = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_TO);
+		$xaliSetting->setActivationTo($to['date']);
+
+		$xaliSetting->setActivationWeekdays($form->getInput(xaliSettingsFormGUI::F_WEEKDAYS));
+
+		$this->saveObject($xaliSetting);
+	}
+
+
 	/**
 	 * @param ilObject $newObj
 	 */
-	function afterSave($newObj) {
-		$xaliSetting = new xaliSetting();
+	function afterSave($newObj, $additional_args) {
+		$xaliSetting = $additional_args[0];
+
 		$xaliSetting->setId($newObj->getId());
 		$xaliSetting->create();
+		$xaliSetting->createEmptyLists();
+
 		parent::afterSave($newObj);
 	}
 
@@ -281,44 +320,22 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		return false;
 	}
 
-
-	/**
-	 * @return ilObjCourse|ilObjGroup
-	 * @throws Exception
-	 */
-	public function getParentCourseOrGroup() {
-		static $parent;
-		if (!$parent) {
-			$ref_id = $this->ref_id ? $this->ref_id : ilAttendanceListPlugin::lookupRefId($this->obj_id);
-
-			$parent = ilObjectFactory::getInstanceByRefId($this->getParentCourseOrGroupId($ref_id));
-		}
-
-		return $parent;
-	}
-
 	public function getParentCourseOrGroupId($ref_id) {
+		global $tree;
 		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
 			if ($ref_id == 1) {
 				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");
 			}
-			$ref_id = $this->tree->getParentId($ref_id);
+			$ref_id = $tree->getParentId($ref_id);
 		}
 		return $ref_id;
 	}
-
 
 	/**
 	 * @return array
 	 */
 	public function getMembers() {
-		static $members;
-		if (!$members) {
-			$parent = $this->getParentCourseOrGroup();
-			$member_role = $parent->getDefaultMemberRole();
-			$members = $this->rbacreview->assignedUsers($member_role);
-		}
-		return $members;
+		return $this->object->getMembers();
 	}
 
 

@@ -37,16 +37,22 @@ status_1#:#Abwesend Unentschuldigt
 status_2#:#Abwesend Entschuldigt
 status_3#:#Anwesend
 button_add_list#:#Neue Liste Hinzufügen
+button_create_certificates#:#Zertifikate Erstellen
 form_input_date#:#Datum der zu erstellenden Liste
 xali_new#:#Neue Anwesenheitsliste anlegen
 minimum_attendance#:#Mindestanwesenheit
-activation_from#:#Verfügbar von
-activation_to#:#Verfügbar bis
+minimum_attendance_info#:#Wird zur Berechnung des Lernfortschritts verwendet. Entschuldigte Abwesenheiten zählen als Anwesenheiten.
+activation_from#:#Veranstaltungsbeginn
+activation_to#:#Veranstaltungsende
 obj_xali#:#Anwesenheitsliste
 objs_xali#:#Anwesenheitslisten
 xali_add#:#Anwesenheitsliste anlegen
 activation#:#Veranstaltungszeitraum
-create_lists#:#Leere Listen erstellen
+create_lists#:#Listen erstellen
+create_lists_info#:#Innerhalb der ausgewählten Tage werden leere Listen erstellt.
+delete_lists#:#Listen löschen
+delete_lists_info#:#Automatisch erstellte leere Listen ausserhalb der ausgewählten Tage werden gelöscht.
 weekdays#:#Wochentage
 all_users#:#Alle Mitglieder anzeigen
-automatically_created#:#(automatisch erstellt)
+automatically_created#:#automatisch erstellt
+incomplete#:#unvollständig

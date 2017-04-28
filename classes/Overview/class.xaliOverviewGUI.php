@@ -1,6 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.xaliGUI.php';
+require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
 require_once 'Services/UIComponent/Button/classes/class.ilLinkButton.php';
 require_once 'Services/Utilities/classes/class.ilConfirmationGUI.php';
 require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
@@ -44,19 +45,20 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function showListsOverview() {
-		global $ilToolbar;
 		$this->setSubtabs(self::SUBTAB_LISTS);
-		/** @var ilToolbarGUI $ilToolbarGUI*/
 		$add_button = ilLinkButton::getInstance();
 		$add_button->setPrimary(true);
 		$add_button->setCaption($this->pl->txt('button_add_list'), false);
 		$add_button->setUrl($this->ctrl->getLinkTarget($this, self::CMD_ADD_LIST));
-		$ilToolbar->addButtonInstance($add_button);
+		$this->toolbar->addButtonInstance($add_button);
 		$xaliOverviewListTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
 		$this->tpl->setContent($xaliOverviewListTableGUI->getHTML());
 	}
 
 
+	/**
+	 *
+	 */
 	public function applyFilterUsers() {
 		$users = $this->parent_gui->getMembers();
 		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
@@ -65,6 +67,10 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
+
+	/**
+	 *
+	 */
 	public function resetFilterUsers() {
 		$users = $this->parent_gui->getMembers();
 		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
@@ -73,6 +79,10 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
+
+	/**
+	 *
+	 */
 	public function applyFilterLists() {
 		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
 		$xaliOverviewUserTableGUI->writeFilterToSession();
@@ -80,6 +90,10 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
+
+	/**
+	 *
+	 */
 	public function resetFilterLists() {
 		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
 		$xaliOverviewUserTableGUI->resetFilter();
@@ -126,6 +140,9 @@ class xaliOverviewGUI extends xaliGUI {
 			$entry->store();
 		}
 
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
 		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
@@ -163,6 +180,10 @@ class xaliOverviewGUI extends xaliGUI {
 		$checklist->setLastEditedBy($this->user->getId());
 		$checklist->setLastUpdate(time());
 		$checklist->create();
+
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
 		ilUtil::sendSuccess($this->pl->txt('msg_list_created'), true);
 		$this->ctrl->setParameter($this, 'checklist_id', $checklist->getId());
 		$this->ctrl->redirect($this, self::CMD_EDIT_LIST);
@@ -190,7 +211,7 @@ class xaliOverviewGUI extends xaliGUI {
 		$checklist = xaliChecklist::find($_GET['checklist_id']);
 
 		$xaliChecklistTableGUI = new xaliChecklistTableGUI($this, $checklist, $users);
-		$xaliChecklistTableGUI->setTitle(sprintf($this->pl->txt('table_checklist_title'), $checklist->getChecklistDate()));
+		$xaliChecklistTableGUI->setTitle(sprintf($this->pl->txt('table_checklist_title'), date('D, d.m.Y', strtotime($checklist->getChecklistDate()))));
 
 		$this->tpl->setContent($xaliChecklistTableGUI->getHTML());
 	}
@@ -224,6 +245,10 @@ class xaliOverviewGUI extends xaliGUI {
 			$checklist = xaliChecklist::find($id);
 			$checklist->delete();
 		}
+
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
 		ilUtil::sendSuccess($this->pl->txt('msg_list_deleted'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
@@ -235,4 +260,5 @@ class xaliOverviewGUI extends xaliGUI {
 	protected function cancel() {
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
+
 }

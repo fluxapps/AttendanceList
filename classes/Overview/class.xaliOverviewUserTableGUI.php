@@ -24,7 +24,19 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	 * @var xaliSetting
 	 */
 	protected $settings;
+	/**
+	 * @var bool
+	 */
+	protected $has_passed_students = false;
 
+
+	/**
+	 * xaliOverviewUserTableGUI constructor.
+	 *
+	 * @param xaliOverviewGUI $a_parent_obj
+	 * @param array           $users
+	 * @param string          $obj_id
+	 */
 	public function __construct(xaliOverviewGUI $a_parent_obj, array $users, $obj_id) {
 		global $lng, $ilCtrl;
 		$this->lng = $lng;
@@ -51,15 +63,14 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->parseData();
 	}
 
+
+	/**
+	 *
+	 */
 	protected function parseData() {
 		$data = array();
 		if ($this->filter['user_id']) {
-			$checklist_ids = $this->getChecklistIds();
-			$operators = array(
-				'user_id' => '=',
-				'status' => '=',
-				'checklist_id' => 'IN'
-			);
+
 			foreach ($this->users as $usr_id) {
 				$user = new ilObjUser($usr_id);
 				$user_data = array();
@@ -70,28 +81,16 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 				$user_data["login"] = $user->getLogin();
 				$user_data["id"] = $user->getId();
 
-				if ($checklist_ids) {
-					$user_data["present"] = xaliChecklistEntry::where(array(
-						'user_id' => $usr_id,
-						'status' => xaliChecklistEntry::STATUS_PRESENT,
-						'checklist_id' => $checklist_ids
-					), $operators)->count();
-					$user_data["excused"] = xaliChecklistEntry::where(array(
-						'user_id' => $usr_id,
-						'status' => xaliChecklistEntry::STATUS_ABSENT_EXCUSED,
-						'checklist_id' => $checklist_ids
-					), $operators)->count();
-					$user_data["unexcused"] = xaliChecklistEntry::where(array(
-						'user_id' => $usr_id,
-						'status' => xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED,
-						'checklist_id' => $checklist_ids
-					), $operators)->count();
+				/** @var xaliUserStatus $xaliUserStatus */
+				$xaliUserStatus = xaliUserStatus::getInstance($user->getId(), $this->obj_id);
 
-					$user_data['reached_percentage'] = round(($user_data["present"] + $user_data["excused"]) / count($checklist_ids) * 100);
-				} else {
-					$user_data['reached_percentage'] = $user_data["present"] = $user_data["excused"] = $user_data["unexcused"] = 0;
-				}
-				$user_data['no_status'] = count($checklist_ids) - ($user_data["present"] + $user_data["excused"] + $user_data["unexcused"]);
+				$user_data["present"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT);
+				$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
+				$user_data["unexcused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
+
+				$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
+
+				$user_data['no_status'] = $xaliUserStatus->getUnedited();
 				$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $this->settings->getMinimumAttendance() . '%';
 				$data[] = $user_data;
 			}
@@ -100,13 +99,22 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param array $a_set
+	 */
 	protected function fillRow($a_set) {
 		parent::fillRow($a_set);
 		$color = ($a_set['reached_percentage'] < $this->settings->getMinimumAttendance()) ? 'red' : 'green';
+		if ($color == 'green') {
+			$this->has_passed_students = true;
+		}
 		$this->tpl->setVariable('COLOR', $color);
 	}
 
 
+	/**
+	 * @return array
+	 */
 	protected function getChecklistIds() {
 		$ids = array();
 		foreach (xaliChecklist::where(array('obj_id' => $this->obj_id))->get() as $checklist) {
@@ -133,6 +141,10 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->filter['user_id'] = $user_filter->getValue();
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		$this->addColumn($this->pl->txt('table_column_name'), 'name');
 		$this->addColumn($this->pl->txt('table_column_login'), 'login');
@@ -144,6 +156,11 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param $a_field
+	 *
+	 * @return bool
+	 */
 	function numericOrdering($a_field) {
 		switch ($a_field) {
 			case 'present':
@@ -158,6 +175,10 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param object $a_csv
+	 * @param array  $a_set
+	 */
 	protected function fillRowCSV($a_csv, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['reached_percentage']);
@@ -165,9 +186,24 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param object $a_worksheet
+	 * @param int    $a_row
+	 * @param array  $a_set
+	 */
 	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['reached_percentage']);
 		parent::fillRowExcel($a_worksheet, $a_row, $a_set);
 	}
+
+
+	/**
+	 * @return boolean
+	 */
+	public function hasPassedStudents() {
+		return $this->has_passed_students;
+	}
+
+
 }

@@ -60,25 +60,27 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		try {
 			/** @var xaliSetting $settings */
 			$settings = xaliSetting::find($this->obj_id);
-			if ($settings->getActivation()) {
-				$activation_from = date('d. M Y', strtotime($settings->getActivationFrom()));
-				$activation_to = date('d. M Y', strtotime($settings->getActivationTo()));
-				$props[] = array(
-					'alert' => false,
-					'newline' => true,
-					'property' => $this->lng->txt('activation'),
-					'value' => $activation_from . ' - ' . $activation_to,
-					'propertyNameVisible' => true
-				);
-			}
-			if (!$settings->getIsOnline()) {
-				$props[] = array(
-					'alert' => true,
-					'newline' => true,
-					'property' => 'Status',
-					'value' => 'Offline',
-					'propertyNameVisible' => true
-				);
+			if ($settings != null) {
+				if ($settings->getActivation()) {
+					$activation_from = date('d. M Y', strtotime($settings->getActivationFrom()));
+					$activation_to = date('d. M Y', strtotime($settings->getActivationTo()));
+					$props[] = array(
+						'alert' => false,
+						'newline' => true,
+						'property' => $this->lng->txt('activation'),
+						'value' => $activation_from . ' - ' . $activation_to,
+						'propertyNameVisible' => true
+					);
+				}
+				if (!$settings->getIsOnline()) {
+					$props[] = array(
+						'alert' => true,
+						'newline' => true,
+						'property' => 'Status',
+						'value' => 'Offline',
+						'propertyNameVisible' => true
+					);
+				}
 			}
 		} catch (Exception $e) {
 

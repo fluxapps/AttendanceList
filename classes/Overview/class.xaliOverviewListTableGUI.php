@@ -22,6 +22,13 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	 */
 	protected $ctrl;
 
+
+	/**
+	 * xaliOverviewListTableGUI constructor.
+	 *
+	 * @param xaliOverviewGUI $a_parent_obj
+	 * @param string          $obj_id
+	 */
 	public function __construct(xaliOverviewGUI $a_parent_obj, $obj_id) {
 		global $lng, $ilCtrl;
 		$this->lng = $lng;
@@ -49,6 +56,10 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->parseData();
 	}
 
+
+	/**
+	 *
+	 */
 	public function parseData() {
 		$data = array();
 		foreach (xaliChecklist::where(array('obj_id' => $this->obj_id))->get() as $checklist) {
@@ -57,13 +68,14 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 			$dataset['id'] = $checklist->getId();
 			$dataset['sort_date'] = $checklist->getChecklistDate();
 			$dataset['date'] = date('D, d.m.Y', strtotime($checklist->getChecklistDate()));
+			$dataset['date'] .= $checklist->isComplete() ? '' : ' (' . $this->pl->txt('incomplete') . ')';
 
 			if ($date_filter = $this->filter['date']) {
 				/** @var ilDateTime $from */
-				if (isset($date_filter['from']) && $date_filter['from']->get(IL_CAL_DATE, 'Y-m-d') > $dataset['date']) {
+				if (isset($date_filter['from']) && $date_filter['from']->get(IL_CAL_DATE, 'Y-m-d') > $dataset['sort_date']) {
 					continue;
 				}
-				if (isset($date_filter['to']) && $date_filter['to']->get(IL_CAL_DATE, 'Y-m-d') < $dataset['date']) {
+				if (isset($date_filter['to']) && $date_filter['to']->get(IL_CAL_DATE, 'Y-m-d') < $dataset['sort_date']) {
 					continue;
 				}
 			}
@@ -90,11 +102,21 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->setData($data);
 	}
 
+
+	/**
+	 * @param array $a_set
+	 */
 	public function fillRow($a_set) {
 		parent::fillRow($a_set);
 		$this->tpl->setVariable('ACTIONS', $this->buildAction($a_set));
 	}
 
+
+	/**
+	 * @param $a_set
+	 *
+	 * @return string
+	 */
 	public function buildAction($a_set) {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
@@ -113,16 +135,25 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->filter['date'] = $date_filter->getDate();
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		$this->addColumn("", "", "1", true);
 		$this->addColumn($this->pl->txt('table_column_date'), 'sort_date');
-		$this->addColumn($this->pl->txt('table_column_tutor'));
+		$this->addColumn($this->pl->txt('table_column_tutor'), 'tutor');
 		$this->addColumn($this->pl->txt('table_column_present'));
 		$this->addColumn($this->pl->txt('table_column_excused'));
 		$this->addColumn($this->pl->txt('table_column_unexcused'));
 		$this->addColumn("", "", '30px', true);
 	}
 
+
+	/**
+	 * @param object $a_csv
+	 * @param array  $a_set
+	 */
 	protected function fillRowCSV($a_csv, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);
@@ -130,6 +161,11 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param object $a_worksheet
+	 * @param int    $a_row
+	 * @param array  $a_set
+	 */
 	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);

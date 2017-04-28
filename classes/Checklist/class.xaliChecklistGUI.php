@@ -3,6 +3,7 @@
 require_once 'class.xaliChecklistTableGUI.php';
 require_once 'class.xaliChecklist.php';
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.xaliGUI.php';
+require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
 /**
  * Class xaliChecklistGUI
  *
@@ -19,6 +20,12 @@ class xaliChecklistGUI extends xaliGUI {
 	 */
 	protected $user;
 
+
+	/**
+	 * xaliChecklistGUI constructor.
+	 *
+	 * @param ilObjAttendanceListGUI $parent_gui
+	 */
 	public function __construct(ilObjAttendanceListGUI $parent_gui) {
 		parent::__construct($parent_gui);
 
@@ -37,10 +44,6 @@ class xaliChecklistGUI extends xaliGUI {
 	 * standard command
 	 */
 	public function show() {
-//		if (!$this->isListEditable()) {
-//			ilUtil::sendInfo($this->pl->txt('msg_list_not_editable'), true);
-//			return;
-//		}
 		if (!$this->checklist->getId()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}
@@ -52,6 +55,10 @@ class xaliChecklistGUI extends xaliGUI {
 		$this->tpl->setContent($xaliChecklistTableGUI->getHTML());
 	}
 
+
+	/**
+	 *
+	 */
 	public function save() {
 		if (count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
@@ -71,23 +78,11 @@ class xaliChecklistGUI extends xaliGUI {
 			$entry->store();
 		}
 
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
 		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
-
-
-//	/**
-//	 * @return bool
-//	 */
-//	public function isListEditable() {
-//		static $editable;
-//		if ($editable === null) {
-//			/** @var xaliSetting $settings */
-//			$settings = xaliSetting::find($this->parent_gui->obj_id);
-//			$today = date('Y-m-d');
-//			$editable = !$settings->getActivation() || ($today >= $settings->getActivationFrom()) && ($today <= $settings->getActivationTo());
-//		}
-//		return $editable;
-//	}
 
 }

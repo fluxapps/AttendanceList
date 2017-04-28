@@ -35,9 +35,20 @@ class xaliGUI {
 	 * @var ilObjUser
 	 */
 	protected $user;
+	/**
+	 * @var ilToolbarGUI
+	 */
+	protected $toolbar;
 
+
+	/**
+	 * xaliGUI constructor.
+	 *
+	 * @param ilObjAttendanceListGUI $parent_gui
+	 */
 	function __construct(ilObjAttendanceListGUI $parent_gui) {
-		global $tpl, $ilCtrl, $ilTabs, $lng, $ilUser;
+		global $tpl, $ilCtrl, $ilTabs, $lng, $ilUser, $ilToolbar;
+		$this->toolbar = $ilToolbar;
 		$this->user = $ilUser;
 		$this->lng = $lng;
 		$this->tabs = $ilTabs;
@@ -47,6 +58,10 @@ class xaliGUI {
 		$this->parent_gui = $parent_gui;
 	}
 
+
+	/**
+	 *
+	 */
 	public function executeCommand() {
 		$this->prepareOutput();
 		if (ilObjAttendanceListAccess::hasWriteAccess()) {
@@ -61,11 +76,18 @@ class xaliGUI {
 				$this->{$cmd}();
 				break;
 		}
-
 	}
 
+
+	/**
+	 *
+	 */
 	protected function prepareOutput() { }
 
+
+	/**
+	 *
+	 */
 	protected function cancel() {
 		$this->ctrl->redirect($this, static::CMD_STANDARD);
 	}

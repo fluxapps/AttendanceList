@@ -18,6 +18,7 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	const F_ACTIVATION_TO = 'activation_to';
 	const F_ACTIVATION_WEEKDAYS = 'activation_weekdays';
 	const F_CREATE_LISTS = 'create_lists';
+	const F_DELETE_LISTS = 'delete_lists';
 	const F_WEEKDAYS = 'weekdays';
 
 	/**
@@ -63,6 +64,9 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	public function initForm() {
 		$input = new ilTextInputGUI($this->lng->txt(self::F_TITLE), self::F_TITLE);
 		$input->setRequired(true);
@@ -84,31 +88,36 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		}
 		$input->setOptions($options);
 		$input->setValue($this->settings->getMinimumAttendance());
+		$input->setInfo($this->pl->txt(self::F_MINIMUM_ATTENDANCE . '_info'));
 		$this->addItem($input);
 
-		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_ACTIVATION), self::F_ACTIVATION);
-		$input->setChecked($this->settings->getActivation());
+		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_FROM), self::F_ACTIVATION_FROM);
+		$input->setValueByArray(array(self::F_ACTIVATION_FROM => array("date" => $this->settings->getActivationFrom())));
+		$this->addItem($input);
 
-		$from = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_FROM), self::F_ACTIVATION_FROM);
-		$from->setValueByArray(array(self::F_ACTIVATION_FROM => array("date" => $this->settings->getActivationFrom())));
-		$input->addSubItem($from);
+		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_TO), self::F_ACTIVATION_TO);
+		$input->setValueByArray(array(self::F_ACTIVATION_TO => array("date" => $this->settings->getActivationTo())));
+		$this->addItem($input);
 
-		$to = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_TO), self::F_ACTIVATION_TO);
-		$to->setValueByArray(array(self::F_ACTIVATION_TO => array("date" => $this->settings->getActivationTo())));
-		$input->addSubItem($to);
+		$input = new srWeekdayInputGUI($this->pl->txt(self::F_WEEKDAYS), self::F_WEEKDAYS);
+		$input->setValue($this->settings->getActivationWeekdays());
+		$this->addItem($input);
 
-		$cl = new ilCheckboxInputGUI($this->pl->txt(self::F_CREATE_LISTS), self::F_CREATE_LISTS);
-		$wd = new srWeekdayInputGUI($this->pl->txt(self::F_WEEKDAYS), self::F_WEEKDAYS);
-		$wd->setValue($this->settings->getActivationWeekdays());
-		$cl->addSubItem($wd);
-		$input->addSubItem($cl);
+		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_CREATE_LISTS), self::F_CREATE_LISTS);
+		$input->setInfo($this->pl->txt(self::F_CREATE_LISTS . '_info'));
+		$this->addItem($input);
 
-
+		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_DELETE_LISTS), self::F_DELETE_LISTS);
+		$input->setInfo($this->pl->txt(self::F_DELETE_LISTS . '_info'));
 		$this->addItem($input);
 
 		$this->addCommandButton(xaliSettingsGUI::CMD_SAVE, $this->lng->txt('save'));
 	}
 
+
+	/**
+	 * @return bool
+	 */
 	public function saveSettings() {
 		if (!$this->checkInput()) {
 			return false;
@@ -132,8 +141,8 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 
 		$this->settings->update();
 
-		if ($this->getInput(self::F_CREATE_LISTS)) {
-			$this->parent_gui->createEmptyLists();
+		if ($this->getInput(self::F_CREATE_LISTS) || $this->getInput(self::F_DELETE_LISTS)) {
+			$this->settings->createOrDeleteEmptyLists($this->getInput(self::F_CREATE_LISTS), $this->getInput(self::F_DELETE_LISTS));
 		}
 
 		return true;

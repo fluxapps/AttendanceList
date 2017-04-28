@@ -59,6 +59,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		$this->setRowTemplate('tpl.checklist_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
 		$this->setFormAction($this->ctrl->getFormAction($a_parent_obj));
 		$this->setLimit(0);
+		$this->resetOffset();
 		$this->initColumns();
 
 		$this->initCommands();
@@ -66,6 +67,10 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		$this->parseData();
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initCommands() {
 		$this->addCommandButton('save', $this->lng->txt('save'));
 		if ($this->parent_obj instanceof xaliOverviewGUI) {
@@ -73,6 +78,10 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		}
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		$this->addColumn($this->pl->txt('table_column_name'));
 		$this->addColumn($this->pl->txt('table_column_login'));
@@ -116,6 +125,10 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param object $a_csv
+	 * @param array  $a_set
+	 */
 	public function fillRowCSV($a_csv, $a_set) {
 		unset($a_set['id']);
 		foreach ($a_set as $key => $value)
@@ -134,6 +147,11 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	}
 
 
+	/**
+	 * @param object $a_worksheet
+	 * @param int    $a_row
+	 * @param array  $a_set
+	 */
 	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
 		$col = 0;

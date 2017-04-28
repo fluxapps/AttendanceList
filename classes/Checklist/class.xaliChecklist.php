@@ -11,6 +11,9 @@ class xaliChecklist extends ActiveRecord {
 	const DB_TABLE_NAME = "xali_checklist";
 
 
+	/**
+	 * @return string
+	 */
 	static function returnDbTableName() {
 		return self::DB_TABLE_NAME;
 	}
@@ -59,6 +62,9 @@ class xaliChecklist extends ActiveRecord {
 	protected $last_update;
 
 
+	/**
+	 *
+	 */
 	public function create() {
 		parent::create();
 
@@ -82,14 +88,45 @@ class xaliChecklist extends ActiveRecord {
 		return $entry;
 	}
 
+
+	/**
+	 * @return int
+	 */
 	public function getEntriesCount() {
 		return xaliChecklistEntry::where(array('checklist_id' => $this->getId()))->count();
 	}
 
+
+	/**
+	 * @return bool
+	 */
+	public function isComplete() {
+		$ilObjAttendanceList = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($this->obj_id));
+		return $this->getEntriesCount() == count($ilObjAttendanceList->getMembers());
+	}
+
+
+	/**
+	 * @param $status
+	 *
+	 * @return int
+	 */
 	public function getStatusCount($status) {
 		return xaliChecklistEntry::where(array('status' => $status, 'checklist_id' => $this->getId()))->count();
 	}
 
+
+	/**
+	 * @return bool
+	 */
+	public function isEmpty() {
+		return $this->last_edited_by == null;
+	}
+
+
+	/**
+	 *
+	 */
 	public function delete() {
 		foreach (xaliChecklistEntry::where(array('checklist_id' => $this->id))->get() as $entry) {
 			$entry->delete();

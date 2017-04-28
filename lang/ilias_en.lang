@@ -37,16 +37,22 @@ status_1#:#Absend Unexcused
 status_2#:#Absend Excused
 status_3#:#Present
 button_add_list#:#Add New List
+button_create_certificates#:#Create Certificates
 form_input_date#:#Date of created list
 xali_new#:#Create new attendance list
 minimum_attendance#:#Minimum Attendance
+minimum_attendance_info#:#Determines the learning progress. Excused absences count as attendances.
 activation_from#:#Active from
 activation_to#:#Active to
 obj_xali#:#Attendance List
 objs_xali#:#Attendance Lists
 xali_add#:#Create attendance list
 activation#:#Time range
-create_lists#:#Leere Listen erstellen
+create_lists#:#Create lists
+create_lists_info#:#Empty lists will be created inside the chosen dates.
+delete_lists#:#Delete lists
+delete_lists_info#:#Automatically created empty lists outside the chosen dates will be deleted.
 weekdays#:#Wochentage
 all_users#:#Show all members
-automatically_created#:#(automatically created)
+automatically_created#:#automatically created
+incomplete#:#incomplete
