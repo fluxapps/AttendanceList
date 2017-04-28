@@ -298,7 +298,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 
 		$xaliSetting->setId($newObj->getId());
 		$xaliSetting->create();
-		$xaliSetting->createEmptyLists(true, false);
+		$xaliSetting->createOrDeleteEmptyLists(true, false);
 
 		parent::afterSave($newObj);
 	}
