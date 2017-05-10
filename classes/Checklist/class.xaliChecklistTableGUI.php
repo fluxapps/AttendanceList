@@ -111,8 +111,9 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 					$user_data["checked_".xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				}
 			}
-			$data[] = $user_data;
+			$data[$user->getFullname()] = $user_data;
 		}
+		ksort($data);
 		$this->setData($data);
 	}
 
