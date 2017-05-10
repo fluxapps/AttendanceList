@@ -60,40 +60,36 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->setFilterCommand(xaliOverviewGUI::CMD_APPLY_FILTER_USERS);
 		$this->setResetCommand(xaliOverviewGUI::CMD_RESET_FILTER_USERS);
 
-		$this->parseData();
 	}
 
 
 	/**
 	 *
 	 */
-	protected function parseData() {
+	public function parseData() {
 		$data = array();
-		if ($this->filter['user_id']) {
-
-			foreach ($this->users as $usr_id) {
-				$user = new ilObjUser($usr_id);
-				$user_data = array();
-				if ($this->filter['user_id'] != 'all' && $this->filter['user_id'] != $user->getId()) {
-					continue;
-				}
-				$user_data["name"] = $user->getFullname();
-				$user_data["login"] = $user->getLogin();
-				$user_data["id"] = $user->getId();
-
-				/** @var xaliUserStatus $xaliUserStatus */
-				$xaliUserStatus = xaliUserStatus::getInstance($user->getId(), $this->obj_id);
-
-				$user_data["present"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT);
-				$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
-				$user_data["unexcused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
-
-				$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
-
-				$user_data['no_status'] = $xaliUserStatus->getUnedited();
-				$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $this->settings->getMinimumAttendance() . '%';
-				$data[] = $user_data;
+		foreach ($this->users as $usr_id) {
+			$user = new ilObjUser($usr_id);
+			$user_data = array();
+			if ($this->filter['login'] != '' && $this->filter['login'] != $user->getLogin()) {
+				continue;
 			}
+			$user_data["name"] = $user->getFullname();
+			$user_data["login"] = $user->getLogin();
+			$user_data["id"] = $user->getId();
+
+			/** @var xaliUserStatus $xaliUserStatus */
+			$xaliUserStatus = xaliUserStatus::getInstance($user->getId(), $this->obj_id);
+
+			$user_data["present"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT);
+			$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
+			$user_data["unexcused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
+
+			$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
+
+			$user_data['no_status'] = $xaliUserStatus->getUnedited();
+			$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $this->settings->getMinimumAttendance() . '%';
+			$data[] = $user_data;
 		}
 		$this->setData($data);
 	}
@@ -127,18 +123,13 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	 *
 	 */
 	public function initFilter() {
-		$user_filter = new ilSelectInputGUI($this->lng->txt('name'), 'name');
-		$options = array();
-		foreach ($this->users as $user_id) {
-			$user = new ilObjUser($user_id);
-			$options[$user_id] = $user->getFullname();
-		}
-		asort($options);
-		$options = array(0 => $this->lng->txt('please_select'), 'all' => $this->pl->txt('all_users')) + $options;
-		$user_filter->setOptions($options);
+		$user_filter = new ilTextInputGUI($this->lng->txt('login'), 'name');
+		$this->ctrl->saveParameterByClass('ilAttendanceListPlugin', 'ref_id', $_GET['ref_id']);
+		$user_filter->setDataSource($this->ctrl->getLinkTargetByClass(array('ilUIPluginRouterGUI', 'ilAttendanceListPlugin'),
+			'addUserAutoComplete', "", true));
 		$this->addFilterItem($user_filter);
 		$user_filter->readFromSession();
-		$this->filter['user_id'] = $user_filter->getValue();
+		$this->filter['login'] = $user_filter->getValue();
 	}
 
 

@@ -335,7 +335,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 * @return array
 	 */
 	public function getMembers() {
-		return $this->object->getMembers();
+		return $this->pl->getMembers($this->object->ref_id);
 	}
 
 

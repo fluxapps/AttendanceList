@@ -107,6 +107,8 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 				$checklist_entry = $this->checklist->getEntryOfUser($user->getId());
 				if ($status = $checklist_entry->getStatus()) {
 					$user_data["checked_$status"] = 'checked';
+				} else {
+					$user_data["checked_".xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				}
 			}
 			$data[] = $user_data;

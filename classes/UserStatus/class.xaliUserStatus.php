@@ -3,6 +3,7 @@
 require_once 'Services/ActiveRecord/class.ActiveRecord.php';
 require_once('./Services/Tracking/classes/class.ilLPStatus.php');
 require_once('./Services/Tracking/classes/class.ilLPStatusWrapper.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilAttendanceListPlugin.php');
 
 /**
  * Class xaliUserStatus
@@ -372,9 +373,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @param $attendancelist_id
 	 */
 	public static function updateUserStatuses($attendancelist_id) {
-		$attendancelist = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($attendancelist_id));
-
-		foreach ($attendancelist->getMembers() as $user_id) {
+		foreach (ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($attendancelist_id)) as $user_id) {
 			$user_status = self::getInstance($user_id, $attendancelist_id);
 			$user_status->updateLPStatus();
 			$user_status->store();

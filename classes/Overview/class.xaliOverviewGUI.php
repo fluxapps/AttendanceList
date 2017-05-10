@@ -15,7 +15,8 @@ require_once 'class.xaliOverviewListTableGUI.php';
  */
 class xaliOverviewGUI extends xaliGUI {
 
-	const CMD_STANDARD = 'showUsersOverview';
+	const CMD_STANDARD = 'initUserOverview';
+	const CMD_SHOW_USERS = 'showUsers';
 	const CMD_LISTS = 'showListsOverview';
 	const CMD_EDIT_LIST = 'editList';
 	const CMD_CONFIRM_DELETE_LISTS = 'confirmDeleteLists';
@@ -33,10 +34,21 @@ class xaliOverviewGUI extends xaliGUI {
 	/**
 	 *
 	 */
-	public function showUsersOverview() {
+	public function initUserOverview() {
 		$this->setSubtabs(self::SUBTAB_USERS);
 		$users = $this->parent_gui->getMembers();
 		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$this->tpl->setContent($xaliOverviewUserTableGUI->getHTML());
+	}
+
+	/**
+	 *
+	 */
+	public function showUsers() {
+		$this->setSubtabs(self::SUBTAB_USERS);
+		$users = $this->parent_gui->getMembers();
+		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$xaliOverviewUserTableGUI->parseData();
 		$this->tpl->setContent($xaliOverviewUserTableGUI->getHTML());
 	}
 
@@ -64,7 +76,7 @@ class xaliOverviewGUI extends xaliGUI {
 		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
 		$xaliOverviewUserTableGUI->writeFilterToSession();
 		$xaliOverviewUserTableGUI->resetOffset();
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
 	}
 
 

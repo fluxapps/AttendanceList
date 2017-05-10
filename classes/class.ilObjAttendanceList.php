@@ -4,7 +4,6 @@ require_once ('./Services/Repository/classes/class.ilObjectPlugin.php');
 require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Checklist/class.xaliChecklist.php');
 require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php');
 require_once ('./Services/Tracking/interfaces/interface.ilLPStatusPlugin.php');
-require_once ('./Services/Object/classes/class.ilObjectFactory.php');
 /**
  * Class ilObjAttendanceList
  *
@@ -59,7 +58,7 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 			'status' => ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM,
 			'attendancelist_id' => $this->getId()
 		), $operators)->getArray(null, 'user_id');
-		return array_diff($this->getMembers(), $other_than_not_attempted);
+		return array_diff($this->plugin->getMembers($this->ref_id), $other_than_not_attempted);
 	}
 	/**
 	 * Get all user ids with LP status failed
@@ -103,43 +102,4 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 		return ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM;
 	}
 
-	/**
-	 * @return array
-	 */
-	public function getMembers() {
-		global $rbacreview;
-		static $members;
-		if (!$members) {
-			$parent = $this->getParentCourseOrGroup();
-			$member_role = $parent->getDefaultMemberRole();
-			$members = $rbacreview->assignedUsers($member_role);
-		}
-		return $members;
-	}
-
-	/**
-	 * @return ilObjCourse|ilObjGroup
-	 * @throws Exception
-	 */
-	public function getParentCourseOrGroup() {
-		static $parent;
-		if (!$parent) {
-			$ref_id = $this->ref_id ? $this->ref_id : ilAttendanceListPlugin::lookupRefId($this->id);
-
-			$parent = ilObjectFactory::getInstanceByRefId($this->getParentCourseOrGroupId($ref_id));
-		}
-
-		return $parent;
-	}
-
-	public function getParentCourseOrGroupId($ref_id) {
-		global $tree;
-		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
-			if ($ref_id == 1) {
-				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");
-			}
-			$ref_id = $tree->getParentId($ref_id);
-		}
-		return $ref_id;
-	}
 }

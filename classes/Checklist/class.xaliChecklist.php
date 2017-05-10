@@ -1,6 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once 'Services/ActiveRecord/class.ActiveRecord.php';
+require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilAttendanceListPlugin.php';
 /**
  * Class xaliChecklist
  *
@@ -101,8 +102,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @return bool
 	 */
 	public function isComplete() {
-		$ilObjAttendanceList = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($this->obj_id));
-		return $this->getEntriesCount() == count($ilObjAttendanceList->getMembers());
+		return $this->getEntriesCount() == count(ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
 	}
 
 
