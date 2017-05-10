@@ -44,7 +44,7 @@ class xaliChecklistGUI extends xaliGUI {
 	 * standard command
 	 */
 	public function show() {
-		if (!$this->checklist->getId()) {
+		if (!$this->checklist->isComplete()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}
 		$users = $this->parent_gui->getMembers();
