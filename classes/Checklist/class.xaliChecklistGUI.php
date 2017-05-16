@@ -4,6 +4,7 @@ require_once 'class.xaliChecklistTableGUI.php';
 require_once 'class.xaliChecklist.php';
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.xaliGUI.php';
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
+require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Settings/class.xaliSetting.php';
 /**
  * Class xaliChecklistGUI
  *
@@ -19,7 +20,10 @@ class xaliChecklistGUI extends xaliGUI {
 	 * @var ilObjUser
 	 */
 	protected $user;
-
+	/**
+	 * @var xaliSetting
+	 */
+	protected $settings;
 
 	/**
 	 * xaliChecklistGUI constructor.
@@ -28,6 +32,8 @@ class xaliChecklistGUI extends xaliGUI {
 	 */
 	public function __construct(ilObjAttendanceListGUI $parent_gui) {
 		parent::__construct($parent_gui);
+
+		$this->settings = xaliSetting::find($parent_gui->obj_id);
 
 		$list_query = xaliChecklist::where(array('checklist_date' => date('Y-m-d'), 'obj_id' => $parent_gui->obj_id));
 		if ($list_query->hasSets()) {
@@ -44,6 +50,11 @@ class xaliChecklistGUI extends xaliGUI {
 	 * standard command
 	 */
 	public function show() {
+		if ((time()-(60*60*24)) > strtotime($this->settings->getActivationTo())) {
+			ilUtil::sendInfo($this->pl->txt('activation_passed'), true);
+			return;
+		}
+
 		if (!$this->checklist->isComplete()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}

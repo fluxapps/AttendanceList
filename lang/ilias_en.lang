@@ -56,3 +56,14 @@ weekdays#:#Wochentage
 all_users#:#Show all members
 automatically_created#:#automatically created
 incomplete#:#incomplete
+activation_passed#:#The configured activation date for this object has passed. No new lists can be created.
+xali_visible#:#Visible: Attendancelist is visible
+xali_read#:#Read: User can save daily attendance lists
+xali_write#:#Edit Settings: User can edit attendance list settings and administrate lists
+xali_delete#:#Delete: User can delete AttendanceLists
+xali_edit_permission#:#Change Permissions: User can change permission settings
+grp_create_xali#:#Create AttendanceList
+cat_create_xali#:#Create AttendanceList
+crs_create_xali#:#Create AttendanceList
+root_create_xali#:#Create AttendanceList
+fold_create_xali#:#Create AttendanceList

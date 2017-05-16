@@ -266,6 +266,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$wd = new srWeekdayInputGUI($this->pl->txt(xaliSettingsFormGUI::F_WEEKDAYS), xaliSettingsFormGUI::F_WEEKDAYS);
 		$form->addItem($wd);
 
+		$form->setPreventDoubleSubmission(false);
+
 		return $form;
 	}
 

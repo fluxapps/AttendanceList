@@ -56,3 +56,14 @@ weekdays#:#Wochentage
 all_users#:#Alle Mitglieder anzeigen
 automatically_created#:#automatisch erstellt
 incomplete#:#unvollständig
+activation_passed#:#Der konfigurierte Versanstaltungszeitraum für dieses Objekt ist abgelaufen. Es können keine weiteren Listen erstellt werden.
+xali_visible#:#Anzeigen: Anwesenheitsliste ist sichtbar
+xali_read#:#Lesezugriff: Tägliche Anwesenheitslisten ausfüllen
+xali_write#:#Einstellungen bearbeiten: Objekteeinstellungen bearbeiten und Anwesenheitslisten verwalten
+xali_delete#:#Löschen: Anwesenheitsliste löschen
+xali_edit_permission#:#Rechteeinstellungen ändern: Rechteeinstellungen ändern
+grp_create_xali#:#Anwesenheistliste anlegen
+cat_create_xali#:#Anwesenheistliste anlegen
+crs_create_xali#:#Anwesenheistliste anlegen
+root_create_xali#:#Anwesenheistliste anlegen
+fold_create_xali#:#Anwesenheistliste anlegen

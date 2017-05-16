@@ -35,6 +35,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->obj_id = $obj_id;
+		$this->setId('xali_lists_overview_'.$obj_id);
 
 		parent::__construct($a_parent_obj, xaliOverviewGUI::CMD_LISTS);
 		$this->setRowTemplate('tpl.list_overview_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
