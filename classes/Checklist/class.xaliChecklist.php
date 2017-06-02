@@ -112,6 +112,10 @@ class xaliChecklist extends ActiveRecord {
 	 * @return int
 	 */
 	public function getStatusCount($status) {
+		$members = ilAttendanceListPlugin::getInstance()->getMembers();
+		if (empty($members)) {
+			return 0;
+		}
 		$operators = array(
 			'status' => '=',
 			'checklist_id' => '=',
@@ -120,7 +124,7 @@ class xaliChecklist extends ActiveRecord {
 		return xaliChecklistEntry::where(array(
 			'status' => $status,
 			'checklist_id' => $this->getId(),
-			'user_id' => ilAttendanceListPlugin::getInstance()->getMembers()
+			'user_id' => $members
 		), $operators)->count();
 	}
 
