@@ -8,13 +8,13 @@ table_column_date#:#Datum
 table_column_tutor#:#Dozent
 table_column_present#:#Anwesend
 table_column_excused#:#Entschuldigt
-table_column_unexcused#:#Unentschuldigt
+table_column_unexcused#:#Abwesend
 table_column_actions#:#Aktionen
 table_column_percentage#:#Anteil Anwesend / Mindestanwesenheit
 table_column_no_status#:#Nicht Ausgefüllt
 table_checklist_title_today#:#Anwesenheitsliste von heute, %s
 table_checklist_title#:#Anwesenheitsliste vom %s
-label_unexcused#:#Abwesend Unentschuldigt
+label_unexcused#:#Abwesend
 label_excused#:#Abwesend Entschuldigt
 label_present#:#Anwesend
 list_unsaved#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
@@ -33,7 +33,7 @@ subtab_users#:#Benutzer
 table_title_lists#:#Listen
 subtab_lists#:#Listen
 table_title_prefix#:#Übersicht:
-status_1#:#Abwesend Unentschuldigt
+status_1#:#Abwesend
 status_2#:#Abwesend Entschuldigt
 status_3#:#Anwesend
 button_add_list#:#Neue Liste Hinzufügen
@@ -41,7 +41,7 @@ button_create_certificates#:#Zertifikate Erstellen
 form_input_date#:#Datum der zu erstellenden Liste
 xali_new#:#Neue Anwesenheitsliste anlegen
 minimum_attendance#:#Mindestanwesenheit
-minimum_attendance_info#:#Wird zur Berechnung des Lernfortschritts verwendet. Entschuldigte Abwesenheiten zählen als Anwesenheiten.
+minimum_attendance_info#:#Wird zur Berechnung des Lernfortschritts verwendet.
 activation_from#:#Veranstaltungsbeginn
 activation_to#:#Veranstaltungsende
 obj_xali#:#Anwesenheitsliste

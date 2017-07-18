@@ -8,13 +8,13 @@ table_column_date#:#Date
 table_column_tutor#:#Tutor
 table_column_present#:#Present
 table_column_excused#:#Excused
-table_column_unexcused#:#Unexcused
-table_column_actions#:#Aktionen
+table_column_unexcused#:#Absent
+table_column_actions#:#Actions
 table_column_percentage#:#Presence Percentage / Minimum Attendance
 table_column_no_status#:#Not Edited
 table_checklist_title_today#:#Attendance list of today, %s
 table_checklist_title#:#Attendance list of %s
-label_unexcused#:#Absent Unexcused
+label_unexcused#:#Absent
 label_excused#:#Absent Excused
 label_present#:#Present
 list_unsaved#:#The attendance list for today has not been saved yet. Please fill it out and click on "save".
@@ -33,15 +33,15 @@ subtab_users#:#Users
 table_title_lists#:#Lists
 subtab_lists#:#Lists
 table_title_prefix#:#Overview:
-status_1#:#Absend Unexcused
-status_2#:#Absend Excused
+status_1#:#Absent
+status_2#:#Absent Excused
 status_3#:#Present
 button_add_list#:#Add New List
 button_create_certificates#:#Create Certificates
 form_input_date#:#Date of created list
 xali_new#:#Create new attendance list
 minimum_attendance#:#Minimum Attendance
-minimum_attendance_info#:#Determines the learning progress. Excused absences count as attendances.
+minimum_attendance_info#:#Determines the learning progress.
 activation_from#:#Active from
 activation_to#:#Active to
 obj_xali#:#Attendance List

@@ -1,6 +1,6 @@
 <?php
 $id = 'xali';
-$version = '0.0.10';
+$version = '0.0.11';
 $ilias_min_version = '5.1.0';
 $ilias_max_version = '5.1.999';
 $responsible = 'Theodor Truffer';

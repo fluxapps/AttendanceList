@@ -122,7 +122,8 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	 */
 	protected function fillRow($a_set) {
 		parent::fillRow($a_set);
-		foreach (array('unexcused', 'excused', 'present') as $label) {
+//		foreach (array('unexcused', 'excused', 'present') as $label) {
+		foreach (array('unexcused', 'present') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
 	}

@@ -91,12 +91,13 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 
 
 			$present = $checklist->getStatusCount(xaliChecklistEntry::STATUS_PRESENT);
-			$excused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
+//			$excused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
 			$unexcused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
-			$total = $present + $excused + $unexcused;
+//			$total = $present + $excused + $unexcused;
+			$total = $present + $unexcused;
 
 			$dataset['present'] = $total ? $present . ' (' . round($present / $total * 100) . '%)' : '-';
-			$dataset['excused'] = $total ? $excused . ' (' . round($excused / $total * 100) . '%)' : '-';
+//			$dataset['excused'] = $total ? $excused . ' (' . round($excused / $total * 100) . '%)' : '-';
 			$dataset['unexcused'] = $total ? $unexcused . ' (' . round($unexcused / $total * 100) . '%)' : '-';
 			$data[] = $dataset;
 		}
@@ -145,7 +146,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->addColumn($this->pl->txt('table_column_date'), 'sort_date');
 		$this->addColumn($this->pl->txt('table_column_tutor'), 'tutor');
 		$this->addColumn($this->pl->txt('table_column_present'));
-		$this->addColumn($this->pl->txt('table_column_excused'));
+//		$this->addColumn($this->pl->txt('table_column_excused'));
 		$this->addColumn($this->pl->txt('table_column_unexcused'));
 		$this->addColumn("", "", '30px', true);
 	}

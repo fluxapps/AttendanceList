@@ -319,11 +319,14 @@ class xaliUserStatus extends ActiveRecord {
 	 * @return int
 	 */
 	public function getReachedPercentage() {
+//		return round(
+//			($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
+//			+ $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED))
+//			/ count($this->getChecklistIds())
+//			* 100
+//		);
 		return round(
-			($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
-			+ $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED))
-			/ count($this->getChecklistIds())
-			* 100
+			$this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) / count($this->getChecklistIds()) * 100
 		);
 	}
 
@@ -334,7 +337,7 @@ class xaliUserStatus extends ActiveRecord {
 	public function getUnedited() {
 		return count($this->getChecklistIds())
 			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
-			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED)
+//			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED)
 			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
 	}
 
