@@ -94,7 +94,18 @@ class xaliChecklist extends ActiveRecord {
 	 * @return int
 	 */
 	public function getEntriesCount() {
-		return xaliChecklistEntry::where(array('checklist_id' => $this->getId()))->count();
+		$members = ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id));
+		if (empty($members)) {
+			return 0;
+		}
+		$operators = array(
+			'checklist_id' => '=',
+			'user_id' => 'IN'
+		);
+		return xaliChecklistEntry::where(array(
+			'checklist_id' => $this->getId(),
+			'user_id' => $members
+		), $operators)->count();
 	}
 
 
