@@ -102,7 +102,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @return bool
 	 */
 	public function isComplete() {
-		return $this->getEntriesCount() == count(ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
+		return $this->getEntriesCount() >= count(ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
 	}
 
 
