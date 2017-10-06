@@ -107,8 +107,12 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		if ($color == 'green') {
 			$this->has_passed_students = true;
 		}
+		$this->ctrl->setParameter($this->parent_obj, 'user_id', $a_set['id']);
+		$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTarget($this->parent_obj, 'editUser'));
 		$this->tpl->setVariable('COLOR', $color);
 	}
+
+
 
 
 	/**

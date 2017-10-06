@@ -72,7 +72,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initCommands() {
-		$this->addCommandButton('save', $this->lng->txt('save'));
+		$this->addCommandButton('saveList', $this->lng->txt('save'));
 		if ($this->parent_obj instanceof xaliOverviewGUI) {
 			$this->addCommandButton('cancel', $this->lng->txt('cancel'));
 		}
@@ -99,18 +99,15 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			$user_data["name"] = $user->getFullname();
 			$user_data["login"] = $user->getLogin();
 			$user_data["id"] = $user->getId();
-			if (isset($_POST['attendance_status'][$user->getId()])) {
-				$user_data["checked_" . $_POST['attendance_status'][$user->getId()]] = 'checked';
-			} elseif (isset($_POST['attendance_status'])) {
-				$user_data["warning"] = $this->pl->txt('warning_not_filled_out');
+
+			$checklist_entry = $this->checklist->getEntryOfUser($user->getId());
+			if ($status = $checklist_entry->getStatus()) {
+				$user_data["checked_$status"] = 'checked';
 			} else {
-				$checklist_entry = $this->checklist->getEntryOfUser($user->getId());
-				if ($status = $checklist_entry->getStatus()) {
-					$user_data["checked_$status"] = 'checked';
-				} else {
-					$user_data["checked_".xaliChecklistEntry::STATUS_PRESENT] = 'checked';
-				}
+				$user_data["checked_".xaliChecklistEntry::STATUS_PRESENT] = 'checked';
+				$user_data["warning"] = $this->pl->txt('warning_not_filled_out');
 			}
+
 			$data[$user->getFullname()] = $user_data;
 		}
 		ksort($data);
@@ -122,7 +119,18 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	 */
 	protected function fillRow($a_set) {
 		parent::fillRow($a_set);
-//		foreach (array('unexcused', 'excused', 'present') as $label) {
+
+		if (ilObjAttendanceListAccess::hasWriteAccess()) {
+			$this->tpl->setCurrentBlock('with_link');
+			$this->ctrl->setParameterByClass('xaliOverviewGUI', 'user_id', $a_set['id']);
+			$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', 'editUser'));
+		} else {
+			$this->tpl->setCurrentBlock('without_link');
+		}
+		$this->tpl->setVariable('VAL_NAME', $a_set['name']);
+		$this->tpl->parseCurrentBlock();
+
+		//		foreach (array('unexcused', 'excused', 'present') as $label) {
 		foreach (array('unexcused', 'present') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}

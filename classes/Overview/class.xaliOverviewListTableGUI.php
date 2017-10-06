@@ -67,8 +67,8 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 			/** @var $checklist xaliChecklist */
 			$dataset = array();
 			$dataset['id'] = $checklist->getId();
-			$dataset['sort_date'] = $checklist->getChecklistDate();
-			$dataset['date'] = date('D, d.m.Y', strtotime($checklist->getChecklistDate()));
+			$dataset['sort_date'] = $checklist->getChecklistDate(false);
+			$dataset['date'] = $checklist->getChecklistDate();
 			$dataset['date'] .= $checklist->isComplete() ? '' : ' (' . $this->pl->txt('incomplete') . ')';
 
 			if ($date_filter = $this->filter['date']) {
@@ -81,14 +81,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 				}
 			}
 
-			$tutor_id = $checklist->getLastEditedBy();
-			if ($tutor_id) {
-				$name = ilObjUser::_lookupName($tutor_id);
-				$dataset['tutor'] = $name['firstname'] . ' ' . $name['lastname'];
-			} else {
-				$dataset['tutor'] = $this->pl->txt('automatically_created');
-			}
-
+			$dataset['tutor'] = $checklist->getLastEditedBy(true);
 
 			$present = $checklist->getStatusCount(xaliChecklistEntry::STATUS_PRESENT);
 //			$excused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
@@ -110,19 +103,18 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	 */
 	public function fillRow($a_set) {
 		parent::fillRow($a_set);
-		$this->tpl->setVariable('ACTIONS', $this->buildAction($a_set));
+		$this->ctrl->setParameter($this->parent_obj, 'checklist_id', $a_set['id']);
+		$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTarget($this->parent_obj, 'editList'));
+		$this->tpl->setVariable('ACTIONS', $this->buildAction());
 	}
 
 
 	/**
-	 * @param $a_set
-	 *
 	 * @return string
 	 */
-	public function buildAction($a_set) {
+	public function buildAction() {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
-		$this->ctrl->setParameter($this->parent_obj, 'checklist_id', $a_set['id']);
 		$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_EDIT_LIST));
 		$actions->addItem($this->lng->txt('delete'), 'delete', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_CONFIRM_DELETE_LISTS));
 		return $actions->getHTML();

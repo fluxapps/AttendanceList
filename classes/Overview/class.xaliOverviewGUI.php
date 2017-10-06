@@ -7,6 +7,7 @@ require_once 'Services/Utilities/classes/class.ilConfirmationGUI.php';
 require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
 require_once 'class.xaliOverviewUserTableGUI.php';
 require_once 'class.xaliOverviewListTableGUI.php';
+require_once 'class.xaliUserDetailsTableGUI.php';
 
 /**
  * Class xaliOverviewGUI
@@ -126,7 +127,7 @@ class xaliOverviewGUI extends xaliGUI {
 	/**
 	 *
 	 */
-	public function save() {
+	public function saveList() {
 		if (count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
 			$this->editList();
@@ -157,6 +158,29 @@ class xaliOverviewGUI extends xaliGUI {
 
 		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
+	}
+
+	/**
+	 *
+	 */
+	public function saveUsers() {
+		$user_id = $_GET['user_id'];
+		foreach ($_POST['attendance_status'] as $checklist_id => $status) {
+			$checklist = xaliChecklist::find($checklist_id);
+			$entry = $checklist->getEntryOfUser($user_id);
+			$entry->setStatus($status);
+			$entry->store();
+
+			$checklist->setLastEditedBy($this->user->getId());
+			$checklist->setLastUpdate(time());
+			$checklist->store();
+		}
+
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
+		ilUtil::sendSuccess($this->pl->txt('msg_user_saved'), true);
+		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
 	}
 
 
@@ -221,11 +245,22 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->saveParameter($this, 'checklist_id');
 		$users = $this->parent_gui->getMembers();
 		$checklist = xaliChecklist::find($_GET['checklist_id']);
+		if (!$checklist->hasSavedEntries()) {
+			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
+		}
 
 		$xaliChecklistTableGUI = new xaliChecklistTableGUI($this, $checklist, $users);
 		$xaliChecklistTableGUI->setTitle(sprintf($this->pl->txt('table_checklist_title'), date('D, d.m.Y', strtotime($checklist->getChecklistDate()))));
 
 		$this->tpl->setContent($xaliChecklistTableGUI->getHTML());
+	}
+
+	/**
+	 *
+	 */
+	public function editUser() {
+		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $_GET['user_id'], $this->parent_gui->obj_id);
+		$this->tpl->setContent($xaliUserDetailsGUI->getHTML());
 	}
 
 

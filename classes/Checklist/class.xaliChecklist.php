@@ -118,6 +118,14 @@ class xaliChecklist extends ActiveRecord {
 
 
 	/**
+	 *
+	 */
+	public function hasSavedEntries() {
+		return $this->getEntriesCount() != 0;
+	}
+
+
+	/**
 	 * @param $status
 	 *
 	 * @return int
@@ -193,8 +201,8 @@ class xaliChecklist extends ActiveRecord {
 	/**
 	 * @return int
 	 */
-	public function getChecklistDate() {
-		return $this->checklist_date;
+	public function getChecklistDate($formatted = true) {
+		return $formatted ? date('D, d.m.Y', strtotime($this->checklist_date)) : $this->checklist_date;
 	}
 
 
@@ -209,8 +217,18 @@ class xaliChecklist extends ActiveRecord {
 	/**
 	 * @return int
 	 */
-	public function getLastEditedBy() {
-		return $this->last_edited_by;
+	public function getLastEditedBy($as_string) {
+		if (!$as_string) {
+			return $this->last_edited_by;
+		}
+
+		if (!$this->last_edited_by) {		// automatically created
+			return ilAttendanceListPlugin::getInstance()->txt('automatically_created');
+		}
+
+		$name = ilObjUser::_lookupName($this->last_edited_by);
+		return $name['firstname'] . ' ' . $name['lastname'];
+
 	}
 
 

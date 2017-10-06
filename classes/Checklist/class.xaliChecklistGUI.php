@@ -56,12 +56,12 @@ class xaliChecklistGUI extends xaliGUI {
 		}
 
 		if (!$this->checklist->isComplete()) {
-			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
+			ilUtil::sendInfo($this->pl->txt('list_unsaved_today'), true);
 		}
 		$users = $this->parent_gui->getMembers();
 
 		$xaliChecklistTableGUI = new xaliChecklistTableGUI($this, $this->checklist, $users);
-		$xaliChecklistTableGUI->setTitle(sprintf($this->pl->txt('table_checklist_title'), date('D, d.m.Y', strtotime($this->checklist->getChecklistDate()))));
+		$xaliChecklistTableGUI->setTitle(sprintf($this->pl->txt('table_checklist_title'), $this->checklist->getChecklistDate()));
 
 		$this->tpl->setContent($xaliChecklistTableGUI->getHTML());
 	}
@@ -70,7 +70,7 @@ class xaliChecklistGUI extends xaliGUI {
 	/**
 	 *
 	 */
-	public function save() {
+	public function saveList() {
 		if (count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
 			$this->show();

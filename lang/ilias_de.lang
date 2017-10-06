@@ -17,8 +17,10 @@ table_checklist_title#:#Anwesenheitsliste vom %s
 label_unexcused#:#Abwesend
 label_excused#:#Abwesend Entschuldigt
 label_present#:#Anwesend
-list_unsaved#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
+list_unsaved_today#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
+list_unsaved#:#Diese Anwesenheitsliste wurde noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
 msg_checklist_saved#:#Die Anwesenheitsliste wurde gespeichert.
+msg_user_saved#:#Die An- und Abwesenheiten des Benutzers wurden gespeichert.
 msg_confirm_delete_list#:#Möchten Sie wirklich folgende Anwesenheitsliste unwiderruflich löschen?
 msg_list_deleted#:#Anwesenheitsliste gelöscht.
 msg_list_created#:#Anwesenheitsliste erstellt.
@@ -27,7 +29,7 @@ msg_incomplete_lists#:#Es existieren eine oder mehrere unvollständig ausgefüll
 msg_creation_failed#:#Erstellung nicht möglich: Anwesenheitslisten können nur in Kursen oder Gruppen erstellt werden.
 msg_list_not_editable#:#Es können keine Anwesenheitslisten mehr erstellt werden, da der Veranstaltungszeitraum vorüber ist.
 warning_list_incomplete#:#Speichern fehlgeschlagen: Es muss für jeden Teilnehmer ein Status ausgewählt werden.
-warning_not_filled_out#:#Bitte Status auswählen.
+warning_not_filled_out#:#Status noch nicht gespeichert.
 table_title_users#:#Benutzer
 subtab_users#:#Benutzer
 table_title_lists#:#Listen
