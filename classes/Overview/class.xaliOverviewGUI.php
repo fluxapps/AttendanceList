@@ -20,6 +20,7 @@ class xaliOverviewGUI extends xaliGUI {
 	const CMD_SHOW_USERS = 'showUsers';
 	const CMD_LISTS = 'showListsOverview';
 	const CMD_EDIT_LIST = 'editList';
+	const CMD_EDIT_USER = 'editUser';
 	const CMD_CONFIRM_DELETE_LISTS = 'confirmDeleteLists';
 	const CMD_ADD_LIST = 'addList';
 	const CMD_CREATE_LIST = 'createList';
@@ -27,6 +28,8 @@ class xaliOverviewGUI extends xaliGUI {
 	const CMD_RESET_FILTER_USERS = 'resetFilterUsers';
 	const CMD_APPLY_FILTER_LISTS = 'applyFilterLists';
 	const CMD_RESET_FILTER_LISTS = 'resetFilterLists';
+	const CMD_SAVE_ENTRY = 'saveEntry';
+	const CMD_SAVE_USER = 'saveUser';
 
 	const SUBTAB_USERS = 'subtab_users';
 	const SUBTAB_LISTS = 'subtab_lists';
@@ -163,7 +166,7 @@ class xaliOverviewGUI extends xaliGUI {
 	/**
 	 *
 	 */
-	public function saveUsers() {
+	public function saveUser() {
 		$user_id = $_GET['user_id'];
 		foreach ($_POST['attendance_status'] as $checklist_id => $status) {
 			$checklist = xaliChecklist::find($checklist_id);
@@ -298,6 +301,19 @@ class xaliOverviewGUI extends xaliGUI {
 
 		ilUtil::sendSuccess($this->pl->txt('msg_list_deleted'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
+	}
+
+
+	/**
+	 * async ajax
+	 */
+	public function saveEntry() {
+		/** @var xaliChecklist $checklist */
+		$checklist = xaliChecklist::find($_GET['checklist_id']);
+		$checklist_entry = $checklist->getEntryOfUser($_GET['user_id']);
+		$checklist_entry->setStatus($_GET['status']);
+		$checklist_entry->store();
+		exit;
 	}
 
 

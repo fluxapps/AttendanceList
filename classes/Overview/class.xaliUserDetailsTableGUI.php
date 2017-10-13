@@ -42,7 +42,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 * @param string $user_id
 	 */
 	public function __construct(xaliOverviewGUI $a_parent_obj, $user_id, $obj_id) {
-		global $ilCtrl, $lng;
+		global $ilCtrl, $lng, $tpl;
 		$this->ctrl = $ilCtrl;
 		$this->lng = $lng;
 		$this->pl = ilAttendanceListPlugin::getInstance();
@@ -66,6 +66,15 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->initCommands();
 
 		$this->parseData();
+
+		$async_links = array();
+		$this->ctrl->setParameter($this->parent_obj, 'user_id', $this->user->getId());
+		foreach ($this->getData() as $data_set) {
+			$this->ctrl->setParameter($this->parent_obj, 'checklist_id',$data_set['id']);
+			$async_links[] = $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ENTRY, "", true);
+		}
+		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/js/srAttendanceList.js');
+		$tpl->addOnLoadCode('srAttendanceList.initUserDetails(' . json_encode($async_links).');');
 	}
 
 
@@ -73,8 +82,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initCommands() {
-		$this->addCommandButton('saveUsers', $this->lng->txt('save'));
-		$this->addCommandButton('cancel', $this->lng->txt('cancel'));
+		$this->addCommandButton(xaliOverviewGUI::CMD_SAVE_USER, $this->pl->txt('save_all'));
+		$this->addCommandButton(xaliOverviewGUI::CMD_SHOW_USERS, $this->lng->txt('cancel'));
 	}
 
 
@@ -82,9 +91,9 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initColumns() {
-		$this->addColumn($this->pl->txt('table_column_date'));
-		$this->addColumn($this->pl->txt('table_column_tutor'));
-		$this->addColumn($this->pl->txt('table_column_status'));
+		$this->addColumn($this->pl->txt('table_column_date'), "", "350px");
+		$this->addColumn($this->pl->txt('table_column_tutor'), "","450px");
+		$this->addColumn($this->pl->txt('table_column_status'), "", "1000px");
 	}
 
 	/**
@@ -93,7 +102,13 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	protected function parseData() {
 		$data = array();
 		/** @var xaliChecklist $checklist */
-		foreach (xaliChecklist::where(array('obj_id' => $this->obj_id))->orderBy('checklist_date')->get() as $checklist) {
+		foreach (xaliChecklist::where(array(
+			'obj_id' => $this->obj_id,
+			'checklist_date' => date('Y-m-d')
+		), array(
+			'obj_id' => '=',
+			'checklist_date' => '<='
+		))->orderBy('checklist_date')->get() as $checklist) {
 			$checklist_data = array();
 			$checklist_data["id"] = $checklist->getId();
 			$checklist_data["date"] = $checklist->getChecklistDate();
@@ -102,6 +117,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			$checklist_entry = $checklist->getEntryOfUser($this->user->getId());
 			if ($status = $checklist_entry->getStatus()) {
 				$checklist_data["checked_$status"] = 'checked';
+				$checklist_data["link_save_hidden"] = 'hidden';
 			} else {
 				$checklist_data["checked_" . xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				$checklist_data["warning"] = $this->pl->txt('warning_not_filled_out');
@@ -120,7 +136,10 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		parent::fillRow($a_set);
 
 		$this->ctrl->setParameter($this->parent_obj, 'checklist_id', $a_set['id']);
-		$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTarget($this->parent_obj, 'editList'));
+		$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_EDIT_LIST));
+		$this->tpl->setVariable('VAL_SAVE_LINK', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ENTRY, "", true));
+		$this->tpl->setVariable('VAL_SAVE', $this->pl->txt('save_entry'));
+		$this->tpl->setVariable('VAL_SAVING', $this->pl->txt('saving_entry'));
 
 		//		foreach (array('unexcused', 'excused', 'present') as $label) {
 		foreach (array('unexcused', 'present') as $label) {

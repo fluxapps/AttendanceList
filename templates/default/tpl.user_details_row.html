@@ -1,4 +1,4 @@
-<tr class='{CSS_ROW}'>
+<tr class='{CSS_ROW} xali_user_details_row'>
 	<td class='std small'>
 		<a href="{VAL_EDIT_LINK}">
 			{VAL_DATE}
@@ -14,6 +14,8 @@
 		<!--<label for="absent_excused_{VAL_ID}" style="margin-right:15px">{LABEL_EXCUSED}</label>-->
 		<input type="radio" name="attendance_status[{VAL_ID}]" id="absent_unexcused_{VAL_ID}" value="1" {VAL_CHECKED_1}>
 		<label for="absent_unexcused_{VAL_ID}" style="margin-right:15px">{LABEL_UNEXCUSED}</label>
-		<font color="red">{VAL_WARNING}</font>
+		<font class="xali_warning" color="red">{VAL_WARNING}</font>
+		<a id="xali_link_save_{VAL_ID}" class="xali_link_save" {VAL_LINK_SAVE_HIDDEN}><font color="green">{VAL_SAVE}</font></a>
+		<span class="xali_saving" hidden>{VAL_SAVING}</span>
 	</td>
 </tr>

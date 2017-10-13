@@ -123,7 +123,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		if (ilObjAttendanceListAccess::hasWriteAccess()) {
 			$this->tpl->setCurrentBlock('with_link');
 			$this->ctrl->setParameterByClass('xaliOverviewGUI', 'user_id', $a_set['id']);
-			$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', 'editUser'));
+			$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_EDIT_USER));
 		} else {
 			$this->tpl->setCurrentBlock('without_link');
 		}

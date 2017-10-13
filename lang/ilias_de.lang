@@ -69,3 +69,6 @@ cat_create_xali#:#Anwesenheistliste anlegen
 crs_create_xali#:#Anwesenheistliste anlegen
 root_create_xali#:#Anwesenheistliste anlegen
 fold_create_xali#:#Anwesenheistliste anlegen
+save_entry#:#Eintrag speichern
+saving_entry#:#wird gespeichert...
+save_all#:#Alle Speichern

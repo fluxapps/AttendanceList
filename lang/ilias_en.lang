@@ -69,3 +69,6 @@ cat_create_xali#:#Create AttendanceList
 crs_create_xali#:#Create AttendanceList
 root_create_xali#:#Create AttendanceList
 fold_create_xali#:#Create AttendanceList
+save_entry#:#Save entry
+saving_entry#:#saving...
+save_all#:#Save All
