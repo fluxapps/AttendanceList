@@ -162,11 +162,12 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		foreach ($a_set as $key => $value)
 		{
 			if ($value == 'checked') {
+				if (isset($a_set['warning'])) {
+					continue;
+				}
 				$status_id = substr($key, -1);
 				$value = $this->pl->txt('status_' . $status_id);
-			}
-			if(is_array($value))
-			{
+			} elseif(is_array($value)) {
 				$value = implode(', ', $value);
 			}
 			$a_csv->addColumn(strip_tags($value));
@@ -187,6 +188,9 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		foreach ($a_set as $key => $value)
 		{
 			if ($value == 'checked') {
+				if (isset($a_set['warning'])) {
+					continue;
+				}
 				$status_id = substr($key, -1);
 				$value = $this->pl->txt('status_' . $status_id);
 			}
