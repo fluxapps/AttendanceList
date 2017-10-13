@@ -237,6 +237,7 @@ class xaliSetting extends ActiveRecord {
 		if ($create) {
 			$begin = new DateTime($begin);
 			$end = new DateTime($end);
+			$end->setTime(0, 0, 1); // if the time is 00:00:00, the last day will not be included by DatePeriod
 
 			$interval = DateInterval::createFromDateString('1 day');
 			$period = new DatePeriod($begin, $interval, $end);
