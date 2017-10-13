@@ -48,8 +48,12 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->user = new ilObjUser($user_id);
 		$this->obj_id = $obj_id;
+		$this->parent_cmd = 'editUser';
 
-		parent::__construct($a_parent_obj);
+		$this->setPrefix('xali_usr_detail');
+		$this->setId($user_id);
+
+		parent::__construct($a_parent_obj, xaliOverviewGUI::CMD_EDIT_USER);
 
 		$this->setTitle($this->user->getFirstname() . ' ' . $this->user->getLastname());
 
@@ -58,7 +62,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->setEnableNumInfo(false);
 		$this->setRowTemplate('tpl.user_details_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
 		$this->ctrl->setParameter($this->parent_obj, 'user_id', $this->user->getId());
-		$this->setFormAction($this->ctrl->getFormAction($a_parent_obj));
+		$this->setFormAction($this->ctrl->getFormAction($a_parent_obj, 'editUser'));
 		$this->setLimit(0);
 		$this->resetOffset();
 		$this->initColumns();
@@ -154,6 +158,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 */
 	public function fillRowCSV($a_csv, $a_set) {
 		unset($a_set['id']);
+		unset($a_set['link_save_hidden']);
 		foreach ($a_set as $key => $value)
 		{
 			if ($value == 'checked') {
@@ -177,6 +182,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 */
 	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
+		unset($a_set['link_save_hidden']);
 		$col = 0;
 		foreach ($a_set as $key => $value)
 		{
@@ -190,6 +196,96 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			}
 			$a_worksheet->write($a_row, $col, strip_tags($value));
 			$col++;
+		}
+	}
+
+	/**
+	 * Export and optionally send current table data
+	 *
+	 * @param	int	$format
+	 */
+	public function exportData($format, $send = false)
+	{
+		if($this->dataExists())
+		{
+			// #9640: sort
+			if (!$this->getExternalSorting() && $this->enabled["sort"])
+			{
+				$this->determineOffsetAndOrder(true);
+
+				$this->row_data = ilUtil::sortArray($this->row_data, $this->getOrderField(),
+					$this->getOrderDirection(), $this->numericOrdering($this->getOrderField()));
+			}
+
+			$filename = 'Anwesenheitsliste_' . $this->user->getFirstname() . '_' . $this->user->getLastname();
+
+			switch($format)
+			{
+				case self::EXPORT_EXCEL:
+					include_once "./Services/Excel/classes/class.ilExcelUtils.php";
+					include_once "./Services/Excel/classes/class.ilExcelWriterAdapter.php";
+					$adapter = new ilExcelWriterAdapter($filename.".xls", $send);
+					$workbook = $adapter->getWorkbook();
+					$worksheet = $workbook->addWorksheet();
+					$row = 0;
+
+					ob_start();
+					$this->fillMetaExcel($worksheet, $row); // row must be increment in fillMetaExcel()! (optional method)
+
+					// #14813
+					$pre = $row;
+					$this->fillHeaderExcel($worksheet, $row); // row should NOT be incremented in fillHeaderExcel()! (required method)
+					if($pre == $row)
+					{
+						$row++;
+					}
+
+					foreach($this->row_data as $set)
+					{
+						$this->fillRowExcel($worksheet, $row, $set);
+						$row++; // #14760
+					}
+					ob_end_clean();
+
+					$workbook->close();
+					break;
+
+				case self::EXPORT_CSV:
+					include_once "./Services/Utilities/classes/class.ilCSVWriter.php";
+					$csv = new ilCSVWriter();
+					$csv->setSeparator(";");
+
+					ob_start();
+					$this->fillMetaCSV($csv);
+					$this->fillHeaderCSV($csv);
+					foreach($this->row_data as $set)
+					{
+						$this->fillRowCSV($csv, $set);
+					}
+					ob_end_clean();
+
+					if($send)
+					{
+						$filename .= ".csv";
+						header("Content-type: text/comma-separated-values");
+						header("Content-Disposition: attachment; filename=\"".$filename."\"");
+						header("Expires: 0");
+						header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+						header("Pragma: public");
+						echo $csv->getCSVString();
+
+					}
+					else
+					{
+						file_put_contents($filename, $csv->getCSVString());
+					}
+					break;
+			}
+
+			if($send)
+			{
+				exit();
+			}
 		}
 	}
 }
