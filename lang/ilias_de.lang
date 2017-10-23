@@ -58,7 +58,8 @@ weekdays#:#Wochentage
 all_users#:#Alle Mitglieder anzeigen
 automatically_created#:#automatisch erstellt
 incomplete#:#unvollständig
-activation_passed#:#Der konfigurierte Versanstaltungszeitraum für dieses Objekt ist abgelaufen. Es können keine weiteren Listen erstellt werden.
+activation_passed#:#Der konfigurierte Veranstaltungszeitraum für dieses Objekt ist abgelaufen. Es können keine weiteren Listen erstellt werden.
+activation_not_started_yet#:#Der konfigurierte Veranstaltungszeitraum für dieses Objekt hat noch nicht begonnen. Es können noch keine Listen erstellt werden.
 xali_visible#:#Anzeigen: Anwesenheitsliste ist sichtbar
 xali_read#:#Lesezugriff: Tägliche Anwesenheitslisten ausfüllen
 xali_write#:#Einstellungen bearbeiten: Objekteeinstellungen bearbeiten und Anwesenheitslisten verwalten

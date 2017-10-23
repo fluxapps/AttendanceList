@@ -50,11 +50,19 @@ class xaliChecklistGUI extends xaliGUI {
 	 * standard command
 	 */
 	public function show() {
+		// activation passed, don't show a list
 		if ((time()-(60*60*24)) > strtotime($this->settings->getActivationTo())) {
 			ilUtil::sendInfo($this->pl->txt('activation_passed'), true);
 			return;
 		}
 
+		// activation not yet begun, don't show a list
+		if ((time()) < strtotime($this->settings->getActivationFrom())) {
+			ilUtil::sendInfo($this->pl->txt('activation_not_started_yet'), true);
+			return;
+		}
+
+		// incomplete, display info
 		if (!$this->checklist->isComplete()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved_today'), true);
 		}

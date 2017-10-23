@@ -59,6 +59,7 @@ all_users#:#Show all members
 automatically_created#:#automatically created
 incomplete#:#incomplete
 activation_passed#:#The configured activation date for this object has passed. No new lists can be created.
+activation_not_started_yet#:#The configured activation date for this object has not yet started. No lists can be created.
 xali_visible#:#Visible: Attendancelist is visible
 xali_read#:#Read: User can save daily attendance lists
 xali_write#:#Edit Settings: User can edit attendance list settings and administrate lists
