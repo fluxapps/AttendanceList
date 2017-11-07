@@ -58,7 +58,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 			'status' => ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM,
 			'attendancelist_id' => $this->getId()
 		), $operators)->getArray(null, 'user_id');
-		return array_diff($this->plugin->getMembers($this->ref_id), $other_than_not_attempted);
+
+		return array_diff($this->plugin->getMembers($this->plugin->lookupRefId($this->getId())), $other_than_not_attempted);
 	}
 	/**
 	 * Get all user ids with LP status failed
