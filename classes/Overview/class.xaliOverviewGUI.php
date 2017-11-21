@@ -313,6 +313,10 @@ class xaliOverviewGUI extends xaliGUI {
 		$checklist_entry = $checklist->getEntryOfUser($_GET['user_id']);
 		$checklist_entry->setStatus($_GET['status']);
 		$checklist_entry->store();
+
+		// update LP
+		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+
 		exit;
 	}
 
