@@ -1,9 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once ('./Services/Repository/classes/class.ilObjectPlugin.php');
-require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Checklist/class.xaliChecklist.php');
-require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php');
-require_once ('./Services/Tracking/interfaces/interface.ilLPStatusPlugin.php');
 /**
  * Class ilObjAttendanceList
  *

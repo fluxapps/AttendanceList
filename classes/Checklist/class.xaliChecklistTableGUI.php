@@ -1,10 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'class.xaliChecklistGUI.php';
-require_once 'class.xaliChecklist.php';
-require_once 'class.xaliChecklistEntry.php';
-require_once 'Services/User/classes/class.ilObjUser.php';
-require_once 'Services/Table/classes/class.ilTable2GUI.php';
 /**
  * Class xaliChecklistTableGUI
  *

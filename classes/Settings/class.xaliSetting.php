@@ -1,7 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/ActiveRecord/class.ActiveRecord.php';
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
 /**
  * Class xaliSetting
  *

@@ -12,6 +12,11 @@ table_column_unexcused#:#Abwesend
 table_column_actions#:#Aktionen
 table_column_percentage#:#Anteil Anwesend / Mindestanwesenheit
 table_column_no_status#:#Nicht Ausgefüllt
+table_column_title#:#Titel
+table_column_info#:#Info
+table_column_comment_req#:#Kommentar erforderlich
+table_column_upload_req#:#Upload erforderlich
+table_column_absence_reason#:#Abwesenheitsbegründung
 table_checklist_title_today#:#Anwesenheitsliste von heute, %s
 table_checklist_title#:#Anwesenheitsliste vom %s
 label_unexcused#:#Abwesend
@@ -28,6 +33,7 @@ msg_date_already_used#:#Für den %s existiert bereits eine Anwesenheitsliste. Bi
 msg_incomplete_lists#:#Es existieren eine oder mehrere unvollständig ausgefüllte Anwesenheitslisten mit bereits vergangenem Datum. Bitte vervollständigen oder löschen Sie diese in der <a href="%s">Listenübersicht</a>, um eine falsche Berechnung der Mindestanwesenheit zu vermeiden.
 msg_creation_failed#:#Erstellung nicht möglich: Anwesenheitslisten können nur in Kursen oder Gruppen erstellt werden.
 msg_list_not_editable#:#Es können keine Anwesenheitslisten mehr erstellt werden, da der Veranstaltungszeitraum vorüber ist.
+msg_saved#:#Änderungen wurden erfolgreich gespeichert.
 warning_list_incomplete#:#Speichern fehlgeschlagen: Es muss für jeden Teilnehmer ein Status ausgewählt werden.
 warning_not_filled_out#:#Status noch nicht gespeichert.
 table_title_users#:#Benutzer
@@ -73,3 +79,11 @@ fold_create_xali#:#Anwesenheistliste anlegen
 save_entry#:#Eintrag speichern
 saving_entry#:#wird gespeichert...
 save_all#:#Alle Speichern
+absence_reasons#:#Abwesenheitsbegründungen
+absence_reason#:#Abwesenheitsbegründung
+absence_reasons_info#:#Textfeld 1: Titel<br>Textfeld 2: Beschreibung<br>Checkbox 1: Kommentar erfordert<br>Checkbox 2: Dateiupload erfordert
+config_add_new_absence_reason#:#Neue Abwesenheitsbegründung Hinzufügen
+form_title_absence#:#Abwesenheit vom %s
+comment#:#Kommentar
+file_upload#:#Dateiupload
+no_absence_reason#:#Noch nicht ausgefüllt

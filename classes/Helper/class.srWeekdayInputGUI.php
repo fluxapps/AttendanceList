@@ -1,6 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/Form/classes/class.ilFormPropertyGUI.php';
 /**
  * Class srWeekdayInputGUI
  *

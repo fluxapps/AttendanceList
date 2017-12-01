@@ -1,6 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/Table/classes/class.ilTable2GUI.php';
 
 /**
  * Class xaliUserDetailsTableGUI
@@ -97,7 +96,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	protected function initColumns() {
 		$this->addColumn($this->pl->txt('table_column_date'), "", "350px");
 		$this->addColumn($this->pl->txt('table_column_tutor'), "","450px");
-		$this->addColumn($this->pl->txt('table_column_status'), "", "1000px");
+		$this->addColumn($this->pl->txt('table_column_status'), "", "550px");
+		$this->addColumn($this->pl->txt('table_column_absence_reason'), "", "300px");
 	}
 
 	/**
@@ -119,6 +119,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			$checklist_data["tutor"] = $checklist->getLastEditedBy(true);
 
 			$checklist_entry = $checklist->getEntryOfUser($this->user->getId());
+			$checklist_data['entry_id'] = $checklist_entry->getId();
 			if ($status = $checklist_entry->getStatus()) {
 				$checklist_data["checked_$status"] = 'checked';
 				$checklist_data["link_save_hidden"] = 'hidden';
@@ -144,6 +145,17 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('VAL_SAVE_LINK', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ENTRY, "", true));
 		$this->tpl->setVariable('VAL_SAVE', $this->pl->txt('save_entry'));
 		$this->tpl->setVariable('VAL_SAVING', $this->pl->txt('saving_entry'));
+
+		$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+		$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
+		$this->tpl->setVariable('LINK_ABSENCE_REASON', $link_to_absence_form);
+		$reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id'])->getReason();
+		$this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
+
+		if (!$a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED]) {
+			$this->tpl->setVariable('VAL_LINK_ABSENCE_HIDDEN', 'hidden');
+		}
+		//		$this->tpl->setVariable('VAL_LINK_ABSENCE', )
 
 		//		foreach (array('unexcused', 'excused', 'present') as $label) {
 		foreach (array('unexcused', 'present') as $label) {

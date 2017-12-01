@@ -1,8 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once ('./Services/Repository/classes/class.ilRepositoryObjectPlugin.php');
-require_once ('./Services/Object/classes/class.ilObjectFactory.php');
-require_once ('./Services/Object/classes/class.ilObject2.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 /**
  * Class ilAttendanceListPlugin
  *

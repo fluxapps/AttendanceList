@@ -1,7 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once ('./Services/Repository/classes/class.ilObjectPluginListGUI.php');
-require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilObjAttendanceListGUI.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 /**
  * Class ilObjAttendanceListListGUI
  *

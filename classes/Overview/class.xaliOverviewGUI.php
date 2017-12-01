@@ -1,13 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.xaliGUI.php';
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
-require_once 'Services/UIComponent/Button/classes/class.ilLinkButton.php';
-require_once 'Services/Utilities/classes/class.ilConfirmationGUI.php';
-require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
-require_once 'class.xaliOverviewUserTableGUI.php';
-require_once 'class.xaliOverviewListTableGUI.php';
-require_once 'class.xaliUserDetailsTableGUI.php';
 
 /**
  * Class xaliOverviewGUI

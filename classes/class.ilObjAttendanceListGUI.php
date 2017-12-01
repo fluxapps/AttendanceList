@@ -1,21 +1,13 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+require_once __DIR__ . '/../vendor/autoload.php';
 
-require_once ('./Services/Repository/classes/class.ilObjectPluginGUI.php');
-require_once ('./Services/Object/classes/class.ilObjectFactory.php');
-//require_once ('./Services/Object/classes/class.ilObject2.php');
-require_once ('class.ilAttendanceListPlugin.php');
-require_once ('class.ilObjAttendanceListAccess.php');
-require_once ('class.ilObjAttendanceListAccess.php');
-require_once ('Checklist/class.xaliChecklistGUI.php');
-require_once ('Settings/class.xaliSettingsGUI.php');
-require_once ('Settings/class.xaliSetting.php');
-require_once ('Overview/class.xaliOverviewGUI.php');
 /**
  * Class ilObjAttendanceListGUI
  *
  * @ilCtrl_isCalledBy   ilObjAttendanceListGUI: ilRepositoryGUI, ilObjPluginDispatchGUI, ilAdministrationGUI
  * @ilCtrl_Calls        ilObjAttendanceListGUI: xaliChecklistGUI, xaliSettingsGUI, xaliOverviewGUI
+ * @ilCtrl_Calls        ilObjAttendanceListGUI: xaliAbsenceStatementGUI
  * @ilCtrl_Calls        ilObjAttendanceListGUI: ilInfoScreenGUI, ilPermissionGUI, ilCommonActionDispatcherGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
@@ -51,13 +43,17 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 * @var ilRbacReview
 	 */
 	protected $rbacreview;
+	/**
+	 * @var ilObjUser
+	 */
+	protected $user;
 
 
 	/**
 	 *
 	 */
 	protected function afterConstructor() {
-		global $tpl, $ilCtrl, $ilTabs, $tree, $rbacreview, $lng;
+		global $tpl, $ilCtrl, $ilTabs, $tree, $rbacreview, $lng, $ilUser;
 
 		$this->lng = $lng;
 		$this->tpl = $tpl;
@@ -66,6 +62,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$this->access = new ilObjAttendanceListAccess();
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->tree = $tree;
+		$this->user = $ilUser;
 		$this->rbacreview = $rbacreview;
 	}
 
@@ -96,7 +93,9 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 //			$this->tpl->setAlertProperties($list_gui->getAlertProperties());
 			// set tabs
 			if (strtolower($_GET['baseClass']) != 'iladministrationgui') {
-				$this->setTabs();
+				if (strtolower($_GET['cmdClass']) != 'xaliabsencestatementgui') {
+					$this->setTabs();
+				}
 				$this->setLocator();
 			} else {
 				$this->addAdminLocatorItems();
@@ -153,6 +152,14 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 				$xaliSettingsGUI = new xaliSettingsGUI($this);
 				$this->tabs->setTabActive(self::TAB_SETTINGS);
 				$this->ctrl->forwardCommand($xaliSettingsGUI);
+				break;
+			case 'xaliabsencestatementgui':
+				if(xaliChecklistEntry::find($_GET['entry_id'])->getUserId() != $this->user->getId()) {
+					$this->checkPermission("write");
+				}
+				$xaliAbsenceStatementGUI = new xaliAbsenceStatementGUI($this);
+//				$this->tabs->setTabActive(self::TAB_SETTINGS);
+				$this->ctrl->forwardCommand($xaliAbsenceStatementGUI);
 				break;
 			case 'ilpermissiongui':
 				$this->checkPermission("edit_permission");
