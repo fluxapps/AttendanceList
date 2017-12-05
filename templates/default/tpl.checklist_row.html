@@ -1,13 +1,13 @@
 <tr class='{CSS_ROW}'>
 	<td class='std small'>
-		<!-- BEGIN with_link -->
+		<!-- BEGIN name_with_link -->
 		<a href="{VAL_EDIT_LINK}">
 			{VAL_NAME}
 		</a>
-		<!-- END with_link -->
-		<!-- BEGIN without_link -->
+		<!-- END name_with_link -->
+		<!-- BEGIN name_without_link -->
 		{VAL_NAME}
-		<!-- END without_link -->
+		<!-- END name_without_link -->
 	</td>
 	<td class='std small'>
 		{VAL_LOGIN}
@@ -20,5 +20,15 @@
 		<input type="radio" name="attendance_status[{VAL_ID}]" id="absent_unexcused_{VAL_ID}" value="1" {VAL_CHECKED_1}>
 		<label for="absent_unexcused_{VAL_ID}" style="margin-right:15px">{LABEL_UNEXCUSED}</label>
 		<font color="red">{VAL_WARNING}</font>
+	</td>
+	<td class='std small'>
+		<!-- BEGIN absence_with_link -->
+		<a class="xali_absence_reason" href="{VAL_ABSENCE_LINK}">
+			{VAL_ABSENCE_REASON}
+		</a>
+		<!-- END absence_with_link -->
+		<!-- BEGIN absence_without_link -->
+		{VAL_ABSENCE_REASON}
+		<!-- END absence_without_link -->
 	</td>
 </tr>

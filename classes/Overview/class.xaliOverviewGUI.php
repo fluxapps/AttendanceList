@@ -237,9 +237,18 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function editList() {
+		$checklist_id = $_GET['checklist_id'];
+		if (!$checklist_id) {
+			if ($_GET['entry_id']) {
+				$checklist_id = xaliChecklistEntry::find($_GET['entry_id'])->getChecklistId();
+			} else {
+				$this->ctrl->redirect($this, self::CMD_LISTS);
+			}
+		}
+
 		$this->ctrl->saveParameter($this, 'checklist_id');
 		$users = $this->parent_gui->getMembers();
-		$checklist = xaliChecklist::find($_GET['checklist_id']);
+		$checklist = xaliChecklist::find($checklist_id);
 		if (!$checklist->hasSavedEntries()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}
@@ -254,7 +263,17 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function editUser() {
-		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $_GET['user_id'], $this->parent_gui->obj_id);
+		$user_id = $_GET['user_id'];
+
+		if (!$user_id) {
+			if ($_GET['entry_id']) {
+				$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
+			} else {
+				$this->ctrl->redirect($this, self::CMD_STANDARD);
+			}
+		}
+
+		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $user_id, $this->parent_gui->obj_id);
 		$this->tpl->setContent($xaliUserDetailsGUI->getHTML());
 	}
 

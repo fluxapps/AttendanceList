@@ -94,8 +94,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initColumns() {
-		$this->addColumn($this->pl->txt('table_column_date'), "", "350px");
-		$this->addColumn($this->pl->txt('table_column_tutor'), "","450px");
+		$this->addColumn($this->pl->txt('table_column_date'), "", "200px");
+		$this->addColumn($this->pl->txt('table_column_tutor'), "","200px");
 		$this->addColumn($this->pl->txt('table_column_status'), "", "550px");
 		$this->addColumn($this->pl->txt('table_column_absence_reason'), "", "300px");
 	}
@@ -146,6 +146,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('VAL_SAVE', $this->pl->txt('save_entry'));
 		$this->tpl->setVariable('VAL_SAVING', $this->pl->txt('saving_entry'));
 
+		$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'back_cmd', xaliOverviewGUI::CMD_EDIT_USER);
 		$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
 		$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
 		$this->tpl->setVariable('LINK_ABSENCE_REASON', $link_to_absence_form);

@@ -81,6 +81,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		$this->addColumn($this->pl->txt('table_column_name'));
 		$this->addColumn($this->pl->txt('table_column_login'));
 		$this->addColumn($this->pl->txt('table_column_status'));
+		$this->addColumn($this->pl->txt('table_column_absence_reason'));
 	}
 
 	/**
@@ -96,6 +97,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			$user_data["id"] = $user->getId();
 
 			$checklist_entry = $this->checklist->getEntryOfUser($user->getId());
+			$user_data['entry_id'] = $checklist_entry->getId();
 			if ($status = $checklist_entry->getStatus()) {
 				$user_data["checked_$status"] = 'checked';
 			} else {
@@ -116,14 +118,30 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		parent::fillRow($a_set);
 
 		if (ilObjAttendanceListAccess::hasWriteAccess()) {
-			$this->tpl->setCurrentBlock('with_link');
+			$this->tpl->setCurrentBlock('name_with_link');
 			$this->ctrl->setParameterByClass('xaliOverviewGUI', 'user_id', $a_set['id']);
 			$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_EDIT_USER));
 		} else {
-			$this->tpl->setCurrentBlock('without_link');
+			$this->tpl->setCurrentBlock('name_without_link');
 		}
 		$this->tpl->setVariable('VAL_NAME', $a_set['name']);
 		$this->tpl->parseCurrentBlock();
+
+		if ($a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED] == 'checked') {
+			if (ilObjAttendanceListAccess::hasWriteAccess()) {
+				$this->tpl->setCurrentBlock('absence_with_link');
+				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'back_cmd', xaliOverviewGUI::CMD_EDIT_LIST);
+				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+				$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
+				$this->tpl->setVariable('VAL_ABSENCE_LINK', $link_to_absence_form);
+			} else {
+				$this->tpl->setCurrentBlock('absence_without_link');
+			}
+
+			$reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id'])->getReason();
+			$this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
+			$this->tpl->parseCurrentBlock();
+		}
 
 		//		foreach (array('unexcused', 'excused', 'present') as $label) {
 		foreach (array('unexcused', 'present') as $label) {

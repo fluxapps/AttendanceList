@@ -39,6 +39,10 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
 
+		if ($file_id = $this->absence_statement->getFileId()) {
+			$this->ctrl->setParameter($this->parent_gui, 'file_id', $file_id);
+		}
+		$this->ctrl->setParameter($this->parent_gui, 'back_cmd', $_GET['back_cmd']);
 		$this->ctrl->setParameter($this->parent_gui, 'entry_id', $xaliAbsenceStatement->getEntryId());
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 		$this->initForm();
@@ -75,6 +79,9 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$this->addItem($input);
 
 		// Buttons
+		if ($file_id = $this->absence_statement->getFileId()) {
+			$this->addCommandButton(xaliAbsenceStatementGUI::CMD_DOWNLOAD_FILE, $this->pl->txt('download_file'));
+		}
 		$this->addCommandButton(xaliAbsenceStatementGUI::CMD_UPDATE,$this->lng->txt('save'));
 		$this->addCommandButton(xaliAbsenceStatementGUI::CMD_CANCEL,$this->lng->txt('cancel'));
 	}
@@ -103,6 +110,7 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 			$file_obj = new ilObjFile();
 			$file_obj->setTitle($fileupload['name']);
 			$file_obj->setFileSize($fileupload['size']);
+			$file_obj->setFileName($fileupload['name']);
 			$file_obj->setType('file');
 			$file_obj->setMode("object");
 			$file_obj->create();
@@ -117,5 +125,20 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		} else {
 			$this->absence_statement->create();
 		}
+
+		return true;
+	}
+
+	public function fillForm() {
+		if ($file_id = $this->absence_statement->getFileId()) {
+			$filename = ilObjFile::_lookupFileName($file_id);
+		}
+		$reason_id = $this->absence_statement->getReasonId();
+		$values = array(
+			'reason_id' => $reason_id,
+			'comment_' . $reason_id => $this->absence_statement->getComment(),
+			'file_upload_' . $reason_id => $filename,
+		);
+		$this->setValuesByArray($values);
 	}
 }
