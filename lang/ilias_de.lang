@@ -88,3 +88,10 @@ comment#:#Kommentar
 file_upload#:#Dateiupload
 no_absence_reason#:#Noch nicht ausgefüllt
 download_file#:#Datei Herunterladen
+subtab_config#:#Einstellungen
+subtab_absence_reasons#:#Abwesenheitsbegründungen
+config_interval_reminder_email#:#Intervall Erinnerungs-Mail
+config_interval_reminder_email_info#:#Intervall (in Anzahl Tagen), in welchem Erinnerungsmails an Benutzer mit offenen Abwesenheitsbegründungen verschickt werden. 0 = keine Erinnerung
+config_sender_reminder_email#:#Absender Erinnerungs-Mail (User-ID)
+config_sender_reminder_email_info#:#Alle Erinnerungs-Mails werden von diesem Account aus gesendet. Dadurch können die versendeten Mails im Postausgang dieses Benutzers eingesehen werden.
+config_header_notification#:#Benachrichtigung

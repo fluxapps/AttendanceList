@@ -7,7 +7,9 @@
  */
 class xaliConfig extends ActiveRecord {
 
-	const F_ABSENCE_REASONS = 'absence_reasons';
+	const F_INTERVAL_REMINDER_EMAIL = 'interval_reminder_email';
+	const F_SENDER_REMINDER_EMAIL = 'sender_reminder_email';
+	const F_HTTP_PATH = 'http_path';
 
 
 	/**
@@ -26,6 +28,7 @@ class xaliConfig extends ActiveRecord {
 	 */
 	protected static $cache_loaded = array();
 
+
 	/**
 	 * @param $name
 	 *
@@ -33,7 +36,12 @@ class xaliConfig extends ActiveRecord {
 	 */
 	public static function getConfig($name) {
 		if (!self::$cache_loaded[$name]) {
-			$obj = new self($name);
+			try {
+				$obj = new self($name);
+			} catch (Exception $e) {
+				$obj = new self();
+				$obj->setName($name);
+			}
 			self::$cache[$name] = json_decode($obj->getValue(), true);
 			self::$cache_loaded[$name] = true;
 		}

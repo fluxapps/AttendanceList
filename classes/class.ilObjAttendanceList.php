@@ -26,6 +26,30 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 		return !xaliSetting::find($this->getId())->getIsOnline();
 	}
 
+
+	/**
+	 * @param $user_id
+	 *
+	 * @return mixed
+	 */
+	public function getOpenAbsenceStatementsForUser($user_id) {
+		global $ilDB;
+		$sql = "SELECT 
+				    xali_entry . *, xali_checklist.checklist_date
+				FROM
+				    xali_checklist
+				        INNER JOIN
+				    xali_entry ON xali_entry.checklist_id = xali_checklist.id
+				        LEFT JOIN
+				    xali_absence_statement ON xali_absence_statement.entry_id = xali_entry.id
+				WHERE
+				    xali_checklist.obj_id = {$this->getId()} AND user_id = $user_id
+				        AND xali_entry.status = 1
+				        AND xali_absence_statement.entry_id IS NULL";
+		$set = $ilDB->query($sql);
+		return $set->numRows();
+	}
+
 	/**
 	 * Get all user ids with LP status completed
 	 *

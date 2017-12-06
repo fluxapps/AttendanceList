@@ -434,6 +434,7 @@ class ComposerStaticInitd1a2d0cdca684ebb46115dbba8c24155
         'xaliConfig' => __DIR__ . '/../..' . '/classes/Config/class.xaliConfig.php',
         'xaliConfigAbsenceFormGUI' => __DIR__ . '/../..' . '/classes/Config/class.xaliConfigAbsenceFormGUI.php',
         'xaliConfigAbsencesTableGUI' => __DIR__ . '/../..' . '/classes/Config/class.xaliConfigAbsencesTableGUI.php',
+        'xaliConfigFormGUI' => __DIR__ . '/../..' . '/classes/Config/class.xaliConfigFormGUI.php',
         'xaliGUI' => __DIR__ . '/../..' . '/classes/class.xaliGUI.php',
         'xaliOverviewGUI' => __DIR__ . '/../..' . '/classes/Overview/class.xaliOverviewGUI.php',
         'xaliOverviewListTableGUI' => __DIR__ . '/../..' . '/classes/Overview/class.xaliOverviewListTableGUI.php',

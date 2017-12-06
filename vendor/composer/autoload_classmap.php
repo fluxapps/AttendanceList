@@ -433,6 +433,7 @@ return array(
     'xaliConfig' => $baseDir . '/classes/Config/class.xaliConfig.php',
     'xaliConfigAbsenceFormGUI' => $baseDir . '/classes/Config/class.xaliConfigAbsenceFormGUI.php',
     'xaliConfigAbsencesTableGUI' => $baseDir . '/classes/Config/class.xaliConfigAbsencesTableGUI.php',
+    'xaliConfigFormGUI' => $baseDir . '/classes/Config/class.xaliConfigFormGUI.php',
     'xaliGUI' => $baseDir . '/classes/class.xaliGUI.php',
     'xaliOverviewGUI' => $baseDir . '/classes/Overview/class.xaliOverviewGUI.php',
     'xaliOverviewListTableGUI' => $baseDir . '/classes/Overview/class.xaliOverviewListTableGUI.php',

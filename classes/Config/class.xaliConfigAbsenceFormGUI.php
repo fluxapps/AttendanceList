@@ -65,7 +65,7 @@ class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
 		$cmd = $this->absence_reason->getId() ? ilAttendanceListConfigGUI::CMD_UPDATE_REASON : ilAttendanceListConfigGUI::CMD_CREATE_REASON;
 
 		$this->addCommandButton($cmd,$this->lng->txt('save'));
-		$this->addCommandButton(ilAttendanceListConfigGUI::CMD_STANDARD,$this->lng->txt('cancel'));
+		$this->addCommandButton(ilAttendanceListConfigGUI::CMD_SHOW_REASONS,$this->lng->txt('cancel'));
 	}
 
 

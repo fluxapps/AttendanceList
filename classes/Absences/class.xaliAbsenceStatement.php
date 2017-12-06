@@ -49,7 +49,6 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 */
 	protected $file_id;
 
-
 	/**
 	 * @return null
 	 */
@@ -123,5 +122,6 @@ class xaliAbsenceStatement extends ActiveRecord {
 	public function setFileId($file_id) {
 		$this->file_id = $file_id;
 	}
+
 
 }

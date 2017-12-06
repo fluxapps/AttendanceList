@@ -21,8 +21,10 @@ foreach (xaliChecklistEntry::where(array('status' => xaliChecklistEntry::STATUS_
 <?php
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Config/class.xaliConfig.php';
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Config/class.xaliAbsenceReason.php';
+require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Config/class.xaliLastReminder.php';
 require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Absences/class.xaliAbsenceStatement.php';
 xaliConfig::updateDB();
 xaliAbsenceReason::updateDB();
+xaliLastReminder::updateDB();
 xaliAbsenceStatement::updateDB();
 ?>

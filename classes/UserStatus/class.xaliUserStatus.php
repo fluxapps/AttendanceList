@@ -359,9 +359,11 @@ class xaliUserStatus extends ActiveRecord {
 	 *
 	 */
 	public function updateLPStatus() {
+		$ilObjAttendanceList = new ilObjAttendanceList($this->getAttendancelistId());
+
 		/** @var xaliSetting $xaliSetting */
 		$xaliSetting = xaliSetting::find($this->attendancelist_id);
-		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance()) {
+		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_COMPLETED_NUM);                      //COMPLETED: minimum attendance is reached
 		} elseif ((time()-(60*60*24)) > strtotime($xaliSetting->getActivationTo())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_FAILED_NUM);                         //FAILED: minimum attendance not reached and time is up
