@@ -70,7 +70,7 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 			}
 			if ($reason->getUploadReq()) {
 				$subinput = new ilFileInputGUI($this->pl->txt('file_upload'), 'file_upload_' . $reason->getId());
-				$subinput->setRequired(true);
+				$subinput->setRequired(!$this->absence_statement->getFileId() || ($this->absence_statement->getReasonId() != $reason->getId()));
 				$option->addSubItem($subinput);
 			}
 			$input->addOption($option);
@@ -107,17 +107,24 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 
 		if ($reason->getUploadReq()) {
 			$fileupload = $this->getInput('file_upload_' . $reason_id);
-			$file_obj = new ilObjFile();
-			$file_obj->setTitle($fileupload['name']);
-			$file_obj->setFileSize($fileupload['size']);
-			$file_obj->setFileName($fileupload['name']);
-			$file_obj->setType('file');
-			$file_obj->setMode("object");
-			$file_obj->create();
+			if ($fileupload['size']) {
+				$file_obj = new ilObjFile();
+				$file_obj->setTitle($fileupload['name']);
+				$file_obj->setFileSize($fileupload['size']);
+				$file_obj->setFileName($fileupload['name']);
+				$file_obj->setType('file');
+				$file_obj->setMode("object");
+				$file_obj->create();
 
-			$file_obj->getUploadFile($fileupload['tmp_name'], $fileupload["name"]);
+				$file_obj->getUploadFile($fileupload['tmp_name'], $fileupload["name"]);
 
-			$this->absence_statement->setFileId($file_obj->getId());
+				if ($existing_file_id = $this->absence_statement->getFileId()) {
+					$existing_file_obj = new ilObjFile($existing_file_id, false);
+					$existing_file_obj->delete();
+				}
+
+				$this->absence_statement->setFileId($file_obj->getId());
+			}
 		}
 
 		if (xaliAbsenceStatement::where(array('entry_id' => $this->absence_statement->getEntryId()))->hasSets()) {

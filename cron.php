@@ -114,10 +114,11 @@ class xaliCron {
 				xali_absence_statement ON xali_absence_statement.entry_id = xali_entry.id
 			WHERE
 			    xali_data.is_online = 1
-			        AND xali_data.activation_from < '$time_string'
+			        AND xali_data.activation_from <= '$time_string'
 			        AND xali_data.activation_to > '2017-12-06'
 					AND xali_entry.status = 1
-					AND xali_absence_statement.entry_id IS NULL;";
+					AND xali_absence_statement.entry_id IS NULL
+					AND object_reference.deleted IS NULL;";
 
 		$sql = $this->db->query($query);
 		// array format:
@@ -148,7 +149,7 @@ class xaliCron {
 			}
 
 
-			if ($last_reminder->getLastReminder() >= date('Y-m-d', strtotime("now -$interval days"))) {
+			if ($last_reminder->getLastReminder() > date('Y-m-d', strtotime("now -$interval days"))) {
 				$this->log->write('continue');
 				continue;
 			}
@@ -167,7 +168,7 @@ class xaliCron {
 				$parent_course = $this->pl->getParentCourseOrGroup($ref_id);
 				$open_absences .= 'Kurs "' . $parent_course->getTitle() . "\": \n";
 				foreach ($entry_array as $entry_id => $checklist_date) {
-					$open_absences .= "- $checklist_date: " . $base_link . "&entry_id=$entry_id \n";
+					$open_absences .= "» $checklist_date: " . $base_link . "&entry_id=$entry_id \n";
 				}
 				$open_absences .= "\n";
 			}

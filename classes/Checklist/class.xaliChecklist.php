@@ -62,15 +62,6 @@ class xaliChecklist extends ActiveRecord {
 
 
 	/**
-	 *
-	 */
-	public function create() {
-		parent::create();
-
-	}
-
-
-	/**
 	 * @param $user_id
 	 *
 	 * @return xaliChecklistEntry

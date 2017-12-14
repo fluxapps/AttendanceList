@@ -246,7 +246,7 @@ class xaliOverviewGUI extends xaliGUI {
 			}
 		}
 
-		$this->ctrl->saveParameter($this, 'checklist_id');
+		$this->ctrl->setParameter($this, 'checklist_id', $checklist_id);
 		$users = $this->parent_gui->getMembers();
 		$checklist = xaliChecklist::find($checklist_id);
 		if (!$checklist->hasSavedEntries()) {

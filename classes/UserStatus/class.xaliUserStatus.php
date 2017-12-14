@@ -359,7 +359,7 @@ class xaliUserStatus extends ActiveRecord {
 	 *
 	 */
 	public function updateLPStatus() {
-		$ilObjAttendanceList = new ilObjAttendanceList($this->getAttendancelistId());
+		$ilObjAttendanceList = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($this->getAttendancelistId()));
 
 		/** @var xaliSetting $xaliSetting */
 		$xaliSetting = xaliSetting::find($this->attendancelist_id);
