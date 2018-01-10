@@ -62,10 +62,10 @@ class xaliChecklistEntry extends ActiveRecord {
 	 *
 	 */
 	public function create() {
-		if ($this->status == self::STATUS_ABSENT_UNEXCUSED) {
-			$this->sendAbsenceNotification();
-		}
 		parent::create();
+		if ($this->status == self::STATUS_ABSENT_UNEXCUSED) {
+//			$this->sendAbsenceNotification();
+		}
 	}
 
 
@@ -74,7 +74,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 */
 	public function update() {
 		if (($this->status == self::STATUS_ABSENT_UNEXCUSED) && $this->status_changed) {
-			$this->sendAbsenceNotification();
+//			$this->sendAbsenceNotification();
 		}
 		parent::update();
 	}
