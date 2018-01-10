@@ -95,7 +95,8 @@ class xaliCron {
 
 		$send_mail = array();
 
-		$time_string = date('Y-m-d');
+		$now = date('Y-m-d');
+		$now_minus_30_days = date('Y-m-d', strtotime('-30 days'));
 
 		// fetch open absence statements for checklists which are online
 		// TODO activation_to + 30 tage > now ?? oder bis kurs offline / gelöscht ist (geht wahrsch. nicht, weil alte Kurse noch online sind)?
@@ -114,8 +115,9 @@ class xaliCron {
 				xali_absence_statement ON xali_absence_statement.entry_id = xali_entry.id
 			WHERE
 			    xali_data.is_online = 1
-			        AND xali_data.activation_from <= '$time_string'
-			        AND xali_data.activation_to > '2017-12-06'
+			        AND xali_data.activation_from <= '$now'
+			        AND xali_data.activation_to > '2018-01-01'
+			        AND xali_data.activation_to > '$now_minus_30_days'
 					AND xali_entry.status = 1
 					AND xali_absence_statement.entry_id IS NULL
 					AND object_reference.deleted IS NULL;";
