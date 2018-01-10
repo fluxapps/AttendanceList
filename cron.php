@@ -116,7 +116,7 @@ class xaliCron {
 			WHERE
 			    xali_data.is_online = 1
 			        AND xali_data.activation_from <= '$now'
-			        AND xali_data.activation_to > '2018-01-01'
+			        AND xali_data.activation_from > '2018-01-01'
 			        AND xali_data.activation_to > '$now_minus_30_days'
 					AND xali_entry.status = 1
 					AND xali_absence_statement.entry_id IS NULL
