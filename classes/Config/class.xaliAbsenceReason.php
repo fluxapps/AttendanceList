@@ -10,8 +10,10 @@ class xaliAbsenceReason extends ActiveRecord {
 
 	const F_ABSENCE_REASONS_TITLE = 'title';
 	const F_ABSENCE_REASONS_INFO = 'info';
-	const F_ABSENCE_REASONS_COMMENT = 'comment_req';
-	const F_ABSENCE_REASONS_UPLOAD = 'upload_req';
+	const F_ABSENCE_REASONS_HAS_COMMENT = 'has_comment';
+	const F_ABSENCE_REASONS_COMMENT_REQ = 'comment_req';
+	const F_ABSENCE_REASONS_HAS_UPLOAD = 'has_upload';
+	const F_ABSENCE_REASONS_UPLOAD_REQ = 'upload_req';
 
 
 	/**
@@ -55,7 +57,23 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
+	protected $has_comment;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           1
+	 */
 	protected $comment_req;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           1
+	 */
+	protected $has_upload;
 	/**
 	 * @var int
 	 *
@@ -117,6 +135,38 @@ class xaliAbsenceReason extends ActiveRecord {
 	/**
 	 * @return int
 	 */
+	public function hasComment() {
+		return $this->has_comment;
+	}
+
+
+	/**
+	 * @param int $has_comment
+	 */
+	public function setHasComment($has_comment) {
+		$this->has_comment = $has_comment;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function hasUpload() {
+		return $this->has_upload;
+	}
+
+
+	/**
+	 * @param int $has_upload
+	 */
+	public function setHasUpload($has_upload) {
+		$this->has_upload = $has_upload;
+	}
+
+
+	/**
+	 * @return int
+	 */
 	public function getCommentReq() {
 		return $this->comment_req;
 	}
@@ -144,6 +194,5 @@ class xaliAbsenceReason extends ActiveRecord {
 	public function setUploadReq($upload_req) {
 		$this->upload_req = $upload_req;
 	}
-
 
 }

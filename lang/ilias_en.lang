@@ -95,3 +95,9 @@ config_interval_reminder_email_info#:#Number of days, after which a user is remi
 config_sender_reminder_email#:#Sender Reminder Email (user ID)
 config_sender_reminder_email_info#:#All reminder emails will be send from this user account. Thus, the sent emails can be seen in this users outbox.
 config_header_notification#:#Notification
+config_form_title#:#Title
+config_form_info#:#Info
+config_form_comment#:#Show comment field
+config_form_comment_req#:#Mandatory field
+config_form_upload#:#Show file upload field
+config_form_upload_req#:#Mandatory field

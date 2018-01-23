@@ -63,14 +63,15 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 			if ($info = $reason->getInfo()) {
 				$option->setInfo($info);
 			}
-			if ($reason->getCommentReq()) {
+			if ($reason->hasComment()) {
 				$subinput = new ilTextAreaInputGUI($this->pl->txt('comment'), 'comment_' . $reason->getId());
-				$subinput->setRequired(true);
+				$subinput->setRequired($reason->getCommentReq());
 				$option->addSubItem($subinput);
 			}
-			if ($reason->getUploadReq()) {
+			if ($reason->hasUpload()) {
 				$subinput = new ilFileInputGUI($this->pl->txt('file_upload'), 'file_upload_' . $reason->getId());
-				$subinput->setRequired(!$this->absence_statement->getFileId() || ($this->absence_statement->getReasonId() != $reason->getId()));
+				$subinput->setRequired($reason->getUploadReq()
+					&& (!$this->absence_statement->getFileId() || ($this->absence_statement->getReasonId() != $reason->getId())));
 				$option->addSubItem($subinput);
 			}
 			$input->addOption($option);
@@ -96,16 +97,26 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		}
 
 		$reason_id = $this->getInput('reason_id');
+
+		if ($this->absence_statement->getReasonId() != $reason_id) {
+			if ($existing_file_id = $this->absence_statement->getFileId()) {
+				$existing_file_obj = new ilObjFile($existing_file_id, false);
+				$existing_file_obj->delete();
+				$this->absence_statement->setFileId(null);
+			}
+			$this->absence_statement->setComment('');
+		}
+
 		$this->absence_statement->setReasonId($reason_id);
 
 		/** @var xaliAbsenceReason $reason */
 		$reason = xaliAbsenceReason::find($reason_id);
-		if ($reason->getCommentReq()) {
+		if ($reason->hasComment()) {
 			$comment = $this->getInput('comment_' . $reason_id);
 			$this->absence_statement->setComment($comment);
 		}
 
-		if ($reason->getUploadReq()) {
+		if ($reason->hasUpload()) {
 			$fileupload = $this->getInput('file_upload_' . $reason_id);
 			if ($fileupload['size']) {
 				$file_obj = new ilObjFile();
@@ -117,11 +128,6 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 				$file_obj->create();
 
 				$file_obj->getUploadFile($fileupload['tmp_name'], $fileupload["name"]);
-
-				if ($existing_file_id = $this->absence_statement->getFileId()) {
-					$existing_file_obj = new ilObjFile($existing_file_id, false);
-					$existing_file_obj->delete();
-				}
 
 				$this->absence_statement->setFileId($file_obj->getId());
 			}

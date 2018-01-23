@@ -50,10 +50,12 @@ class xaliConfigAbsencesTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initColumns() {
-		$this->addColumn($this->pl->txt('table_column_title'));
-		$this->addColumn($this->pl->txt('table_column_info'));
-		$this->addColumn($this->pl->txt('table_column_comment_req'));
-		$this->addColumn($this->pl->txt('table_column_upload_req'));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_TITLE));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_INFO));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_HAS_COMMENT));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_COMMENT_REQ));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_HAS_UPLOAD));
+		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_UPLOAD_REQ));
 		$this->addColumn("", "", '30px', true);
 	}
 

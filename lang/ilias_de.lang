@@ -14,7 +14,9 @@ table_column_percentage#:#Anteil Anwesend / Mindestanwesenheit
 table_column_no_status#:#Nicht Ausgefüllt
 table_column_title#:#Titel
 table_column_info#:#Info
+table_column_has_comment#:#Kommentar
 table_column_comment_req#:#Kommentar erforderlich
+table_column_has_upload#:#Upload
 table_column_upload_req#:#Upload erforderlich
 table_column_absence_reason#:#Abwesenheitsbegründung
 table_checklist_title_today#:#Anwesenheitsliste von heute, %s
@@ -95,3 +97,9 @@ config_interval_reminder_email_info#:#Intervall (in Anzahl Tagen), in welchem Er
 config_sender_reminder_email#:#Absender Erinnerungs-Mail (User-ID)
 config_sender_reminder_email_info#:#Alle Erinnerungs-Mails werden von diesem Account aus gesendet. Dadurch können die versendeten Mails im Postausgang dieses Benutzers eingesehen werden.
 config_header_notification#:#Benachrichtigung
+config_form_title#:#Titel
+config_form_info#:#Info
+config_form_has_comment#:#Kommentarfeld anbieten
+config_form_comment_req#:#Feld muss ausgefüllt werden
+config_form_has_upload#:#Dateiupload-Feld anbieten
+config_form_upload_req#:#Feld muss ausgefüllt werden
