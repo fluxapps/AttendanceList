@@ -119,11 +119,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @throws Exception
 	 */
 	public function getParentCourseOrGroup($ref_id = 0) {
-		static $parent;
-		if (!$parent) {
-			$ref_id = $ref_id ? $ref_id : $_GET['ref_id'];
-			$parent = ilObjectFactory::getInstanceByRefId($this->getParentCourseOrGroupId($ref_id));
-		}
+		$ref_id = $ref_id ? $ref_id : $_GET['ref_id'];
+		$parent = ilObjectFactory::getInstanceByRefId($this->getParentCourseOrGroupId($ref_id));
 
 		return $parent;
 	}
