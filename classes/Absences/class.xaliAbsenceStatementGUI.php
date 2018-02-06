@@ -17,7 +17,14 @@ class xaliAbsenceStatementGUI extends xaliGUI {
 	 *
 	 */
 	protected function show() {
-		$absence = xaliAbsenceStatement::findOrGetInstance($_GET['entry_id']);
+		$entry_id = $_GET['entry_id'];
+		if (!$entry_id) {
+			$entry_id = xaliChecklistEntry::where(array(
+				'checklist_id' => $_GET['checklist_id'],
+				'user_id' => $_GET['user_id'])
+			)->first()->getId();
+		}
+		$absence = xaliAbsenceStatement::findOrGetInstance($entry_id);
 		$xaliAbsenceFormGUI = new xaliAbsenceStatementFormGUI($this, $absence);
 		$xaliAbsenceFormGUI->fillForm();
 		$this->tpl->setContent($xaliAbsenceFormGUI->getHTML());
@@ -32,14 +39,15 @@ class xaliAbsenceStatementGUI extends xaliGUI {
 		$xaliAbsenceFormGUI = new xaliAbsenceStatementFormGUI($this, $absence);
 		$xaliAbsenceFormGUI->setValuesByPost();
 		if ($xaliAbsenceFormGUI->saveForm()) {
+			$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
+			/** @var xaliUserStatus $user_status */
+			$user_status = xaliUserStatus::where(array('attendancelist_id' => $this->parent_gui->obj_id, 'user_id' => $user_id))->first();
+			$user_status->updateLPStatus();
+			$user_status->update();
+
 			ilUtil::sendSuccess($this->pl->txt('msg_saved'), true);
 			$this->cancel();
 		}
-		$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
-		/** @var xaliUserStatus $user_status */
-		$user_status = xaliUserStatus::where(array('attendancelist_id' => $this->parent_gui->obj_id, 'user_id' => $user_id))->first();
-		$user_status->updateLPStatus();
-		$user_status->update();
 		$this->tpl->setContent($xaliAbsenceFormGUI->getHTML());
 	}
 

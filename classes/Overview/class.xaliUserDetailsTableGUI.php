@@ -146,8 +146,14 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('VAL_SAVE', $this->pl->txt('save_entry'));
 		$this->tpl->setVariable('VAL_SAVING', $this->pl->txt('saving_entry'));
 
+		$this->ctrl->clearParametersByClass(xaliAbsenceStatementGUI::class);
 		$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'back_cmd', xaliOverviewGUI::CMD_EDIT_USER);
-		$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+		if ($a_set['entry_id']) {
+			$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+		} else {
+			$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'checklist_id', $a_set['id']);
+			$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'user_id', $this->user->getId());
+		}
 		$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
 		$this->tpl->setVariable('LINK_ABSENCE_REASON', $link_to_absence_form);
 		$reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id'])->getReason();

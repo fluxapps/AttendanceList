@@ -131,7 +131,12 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			if (ilObjAttendanceListAccess::hasWriteAccess()) {
 				$this->tpl->setCurrentBlock('absence_with_link');
 				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'back_cmd', xaliOverviewGUI::CMD_EDIT_LIST);
-				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+				if ($a_set['entry_id']) {
+					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
+				} else {
+					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'checklist_id', $a_set['checklist_id']);
+					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'user_id', $a_set['id']);
+				}
 				$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
 				$this->tpl->setVariable('VAL_ABSENCE_LINK', $link_to_absence_form);
 			} else {
