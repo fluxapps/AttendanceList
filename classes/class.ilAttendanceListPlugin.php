@@ -43,10 +43,18 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		return self::$instance;
 	}
 
+
+	/**
+	 * @return string
+	 */
 	function getPluginName() {
 		return self::PLUGIN_NAME;
 	}
 
+
+	/**
+	 *
+	 */
 	protected function uninstallCustom() {
 		// TODO: Implement uninstallCustom() method.
 	}
@@ -125,6 +133,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		return $parent;
 	}
 
+
+	/**
+	 * @param $ref_id
+	 *
+	 * @return int
+	 * @throws Exception
+	 */
 	public function getParentCourseOrGroupId($ref_id) {
 		global $tree, $ilLog;
 		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
@@ -137,4 +152,42 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		return $ref_id;
 	}
 
+
+	/**
+	 * @param $user_id
+	 * @param $crs_ref_id
+	 *
+	 * @return array
+	 */
+	public function getAttendancesForUserAndCourse($user_id, $crs_ref_id) {
+		$obj_id = $this->getAttendanceListIdForCourse($crs_ref_id);
+		$settings = new xaliSetting($obj_id);
+
+		/** @var xaliUserStatus $xaliUserStatus */
+		$xaliUserStatus = xaliUserStatus::getInstance($user_id, $obj_id);
+		return array(
+			'present' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT),
+			'absent' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED),
+			'unedited' => $xaliUserStatus->getUnedited(),
+			'percentage' => $xaliUserStatus->getReachedPercentage(),
+			'minimum_attendance' => $obj_id ? $settings->getMinimumAttendance() : 0
+		);
+	}
+
+
+	/**
+	 * @param      $crs_ref_id
+	 * @param bool $get_ref_id
+	 *
+	 * @return int
+	 */
+	public function getAttendanceListIdForCourse($crs_ref_id, $get_ref_id = false) {
+		global $tree;
+		$attendancelist = array_shift($tree->getChildsByType($crs_ref_id, $this->getId()));
+		$ref_id = $attendancelist['child'];
+		if ($get_ref_id) {
+			return $ref_id;
+		}
+		return ilObjAttendanceList::_lookupObjectId($ref_id);
+	}
 }
