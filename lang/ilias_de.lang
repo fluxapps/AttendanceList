@@ -88,7 +88,7 @@ config_add_new_absence_reason#:#Neue Abwesenheitsbegründung Hinzufügen
 form_title_absence#:#Abwesenheit vom %s
 comment#:#Kommentar
 file_upload#:#Dateiupload
-no_absence_reason#:#Noch nicht ausgefüllt
+no_absence_reason#:#Unentschuldigt
 download_file#:#Datei Herunterladen
 subtab_config#:#Einstellungen
 subtab_absence_reasons#:#Abwesenheitsbegründungen

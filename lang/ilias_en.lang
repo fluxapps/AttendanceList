@@ -86,7 +86,7 @@ config_add_new_absence_reason#:#Add New Absence Reason
 form_title_absence#:#Absence of %s
 comment#:#Comment
 file_upload#:#File Upload
-no_absence_reason#:#Not yet given
+no_absence_reason#:#Unexcused
 download_file#:#Download File
 subtab_config#:#Configuration
 subtab_absence_reasons#:#Causes of Absence
