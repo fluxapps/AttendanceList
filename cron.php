@@ -1,6 +1,7 @@
 <?php
 $cron = new xaliCron($_SERVER['argv']);
 $cron->run();
+//$cron->logout();
 
 /**
  * Class xaliCron
@@ -155,7 +156,6 @@ class xaliCron {
 
 
 			if ($last_reminder->getLastReminder() > date('Y-m-d', strtotime("now -$interval days"))) {
-				$this->log->write('continue');
 				continue;
 			}
 
@@ -200,6 +200,15 @@ class xaliCron {
 
 	}
 
+	/**
+	 *
+	 */
+	public function logout() {
+		global $DIC;
+		$ilAuth = $DIC["ilAuth"];
+		$ilAuth->logout();
+		session_destroy();
+	}
 
 }
 

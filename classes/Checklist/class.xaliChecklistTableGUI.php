@@ -105,7 +105,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 				$user_data["warning"] = $this->pl->txt('warning_not_filled_out');
 			}
 
-			$data[$user->getFullname()] = $user_data;
+			$data[$user->getFullname() . $user->getId()] = $user_data;
 		}
 		ksort($data);
 		$this->setData($data);

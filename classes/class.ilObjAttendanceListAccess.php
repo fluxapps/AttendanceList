@@ -41,6 +41,22 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 		return true;
 	}
 
+
+	/**
+	 * @param        $a_permission
+	 * @param        $a_cmd
+	 * @param        $a_ref_id
+	 * @param string $a_type
+	 * @param string $a_obj_id
+	 * @param string $a_tree_id
+	 *
+	 * @return mixed
+	 */
+	function checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type = "", $a_obj_id = "", $a_tree_id="")
+	{
+		return $this->access->checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type, $a_obj_id, $a_tree_id);
+	}
+
 	/**
 	 * @param $a_id
 	 *
