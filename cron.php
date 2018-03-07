@@ -22,7 +22,10 @@ class xaliCron {
 	 * @var ilLog
 	 */
 	protected $log;
-
+	/**
+	 * @var ilRbacReview
+	 */
+	protected $rbacreview;
 
 	/**
 	 * @param array $data
@@ -33,7 +36,7 @@ class xaliCron {
 		$_POST['password'] = $data[2];
 		$this->initILIAS();
 
-		global $ilDB, $ilUser, $ilCtrl, $ilLog, $ilias;
+		global $ilDB, $ilUser, $ilCtrl, $ilLog, $ilias, $rbacreview;
 		if (self::DEBUG) {
 			$ilLog->write('Auth passed for async AttendanceList');
 		}
@@ -50,6 +53,7 @@ class xaliCron {
 		$this->ctrl = $ilCtrl;
 		$this->ilias = $ilias;
 		$this->log = $ilLog;
+		$this->rbacreview = $rbacreview;
 	}
 
 
@@ -155,24 +159,34 @@ class xaliCron {
 				continue;
 			}
 
-			$this->log->write('send');
 			$ilObjUser = new ilObjUser($user_id);
 			$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
 			$sender = new srNotificationInternalMailSender($sender_id,$user_id);
 
 			$open_absences = '';
 			foreach ($array as $ref_id => $entry_array) {
+				$parent_course = $this->pl->getParentCourseOrGroup($ref_id);
+
+				// check if user is still assigned to course
+				if (!$this->rbacreview->isAssigned($user_id, $parent_course->getDefaultMemberRole())) {
+					continue;
+				}
+
 				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'ref_id', $ref_id);
 				$base_link_relative = $this->ctrl->getLinkTargetByClass(array(ilObjPluginDispatchGUI::class, ilObjAttendanceListGUI::class, xaliAbsenceStatementGUI::class), xaliAbsenceStatementGUI::CMD_STANDARD);
 				$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/ilias.php' . $base_link_relative . '&baseClass=ilObjPluginDispatchGUI';
 
-				$parent_course = $this->pl->getParentCourseOrGroup($ref_id);
 				$open_absences .= 'Kurs "' . $parent_course->getTitle() . "\": \n";
 				foreach ($entry_array as $entry_id => $checklist_date) {
 					$open_absences .= "» $checklist_date: " . $base_link . "&entry_id=$entry_id \n";
 				}
 				$open_absences .= "\n";
 			}
+
+			if (!$open_absences) {
+				continue;
+			}
+
 			$placeholders = array('user' => $ilObjUser, 'open_absences' => $open_absences);
 
 			$notification = srNotification::getInstanceByName('absence_reminder');
