@@ -53,7 +53,14 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	protected function afterConstructor() {
-		global $tpl, $ilCtrl, $ilTabs, $tree, $rbacreview, $lng, $ilUser;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilTabs = $DIC['ilTabs'];
+		$tree = $DIC['tree'];
+		$rbacreview = $DIC['rbacreview'];
+		$lng = $DIC['lng'];
+		$ilUser = $DIC['ilUser'];
 
 		$this->lng = $lng;
 		$this->tpl = $tpl;
@@ -79,7 +86,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	protected function initHeaderAndLocator() {
-		global $ilNavigationHistory;
+		global $DIC;
+		$ilNavigationHistory = $DIC['ilNavigationHistory'];
 
 		// get standard template (includes main menu and general layout)
 		$this->tpl->getStandardTemplate();
@@ -103,7 +111,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 				$this->setAdminTabs();
 			}
 
-			global $ilAccess;
+			global $DIC;
+			$ilAccess = $DIC['ilAccess'];
 			// add entry to navigation history
 			if ($ilAccess->checkAccess('read', '', $_GET['ref_id'])) {
 				$ilNavigationHistory->addItem($_GET['ref_id'], $this->ctrl->getLinkTarget($this, $this->getStandardCmd()), $this->getType());
@@ -330,7 +339,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 	public function getParentCourseOrGroupId($ref_id) {
-		global $tree;
+		global $DIC;
+		$tree = $DIC['tree'];
 		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
 			if ($ref_id == 1) {
 				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");

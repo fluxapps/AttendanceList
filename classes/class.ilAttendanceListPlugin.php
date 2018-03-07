@@ -22,7 +22,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 *
 	 */
 	public function executeCommand() {
-		global $ilCtrl;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
 		$cmd = $ilCtrl->getCmd();
 		switch($cmd) {
 			default:
@@ -111,7 +112,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @return array
 	 */
 	public function getMembers($ref_id = 0) {
-		global $rbacreview;
+		global $DIC;
+		$rbacreview = $DIC['rbacreview'];
 		static $members;
 		if (!$members) {
 			$ref_id = $ref_id ? $ref_id : $_GET['ref_id'];
@@ -141,7 +143,9 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @throws Exception
 	 */
 	public function getParentCourseOrGroupId($ref_id) {
-		global $tree, $ilLog;
+		global $DIC;
+		$tree = $DIC['tree'];
+		$ilLog = $DIC['ilLog'];
 		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
 			if ($ref_id == 1 || !$ref_id) {
 				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");
@@ -181,7 +185,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @return int
 	 */
 	public function getAttendanceListIdForCourse($crs_ref_id, $get_ref_id = false) {
-		global $tree;
+		global $DIC;
+		$tree = $DIC['tree'];
 		$attendancelist = array_shift($tree->getChildsByType($crs_ref_id, $this->getId()));
 		$ref_id = $attendancelist['child'];
 		if ($get_ref_id) {

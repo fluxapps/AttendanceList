@@ -34,7 +34,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 * @return mixed
 	 */
 	public function getOpenAbsenceStatementsForUser($user_id) {
-		global $ilDB;
+		global $DIC;
+		$ilDB = $DIC['ilDB'];
 		$sql = "SELECT 
 				    xali_entry . *, xali_checklist.checklist_date
 				FROM

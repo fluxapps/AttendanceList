@@ -36,7 +36,9 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 	 * @param array            $users
 	 */
 	public function __construct($a_parent_obj, xaliChecklist $checklist, array $users) {
-		global $ilCtrl, $lng;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
+		$lng = $DIC['lng'];
 		$this->ctrl = $ilCtrl;
 		$this->lng = $lng;
 		$this->pl = ilAttendanceListPlugin::getInstance();

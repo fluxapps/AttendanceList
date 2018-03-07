@@ -26,7 +26,9 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 	 * xaliConfigFormGUI constructor.
 	 */
 	public function __construct($parent_gui) {
-		global $lng, $ilCtrl;
+		global $DIC;
+		$lng = $DIC['lng'];
+		$ilCtrl = $DIC['ilCtrl'];
 		$this->parent_gui = $parent_gui;
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->lng = $lng;

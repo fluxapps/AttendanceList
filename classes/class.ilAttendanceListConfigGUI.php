@@ -47,7 +47,11 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	 * ilAttendanceListConfigGUI constructor.
 	 */
 	public function __construct() {
-		global $tpl, $ilCtrl, $ilToolbar, $ilTabs;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilToolbar = $DIC['ilToolbar'];
+		$ilTabs = $DIC['ilTabs'];
 		$this->ctrl = $ilCtrl;
 		$this->tpl = $tpl;
 		$this->toolbar = $ilToolbar;

@@ -85,7 +85,8 @@ class xaliChecklistEntry extends ActiveRecord {
 	 */
 	protected function sendAbsenceNotification() {
 		/** ilCtrl $ilCtrl */
-		global $ilCtrl;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
 		$ilObjUser = new ilObjUser($this->getUserId());
 
 		/** @var xaliChecklist $xaliChecklist */

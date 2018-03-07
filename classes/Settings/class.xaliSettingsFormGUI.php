@@ -50,7 +50,10 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	 * @param $parent_gui xaliSettingsGUI
 	 */
 	public function __construct(xaliSettingsGUI $parent_gui, ilObjAttendanceList $object) {
-		global $ilCtrl, $lng, $tpl;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
+		$lng = $DIC['lng'];
+		$tpl = $DIC['tpl'];
 		$this->parent_gui = $parent_gui;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilAttendanceListPlugin::getInstance();

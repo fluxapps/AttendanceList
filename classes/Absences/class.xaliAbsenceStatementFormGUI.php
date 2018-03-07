@@ -32,7 +32,9 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 	 * @param xaliAbsenceStatement|NULL $xaliAbsenceStatement
 	 */
 	public function __construct($parent_gui, xaliAbsenceStatement $xaliAbsenceStatement = null) {
-		global $lng, $ilCtrl;
+		global $DIC;
+		$lng = $DIC['lng'];
+		$ilCtrl = $DIC['ilCtrl'];
 		$this->absence_statement = $xaliAbsenceStatement;
 		$this->parent_gui = $parent_gui;
 		$this->pl = ilAttendanceListPlugin::getInstance();

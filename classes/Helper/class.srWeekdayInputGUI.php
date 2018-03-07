@@ -18,7 +18,8 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	protected $lng;
 
 	public function __construct($a_title, $a_postvar) {
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 		$this->lng = $lng;
 		parent::__construct($a_title, $a_postvar);
 		$this->setType(self::TYPE);

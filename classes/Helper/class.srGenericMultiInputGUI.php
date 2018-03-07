@@ -239,7 +239,8 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	 * @return    boolean        Input ok, true/false
 	 */
 	public function checkInput() {
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 
 		$valid = true;
 
@@ -413,7 +414,9 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	 * @return    int    Size
 	 */
 	public function insert(&$a_tpl) {
-		global $tpl, $lng;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$lng = $DIC['lng'];
 
 		$output = "";
 //		$tpl->addCss($this->getTemplateDir() . '/templates/css/multi_line_input.css');

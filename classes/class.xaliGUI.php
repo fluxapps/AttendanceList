@@ -47,7 +47,13 @@ class xaliGUI {
 	 * @param ilObjAttendanceListGUI $parent_gui
 	 */
 	function __construct(ilObjAttendanceListGUI $parent_gui) {
-		global $tpl, $ilCtrl, $ilTabs, $lng, $ilUser, $ilToolbar;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilTabs = $DIC['ilTabs'];
+		$lng = $DIC['lng'];
+		$ilUser = $DIC['ilUser'];
+		$ilToolbar = $DIC['ilToolbar'];
 		$this->toolbar = $ilToolbar;
 		$this->user = $ilUser;
 		$this->lng = $lng;
