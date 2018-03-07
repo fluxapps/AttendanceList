@@ -42,7 +42,6 @@ class xaliCron {
 		$ilUser = $DIC['ilUser'];
 		$ilCtrl = $DIC['ilCtrl'];
 		$ilLog = $DIC['ilLog'];
-		$ilias = $DIC['ilias'];
 		$rbacreview = $DIC['rbacreview'];
 		if (self::DEBUG) {
 			$ilLog->write('Auth passed for async AttendanceList');
@@ -58,7 +57,6 @@ class xaliCron {
 		$this->db = $ilDB;
 		$this->user = $ilUser;
 		$this->ctrl = $ilCtrl;
-		$this->ilias = $ilias;
 		$this->log = $ilLog;
 		$this->rbacreview = $rbacreview;
 	}
