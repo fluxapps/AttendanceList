@@ -1,7 +1,7 @@
 <?php
 $cron = new xaliCron($_SERVER['argv']);
 $cron->run();
-//$cron->logout();
+$cron->logout();
 
 /**
  * Class xaliCron
@@ -210,9 +210,8 @@ class xaliCron {
 	 */
 	public function logout() {
 		global $DIC;
-		$ilAuth = $DIC["ilAuth"];
+		$ilAuth = $DIC["ilAuthSession"];
 		$ilAuth->logout();
-		session_destroy();
 	}
 
 }
