@@ -1,5 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
 /**
  * Class xaliConfig
  *
@@ -10,14 +11,16 @@ class xaliConfig extends ActiveRecord {
 	const F_INTERVAL_REMINDER_EMAIL = 'interval_reminder_email';
 	const F_SENDER_REMINDER_EMAIL = 'sender_reminder_email';
 	const F_HTTP_PATH = 'http_path';
+	const TABLE_NAME = 'xali_config';
 
 
 	/**
 	 * @return string
 	 */
 	static function returnDbTableName() {
-		return 'xali_config';
+		return self::TABLE_NAME;
 	}
+
 
 	/**
 	 * @var array
@@ -48,6 +51,7 @@ class xaliConfig extends ActiveRecord {
 
 		return self::$cache[$name];
 	}
+
 
 	/**
 	 * @param $name

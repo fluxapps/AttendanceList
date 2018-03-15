@@ -14,13 +14,14 @@ class xaliAbsenceReason extends ActiveRecord {
 	const F_ABSENCE_REASONS_COMMENT_REQ = 'comment_req';
 	const F_ABSENCE_REASONS_HAS_UPLOAD = 'has_upload';
 	const F_ABSENCE_REASONS_UPLOAD_REQ = 'upload_req';
+	const TABLE_NAME = 'xali_absence_reasons';
 
 
 	/**
 	 * @return string
 	 */
 	static function returnDbTableName() {
-		return 'xali_absence_reasons';
+		return self::TABLE_NAME;
 	}
 
 
@@ -194,5 +195,4 @@ class xaliAbsenceReason extends ActiveRecord {
 	public function setUploadReq($upload_req) {
 		$this->upload_req = $upload_req;
 	}
-
 }

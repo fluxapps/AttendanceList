@@ -28,6 +28,7 @@ class xaliCron {
 	 */
 	protected $rbacreview;
 
+
 	/**
 	 * @param array $data
 	 */
@@ -79,7 +80,6 @@ class xaliCron {
 			require_once './include/inc.header.php';
 		}
 
-
 		// fix for some stupid ilias init....
 		global $DIC;
 		$ilSetting = $DIC['ilSetting'];
@@ -87,6 +87,7 @@ class xaliCron {
 			$ilSetting = new ilSessionMock();
 		}
 	}
+
 
 	/**
 	 *
@@ -112,23 +113,25 @@ class xaliCron {
 		// TODO activation_to + 30 tage > now ?? oder bis kurs offline / gelöscht ist (geht wahrsch. nicht, weil alte Kurse noch online sind)?
 		$query = "
 			SELECT 
-			    xali_entry.*, object_reference.ref_id, xali_checklist.checklist_date
+			    " . xaliChecklistEntry::DB_TABLE_NAME . ".*, object_reference.ref_id, " . xaliChecklist::DB_TABLE_NAME . ".checklist_date
 			FROM
-			    xali_data
+			    " . xaliSetting::DB_TABLE_NAME . "
 				    INNER JOIN 
-				object_reference on xali_data.id = object_reference.obj_id
+				object_reference on " . xaliSetting::DB_TABLE_NAME . ".id = object_reference.obj_id
 			        INNER JOIN
-			    xali_checklist ON xali_checklist.obj_id = xali_data.id
+			    " . xaliChecklist::DB_TABLE_NAME . " ON " . xaliChecklist::DB_TABLE_NAME . ".obj_id = " . xaliSetting::DB_TABLE_NAME . ".id
 					INNER JOIN 
-				xali_entry ON xali_entry.checklist_id = xali_checklist.id
+				" . xaliChecklistEntry::DB_TABLE_NAME . " ON " . xaliChecklistEntry::DB_TABLE_NAME . ".checklist_id = " . xaliChecklist::DB_TABLE_NAME
+			. ".id
 					LEFT JOIN
-				xali_absence_statement ON xali_absence_statement.entry_id = xali_entry.id
+				" . xaliAbsenceStatement::TABLE_NAME . " ON " . xaliAbsenceStatement::TABLE_NAME . ".entry_id = " . xaliChecklistEntry::DB_TABLE_NAME
+			. ".id
 			WHERE
-			    xali_data.is_online = 1
-			        AND xali_data.activation_from <= '$now'
-			        AND xali_data.activation_to > '$now_minus_30_days'
-					AND xali_entry.status = 1
-					AND xali_absence_statement.entry_id IS NULL
+			    " . xaliSetting::DB_TABLE_NAME . ".is_online = 1
+			        AND " . xaliSetting::DB_TABLE_NAME . ".activation_from <= '$now'
+			        AND " . xaliSetting::DB_TABLE_NAME . ".activation_to > '$now_minus_30_days'
+					AND " . xaliChecklistEntry::DB_TABLE_NAME . ".status = 1
+					AND " . xaliAbsenceStatement::TABLE_NAME . ".entry_id IS NULL
 					AND object_reference.deleted IS NULL;";
 
 		$sql = $this->db->query($query);
@@ -151,7 +154,7 @@ class xaliCron {
 		// send mails
 		foreach ($send_mail as $user_id => $array) {
 			/** @var xaliLastReminder $last_reminder */
-			$last_reminder = xaliLastReminder::where(array('user_id' => $user_id))->first();
+			$last_reminder = xaliLastReminder::where(array( 'user_id' => $user_id ))->first();
 
 			if (!$last_reminder) {
 				$last_reminder = new xaliLastReminder();
@@ -159,14 +162,13 @@ class xaliCron {
 				$last_reminder->create();
 			}
 
-
 			if ($last_reminder->getLastReminder() > date('Y-m-d', strtotime("now -$interval days"))) {
 				continue;
 			}
 
 			$ilObjUser = new ilObjUser($user_id);
 			$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-			$sender = new srNotificationInternalMailSender($sender_id,$user_id);
+			$sender = new srNotificationInternalMailSender($sender_id, $user_id);
 
 			$open_absences = '';
 			foreach ($array as $ref_id => $entry_array) {
@@ -178,8 +180,13 @@ class xaliCron {
 				}
 
 				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'ref_id', $ref_id);
-				$base_link_relative = $this->ctrl->getLinkTargetByClass(array(ilObjPluginDispatchGUI::class, ilObjAttendanceListGUI::class, xaliAbsenceStatementGUI::class), xaliAbsenceStatementGUI::CMD_STANDARD);
-				$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/ilias.php' . $base_link_relative . '&baseClass=ilObjPluginDispatchGUI';
+				$base_link_relative = $this->ctrl->getLinkTargetByClass(array(
+					ilObjPluginDispatchGUI::class,
+					ilObjAttendanceListGUI::class,
+					xaliAbsenceStatementGUI::class
+				), xaliAbsenceStatementGUI::CMD_STANDARD);
+				$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/ilias.php' . $base_link_relative
+					. '&baseClass=ilObjPluginDispatchGUI';
 
 				$open_absences .= 'Kurs "' . $parent_course->getTitle() . "\": \n";
 				foreach ($entry_array as $entry_id => $checklist_date) {
@@ -192,7 +199,7 @@ class xaliCron {
 				continue;
 			}
 
-			$placeholders = array('user' => $ilObjUser, 'open_absences' => $open_absences);
+			$placeholders = array( 'user' => $ilObjUser, 'open_absences' => $open_absences );
 
 			$notification = srNotification::getInstanceByName('absence_reminder');
 			$sent = $notification->send($sender, $placeholders);
@@ -202,8 +209,8 @@ class xaliCron {
 				$last_reminder->update();
 			}
 		}
-
 	}
+
 
 	/**
 	 *
@@ -213,13 +220,11 @@ class xaliCron {
 		$ilAuth = $DIC["ilAuthSession"];
 		$ilAuth->logout();
 	}
-
 }
 
-
 class ilSessionMock {
+
 	public function get($what, $default) {
 		return $default;
 	}
-
 }

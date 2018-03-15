@@ -1,5 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
 /**
  * Class xaliAbsenceStatement
  *
@@ -7,12 +8,16 @@
  */
 class xaliAbsenceStatement extends ActiveRecord {
 
+	const TABLE_NAME = 'xali_absence_statement';
+
+
 	/**
 	 * @return string
 	 */
 	static function returnDbTableName() {
-		return 'xali_absence_statement';
+		self::TABLE_NAME;
 	}
+
 
 	/**
 	 * @var string
@@ -49,6 +54,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 */
 	protected $file_id;
 
+
 	/**
 	 * @return null
 	 */
@@ -56,7 +62,8 @@ class xaliAbsenceStatement extends ActiveRecord {
 		if ($this->getReasonId()) {
 			return xaliAbsenceReason::find($this->getReasonId())->getTitle();
 		}
-		return null;
+
+		return NULL;
 	}
 
 
@@ -122,6 +129,4 @@ class xaliAbsenceStatement extends ActiveRecord {
 	public function setFileId($file_id) {
 		$this->file_id = $file_id;
 	}
-
-
 }

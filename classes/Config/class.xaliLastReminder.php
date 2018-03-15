@@ -10,9 +10,13 @@
  */
 class xaliLastReminder extends ActiveRecord {
 
+	const TABLE_NAME = 'xali_last_reminder';
+
+
 	static function returnDbTableName() {
-		return 'xali_last_reminder';
+		return self::TABLE_NAME;
 	}
+
 
 	/**
 	 * @var int
@@ -62,6 +66,4 @@ class xaliLastReminder extends ActiveRecord {
 	public function setLastReminder($last_reminder) {
 		$this->last_reminder = $last_reminder;
 	}
-
-
 }
