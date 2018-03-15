@@ -38,7 +38,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->setId('xali_lists_overview_'.$obj_id);
 
 		parent::__construct($a_parent_obj, xaliOverviewGUI::CMD_LISTS);
-		$this->setRowTemplate('tpl.list_overview_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.list_overview_row.html', $this->pl->getDirectory());
 		$this->setExportFormats(array(self::EXPORT_CSV, self::EXPORT_EXCEL));
 
 		$this->initColumns();

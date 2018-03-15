@@ -53,7 +53,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		}
 
 		$this->setEnableNumInfo(false);
-		$this->setRowTemplate('tpl.checklist_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.checklist_row.html', $this->pl->getDirectory());
 		$this->setFormAction($this->ctrl->getFormAction($a_parent_obj));
 		$this->setLimit(0);
 		$this->resetOffset();

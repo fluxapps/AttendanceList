@@ -36,7 +36,7 @@ class xaliConfigAbsencesTableGUI extends ilTable2GUI {
 		$this->setId('xali_config_absences');
 
 		parent::__construct($a_parent_obj, ilAttendanceListConfigGUI::CMD_STANDARD);
-		$this->setRowTemplate('tpl.config_absences_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.config_absences_row.html', $this->pl->getDirectory());
 
 		$this->initColumns();
 

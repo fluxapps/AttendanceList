@@ -48,7 +48,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->settings = xaliSetting::find($obj_id);
 
 		parent::__construct($a_parent_obj);
-		$this->setRowTemplate('tpl.user_overview_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.user_overview_row.html', $this->pl->getDirectory());
 		$this->setExportFormats(array(self::EXPORT_CSV, self::EXPORT_EXCEL));
 
 		$this->setLimit(0);

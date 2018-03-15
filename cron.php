@@ -48,7 +48,7 @@ class xaliCron {
 			$ilLog->write('Auth passed for async AttendanceList');
 		}
 
-		require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilAttendanceListPlugin.php';
+		require_once __DIR__ . '/classes/class.ilAttendanceListPlugin.php';
 		/**
 		 * @var $ilDB   ilDB
 		 * @var $ilUser ilObjUser
@@ -65,15 +65,15 @@ class xaliCron {
 
 	public function initILIAS() {
 		chdir(substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], '/Customizing')));
-		require_once('include/inc.ilias_version.php');
-		require_once('Services/Component/classes/class.ilComponent.php');
+		require_once 'include/inc.ilias_version.php';
+		require_once 'Services/Component/classes/class.ilComponent.php';
 		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
 			require_once './Services/Cron/classes/class.ilCronStartUp.php';
 			$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
 			$ilCronStartup->initIlias();
 			$ilCronStartup->authenticate();
 		} else {
-			require_once "Services/Context/classes/class.ilContext.php";
+			require_once 'Services/Context/classes/class.ilContext.php';
 			ilContext::init(ilContext::CONTEXT_CRON);
 			require_once 'Services/Authentication/classes/class.ilAuthFactory.php';
 			ilAuthFactory::setContext(ilAuthFactory::CONTEXT_CRON);
@@ -93,10 +93,11 @@ class xaliCron {
 	 *
 	 */
 	public function run() {
-		require_once 'Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Notifications4Plugins/classes/NotificationSender/class.srNotificationInternalMailSender.php';
-		require_once 'Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Notifications4Plugins/classes/Notification/class.srNotification.php';
-		require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Config/class.xaliConfig.php';
-		require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Config/class.xaliLastReminder.php';
+		require_once __DIR__
+			. '../../../UIComponent/UserInterfaceHook/Notifications4Plugins/classes/NotificationSender/class.srNotificationInternalMailSender.php';
+		require_once __DIR__ . '../../../UIComponent/UserInterfaceHook/Notifications4Plugins/classes/Notification/class.srNotification.php';
+		require_once __DIR__ . '/classes/Config/class.xaliConfig.php';
+		require_once __DIR__ . '/classes/Config/class.xaliLastReminder.php';
 		require_once 'Services/User/classes/class.ilObjUser.php';
 
 		$interval = xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL);

@@ -62,7 +62,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->setExportFormats(array(self::EXPORT_CSV, self::EXPORT_EXCEL));
 
 		$this->setEnableNumInfo(false);
-		$this->setRowTemplate('tpl.user_details_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.user_details_row.html', $this->pl->getDirectory());
 		$this->ctrl->setParameter($this->parent_obj, 'user_id', $this->user->getId());
 		$this->setFormAction($this->ctrl->getFormAction($a_parent_obj, 'editUser'));
 		$this->setLimit(0);

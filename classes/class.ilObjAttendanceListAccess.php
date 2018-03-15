@@ -1,6 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Class ilObjAttendanceListAccess
  *
@@ -11,8 +12,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	/**
 	 * @param string $a_cmd
 	 * @param string $a_permission
-	 * @param int $a_ref_id
-	 * @param int $a_obj_id
+	 * @param int    $a_ref_id
+	 * @param int    $a_obj_id
 	 * @param string $a_user_id
 	 *
 	 * @return bool
@@ -34,7 +35,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 		switch ($a_permission) {
 			case 'read':
 			case 'visible':
-				if ((!ilObjAttendanceListAccess::checkOnline($a_obj_id) OR !ilObjAttendanceListAccess::checkActivation($a_obj_id)) AND !$ilAccess->checkAccessOfUser($a_user_id, 'write', '', $a_ref_id)) {
+				if ((!ilObjAttendanceListAccess::checkOnline($a_obj_id) OR !ilObjAttendanceListAccess::checkActivation($a_obj_id))
+					AND !$ilAccess->checkAccessOfUser($a_user_id, 'write', '', $a_ref_id)) {
 					return false;
 				}
 				break;
@@ -54,10 +56,10 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return mixed
 	 */
-	function checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type = "", $a_obj_id = "", $a_tree_id="")
-	{
+	function checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type = "", $a_obj_id = "", $a_tree_id = "") {
 		return $this->access->checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type, $a_obj_id, $a_tree_id);
 	}
+
 
 	/**
 	 * @param $a_id
@@ -65,7 +67,7 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 * @return bool
 	 */
 	static function checkOnline($a_id) {
-		require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Settings/class.xaliSetting.php');
+		require_once __DIR__ . '/../classes/Settings/class.xaliSetting.php';
 		/**
 		 * @var $xaliSettings xaliSetting
 		 */
@@ -74,6 +76,7 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 		return (bool)$xaliSettings->getIsOnline();
 	}
 
+
 	/**
 	 * @return bool
 	 */
@@ -81,6 +84,7 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 		/** @var xaliSetting $settings */
 		$settings = xaliSetting::find($a_id);
 		$today = date('Y-m-d');
+
 		return !$settings->getActivation() || (($today >= $settings->getActivationFrom()) && ($today <= $settings->getActivationTo()));
 	}
 
@@ -105,6 +109,7 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	public static function hasWriteAccess($ref_id = NULL, $user_id = NULL) {
 		return self::hasAccess('write', $ref_id, $user_id);
 	}
+
 
 	/**
 	 * @param      $permission
