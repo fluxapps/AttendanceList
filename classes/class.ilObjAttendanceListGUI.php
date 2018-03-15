@@ -311,7 +311,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	/**
 	 * @param ilObject $newObj
 	 */
-	function afterSave($newObj, $additional_args) {
+	function afterSave(ilObject $newObj, $additional_args) {
+		// TODO $additional_args
 		$xaliSetting = $additional_args[0];
 
 		$xaliSetting->setId($newObj->getId());
