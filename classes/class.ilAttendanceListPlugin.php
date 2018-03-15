@@ -1,17 +1,17 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Class ilAttendanceListPlugin
  *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
+ * @author            Theodor Truffer <tt@studer-raimann.ch>
  *
  * @ilCtrl_isCalledBy ilAttendanceListPlugin: ilUIPluginRouterGUI
  */
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 	const PLUGIN_NAME = 'AttendanceList';
-
 	/**
 	 * @var ilAttendanceListPlugin
 	 */
@@ -25,7 +25,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		global $DIC;
 		$ilCtrl = $DIC['ilCtrl'];
 		$cmd = $ilCtrl->getCmd();
-		switch($cmd) {
+		switch ($cmd) {
 			default:
 				$this->{$cmd}();
 				break;
@@ -57,7 +57,16 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 *
 	 */
 	protected function uninstallCustom() {
-		// TODO: Implement uninstallCustom() method.
+		$this->db->dropTable(xaliConfig::TABLE_NAME, false);
+		$this->db->dropTable(xaliLastReminder::TABLE_NAME, false);
+		$this->db->dropTable(xaliAbsenceReason::TABLE_NAME, false);
+		$this->db->dropTable(xaliAbsenceStatement::TABLE_NAME, false);
+		$this->db->dropTable(xaliSetting::DB_TABLE_NAME, false);
+		$this->db->dropTable(xaliChecklist::DB_TABLE_NAME, false);
+		$this->db->dropTable(xaliChecklistEntry::DB_TABLE_NAME, false);
+		$this->db->dropTable(xaliUserStatus::TABLE_NAME, false);
+
+		return true;
 	}
 
 
@@ -80,24 +89,21 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	public function addUserAutoComplete() {
 		include_once './Services/User/classes/class.ilUserAutoComplete.php';
 		$auto = new ilUserAutoComplete();
-		$auto->setSearchFields(array('login','firstname','lastname'));
+		$auto->setSearchFields(array( 'login', 'firstname', 'lastname' ));
 		$auto->setResultField('login');
 		$auto->enableFieldSearchableCheck(false);
 		$auto->setMoreLinkAvailable(true);
 
-
-		if(($_REQUEST['fetchall']))
-		{
+		if (($_REQUEST['fetchall'])) {
 			$auto->setLimit(ilUserAutoComplete::MAX_ENTRIES);
 		}
 
 		$list = $auto->getList($_REQUEST['term']);
 
-
 		$array = json_decode($list, true);
 		$members = $this->getMembers();
 
-		foreach($array['items'] as $key => $item) {
+		foreach ($array['items'] as $key => $item) {
 			if (!in_array($item['id'], $members)) {
 				unset($array['items'][$key]);
 			}
@@ -107,6 +113,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		echo $list;
 		exit();
 	}
+
 
 	/**
 	 * @return array
@@ -121,8 +128,10 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 			$member_role = $parent->getDefaultMemberRole();
 			$members = $rbacreview->assignedUsers($member_role);
 		}
+
 		return $members;
 	}
+
 
 	/**
 	 * @return ilObjCourse|ilObjGroup
@@ -146,12 +155,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		global $DIC;
 		$tree = $DIC['tree'];
 		$ilLog = $DIC['ilLog'];
-		while (!in_array(ilObject2::_lookupType($ref_id, true), array('crs', 'grp'))) {
+		while (!in_array(ilObject2::_lookupType($ref_id, true), array( 'crs', 'grp' ))) {
 			if ($ref_id == 1 || !$ref_id) {
 				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");
 			}
 			$ref_id = $tree->getParentId($ref_id);
 		}
+
 		return $ref_id;
 	}
 
@@ -168,6 +178,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 		/** @var xaliUserStatus $xaliUserStatus */
 		$xaliUserStatus = xaliUserStatus::getInstance($user_id, $obj_id);
+
 		return array(
 			'present' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT),
 			'absent' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED),
@@ -192,6 +203,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		if ($get_ref_id) {
 			return $ref_id;
 		}
+
 		return ilObjAttendanceList::_lookupObjectId($ref_id);
 	}
 }
