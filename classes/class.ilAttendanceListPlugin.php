@@ -16,6 +16,19 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @var ilAttendanceListPlugin
 	 */
 	protected static $instance;
+	/**
+	 * @var ilDB
+	 */
+	protected $db;
+
+
+	function __construct() {
+		parent::__construct();
+
+		global $DIC;
+
+		$this->db = $DIC->database();
+	}
 
 
 	/**
