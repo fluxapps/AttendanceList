@@ -106,6 +106,6 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 	}
 
 	function initType() {
-		$this->setType('xali');
+		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
 	}
 }

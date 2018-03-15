@@ -11,6 +11,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
+	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
 	/**
 	 * @var ilAttendanceListPlugin

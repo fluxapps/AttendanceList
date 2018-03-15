@@ -10,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 	protected function initType() {
-		$this->setType("xali");
+		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
 	}
 
 

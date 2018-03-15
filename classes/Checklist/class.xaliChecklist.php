@@ -1,5 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
 /**
  * Class xaliChecklist
  *
@@ -16,6 +17,7 @@ class xaliChecklist extends ActiveRecord {
 	static function returnDbTableName() {
 		return self::DB_TABLE_NAME;
 	}
+
 
 	/**
 	 * @var string
@@ -67,7 +69,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @return xaliChecklistEntry
 	 */
 	public function getEntryOfUser($user_id) {
-		$where = xaliChecklistEntry::where(array('checklist_id' => $this->id, 'user_id' => $user_id));
+		$where = xaliChecklistEntry::where(array( 'checklist_id' => $this->id, 'user_id' => $user_id ));
 		if ($where->hasSets()) {
 			return $where->first();
 		}
@@ -75,6 +77,7 @@ class xaliChecklist extends ActiveRecord {
 		$entry = new xaliChecklistEntry();
 		$entry->setChecklistId($this->id);
 		$entry->setUserId($user_id);
+
 		return $entry;
 	}
 
@@ -91,6 +94,7 @@ class xaliChecklist extends ActiveRecord {
 			'checklist_id' => '=',
 			'user_id' => 'IN'
 		);
+
 		return xaliChecklistEntry::where(array(
 			'checklist_id' => $this->getId(),
 			'user_id' => $members
@@ -102,7 +106,8 @@ class xaliChecklist extends ActiveRecord {
 	 * @return bool
 	 */
 	public function isComplete() {
-		return $this->getEntriesCount() >= count(ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
+		return $this->getEntriesCount() >= count(ilAttendanceListPlugin::getInstance()
+				->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
 	}
 
 
@@ -129,6 +134,7 @@ class xaliChecklist extends ActiveRecord {
 			'checklist_id' => '=',
 			'user_id' => 'IN'
 		);
+
 		return xaliChecklistEntry::where(array(
 			'status' => $status,
 			'checklist_id' => $this->getId(),
@@ -141,7 +147,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @return bool
 	 */
 	public function isEmpty() {
-		return $this->last_edited_by == null;
+		return $this->last_edited_by == NULL;
 	}
 
 
@@ -149,11 +155,12 @@ class xaliChecklist extends ActiveRecord {
 	 *
 	 */
 	public function delete() {
-		foreach (xaliChecklistEntry::where(array('checklist_id' => $this->id))->get() as $entry) {
+		foreach (xaliChecklistEntry::where(array( 'checklist_id' => $this->id ))->get() as $entry) {
 			$entry->delete();
 		}
 		parent::delete();
 	}
+
 
 	/**
 	 * @return string
@@ -211,13 +218,13 @@ class xaliChecklist extends ActiveRecord {
 			return $this->last_edited_by;
 		}
 
-		if (!$this->last_edited_by) {		// automatically created
+		if (!$this->last_edited_by) {        // automatically created
 			return ilAttendanceListPlugin::getInstance()->txt('automatically_created');
 		}
 
 		$name = ilObjUser::_lookupName($this->last_edited_by);
-		return $name['firstname'] . ' ' . $name['lastname'];
 
+		return $name['firstname'] . ' ' . $name['lastname'];
 	}
 
 
@@ -243,5 +250,4 @@ class xaliChecklist extends ActiveRecord {
 	public function setLastUpdate($last_update) {
 		$this->last_update = $last_update;
 	}
-
 }
