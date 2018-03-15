@@ -1,6 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Class ilObjAttendanceListListGUI
  *
@@ -9,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 	function getGuiClass() {
-		return 'ilObjAttendanceListGUI';
+		return ilObjAttendanceListGUI::class;
 	}
 
 
@@ -44,6 +45,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		return $commands;
 	}
 
+
 	/**
 	 * Get item properties
 	 *
@@ -59,7 +61,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		try {
 			/** @var xaliSetting $settings */
 			$settings = xaliSetting::find($this->obj_id);
-			if ($settings != null) {
+			if ($settings != NULL) {
 				if ($settings->getActivation()) {
 					$activation_from = date('d. M Y', strtotime($settings->getActivationFrom()));
 					$activation_to = date('d. M Y', strtotime($settings->getActivationTo()));
@@ -85,9 +87,9 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 		}
 
-
 		return $props;
 	}
+
 
 	/**
 	 * get all alert properties
@@ -104,6 +106,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 		return $alert;
 	}
+
 
 	function initType() {
 		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
