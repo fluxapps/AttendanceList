@@ -1,5 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
 /**
  * Class xaliOverviewUserTableGUI
  *
@@ -49,7 +50,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 
 		parent::__construct($a_parent_obj);
 		$this->setRowTemplate('tpl.user_overview_row.html', $this->pl->getDirectory());
-		$this->setExportFormats(array(self::EXPORT_CSV, self::EXPORT_EXCEL));
+		$this->setExportFormats(array( self::EXPORT_CSV, self::EXPORT_EXCEL ));
 
 		$this->setLimit(0);
 		$this->initColumns();
@@ -86,7 +87,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 			$xaliUserStatus = xaliUserStatus::getInstance($user->getId(), $this->obj_id);
 
 			$user_data["present"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT);
-//			$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
+			//			$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
 			$user_data["unexcused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
 
 			$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
@@ -114,27 +115,29 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
-
-
 	/**
 	 * @return array
 	 */
 	protected function getChecklistIds() {
 		$ids = array();
-		foreach (xaliChecklist::where(array('obj_id' => $this->obj_id))->get() as $checklist) {
+		foreach (xaliChecklist::where(array( 'obj_id' => $this->obj_id ))->get() as $checklist) {
 			$ids[] = $checklist->getId();
 		}
+
 		return $ids;
 	}
+
 
 	/**
 	 *
 	 */
 	public function initFilter() {
 		$user_filter = new ilTextInputGUI($this->lng->txt('login'), 'name');
-		$this->ctrl->saveParameterByClass('ilAttendanceListPlugin', 'ref_id', $_GET['ref_id']);
-		$user_filter->setDataSource($this->ctrl->getLinkTargetByClass(array('ilUIPluginRouterGUI', 'ilAttendanceListPlugin'),
-			'addUserAutoComplete', "", true));
+		$this->ctrl->saveParameterByClass(ilAttendanceListPlugin::class, 'ref_id', $_GET['ref_id']);
+		$user_filter->setDataSource($this->ctrl->getLinkTargetByClass(array(
+			ilUIPluginRouterGUI::class,
+			ilAttendanceListPlugin::class
+		), ilAttendanceListPlugin::CMD_ADD_USER_AUTO_COMPLETE, "", true));
 		$this->addFilterItem($user_filter);
 		$user_filter->readFromSession();
 		$this->filter['login'] = $user_filter->getValue();
@@ -148,7 +151,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->addColumn($this->pl->txt('table_column_name'), 'name');
 		$this->addColumn($this->pl->txt('table_column_login'), 'login');
 		$this->addColumn($this->pl->txt('table_column_present'), 'present');
-//		$this->addColumn($this->pl->txt('table_column_excused'), 'excused');
+		//		$this->addColumn($this->pl->txt('table_column_excused'), 'excused');
 		$this->addColumn($this->pl->txt('table_column_unexcused'), 'unexcused');
 		$this->addColumn($this->pl->txt('table_column_no_status'), 'no_status');
 		$this->addColumn($this->pl->txt('table_column_percentage'), 'reached_percentage');
@@ -203,6 +206,4 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	public function hasPassedStudents() {
 		return $this->has_passed_students;
 	}
-
-
 }

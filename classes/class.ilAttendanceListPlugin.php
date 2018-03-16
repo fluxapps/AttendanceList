@@ -13,6 +13,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
+	const CMD_ADD_USER_AUTO_COMPLETE = 'addUserAutoComplete';
 	/**
 	 * @var ilAttendanceListPlugin
 	 */

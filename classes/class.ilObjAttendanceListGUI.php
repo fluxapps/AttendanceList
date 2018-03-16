@@ -197,11 +197,11 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	protected function setTabs() {
-		$this->tabs->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass('xaliChecklistGUI', xaliChecklistGUI::CMD_STANDARD));
+		$this->tabs->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xaliChecklistGUI::class, xaliChecklistGUI::CMD_STANDARD));
 		$this->addInfoTab();
 		if ($this->access->hasWriteAccess()) {
-			$this->tabs->addTab(self::TAB_OVERVIEW, $this->pl->txt(self::TAB_OVERVIEW), $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_STANDARD));
-			$this->tabs->addTab(self::TAB_SETTINGS, $this->pl->txt(self::TAB_SETTINGS), $this->ctrl->getLinkTargetByClass('xaliSettingsGUI', xaliSettingsGUI::CMD_STANDARD));
+			$this->tabs->addTab(self::TAB_OVERVIEW, $this->pl->txt(self::TAB_OVERVIEW), $this->ctrl->getLinkTargetByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_STANDARD));
+			$this->tabs->addTab(self::TAB_SETTINGS, $this->pl->txt(self::TAB_SETTINGS), $this->ctrl->getLinkTargetByClass(xaliSettingsGUI::class, xaliSettingsGUI::CMD_STANDARD));
 		}
 		parent::setTabs();
 	}
@@ -211,7 +211,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	public function showContent() {
-		$this->ctrl->redirectByClass('xaliChecklistGUI', xaliChecklistGUI::CMD_STANDARD);
+		$this->ctrl->redirectByClass(xaliChecklistGUI::class, xaliChecklistGUI::CMD_STANDARD);
 	}
 
 
@@ -219,7 +219,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	public function showOverview() {
-		$this->ctrl->redirectByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_STANDARD);
+		$this->ctrl->redirectByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_STANDARD);
 	}
 
 
@@ -227,7 +227,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 *
 	 */
 	public function editSettings() {
-		$this->ctrl->redirectByClass('xaliSettingsGUI', xaliSettingsGUI::CMD_STANDARD);
+		$this->ctrl->redirectByClass(xaliSettingsGUI::class, xaliSettingsGUI::CMD_STANDARD);
 	}
 
 
@@ -257,7 +257,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 			$this->getParentCourseOrGroupId($_GET['ref_id']);
 		} catch (Exception $e) {
 			ilUtil::sendFailure($this->pl->txt('msg_creation_failed'), true);
-			$this->ctrl->redirectByClass('ilRepositoryGUI');
+			$this->ctrl->redirectByClass(ilRepositoryGUI::class);
 		}
 
 		$forms = array(
@@ -329,7 +329,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		foreach (xaliChecklist::where(array( 'obj_id' => $this->obj_id ))->get() as $checklist) {
 			if (date('Y-m-d') > $checklist->getChecklistDate()
 				&& ($checklist->getEntriesCount() < $members_count)) {
-				$link_to_overview = $this->ctrl->getLinkTargetByClass('xaliOverviewGUI', xaliOverviewGUI::CMD_LISTS);
+				$link_to_overview = $this->ctrl->getLinkTargetByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_LISTS);
 				ilUtil::sendInfo(sprintf($this->pl->txt('msg_incomplete_lists'), $link_to_overview), true);
 
 				return true;
