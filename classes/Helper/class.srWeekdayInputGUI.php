@@ -83,7 +83,7 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 
 
 	protected function render() {
-		$tpl = new ilTemplate("tpl.weekday_input.html", true, true, $this->pl->getDirectory());
+		$tpl = $this->pl->getTemplate("default/tpl.weekday_input.html");
 
 		$days = array( 1 => 'Mon', 2 => 'Tue', 3 => 'Wed', 4 => 'Thu', 5 => 'Fri', 6 => 'Sat', 7 => 'Sun' );
 

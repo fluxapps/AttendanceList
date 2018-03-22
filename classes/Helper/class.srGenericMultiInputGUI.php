@@ -336,7 +336,7 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	 * @throws ilException
 	 */
 	public function render($iterator_id = 0, $clean_render = false) {
-		$tpl = new ilTemplate("tpl.prop_generic_multi_line.html", true, true, $this->pl->getDirectory());
+		$tpl = $this->pl->getTemplate("default/tpl.prop_generic_multi_line.html");
 
 		$class = 'multi_input_line';
 
