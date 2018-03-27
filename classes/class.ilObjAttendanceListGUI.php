@@ -295,10 +295,10 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$xaliSetting->setActivation(true);
 
 		$from = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_FROM);
-		$xaliSetting->setActivationFrom($from['date']);
+		$xaliSetting->setActivationFrom($from);
 
 		$to = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_TO);
-		$xaliSetting->setActivationTo($to['date']);
+		$xaliSetting->setActivationTo($to);
 
 		$xaliSetting->setActivationWeekdays($form->getInput(xaliSettingsFormGUI::F_WEEKDAYS));
 
