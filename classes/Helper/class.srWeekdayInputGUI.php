@@ -46,7 +46,7 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	/**
 	 * Get Value.
 	 *
-	 * @return    string    Value
+	 * @return    array    Value
 	 */
 	function getValue() {
 		return $this->value;

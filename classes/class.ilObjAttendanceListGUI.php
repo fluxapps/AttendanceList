@@ -44,6 +44,10 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	 * @var ilObjUser
 	 */
 	protected $user;
+	/**
+	 * @var xaliSetting
+	 */
+	protected $setting;
 
 
 	/**
@@ -291,31 +295,28 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$form->setValuesByPost();
 		$form->checkInput();
 
-		$xaliSetting = new xaliSetting();
-		$xaliSetting->setActivation(true);
+		$this->setting = new xaliSetting();
+		$this->setting->setActivation(true);
 
 		$from = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_FROM);
-		$xaliSetting->setActivationFrom($from);
+		$this->setting->setActivationFrom($from);
 
 		$to = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_TO);
-		$xaliSetting->setActivationTo($to);
+		$this->setting->setActivationTo($to);
 
-		$xaliSetting->setActivationWeekdays($form->getInput(xaliSettingsFormGUI::F_WEEKDAYS));
+		$this->setting->setActivationWeekdays($form->getInput(xaliSettingsFormGUI::F_WEEKDAYS));
 
-		$this->saveObject($xaliSetting);
+		$this->saveObject();
 	}
 
 
 	/**
 	 * @param ilObject $newObj
 	 */
-	function afterSave(ilObject $newObj/*/, $additional_args*/) {
-		//$xaliSetting = $additional_args[0];
-		$xaliSetting = new xaliSetting();
-
-		$xaliSetting->setId($newObj->getId());
-		$xaliSetting->create();
-		$xaliSetting->createOrDeleteEmptyLists(true, false);
+	function afterSave(ilObject $newObj) {
+		$this->setting->setId($newObj->getId());
+		$this->setting->create();
+		$this->setting->createOrDeleteEmptyLists(true, false);
 
 		parent::afterSave($newObj);
 	}
