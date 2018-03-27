@@ -202,8 +202,7 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function createList() {
-		$date = $_POST['checklist_date'];
-		$date = $date['date']['y'] . '-' . $date['date']['m'] . '-' . $date['date']['d'];
+		$date = date('Y-m-d', strtotime($_POST['checklist_date']));
 		$this->checkDate($date);
 		$checklist = new xaliChecklist();
 		$checklist->setObjId($this->parent_gui->obj_id);
