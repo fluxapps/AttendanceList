@@ -15,7 +15,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @return string
 	 */
 	static function returnDbTableName() {
-		self::TABLE_NAME;
+		return self::TABLE_NAME;
 	}
 
 
