@@ -156,11 +156,11 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param object $a_worksheet
+	 * @param ilExcel $a_worksheet
 	 * @param int    $a_row
 	 * @param array  $a_set
 	 */
-	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
+	protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);
 		parent::fillRowExcel($a_worksheet, $a_row, $a_set);
