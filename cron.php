@@ -143,6 +143,9 @@ class xaliCron {
 		//      ]
 		// ]
 		while ($res = $this->db->fetchAssoc($sql)) {
+			if (!ilObjUser::_exists($res['user_id'], false, 'usr')) {
+				continue;
+			}
 			if (!is_array($send_mail[$res['user_id']])) {
 				$send_mail[$res['user_id']] = array();
 			}
