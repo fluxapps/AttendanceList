@@ -180,18 +180,11 @@ class xaliCron {
 					continue;
 				}
 
-				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'ref_id', $ref_id);
-				$base_link_relative = $this->ctrl->getLinkTargetByClass(array(
-					ilObjPluginDispatchGUI::class,
-					ilObjAttendanceListGUI::class,
-					xaliAbsenceStatementGUI::class
-				), xaliAbsenceStatementGUI::CMD_STANDARD);
-				$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/ilias.php' . $base_link_relative
-					. '&baseClass=ilObjPluginDispatchGUI';
+				$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/goto.php?target=xali_' . $ref_id;
 
 				$open_absences .= 'Kurs "' . $parent_course->getTitle() . "\": \n";
 				foreach ($entry_array as $entry_id => $checklist_date) {
-					$open_absences .= "» $checklist_date: " . $base_link . "&entry_id=$entry_id \n";
+					$open_absences .= "» $checklist_date: " . $base_link . "_$entry_id \n";
 				}
 				$open_absences .= "\n";
 			}

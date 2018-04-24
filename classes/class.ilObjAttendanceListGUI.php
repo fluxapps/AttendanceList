@@ -188,6 +188,57 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 
 
 	/**
+	 * @param $a_target
+	 */
+	public static function _goto($a_target) {
+		global $DIC;
+
+		$ilCtrl = $DIC->ctrl();
+		$ilAccess = $DIC->access();
+		$lng = $DIC->language();
+
+		$t = explode("_", $a_target[0]);
+		$ref_id = (int) $t[0];
+		$class_name = $a_target[1];
+
+		if (count($t) == 2) {
+			$entry_id = $t[1];
+			$ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
+			$ilCtrl->setTargetScript("ilias.php");
+			$ilCtrl->getCallStructure(strtolower("ilObjPluginDispatchGUI"));
+			$ilCtrl->setParameterByClass($class_name, "ref_id", $ref_id);
+			$ilCtrl->setParameterByClass($class_name, "entry_id", $entry_id);
+			$ilCtrl->redirectByClass(array("ilobjplugindispatchgui", self::class, xaliAbsenceStatementGUI::class), xaliAbsenceStatementGUI::CMD_STANDARD);
+		}
+
+
+		if ($ilAccess->checkAccess("read", "", $ref_id))
+		{
+			$ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
+			$ilCtrl->setTargetScript("ilias.php");
+			$ilCtrl->getCallStructure(strtolower("ilObjPluginDispatchGUI"));
+			$ilCtrl->setParameterByClass($class_name, "ref_id", $ref_id);
+			$ilCtrl->redirectByClass(array("ilobjplugindispatchgui", $class_name), "");
+		}
+		else if($ilAccess->checkAccess("visible", "", $ref_id))
+		{
+			$ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
+			$ilCtrl->setTargetScript("ilias.php");
+			$ilCtrl->getCallStructure(strtolower("ilObjPluginDispatchGUI"));
+			$ilCtrl->setParameterByClass($class_name, "ref_id", $ref_id);
+			$ilCtrl->redirectByClass(array("ilobjplugindispatchgui", $class_name), "infoScreen");
+		}
+		else if ($ilAccess->checkAccess("read", "", ROOT_FOLDER_ID))
+		{
+			ilUtil::sendFailure(sprintf($lng->txt("msg_no_perm_read_item"),
+				ilObject::_lookupTitle(ilObject::_lookupObjId($ref_id))));
+			include_once("./Services/Object/classes/class.ilObjectGUI.php");
+			ilObjectGUI::_gotoRepositoryRoot();
+		}
+	}
+
+
+	/**
 	 * show information screen
 	 */
 	function infoScreen() {
