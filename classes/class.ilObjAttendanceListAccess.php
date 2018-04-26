@@ -131,4 +131,25 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 
 		return $ilAccess->checkAccessOfUser($user_id, $permission, '', $ref_id);
 	}
+
+	/**
+	 * check whether goto script will succeed
+	 */
+	static function _checkGoto($a_target)
+	{
+		global $DIC;
+
+		$ilAccess = $DIC->access();
+
+		$t_arr = explode("_", $a_target);
+		if (count($t_arr) == 3) { // access to absence statement -> access will be checked later
+			return true;
+		}
+
+		if ($ilAccess->checkAccess("read", "", $t_arr[1]))
+		{
+			return true;
+		}
+		return false;
+	}
 }

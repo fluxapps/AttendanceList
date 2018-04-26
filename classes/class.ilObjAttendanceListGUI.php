@@ -203,6 +203,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 
 		if (count($t) == 2) {
 			$entry_id = $t[1];
+//			$_GET['entry_id'] = $entry_id;
 			$ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
 			$ilCtrl->setTargetScript("ilias.php");
 			$ilCtrl->getCallStructure(strtolower("ilObjPluginDispatchGUI"));
