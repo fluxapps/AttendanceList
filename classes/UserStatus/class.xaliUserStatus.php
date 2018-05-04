@@ -1,9 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/ActiveRecord/class.ActiveRecord.php';
-require_once('./Services/Tracking/classes/class.ilLPStatus.php');
-require_once('./Services/Tracking/classes/class.ilLPStatusWrapper.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilAttendanceListPlugin.php');
 
 /**
  * Class xaliUserStatus
@@ -260,7 +256,8 @@ class xaliUserStatus extends ActiveRecord {
 	 */
 	public function create()
 	{
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 
 		$this->created_at = date('Y-m-d H:i:s');
 		$this->updated_at = date('Y-m-d H:i:s');
@@ -275,7 +272,9 @@ class xaliUserStatus extends ActiveRecord {
 	 */
 	public function update()
 	{
-		global $ilUser, $ilAppEventHandler;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
+		$ilAppEventHandler = $DIC['ilAppEventHandler'];
 
 		$this->updated_at = date('Y-m-d H:i:s');
 		$this->updated_user_id = $ilUser->getId();
@@ -325,6 +324,10 @@ class xaliUserStatus extends ActiveRecord {
 //			/ count($this->getChecklistIds())
 //			* 100
 //		);
+		$nr_of_checklists = count($this->getChecklistIds());
+		if (!$nr_of_checklists) {
+			return 0;
+		}
 		return round(
 			$this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) / count($this->getChecklistIds()) * 100
 		);
@@ -363,9 +366,11 @@ class xaliUserStatus extends ActiveRecord {
 	 *
 	 */
 	public function updateLPStatus() {
+		$ilObjAttendanceList = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($this->getAttendancelistId()));
+
 		/** @var xaliSetting $xaliSetting */
 		$xaliSetting = xaliSetting::find($this->attendancelist_id);
-		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance()) {
+		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_COMPLETED_NUM);                      //COMPLETED: minimum attendance is reached
 		} elseif ((time()-(60*60*24)) > strtotime($xaliSetting->getActivationTo())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_FAILED_NUM);                         //FAILED: minimum attendance not reached and time is up

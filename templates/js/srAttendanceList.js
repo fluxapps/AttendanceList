@@ -20,14 +20,22 @@ srAttendanceList = {
 				}).done(function () {
 					$(row).find('font.xali_warning').hide();
 					$(row).find('span.xali_saving').hide();
+					if (status == 3) {
+						$(row).find('a.xali_absence_reason').hide();
+					} else {
+						$(row).find('a.xali_absence_reason').show();
+					}
 				});
 			});
+
 			$(row).find('input[type=radio]').each(function (k, radio) {
 				$(radio).on('click', function () {
 					$(row).find('a.xali_link_save').show();
 					// $(row).find('font.xali_warning').show();
-				})
-			})
+				});
+
+			});
+
 		});
 	}
 }

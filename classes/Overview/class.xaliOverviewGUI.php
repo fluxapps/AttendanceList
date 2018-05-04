@@ -1,13 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.xaliGUI.php';
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/UserStatus/class.xaliUserStatus.php';
-require_once 'Services/UIComponent/Button/classes/class.ilLinkButton.php';
-require_once 'Services/Utilities/classes/class.ilConfirmationGUI.php';
-require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
-require_once 'class.xaliOverviewUserTableGUI.php';
-require_once 'class.xaliOverviewListTableGUI.php';
-require_once 'class.xaliUserDetailsTableGUI.php';
 
 /**
  * Class xaliOverviewGUI
@@ -210,8 +202,7 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function createList() {
-		$date = $_POST['checklist_date'];
-		$date = $date['date']['y'] . '-' . $date['date']['m'] . '-' . $date['date']['d'];
+		$date = date('Y-m-d', strtotime($_POST['checklist_date']));
 		$this->checkDate($date);
 		$checklist = new xaliChecklist();
 		$checklist->setObjId($this->parent_gui->obj_id);
@@ -245,9 +236,18 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function editList() {
-		$this->ctrl->saveParameter($this, 'checklist_id');
+		$checklist_id = $_GET['checklist_id'];
+		if (!$checklist_id) {
+			if ($_GET['entry_id']) {
+				$checklist_id = xaliChecklistEntry::find($_GET['entry_id'])->getChecklistId();
+			} else {
+				$this->ctrl->redirect($this, self::CMD_LISTS);
+			}
+		}
+
+		$this->ctrl->setParameter($this, 'checklist_id', $checklist_id);
 		$users = $this->parent_gui->getMembers();
-		$checklist = xaliChecklist::find($_GET['checklist_id']);
+		$checklist = xaliChecklist::find($checklist_id);
 		if (!$checklist->hasSavedEntries()) {
 			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
 		}
@@ -262,7 +262,17 @@ class xaliOverviewGUI extends xaliGUI {
 	 *
 	 */
 	public function editUser() {
-		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $_GET['user_id'], $this->parent_gui->obj_id);
+		$user_id = $_GET['user_id'];
+
+		if (!$user_id) {
+			if ($_GET['entry_id']) {
+				$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
+			} else {
+				$this->ctrl->redirect($this, self::CMD_STANDARD);
+			}
+		}
+
+		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $user_id, $this->parent_gui->obj_id);
 		$this->tpl->setContent($xaliUserDetailsGUI->getHTML());
 	}
 

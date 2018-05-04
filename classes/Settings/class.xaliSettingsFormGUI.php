@@ -1,7 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
-require_once 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/Helper/class.srWeekdayInputGUI.php';
 /**
  * Class xaliSettingsFormGUI
  *
@@ -52,7 +50,10 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	 * @param $parent_gui xaliSettingsGUI
 	 */
 	public function __construct(xaliSettingsGUI $parent_gui, ilObjAttendanceList $object) {
-		global $ilCtrl, $lng, $tpl;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
+		$lng = $DIC['lng'];
+		$tpl = $DIC['tpl'];
 		$this->parent_gui = $parent_gui;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilAttendanceListPlugin::getInstance();
@@ -92,11 +93,11 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->addItem($input);
 
 		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_FROM), self::F_ACTIVATION_FROM);
-		$input->setValueByArray(array(self::F_ACTIVATION_FROM => array("date" => $this->settings->getActivationFrom())));
+		$input->setValueByArray(array(self::F_ACTIVATION_FROM => $this->settings->getActivationFrom()));
 		$this->addItem($input);
 
 		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_TO), self::F_ACTIVATION_TO);
-		$input->setValueByArray(array(self::F_ACTIVATION_TO => array("date" => $this->settings->getActivationTo())));
+		$input->setValueByArray(array(self::F_ACTIVATION_TO => $this->settings->getActivationTo()));
 		$this->addItem($input);
 
 		$input = new srWeekdayInputGUI($this->pl->txt(self::F_WEEKDAYS), self::F_WEEKDAYS);
@@ -132,10 +133,10 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->settings->setActivation($this->getInput(self::F_ACTIVATION));
 
 		$activation_from = $this->getInput(self::F_ACTIVATION_FROM);
-		$this->settings->setActivationFrom($activation_from['date']);
+		$this->settings->setActivationFrom($activation_from);
 
 		$activation_to = $this->getInput(self::F_ACTIVATION_TO);
-		$this->settings->setActivationTo($activation_to['date']);
+		$this->settings->setActivationTo($activation_to);
 
 		$this->settings->setActivationWeekdays($this->getInput(self::F_WEEKDAYS));
 

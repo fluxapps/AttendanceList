@@ -1,7 +1,5 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once 'Services/Table/classes/class.ilTable2GUI.php';
-require_once 'Services/UIComponent/AdvancedSelectionList/classes/class.ilAdvancedSelectionListGUI.php';
 /**
  * Class xaliOverviewListTableGUI
  *
@@ -30,7 +28,9 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	 * @param string          $obj_id
 	 */
 	public function __construct(xaliOverviewGUI $a_parent_obj, $obj_id) {
-		global $lng, $ilCtrl;
+		global $DIC;
+		$lng = $DIC['lng'];
+		$ilCtrl = $DIC['ilCtrl'];
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilAttendanceListPlugin::getInstance();
@@ -38,7 +38,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->setId('xali_lists_overview_'.$obj_id);
 
 		parent::__construct($a_parent_obj, xaliOverviewGUI::CMD_LISTS);
-		$this->setRowTemplate('tpl.list_overview_row.html', 'Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList');
+		$this->setRowTemplate('tpl.list_overview_row.html', $this->pl->getDirectory());
 		$this->setExportFormats(array(self::EXPORT_CSV, self::EXPORT_EXCEL));
 
 		$this->initColumns();
@@ -156,11 +156,11 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param object $a_worksheet
+	 * @param ilExcel $a_worksheet
 	 * @param int    $a_row
 	 * @param array  $a_set
 	 */
-	protected function fillRowExcel($a_worksheet, &$a_row, $a_set) {
+	protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set) {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);
 		parent::fillRowExcel($a_worksheet, $a_row, $a_set);

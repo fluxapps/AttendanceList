@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-require_once ('./Services/Repository/classes/class.ilObjectPluginListGUI.php');
-require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/classes/class.ilObjAttendanceListGUI.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+
 /**
  * Class ilObjAttendanceListListGUI
  *
@@ -10,7 +10,7 @@ require_once ('./Customizing/global/plugins/Services/Repository/RepositoryObject
 class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 	function getGuiClass() {
-		return 'ilObjAttendanceListGUI';
+		return ilObjAttendanceListGUI::class;
 	}
 
 
@@ -45,6 +45,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		return $commands;
 	}
 
+
 	/**
 	 * Get item properties
 	 *
@@ -53,14 +54,14 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 	 *                        'property' (string) => property name
 	 *                        'value' (string) => property value
 	 */
-	public function getCustomProperties() {
+	public function getCustomProperties($a_prop = array()) {
 
-		$props = parent::getCustomProperties(array());
+		$props = parent::getCustomProperties($a_prop);
 
 		try {
 			/** @var xaliSetting $settings */
 			$settings = xaliSetting::find($this->obj_id);
-			if ($settings != null) {
+			if ($settings != NULL) {
 				if ($settings->getActivation()) {
 					$activation_from = date('d. M Y', strtotime($settings->getActivationFrom()));
 					$activation_to = date('d. M Y', strtotime($settings->getActivationTo()));
@@ -86,9 +87,9 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 		}
 
-
 		return $props;
 	}
+
 
 	/**
 	 * get all alert properties
@@ -106,7 +107,8 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 		return $alert;
 	}
 
+
 	function initType() {
-		$this->setType('xali');
+		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
 	}
 }
