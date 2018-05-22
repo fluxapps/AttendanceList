@@ -102,7 +102,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * async auto complete method for user filter in overview
 	 */
 	public function addUserAutoComplete() {
-		include_once './Services/User/classes/class.ilUserAutoComplete.php';
 		$auto = new ilUserAutoComplete();
 		$auto->setSearchFields(array( 'login', 'firstname', 'lastname' ));
 		$auto->setResultField('login');

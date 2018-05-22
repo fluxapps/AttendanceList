@@ -172,7 +172,6 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 				break;
 			case 'ilpermissiongui':
 				$this->checkPermission("edit_permission");
-				include_once("Services/AccessControl/classes/class.ilPermissionGUI.php");
 				$perm_gui = new ilPermissionGUI($this);
 				$this->tabs->setTabActive("id_permissions");
 				$this->ctrl->forwardCommand($perm_gui);
@@ -233,7 +232,6 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		{
 			ilUtil::sendFailure(sprintf($lng->txt("msg_no_perm_read_item"),
 				ilObject::_lookupTitle(ilObject::_lookupObjId($ref_id))));
-			include_once("./Services/Object/classes/class.ilObjectGUI.php");
 			ilObjectGUI::_gotoRepositoryRoot();
 		}
 	}

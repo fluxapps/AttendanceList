@@ -67,7 +67,6 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 * @return bool
 	 */
 	static function checkOnline($a_id) {
-		require_once __DIR__ . '/../classes/Settings/class.xaliSetting.php';
 		/**
 		 * @var $xaliSettings xaliSetting
 		 */

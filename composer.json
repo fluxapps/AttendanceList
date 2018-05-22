@@ -22,6 +22,8 @@
   "autoload": {
     "classmap": [
       "./classes/",
+      "../../../../../../../Services/AccessControl",
+      "../../../../../../../Services/Excel",
       "../../../../../../../Services/Table",
       "../../../../../../../Services/Form",
       "../../../../../../../Services/Repository",

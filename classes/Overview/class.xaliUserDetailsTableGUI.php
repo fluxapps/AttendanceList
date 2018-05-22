@@ -220,7 +220,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			{
 				$value = implode(', ', $value);
 			}
-			$a_worksheet->write($a_row, $col, strip_tags($value));
+			$a_worksheet->setCell($a_row, $col, strip_tags($value));
 			$col++;
 		}
 	}
@@ -248,36 +248,32 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			switch($format)
 			{
 				case self::EXPORT_EXCEL:
-					include_once "./Services/Excel/classes/class.ilExcelUtils.php";
-					include_once "./Services/Excel/classes/class.ilExcelWriterAdapter.php";
-					$adapter = new ilExcelWriterAdapter($filename.".xls", $send);
-					$workbook = $adapter->getWorkbook();
-					$worksheet = $workbook->addWorksheet();
-					$row = 0;
+				    $excel = new ilExcel();
+				    $excel->addSheet($filename);
+                    $row = 0;
 
-					ob_start();
-					$this->fillMetaExcel($worksheet, $row); // row must be increment in fillMetaExcel()! (optional method)
+                    ob_start();
+                    $this->fillMetaExcel($excel, $row); // row must be increment in fillMetaExcel()! (optional method)
 
-					// #14813
-					$pre = $row;
-					$this->fillHeaderExcel($worksheet, $row); // row should NOT be incremented in fillHeaderExcel()! (required method)
-					if($pre == $row)
-					{
-						$row++;
-					}
+                    // #14813
+                    $pre = $row;
+                    $this->fillHeaderExcel($excel, $row); // row should NOT be incremented in fillHeaderExcel()! (required method)
+                    if($pre == $row)
+                    {
+                        $row++;
+                    }
 
-					foreach($this->row_data as $set)
-					{
-						$this->fillRowExcel($worksheet, $row, $set);
-						$row++; // #14760
-					}
-					ob_end_clean();
+                    foreach($this->row_data as $set)
+                    {
+                        $this->fillRowExcel($excel, $row, $set);
+                        $row++; // #14760
+                    }
+                    ob_end_clean();
 
-					$workbook->close();
-					break;
+                    $excel->sendToClient($filename);
+                    break;
 
-				case self::EXPORT_CSV:
-					include_once "./Services/Utilities/classes/class.ilCSVWriter.php";
+                case self::EXPORT_CSV:
 					$csv = new ilCSVWriter();
 					$csv->setSeparator(";");
 
