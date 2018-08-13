@@ -211,8 +211,9 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 */
 	public function getAttendanceListIdForCourse($crs_ref_id, $get_ref_id = false) {
 		global $DIC;
+		/** @var ilTree $tree */
 		$tree = $DIC['tree'];
-		$attendancelist = array_shift($tree->getChildsByType($crs_ref_id, $this->getId()));
+		$attendancelist = array_shift($tree->getSubTree($tree->getNodeData($crs_ref_id), true, $this->getId()));
 		$ref_id = $attendancelist['child'];
 		if ($get_ref_id) {
 			return $ref_id;
