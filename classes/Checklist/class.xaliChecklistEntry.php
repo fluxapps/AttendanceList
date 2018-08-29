@@ -96,7 +96,7 @@ class xaliChecklistEntry extends ActiveRecord {
 			ilObjAttendanceListGUI::class,
 			xaliAbsenceStatementGUI::class
 		), xaliAbsenceStatementGUI::CMD_STANDARD);
-		$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . $base_link_relative . '&baseClass=ilObjPluginDispatchGUI';
+		$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/' . $base_link_relative . '&baseClass=ilObjPluginDispatchGUI';
 
 		$parent_course = ilAttendanceListPlugin::getInstance()->getParentCourseOrGroup($ref_id);
 		$absence_date = $xaliChecklist->getChecklistDate('d.m.Y');
