@@ -41,6 +41,8 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
 
+		parent::__construct();
+
 		if ($file_id = $this->absence_statement->getFileId()) {
 			$this->ctrl->setParameter($this->parent_gui, 'file_id', $file_id);
 		}
