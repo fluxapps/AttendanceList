@@ -90,18 +90,12 @@ class xaliChecklistEntry extends ActiveRecord {
 		/** @var xaliChecklist $xaliChecklist */
 		$xaliChecklist = xaliChecklist::find($this->getChecklistId());
 		$ref_id = ilAttendanceListPlugin::lookupRefId($xaliChecklist->getObjId());
-		$ilCtrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'ref_id', $ref_id);
-		$base_link_relative = $ilCtrl->getLinkTargetByClass(array(
-			ilObjPluginDispatchGUI::class,
-			ilObjAttendanceListGUI::class,
-			xaliAbsenceStatementGUI::class
-		), xaliAbsenceStatementGUI::CMD_STANDARD);
-		$base_link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/' . $base_link_relative . '&baseClass=ilObjPluginDispatchGUI';
+        $link = xaliConfig::getConfig(xaliConfig::F_HTTP_PATH) . '/goto.php?target=xali_' . $ref_id . '_' . $this->id;
 
 		$parent_course = ilAttendanceListPlugin::getInstance()->getParentCourseOrGroup($ref_id);
 		$absence_date = $xaliChecklist->getChecklistDate('d.m.Y');
 		$absence = 'Kurs "' . $parent_course->getTitle() . "\": \n";
-		$absence .= "» $absence_date: " . $base_link . "&entry_id={$this->id} \n";
+		$absence .= "» $absence_date: " . $link . "\n";
 
 		$placeholders = array( 'user' => $ilObjUser, 'absence' => $absence );
 
