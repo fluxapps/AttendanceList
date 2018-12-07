@@ -40,10 +40,7 @@ class xaliAbsenceStatementGUI extends xaliGUI {
 		$xaliAbsenceFormGUI->setValuesByPost();
 		if ($xaliAbsenceFormGUI->saveForm()) {
 			$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
-			/** @var xaliUserStatus $user_status */
-			$user_status = xaliUserStatus::where(array('attendancelist_id' => $this->parent_gui->obj_id, 'user_id' => $user_id))->first();
-			$user_status->updateLPStatus();
-			$user_status->update();
+			xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->obj_id);
 
 			ilUtil::sendSuccess($this->pl->txt('msg_saved'), true);
 			$this->cancel();
