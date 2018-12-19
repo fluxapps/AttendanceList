@@ -172,7 +172,7 @@ class xaliOverviewGUI extends xaliGUI {
 		}
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->obj_id);
 
 		ilUtil::sendSuccess($this->pl->txt('msg_user_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
@@ -325,7 +325,7 @@ class xaliOverviewGUI extends xaliGUI {
 		$checklist_entry->store();
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatus($_GET['user_id'], $this->parent_gui->obj_id);
 
 		exit;
 	}

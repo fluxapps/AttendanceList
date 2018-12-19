@@ -374,7 +374,10 @@ class xaliUserStatus extends ActiveRecord {
 			$this->setStatus(ilLPStatus::LP_STATUS_COMPLETED_NUM);                      //COMPLETED: minimum attendance is reached
 		} elseif ((time()-(60*60*24)) > strtotime($xaliSetting->getActivationTo())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_FAILED_NUM);                         //FAILED: minimum attendance not reached and time is up
-		} else {
+		} elseif ($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) == 0
+            && $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) == 0) {
+            $this->setStatus(ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM);                  //NOT ATTEMPTED: no absences and no presences
+        } else {
 			$this->setStatus(ilLPStatus::LP_STATUS_IN_PROGRESS_NUM);                    //IN PROGR: minimum attendance not reached, time not yet up
 		}
 	}
@@ -385,10 +388,18 @@ class xaliUserStatus extends ActiveRecord {
 	 */
 	public static function updateUserStatuses($attendancelist_id) {
 		foreach (ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($attendancelist_id)) as $user_id) {
-			$user_status = self::getInstance($user_id, $attendancelist_id);
-			$user_status->updateLPStatus();
-			$user_status->store();
+			self::updateUserStatus($user_id, $attendancelist_id);
 		}
+	}
+
+    /**
+     * @param $user_id
+     * @param $attendancelist_id
+     */
+    public static function updateUserStatus($user_id, $attendancelist_id) {
+        $user_status = self::getInstance($user_id, $attendancelist_id);
+        $user_status->updateLPStatus();
+        $user_status->store();
 	}
 
 	/**
