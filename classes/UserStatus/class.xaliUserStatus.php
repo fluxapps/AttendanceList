@@ -370,14 +370,14 @@ class xaliUserStatus extends ActiveRecord {
 
 		/** @var xaliSetting $xaliSetting */
 		$xaliSetting = xaliSetting::find($this->attendancelist_id);
-		if ($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) == 0
-            && $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) == 0) {
-		    $this->setStatus(ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM);                  //NOT ATTEMPTED: no absences and no presences
-        } elseif ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
+		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_COMPLETED_NUM);                      //COMPLETED: minimum attendance is reached
 		} elseif ((time()-(60*60*24)) > strtotime($xaliSetting->getActivationTo())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_FAILED_NUM);                         //FAILED: minimum attendance not reached and time is up
-		} else {
+		} elseif ($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) == 0
+            && $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) == 0) {
+            $this->setStatus(ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM);                  //NOT ATTEMPTED: no absences and no presences
+        } else {
 			$this->setStatus(ilLPStatus::LP_STATUS_IN_PROGRESS_NUM);                    //IN PROGR: minimum attendance not reached, time not yet up
 		}
 	}
