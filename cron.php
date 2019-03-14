@@ -70,7 +70,6 @@ class xaliCron {
 		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
 			require_once './Services/Cron/classes/class.ilCronStartUp.php';
 			$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
-			$ilCronStartup->initIlias();
 			$ilCronStartup->authenticate();
 		} else {
 			require_once 'Services/Context/classes/class.ilContext.php';
