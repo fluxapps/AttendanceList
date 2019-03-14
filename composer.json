@@ -35,7 +35,8 @@
       "../../../../../../../Services/User",
       "../../../../../../../Services/Object",
       "../../../../../../../Modules/File",
-      "../../../UIComponent/UserInterfaceHook/Notifications4Plugins/classes"
+      "../../../UIComponent/UserInterfaceHook/Notifications4Plugins/classes",
+      "../../../UIComponent/UserInterfaceHook/Notifications4Plugins/src"
     ]
   },
   "config": {
