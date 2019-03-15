@@ -8,7 +8,7 @@ Virtual attendance lists as repository objects in ILIAS. Some of the features:
 
 Installation
 ------------
-####AttendanceList
+#### AttendanceList
 Navigate into the ILIAS root directory, then use:
 
 ```bash
@@ -17,8 +17,8 @@ cd Customizing/global/plugins/Services/Repository/RepositoryObject
 git clone https://github.com/studer-raimann/AttendanceList.git
 ```
 
-####Dependencies
-#####Notifications4Plugins
+#### Dependencies
+##### Notifications4Plugins
 This plugin is required for the AttendanceList plugin to send notifications. Install the plugin from the Github Repository (Installation Guide can be found in the README.md): 
 
 https://github.com/studer-raimann/Notifications4Plugins
@@ -59,7 +59,7 @@ After installation, two notifications must be configured in order for the Attend
 	          
 	    Please click on the link(s) and specify a reason for your absence.
 
-####Cronjob
+#### Cronjob
 The AttendanceList-Plugin includes a cronjob which sends reminder emails to all course participants which still need to fill out the reason for one or multiple of their absences.
 
 To install the cronjob, open or create the file /etc/cron.d/ilias on your server and add the following line:
