@@ -1,9 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once 'Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Notifications4Plugins/vendor/autoload.php';
 
-use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
 /**
  * Class ilAttendanceListConfigGUI
  *
@@ -12,7 +10,6 @@ use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
-	use Notifications4PluginsTrait;
 
 	const SUBTAB_CONFIG = 'config';
 	const SUBTAB_ABSENCE_REASONS = 'absence_reasons';
@@ -51,13 +48,6 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	 * ilAttendanceListConfigGUI constructor.
 	 */
 	public function __construct() {
-		$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-		$sender = self::sender()->factory()->internalMail(ANONYMOUS_USER_ID, 375);
-		$placeholders = array('user' => 'hallo', 'open_absences' => 'absenz xy');
-
-		$notification = self::notification()->getNotificationByName('absence_reminder');
-		$sent = self::sender()->send($sender, $notification, $placeholders);
-
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		$ilCtrl = $DIC['ilCtrl'];
