@@ -30,6 +30,7 @@ After installation, two notifications must be configured in order for the Attend
 * *Title:* Absence
 * *Description:* Mail which will be sent directly after a user has been defined as absent
 * *Default Language:* en
+* *Language:* en
 * *Subject:* Absence
 * *Text*: 
 
@@ -46,6 +47,7 @@ After installation, two notifications must be configured in order for the Attend
 * *Title:* Absence Reminder
 * *Description:* Reminder email listing all open absence reasons
 * *Default Language:* en
+* *Language:* en
 * *Subject:* Reminder: reasons for absence still open
 * *Text*: 
 
