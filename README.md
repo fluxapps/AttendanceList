@@ -59,6 +59,15 @@ After installation, two notifications must be configured in order for the Attend
 	          
 	    Please click on the link(s) and specify a reason for your absence.
 
+####Cronjob
+The AttendanceList-Plugin includes a cronjob which sends reminder emails to all course participants which still need to fill out the reason for one or multiple of their absences.
+
+To install the cronjob, open or create the file /etc/cron.d/ilias on your server and add the following line:
+```bash
+* 7 * * * www-data /usr/bin/php /var/www/ilias/Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/cron.php $USER $PASSWORD $ILIAS_CLIENT_ID > /dev/null
+```
+Change the $USER and $PASSWORD to the login and password of an ilias user and $ILIAS_CLIENT_ID to your ilias client id.
+
 ### Adjustment suggestions
 * Adjustment suggestions by pull requests
 * Adjustment suggestions which are not yet worked out in detail by Jira tasks under https://jira.studer-raimann.ch/projects/PLATT
