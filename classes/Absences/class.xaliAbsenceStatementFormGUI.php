@@ -20,6 +20,10 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 	 */
 	protected $ctrl;
 	/**
+	 * @var \ILIAS\FileUpload\FileUpload $upload
+	 */
+	protected $upload;
+	/**
 	 * @var xaliAbsenceStatement
 	 */
 	protected $absence_statement;
@@ -40,6 +44,7 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
+		$this->upload = $DIC->upload();
 
 		parent::__construct();
 
@@ -130,6 +135,11 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 				$file_obj->setType('file');
 				$file_obj->setMode("object");
 				$file_obj->create();
+
+				if (false === $this->upload->hasBeenProcessed()) {
+					$this->upload->process();
+				}
+
 
 				$file_obj->getUploadFile($fileupload['tmp_name'], $fileupload["name"]);
 

@@ -34,8 +34,7 @@
       "../../../../../../../Services/Tracking",
       "../../../../../../../Services/User",
       "../../../../../../../Services/Object",
-      "../../../../../../../Modules/File",
-      "../../../UIComponent/UserInterfaceHook/Notifications4Plugins/classes"
+      "../../../../../../../Modules/File"
     ]
   },
   "config": {

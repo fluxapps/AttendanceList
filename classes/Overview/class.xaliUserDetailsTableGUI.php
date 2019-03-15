@@ -220,7 +220,12 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			{
 				$value = implode(', ', $value);
 			}
-			$a_worksheet->setCell($a_row, $col, strip_tags($value));
+
+			if (method_exists($a_worksheet, 'write')) {
+				$a_worksheet->write($a_row, $col, strip_tags($value));
+			} else {
+				$a_worksheet->setCell($a_row, $col, strip_tags($value));
+			}
 			$col++;
 		}
 	}
