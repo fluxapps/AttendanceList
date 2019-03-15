@@ -112,8 +112,7 @@ class xaliCron {
      */
     protected function sendAbsenceReminders() {
         require_once __DIR__
-            . '/../../../UIComponent/UserInterfaceHook/Notifications4Plugins/src/NotificationSender/srNotificationInternalMailSender.php';
-        require_once __DIR__ . '/../../../UIComponent/UserInterfaceHook/Notifications4Plugins/src/Notification/srNotification.php';
+            . '/../../../UIComponent/UserInterfaceHook/Notifications4Plugins/vendor/autoload.php';
         require_once __DIR__ . '/classes/Config/class.xaliConfig.php';
         require_once __DIR__ . '/classes/Config/class.xaliLastReminder.php';
         require_once 'Services/User/classes/class.ilObjUser.php';

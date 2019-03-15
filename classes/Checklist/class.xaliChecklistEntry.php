@@ -1,8 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Plugins\Notifications4Plugins\Notification\srNotification;
-use srag\Plugins\Notifications4Plugins\NotificationSender\srNotificationInternalMailSender;
+use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
 
 /**
  * Class xaliChecklistEntry
@@ -11,10 +10,12 @@ use srag\Plugins\Notifications4Plugins\NotificationSender\srNotificationInternal
  */
 class xaliChecklistEntry extends ActiveRecord {
 
+	use Notifications4PluginsTrait;
 	const DB_TABLE_NAME = "xali_entry";
 	const STATUS_ABSENT_UNEXCUSED = 1;
 	const STATUS_ABSENT_EXCUSED = 2; // DEPRECATED
 	const STATUS_PRESENT = 3;
+	const NOTIFICATION_NAME = "absence";
 
 
 	static function returnDbTableName() {
@@ -102,11 +103,11 @@ class xaliChecklistEntry extends ActiveRecord {
 
 		$placeholders = array( 'user' => $ilObjUser, 'absence' => $absence );
 
-		$notification = srNotification::getInstanceByName('absence');
+		$notification = self::notification()->getNotificationByName(self::NOTIFICATION_NAME);
 
 		$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-		$sender = new srNotificationInternalMailSender($sender_id, $ilObjUser->getId());
-		$sent = $notification->send($sender, $placeholders);
+		$sender = self::sender()->factory()->internal($sender_id, $ilObjUser->getId());
+		$sent = self::sender()->send($sender, $notification, $placeholders);
 
 		if ($sent) {
 			$interval = xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL);
