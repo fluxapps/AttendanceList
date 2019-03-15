@@ -14,7 +14,9 @@ table_column_percentage#:#Presence Percentage / Minimum Attendance
 table_column_no_status#:#Not Edited
 table_column_title#:#Title
 table_column_info#:#Info
+table_column_has_comment#:#Comment
 table_column_comment_req#:#Comment Required
+table_column_has_upload#:#Upload
 table_column_upload_req#:#Upload Required
 table_column_absence_reason#:#Reason For Absence
 table_checklist_title_today#:#Attendance list of today, %s
@@ -97,7 +99,7 @@ config_sender_reminder_email_info#:#All reminder emails will be send from this u
 config_header_notification#:#Notification
 config_form_title#:#Title
 config_form_info#:#Info
-config_form_comment#:#Show comment field
+config_form_has_comment#:#Show comment field
 config_form_comment_req#:#Mandatory field
-config_form_upload#:#Show file upload field
+config_form_has_upload#:#Show file upload field
 config_form_upload_req#:#Mandatory field

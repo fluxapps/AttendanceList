@@ -90,7 +90,7 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 		for ($i = 1; $i < 8; $i ++) {
 			$tpl->setCurrentBlock('byday_simple');
 
-			if (in_array($days[$i], $this->getValue())) {
+			if (is_array($this->getValue()) && in_array($days[$i], $this->getValue())) {
 				$tpl->setVariable('BYDAY_WEEKLY_CHECKED', 'checked="checked"');
 			}
 			$tpl->setVariable('TXT_ON', $this->lng->txt('cal_on'));

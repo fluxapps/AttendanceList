@@ -264,6 +264,11 @@ class xaliUserStatus extends ActiveRecord {
 		$this->created_user_id = $ilUser->getId();
 		$this->updated_user_id = $ilUser->getId();
 		parent::create();
+        ilLPStatusWrapper::_updateStatus($this->attendancelist_id, $this->user_id);
+        ilLearningProgress::_tracProgress($this->user_id,
+            $this->attendancelist_id,
+            $this->getRefId(),
+            'xali');
 	}
 
 
@@ -274,15 +279,12 @@ class xaliUserStatus extends ActiveRecord {
 	{
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
-		$ilAppEventHandler = $DIC['ilAppEventHandler'];
 
 		$this->updated_at = date('Y-m-d H:i:s');
 		$this->updated_user_id = $ilUser->getId();
 		parent::update();
 
-		if ($this->hasStatusChanged()) {
-			ilLPStatusWrapper::_updateStatus($this->attendancelist_id, $this->user_id);
-		}
+		ilLPStatusWrapper::_updateStatus($this->attendancelist_id, $this->user_id);
 	}
 
 
