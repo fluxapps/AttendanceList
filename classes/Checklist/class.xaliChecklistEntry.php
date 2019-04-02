@@ -1,7 +1,10 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
+use srag\Notifications4Plugin\Notifications4Plugins\Exception\Notifications4PluginException;
+use srag\Notifications4Plugin\Notifications4Plugins\Utils\Notifications4PluginTrait;
+use srag\Plugins\Notifications4Plugins\Notification\Language\NotificationLanguage;
+use srag\Plugins\Notifications4Plugins\Notification\Notification;
 
 /**
  * Class xaliChecklistEntry
@@ -10,7 +13,7 @@ use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
  */
 class xaliChecklistEntry extends ActiveRecord {
 
-	use Notifications4PluginsTrait;
+	use Notifications4PluginTrait;
 	const DB_TABLE_NAME = "xali_entry";
 	const STATUS_ABSENT_UNEXCUSED = 1;
 	const STATUS_ABSENT_EXCUSED = 2; // DEPRECATED
@@ -103,13 +106,14 @@ class xaliChecklistEntry extends ActiveRecord {
 
 		$placeholders = array( 'user' => $ilObjUser, 'absence' => $absence );
 
-		$notification = self::notification()->getNotificationByName(self::NOTIFICATION_NAME);
+		$notification = self::notification(Notification::class, NotificationLanguage::class)->getNotificationByName(self::NOTIFICATION_NAME);
 
 		$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
 		$sender = self::sender()->factory()->internalMail($sender_id, $ilObjUser->getId());
-		$sent = self::sender()->send($sender, $notification, $placeholders);
 
-		if ($sent) {
+		try {
+			self::sender()->send($sender, $notification, $placeholders);
+
 			$interval = xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL);
 			if (!$interval) {
 				return true;
@@ -127,6 +131,8 @@ class xaliChecklistEntry extends ActiveRecord {
 				$last_reminder->update();
 			}
 			// don't reset the last reminder if there has already been a reminder
+		} catch (Notifications4PluginException $ex) {
+
 		}
 	}
 
