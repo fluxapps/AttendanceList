@@ -198,7 +198,7 @@ class xaliCron {
 
 			$ilObjUser = new ilObjUser($user_id);
 			$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-			$sender = self::sender()->factory()->internalMail($user_id, $sender_id);
+			$sender = self::sender()->factory()->internalMail($sender_id, $user_id);
 
 			$open_absences = '';
 			foreach ($array as $ref_id => $entry_array) {
