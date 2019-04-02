@@ -1,7 +1,9 @@
 <?php
-require_once 'Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Notifications4Plugins/vendor/autoload.php';
 
-use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
+use srag\Notifications4Plugin\Notifications4Plugins\Exception\Notifications4PluginException;
+use srag\Notifications4Plugin\Notifications4Plugins\Utils\Notifications4PluginTrait;
+use srag\Plugins\Notifications4Plugins\Notification\Language\NotificationLanguage;
+use srag\Plugins\Notifications4Plugins\Notification\Notification;
 
 /**
  * Class xaliCron
@@ -10,9 +12,10 @@ use srag\Plugins\Notifications4Plugins\Utils\Notifications4PluginsTrait;
  */
 class xaliCron {
 
-	use Notifications4PluginsTrait;
+	use Notifications4PluginTrait;
 
 	const DEBUG = false;
+	const NOTIFICATION_NAME = "absence_reminder";
 	/**
 	 * @var Ilias
 	 */
@@ -61,8 +64,6 @@ class xaliCron {
 		if (self::DEBUG) {
 			$ilLog->write('Auth passed for async AttendanceList');
 		}
-
-		require_once __DIR__ . '/class.ilAttendanceListPlugin.php';
 		/**
 		 * @var $ilDB   ilDB
 		 * @var $ilUser ilObjUser
@@ -124,10 +125,6 @@ class xaliCron {
 	 * @throws Exception
 	 */
 	protected function sendAbsenceReminders() {
-		require_once __DIR__
-			. '/../../../../UIComponent/UserInterfaceHook/Notifications4Plugins/vendor/autoload.php';
-		require_once __DIR__ . '/Config/class.xaliConfig.php';
-		require_once __DIR__ . '/Config/class.xaliLastReminder.php';
 		require_once 'Services/User/classes/class.ilObjUser.php';
 
 		$interval = xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL);
@@ -187,7 +184,7 @@ class xaliCron {
 		// send mails
 		foreach ($send_mail as $user_id => $array) {
 			/** @var xaliLastReminder $last_reminder */
-			$last_reminder = xaliLastReminder::where(array('user_id' => $user_id))->first();
+			$last_reminder = xaliLastReminder::where(array( 'user_id' => $user_id ))->first();
 
 			if (!$last_reminder) {
 				$last_reminder = new xaliLastReminder();
@@ -225,14 +222,16 @@ class xaliCron {
 				continue;
 			}
 
-			$placeholders = array('user' => $ilObjUser, 'open_absences' => $open_absences);
+			$placeholders = array( 'user' => $ilObjUser, 'open_absences' => $open_absences );
 
-			$notification = self::notification()->getNotificationByName('absence_reminder');
-			$sent = self::sender()->send($sender, $notification, $placeholders);
+			try {
+				$notification = self::notification(Notification::class, NotificationLanguage::class)->getNotificationByName(self::NOTIFICATION_NAME);
+				self::sender()->send($sender, $notification, $placeholders);
 
-			if ($sent) {
 				$last_reminder->setLastReminder(date('Y-m-d'));
 				$last_reminder->update();
+			} catch (Notifications4PluginException $ex) {
+
 			}
 		}
 	}
