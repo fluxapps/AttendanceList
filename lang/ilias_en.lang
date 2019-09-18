@@ -24,6 +24,7 @@ table_checklist_title#:#Attendance list of %s
 label_unexcused#:#Absent
 label_excused#:#Absent Excused
 label_present#:#Present
+label_not_relevant#:#Not relevant
 list_unsaved_today#:#The attendance list for today has not been saved yet. Please fill it out and click on "save".
 list_unsaved#:#This attendance list has not been saved yet. Please fill it out and click on "save".
 msg_checklist_saved#:#Attendance list saved successfully.
@@ -103,4 +104,4 @@ config_form_has_comment#:#Show comment field
 config_form_comment_req#:#Mandatory field
 config_form_has_upload#:#Show file upload field
 config_form_upload_req#:#Mandatory field
-config_show_not_relevant_status#:#Show 'Not revelant' status
+config_show_not_relevant_status#:#Show 'Not relevant' status

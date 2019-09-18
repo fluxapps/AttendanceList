@@ -24,6 +24,7 @@ table_checklist_title#:#Anwesenheitsliste vom %s
 label_unexcused#:#Abwesend
 label_excused#:#Abwesend Entschuldigt
 label_present#:#Anwesend
+label_not_relevant#:#Nicht relevant
 list_unsaved_today#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
 list_unsaved#:#Diese Anwesenheitsliste wurde noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
 msg_checklist_saved#:#Die Anwesenheitsliste wurde gespeichert.
@@ -103,4 +104,4 @@ config_form_has_comment#:#Kommentarfeld anbieten
 config_form_comment_req#:#Feld muss ausgefüllt werden
 config_form_has_upload#:#Dateiupload-Feld anbieten
 config_form_upload_req#:#Feld muss ausgefüllt werden
-config_show_not_relevant_status#:#'Nicht revelant'-Status anzeigen
+config_show_not_relevant_status#:#'Nicht relevant'-Status anzeigen

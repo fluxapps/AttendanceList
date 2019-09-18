@@ -167,8 +167,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		}
 		//		$this->tpl->setVariable('VAL_LINK_ABSENCE', )
 
-		//		foreach (array('unexcused', 'excused', 'present') as $label) {
-		foreach (array('unexcused', 'present') as $label) {
+		//		foreach (array('unexcused', 'excused', 'present', 'not_relevant') as $label) {
+		foreach (array('unexcused', 'present', 'not_relevant') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
 	}
