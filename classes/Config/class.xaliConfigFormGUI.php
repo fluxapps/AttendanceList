@@ -56,7 +56,7 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
         $subinput = new ilCheckboxInputGUI($this->pl->txt('config_' . xaliConfig::F_SHOW_NOT_RELEVANT_STATUS), xaliConfig::F_SHOW_NOT_RELEVANT_STATUS);
         $this->addItem($subinput);
 
-        // Buttons
+		// Buttons
 		$this->addCommandButton(ilAttendanceListConfigGUI::CMD_UPDATE_CONFIG,$this->lng->txt('save'));
 
 	}
@@ -77,7 +77,7 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 		xaliConfig::set(xaliConfig::F_INTERVAL_REMINDER_EMAIL, $this->getInput(xaliConfig::F_INTERVAL_REMINDER_EMAIL));
 		xaliConfig::set(xaliConfig::F_SENDER_REMINDER_EMAIL, $this->getInput(xaliConfig::F_SENDER_REMINDER_EMAIL));
         xaliConfig::set(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS, $this->getInput(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS));
-        
+
 		return true;
 	}
 }
