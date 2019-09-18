@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+* Fix PHP 7.2
+
 ## [1.2.1]
 * Adjustments to work with latest Version of Notifications4Plugins
 
