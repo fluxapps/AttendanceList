@@ -103,3 +103,4 @@ config_form_has_comment#:#Kommentarfeld anbieten
 config_form_comment_req#:#Feld muss ausgefüllt werden
 config_form_has_upload#:#Dateiupload-Feld anbieten
 config_form_upload_req#:#Feld muss ausgefüllt werden
+config_show_not_relevant_status#:#'Nicht revelant'-Status anzeigen
