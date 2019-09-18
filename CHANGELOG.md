@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+* Fix en `Weekdays` lang key
+
 ## [1.2.1]
 * Adjustments to work with latest Version of Notifications4Plugins
 
