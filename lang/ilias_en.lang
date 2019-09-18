@@ -62,7 +62,7 @@ create_lists#:#Create lists
 create_lists_info#:#Empty lists will be created inside the chosen dates.
 delete_lists#:#Delete lists
 delete_lists_info#:#Automatically created empty lists outside the chosen dates will be deleted.
-weekdays#:#Wochentage
+weekdays#:#Weekdays
 all_users#:#Show all members
 automatically_created#:#automatically created
 incomplete#:#incomplete
