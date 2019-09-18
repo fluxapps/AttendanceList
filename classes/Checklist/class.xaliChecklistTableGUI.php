@@ -150,10 +150,14 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			$this->tpl->parseCurrentBlock();
 		}
 
-		//		foreach (array('unexcused', 'excused', 'present', 'not_relevant') as $label) {
-		foreach (array('unexcused', 'present', 'not_relevant') as $label) {
+		//		foreach (array('unexcused', 'excused', 'present') as $label) {
+		foreach (array('unexcused', 'present') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
+            $this->tpl->setCurrentBlock("not_relevant_status");
+            $this->tpl->setVariable('LABEL_NOT_RELEVANT', $this->pl->txt('label_not_relevant'));
+        }
 	}
 
 
