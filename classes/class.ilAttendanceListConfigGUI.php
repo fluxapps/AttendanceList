@@ -2,6 +2,11 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
+use srag\Plugins\AttendanceList\Notification\Ctrl\Notifications4PluginCtrl;
+use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
+use srag\Plugins\AttendanceList\Notification\Notification\Notification;
+
 /**
  * Class ilAttendanceListConfigGUI
  *
@@ -11,8 +16,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 
+	use Notifications4PluginTrait;
 	const SUBTAB_CONFIG = 'config';
 	const SUBTAB_ABSENCE_REASONS = 'absence_reasons';
+	const SUBTAB_NOTIFICATION_ABSENCE = Notifications4PluginCtrl::TAB_NOTIFICATION . '_absence';
+	const SUBTAB_NOTIFICATION_ABSENCE_REMINDER = Notifications4PluginCtrl::TAB_NOTIFICATION . '_absence_reminder';
 
 	const CMD_STANDARD = 'configure';
 	const CMD_ADD_REASON = 'addReason';
@@ -67,14 +75,34 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 
 
 	function performCommand($cmd) {
-		$this->tabs->addSubTab(self::SUBTAB_CONFIG, $this->pl->txt('subtab_' . self::SUBTAB_CONFIG), $this->ctrl->getLinkTarget($this, self::CMD_STANDARD));
-		$this->tabs->addSubTab(self::SUBTAB_ABSENCE_REASONS, $this->pl->txt('subtab_' . self::SUBTAB_ABSENCE_REASONS), $this->ctrl->getLinkTarget($this, self::CMD_SHOW_REASONS));
-		switch ($cmd) {
-			case self::CMD_SHOW_REASONS:
-				$this->addToolbarButton();
+		$this->tabs->addSubTab(self::SUBTAB_CONFIG, $this->pl->txt('subtab_'
+			. self::SUBTAB_CONFIG), $this->ctrl->getLinkTarget($this, self::CMD_STANDARD));
+
+		$this->tabs->addSubTab(self::SUBTAB_ABSENCE_REASONS, $this->pl->txt('subtab_'
+			. self::SUBTAB_ABSENCE_REASONS), $this->ctrl->getLinkTarget($this, self::CMD_SHOW_REASONS));
+
+		$this->ctrl->setParameterByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::GET_PARAM, self::notification(Notification::class, NotificationLanguage::class)
+			->getNotificationByName(xaliChecklistEntry::NOTIFICATION_NAME)->getId());
+		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE, $this->pl->txt('subtab_'
+			. self::SUBTAB_NOTIFICATION_ABSENCE), $this->ctrl->getLinkTargetByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::CMD_EDIT_NOTIFICATION));
+
+		$this->ctrl->setParameterByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::GET_PARAM, self::notification(Notification::class, NotificationLanguage::class)
+			->getNotificationByName(xaliCron::NOTIFICATION_NAME)->getId());
+		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER, $this->pl->txt('subtab_'
+			. self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER), $this->ctrl->getLinkTargetByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::CMD_EDIT_NOTIFICATION));
+
+		switch ($this->ctrl->getNextClass($this)) {
+			case strtolower(Notifications4PluginCtrl::class):
+				$this->ctrl->forwardCommand(new Notifications4PluginCtrl());
 				break;
+			default:
+				switch ($cmd) {
+					case self::CMD_SHOW_REASONS:
+						$this->addToolbarButton();
+						break;
+				}
+				$this->{$cmd}();
 		}
-		$this->{$cmd}();
 	}
 
 	protected function configure() {

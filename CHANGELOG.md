@@ -1,6 +1,9 @@
 # Changelog
 
 ## [x]
+<<<<<<< CHANGELOG.md
+* Notifications4Plugin library
+* PHP7Backport for libraries
 * Fix PHP 7.2
 
 ## [1.2.1]
