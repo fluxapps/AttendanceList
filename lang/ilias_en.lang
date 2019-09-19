@@ -19,6 +19,7 @@ table_column_comment_req#:#Comment Required
 table_column_has_upload#:#Upload
 table_column_upload_req#:#Upload Required
 table_column_absence_reason#:#Reason For Absence
+table_column_not_relevant#:#Not relevant
 table_checklist_title_today#:#Attendance list of today, %s
 table_checklist_title#:#Attendance list of %s
 label_unexcused#:#Absent

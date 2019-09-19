@@ -19,6 +19,7 @@ table_column_comment_req#:#Kommentar erforderlich
 table_column_has_upload#:#Upload
 table_column_upload_req#:#Upload erforderlich
 table_column_absence_reason#:#Abwesenheitsbegründung
+table_column_not_relevant#:#Nicht relevant
 table_checklist_title_today#:#Anwesenheitsliste von heute, %s
 table_checklist_title#:#Anwesenheitsliste vom %s
 label_unexcused#:#Abwesend

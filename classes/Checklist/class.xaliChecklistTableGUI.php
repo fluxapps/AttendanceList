@@ -101,7 +101,9 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			$checklist_entry = $this->checklist->getEntryOfUser($user->getId());
 			$user_data['entry_id'] = $checklist_entry->getId();
 			if ($status = $checklist_entry->getStatus()) {
-				$user_data["checked_$status"] = 'checked';
+                if (!xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS) ? intval($status) !== xaliChecklistEntry::STATUS_NOT_RELEVANT : true) {
+                    $user_data["checked_$status"] = 'checked';
+                }
 			} else {
 				$user_data["checked_".xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				$user_data["warning"] = $this->pl->txt('warning_not_filled_out');
@@ -155,7 +157,6 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
         if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
-            $this->tpl->setCurrentBlock("not_relevant_status");
             $this->tpl->setVariable('LABEL_NOT_RELEVANT', $this->pl->txt('label_not_relevant'));
         }
 	}
