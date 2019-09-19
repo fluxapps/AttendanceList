@@ -56,6 +56,7 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 		$subinput->setInfo($this->pl->txt('config_' . xaliConfig::F_SENDER_REMINDER_EMAIL . '_info'));
 		$this->addItem($subinput);
 
+
 		// Buttons
 		$this->addCommandButton(ilAttendanceListConfigGUI::CMD_UPDATE_CONFIG,$this->lng->txt('save'));
 
