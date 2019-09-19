@@ -1,6 +1,8 @@
 # Changelog
 
 ## [x]
+* Notifications4Plugin library
+* PHP7Backport for libraries
 * Fix en `Weekdays` lang key
 
 ## [1.2.1]
