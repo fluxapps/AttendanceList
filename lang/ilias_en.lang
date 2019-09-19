@@ -104,4 +104,6 @@ config_form_has_comment#:#Show comment field
 config_form_comment_req#:#Mandatory field
 config_form_has_upload#:#Show file upload field
 config_form_upload_req#:#Mandatory field
+subtab_notification_absence#:#Notification absence
+subtab_notification_absence_reminder#:#Notification absence reminder
 config_show_not_relevant_status#:#Show 'Not relevant' status
