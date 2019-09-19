@@ -1,5 +1,9 @@
 # Changelog
 
+## [x]
+* Notifications4Plugin library
+* PHP7Backport for libraries
+
 ## [1.2.1]
 * Adjustments to work with latest Version of Notifications4Plugins
 

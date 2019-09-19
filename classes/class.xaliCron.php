@@ -1,9 +1,9 @@
 <?php
 
-use srag\Notifications4Plugin\Notifications4Plugins\Exception\Notifications4PluginException;
-use srag\Notifications4Plugin\Notifications4Plugins\Utils\Notifications4PluginTrait;
-use srag\Plugins\Notifications4Plugins\Notification\Language\NotificationLanguage;
-use srag\Plugins\Notifications4Plugins\Notification\Notification;
+use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
+use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
+use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
+use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 
 /**
  * Class xaliCron
