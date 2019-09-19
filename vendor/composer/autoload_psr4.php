@@ -6,4 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'srag\\Plugins\\AttendanceList\\' => array($baseDir . '/src'),
+    'srag\\Notifications4Plugin\\' => array($vendorDir . '/srag/notifications4plugin/src'),
+    'srag\\LibrariesNamespaceChanger\\' => array($vendorDir . '/srag/librariesnamespacechanger/src'),
+    'srag\\DIC\\' => array($vendorDir . '/srag/dic/src'),
+    'srag\\CustomInputGUIs\\' => array($vendorDir . '/srag/custominputguis/src'),
 );
