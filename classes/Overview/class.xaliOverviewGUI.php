@@ -146,6 +146,12 @@ class xaliOverviewGUI extends xaliGUI {
 			$entry->setStatus($status);
 			$entry->setUserId($usr_id);
 			$entry->store();
+            if (($reason_id = $_POST['absence_reason'][$entry->getId()]) !== null) {
+                /** @var xaliAbsenceStatement $stm */
+                $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
+                $stm->setReasonId($reason_id);
+                $stm->store();
+            }
 		}
 
 		// update LP

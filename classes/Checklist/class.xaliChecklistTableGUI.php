@@ -131,24 +131,43 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('VAL_NAME', $a_set['name']);
 		$this->tpl->parseCurrentBlock();
 
+        /** @var xaliAbsenceStatement $reason */
+        $reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id']);
+
 		if ($a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED] == 'checked') {
 			if (ilObjAttendanceListAccess::hasWriteAccess()) {
-				$this->tpl->setCurrentBlock('absence_with_link');
-				$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'back_cmd', xaliOverviewGUI::CMD_EDIT_LIST);
-				if ($a_set['entry_id']) {
-					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'entry_id', $a_set['entry_id']);
-				} else {
-					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'checklist_id', $a_set['checklist_id']);
-					$this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class,'user_id', $a_set['id']);
-				}
-				$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
-				$this->tpl->setVariable('VAL_ABSENCE_LINK', $link_to_absence_form);
+                if (xaliAbsenceReason::where("has_comment=true OR has_upload=true")->count() === 0) {
+                    $this->tpl->setCurrentBlock('absence_reason_select');
+                    $absence_options = [];
+                    $absence_options[] = '<option value="">' . htmlspecialchars($this->pl->txt('no_absence_reason')) . '</option>';
+                    /** @var xaliAbsenceReason $xaliReason */
+                    foreach (xaliAbsenceReason::get() as $xaliReason) {
+                        $absence_options[] = '<option value="' . htmlspecialchars($xaliReason->getId()) . '"' . (intval($xaliReason->getId()) === intval($reason->getReasonId()) ? ' selected' : '')
+                            . '>'
+                            . htmlspecialchars($xaliReason->getTitle()) . '</option>';
+                    }
+                    $this->tpl->setVariable('ABSENCE_REASON_OPTIONS', implode("", $absence_options));
+                } else {
+                    $this->tpl->setCurrentBlock('absence_with_link');
+                    $this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'back_cmd', xaliOverviewGUI::CMD_EDIT_LIST);
+                    if ($a_set['entry_id']) {
+                        $this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'entry_id', $a_set['entry_id']);
+                    } else {
+                        $this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'checklist_id', $a_set['checklist_id']);
+                        $this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'user_id', $a_set['id']);
+                    }
+                    $link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
+                    $this->tpl->setVariable('VAL_ABSENCE_LINK', $link_to_absence_form);
+                    $this->tpl->setVariable('VAL_ABSENCE_REASON_ID', $a_set["entry_id"]);
+                }
 			} else {
 				$this->tpl->setCurrentBlock('absence_without_link');
 			}
 
-			$reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id'])->getReason();
-			$this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
+            if (!isset($absence_options)) {
+                $reason = $reason->getReason();
+                $this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
+            }
 			$this->tpl->parseCurrentBlock();
 		}
 
