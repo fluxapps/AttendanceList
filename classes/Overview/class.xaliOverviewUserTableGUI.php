@@ -180,6 +180,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 			case 'present':
 			case 'excused':
 			case 'unexcused':
+            case 'not_relevant':
 			case 'no_status':
 			case 'reached_percentage':
 				return true;
