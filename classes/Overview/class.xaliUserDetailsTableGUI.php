@@ -124,7 +124,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			$checklist_entry = $checklist->getEntryOfUser($this->user->getId());
 			$checklist_data['entry_id'] = $checklist_entry->getId();
 			if ($status = $checklist_entry->getStatus()) {
-                if (!xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS) ? intval($status) !== xaliChecklistEntry::STATUS_NOT_RELEVANT : true) {
+                if (!xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT) ? intval($status) !== xaliChecklistEntry::STATUS_NOT_RELEVANT : true) {
                     $checklist_data["checked_$status"] = 'checked';
                     $checklist_data["link_save_hidden"] = 'hidden';
                 }
@@ -173,7 +173,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		foreach (array('unexcused', 'present') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
-        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
             $this->tpl->setVariable('LABEL_NOT_RELEVANT', $this->pl->txt('label_not_relevant'));
         }
 	}

@@ -86,7 +86,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 			$present = $checklist->getStatusCount(xaliChecklistEntry::STATUS_PRESENT);
 //			$excused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
 			$unexcused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
-            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
+            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
                 $not_relevant = $checklist->getStatusCount(xaliChecklistEntry::STATUS_NOT_RELEVANT);
             } else {
                 $not_relevant = 0;
@@ -97,7 +97,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 			$dataset['present'] = $total ? $present . ' (' . round($present / $total * 100) . '%)' : '-';
 //			$dataset['excused'] = $total ? $excused . ' (' . round($excused / $total * 100) . '%)' : '-';
 			$dataset['unexcused'] = $total ? $unexcused . ' (' . round($unexcused / $total * 100) . '%)' : '-';
-            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
+            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
                 $dataset['not_relevant'] = $total ? $not_relevant . ' (' . round($not_relevant / $total * 100) . '%)' : '-';
             }
 			$data[] = $dataset;
@@ -148,7 +148,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->addColumn($this->pl->txt('table_column_present'));
 //		$this->addColumn($this->pl->txt('table_column_excused'));
 		$this->addColumn($this->pl->txt('table_column_unexcused'));
-        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT_STATUS)) {
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
             $this->addColumn($this->pl->txt('table_column_not_relevant'));
         }
 		$this->addColumn("", "", '30px', true);
