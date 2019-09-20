@@ -93,7 +93,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
                 $user_data["not_relevant"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_NOT_RELEVANT);
             }
             if (xaliConfig::getConfig(xaliConfig::F_SHOW_PRESENT_TOTAL)) {
-                $user_data["present_total"] = "TODO / TODO";
+                $user_data["present_total"] = $xaliUserStatus->getPresentTotalString();
             }
 
 			$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();

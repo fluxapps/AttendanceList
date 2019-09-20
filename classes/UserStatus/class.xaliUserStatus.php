@@ -416,4 +416,12 @@ class xaliUserStatus extends ActiveRecord {
 		}
 		return $this->checklist_ids;
 	}
+
+
+    /**
+     * @return string
+     */
+    public function getPresentTotalString() {
+        return $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) . ' / ' . count($this->getChecklistIds());
+    }
 }
