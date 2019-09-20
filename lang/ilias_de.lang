@@ -55,6 +55,7 @@ form_input_date#:#Datum der zu erstellenden Liste
 xali_new#:#Neue Anwesenheitsliste anlegen
 minimum_attendance#:#Mindestanwesenheit
 minimum_attendance_info#:#Wird zur Berechnung des Lernfortschritts verwendet.
+minimum_attendance_auto#:#Automatische Berechnung
 activation_from#:#Veranstaltungsbeginn
 activation_to#:#Veranstaltungsende
 obj_xali#:#Anwesenheitsliste

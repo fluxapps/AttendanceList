@@ -99,7 +99,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 			$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
 
 			$user_data['no_status'] = $xaliUserStatus->getUnedited();
-			$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $this->settings->getMinimumAttendance() . '%';
+            $user_data['minimum_attendance'] = $xaliUserStatus->calcMinimumAttendance();
+			$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $user_data['minimum_attendance'] . '%';
 			$data[] = $user_data;
 		}
 		$this->setData($data);
@@ -111,7 +112,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	 */
 	protected function fillRow($a_set) {
 		parent::fillRow($a_set);
-		$color = ($a_set['reached_percentage'] < $this->settings->getMinimumAttendance()) ? 'red' : 'green';
+		$color = ($a_set['reached_percentage'] < $a_set['minimum_attendance']) ? 'red' : 'green';
 		if ($color == 'green') {
 			$this->has_passed_students = true;
 		}

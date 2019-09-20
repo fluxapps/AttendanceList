@@ -55,6 +55,7 @@ form_input_date#:#Date of created list
 xali_new#:#Create new attendance list
 minimum_attendance#:#Minimum Attendance
 minimum_attendance_info#:#Determines the learning progress.
+minimum_attendance_auto#:#Auto calc
 activation_from#:#Active from
 activation_to#:#Active to
 obj_xali#:#Attendance List
