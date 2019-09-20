@@ -2,6 +2,7 @@
 
 ## [x]
 * Not relevant status
+* Absent / Total column
 * Notifications4Plugin library
 * PHP7Backport for libraries
 
