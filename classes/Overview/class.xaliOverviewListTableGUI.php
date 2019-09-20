@@ -86,11 +86,7 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 			$present = $checklist->getStatusCount(xaliChecklistEntry::STATUS_PRESENT);
 //			$excused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
 			$unexcused = $checklist->getStatusCount(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
-            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
-                $not_relevant = $checklist->getStatusCount(xaliChecklistEntry::STATUS_NOT_RELEVANT);
-            } else {
-                $not_relevant = 0;
-            }
+            $not_relevant = $checklist->getStatusCount(xaliChecklistEntry::STATUS_NOT_RELEVANT);
 //			$total = $present + $excused + $unexcused + $not_relevant;
 			$total = $present + $unexcused + $not_relevant;
 
