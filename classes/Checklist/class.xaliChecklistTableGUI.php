@@ -131,8 +131,8 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('VAL_NAME', $a_set['name']);
 		$this->tpl->parseCurrentBlock();
 
-        /** @var xaliAbsenceStatement $reason */
-        $reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id']);
+        /** @var xaliAbsenceStatement $stm */
+        $stm = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id']);
 
 		if ($a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED] == 'checked') {
 			if (ilObjAttendanceListAccess::hasWriteAccess()) {
@@ -142,7 +142,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
                     $absence_options[] = '<option value="">' . htmlspecialchars($this->pl->txt('no_absence_reason')) . '</option>';
                     /** @var xaliAbsenceReason $xaliReason */
                     foreach (xaliAbsenceReason::get() as $xaliReason) {
-                        $absence_options[] = '<option value="' . htmlspecialchars($xaliReason->getId()) . '"' . (intval($xaliReason->getId()) === intval($reason->getReasonId()) ? ' selected' : '')
+                        $absence_options[] = '<option value="' . htmlspecialchars($xaliReason->getId()) . '"' . (intval($xaliReason->getId()) === intval($stm->getReasonId()) ? ' selected' : '')
                             . '>'
                             . htmlspecialchars($xaliReason->getTitle()) . '</option>';
                     }
@@ -165,7 +165,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
 			}
 
             if (!isset($absence_options)) {
-                $reason = $reason->getReason();
+                $reason = $stm->getReason();
                 $this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
             }
 			$this->tpl->parseCurrentBlock();
