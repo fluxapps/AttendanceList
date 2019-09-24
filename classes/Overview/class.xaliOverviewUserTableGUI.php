@@ -62,7 +62,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->setFilterCommand(xaliOverviewGUI::CMD_APPLY_FILTER_USERS);
 		$this->setResetCommand(xaliOverviewGUI::CMD_RESET_FILTER_USERS);
 
-		if (in_array($_GET['_xpt'], array_keys($this->export_formats))) {
+		if (empty($_GET['_xpt']) || in_array($_GET['_xpt'], array_keys($this->export_formats))) {
 			$this->parseData();
 		}
 	}
