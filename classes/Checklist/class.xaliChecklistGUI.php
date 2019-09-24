@@ -90,7 +90,7 @@ class xaliChecklistGUI extends xaliGUI {
 			$entry->setStatus($status);
 			$entry->setUserId($usr_id);
 			$entry->store();
-            if (intval($status) !== xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
+            if (intval($status) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
                 if (($reason_id = $_POST['absence_reason'][$entry->getId()]) !== null) {
                     /** @var xaliAbsenceStatement $stm */
                     $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
