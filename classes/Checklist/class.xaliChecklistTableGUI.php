@@ -147,6 +147,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
                             . htmlspecialchars($xaliReason->getTitle()) . '</option>';
                     }
                     $this->tpl->setVariable('ABSENCE_REASON_OPTIONS', implode("", $absence_options));
+                    $this->tpl->setVariable('VAL_ABSENCE_REASON_ID', $a_set["entry_id"]);
                 } else {
                     $this->tpl->setCurrentBlock('absence_with_link');
                     $this->ctrl->setParameterByClass(xaliAbsenceStatementGUI::class, 'back_cmd', xaliOverviewGUI::CMD_EDIT_LIST);
@@ -158,7 +159,6 @@ class xaliChecklistTableGUI extends ilTable2GUI {
                     }
                     $link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
                     $this->tpl->setVariable('VAL_ABSENCE_LINK', $link_to_absence_form);
-                    $this->tpl->setVariable('VAL_ABSENCE_REASON_ID', $a_set["entry_id"]);
                 }
 			} else {
 				$this->tpl->setCurrentBlock('absence_without_link');
