@@ -3,6 +3,7 @@
 ## [x]
 * Notifications4Plugin library
 * PHP7Backport for libraries
+* Fix en `Weekdays` lang key
 * Fix no data in overview > users table
 * Fix PHP 7.2
 
