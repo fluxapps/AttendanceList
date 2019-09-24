@@ -175,6 +175,13 @@ class xaliOverviewGUI extends xaliGUI {
 			$checklist->setLastEditedBy($this->user->getId());
 			$checklist->setLastUpdate(time());
 			$checklist->store();
+
+            if (($reason_id = $_POST['absence_reason'][$entry->getId()]) !== null) {
+                /** @var xaliAbsenceStatement $stm */
+                $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
+                $stm->setReasonId($reason_id);
+                $stm->store();
+            }
 		}
 
 		// update LP

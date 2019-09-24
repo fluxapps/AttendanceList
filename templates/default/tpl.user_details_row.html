@@ -24,5 +24,10 @@
 	</td>
 	<td class='std small'>
 		<a class="xali_absence_reason" href="{LINK_ABSENCE_REASON}" {VAL_LINK_ABSENCE_HIDDEN}>{VAL_ABSENCE_REASON}</a>
+		<!-- BEGIN absence_reason_select -->
+		<select name="absence_reason[{VAL_ABSENCE_REASON_ID}]"{VAL_ABSENCE_REASON_HIDDEN}>
+			{ABSENCE_REASON_OPTIONS}
+		</select>
+		<!-- END absence_reason_select -->
 	</td>
 </tr>
