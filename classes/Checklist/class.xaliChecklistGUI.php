@@ -74,7 +74,7 @@ class xaliChecklistGUI extends xaliGUI {
 	 *
 	 */
 	public function saveList() {
-		if (count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
+		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
 			$this->show();
 			return;
