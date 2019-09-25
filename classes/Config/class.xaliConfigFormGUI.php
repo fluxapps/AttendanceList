@@ -41,10 +41,16 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 	 *
 	 */
 	protected function initForm() {
+	    $section = new ilFormSectionHeaderGUI();
+        $section->setTitle($this->pl->txt('config_header_general'));
+        $this->addItem($section);
+
         $subinput = new ilCheckboxInputGUI($this->pl->txt('config_' . xaliConfig::F_SHOW_NOT_RELEVANT), xaliConfig::F_SHOW_NOT_RELEVANT);
+        $subinput->setInfo($this->pl->txt('config_' . xaliConfig::F_SHOW_NOT_RELEVANT . '_info'));
         $this->addItem($subinput);
 
         $subinput = new ilCheckboxInputGUI($this->pl->txt('config_' . xaliConfig::F_SHOW_PRESENT_TOTAL), xaliConfig::F_SHOW_PRESENT_TOTAL);
+        $subinput->setInfo($this->pl->txt('config_' . xaliConfig::F_SHOW_PRESENT_TOTAL . '_info'));
         $this->addItem($subinput);
 
 		$section = new ilFormSectionHeaderGUI();

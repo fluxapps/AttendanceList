@@ -101,6 +101,7 @@ config_interval_reminder_email_info#:#Number of days, after which a user is remi
 config_sender_reminder_email#:#Sender Reminder Email (user ID)
 config_sender_reminder_email_info#:#All reminder emails will be send from this user account. Thus, the sent emails can be seen in this users outbox.
 config_header_notification#:#Notification
+config_header_general#:#General
 config_form_title#:#Title
 config_form_info#:#Info
 config_form_has_comment#:#Show comment field
@@ -109,5 +110,7 @@ config_form_has_upload#:#Show file upload field
 config_form_upload_req#:#Mandatory field
 subtab_notification_absence#:#Notification absence
 subtab_notification_absence_reminder#:#Notification absence reminder
-config_show_not_relevant#:#Show 'Not relevant'
+config_show_not_relevant#:#Activate 'Not relevant'
+config_show_not_relevant_info#:#Activates an additional status. Not relevant entries will be ignored in the computation of the minimum attendance.
 config_show_present_total#:#Show 'Present / Total'
+config_show_present_total_info#:#Shows an additional column in the user overview table. The total is hereby the sum of all Present and all Absent status.
