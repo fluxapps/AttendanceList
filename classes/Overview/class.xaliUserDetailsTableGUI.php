@@ -124,8 +124,10 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			$checklist_entry = $checklist->getEntryOfUser($this->user->getId());
 			$checklist_data['entry_id'] = $checklist_entry->getId();
 			if ($status = $checklist_entry->getStatus()) {
-				$checklist_data["checked_$status"] = 'checked';
-				$checklist_data["link_save_hidden"] = 'hidden';
+                if (!xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT) ? intval($status) !== xaliChecklistEntry::STATUS_NOT_RELEVANT : true) {
+                    $checklist_data["checked_$status"] = 'checked';
+                    $checklist_data["link_save_hidden"] = 'hidden';
+                }
 			} else {
 				$checklist_data["checked_" . xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				$checklist_data["warning"] = $this->pl->txt('warning_not_filled_out');
@@ -159,18 +161,42 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		}
 		$link_to_absence_form = $this->ctrl->getLinkTargetByClass(xaliAbsenceStatementGUI::class, xaliAbsenceStatementGUI::CMD_STANDARD);
 		$this->tpl->setVariable('LINK_ABSENCE_REASON', $link_to_absence_form);
-		$reason = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id'])->getReason();
+        /** @var xaliAbsenceStatement $stm */
+        $stm = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id']);
+		$reason = $stm->getReason();
 		$this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
 
 		if (!$a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED]) {
 			$this->tpl->setVariable('VAL_LINK_ABSENCE_HIDDEN', 'hidden');
 		}
+
+        if (xaliAbsenceReason::where("has_comment=true OR has_upload=true")->count() === 0) {
+            $this->tpl->setVariable('VAL_LINK_ABSENCE_HIDDEN', 'hidden');
+            $this->tpl->setCurrentBlock('absence_reason_select');
+            $absence_options = [];
+            $absence_options[] = '<option value="">' . htmlspecialchars($this->pl->txt('no_absence_reason')) . '</option>';
+            /** @var xaliAbsenceReason $xaliReason */
+            foreach (xaliAbsenceReason::get() as $xaliReason) {
+                $absence_options[] = '<option value="' . htmlspecialchars($xaliReason->getId()) . '"' . (intval($xaliReason->getId()) === intval($stm->getReasonId()) ? ' selected' : '')
+                    . '>'
+                    . htmlspecialchars($xaliReason->getTitle()) . '</option>';
+            }
+            $this->tpl->setVariable('ABSENCE_REASON_OPTIONS', implode("", $absence_options));
+            if (!$a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED]) {
+                $this->tpl->setVariable('VAL_ABSENCE_REASON_HIDDEN', 'hidden');
+            }
+            $this->tpl->setVariable('VAL_ABSENCE_REASON_ID', $a_set["entry_id"]);
+        }
+
 		//		$this->tpl->setVariable('VAL_LINK_ABSENCE', )
 
 		//		foreach (array('unexcused', 'excused', 'present') as $label) {
 		foreach (array('unexcused', 'present') as $label) {
 			$this->tpl->setVariable('LABEL_'.strtoupper($label), $this->pl->txt('label_'.$label));
 		}
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
+            $this->tpl->setVariable('LABEL_NOT_RELEVANT', $this->pl->txt('label_not_relevant'));
+        }
 	}
 
 
