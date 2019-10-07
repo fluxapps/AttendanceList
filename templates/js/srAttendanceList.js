@@ -20,10 +20,18 @@ srAttendanceList = {
 				}).done(function () {
 					$(row).find('font.xali_warning').hide();
 					$(row).find('span.xali_saving').hide();
-					if (status == 3) {
-						$(row).find('a.xali_absence_reason').hide();
+					if ($('a.xali_absence_reason + select').length > 0) {
+						if (status != 1) {
+							$(row).find('a.xali_absence_reason + select').hide();
+						} else {
+							$(row).find('a.xali_absence_reason + select').show();
+						}
 					} else {
-						$(row).find('a.xali_absence_reason').show();
+						if (status != 1) {
+							$(row).find('a.xali_absence_reason').hide();
+						} else {
+							$(row).find('a.xali_absence_reason').show();
+						}
 					}
 				});
 			});

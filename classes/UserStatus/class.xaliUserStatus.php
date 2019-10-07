@@ -343,7 +343,8 @@ class xaliUserStatus extends ActiveRecord {
 		return count($this->getChecklistIds())
 			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
 //			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED)
-			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
+			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED)
+            - $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_NOT_RELEVANT);
 	}
 
 
@@ -372,7 +373,7 @@ class xaliUserStatus extends ActiveRecord {
 
 		/** @var xaliSetting $xaliSetting */
 		$xaliSetting = xaliSetting::find($this->attendancelist_id);
-		if ($this->getReachedPercentage() >= $xaliSetting->getMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
+		if ($this->getReachedPercentage() >= $this->calcMinimumAttendance() && !$ilObjAttendanceList->getOpenAbsenceStatementsForUser($this->getUserId())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_COMPLETED_NUM);                      //COMPLETED: minimum attendance is reached
 		} elseif ((time()-(60*60*24)) > strtotime($xaliSetting->getActivationTo())) {
 			$this->setStatus(ilLPStatus::LP_STATUS_FAILED_NUM);                         //FAILED: minimum attendance not reached and time is up
@@ -416,4 +417,35 @@ class xaliUserStatus extends ActiveRecord {
 		}
 		return $this->checklist_ids;
 	}
+
+
+    /**
+     * @return string
+     */
+    public function getPresentTotalString() {
+        return $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) . ' / ' . ($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
+                + $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED));
+    }
+
+
+    /**
+     * @return int
+     */
+    public function calcMinimumAttendance() {
+        /** @var xaliSetting $xaliSetting */
+        $xaliSetting = xaliSetting::find($this->attendancelist_id);
+
+        $minimum_attendance = intval($xaliSetting->getMinimumAttendance());
+
+        if ($minimum_attendance === xaliSetting::CALC_AUTO_MINIMUM_ATTENDANCE) {
+            $total = $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) + $this->getUnedited();
+            if ($total > 0) {
+                $minimum_attendance = $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) / $total;
+            } else {
+                $minimum_attendance = 100;
+            }
+        }
+
+        return $minimum_attendance;
+    }
 }

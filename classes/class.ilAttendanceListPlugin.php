@@ -218,7 +218,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 			'absent' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED),
 			'unedited' => $xaliUserStatus->getUnedited(),
 			'percentage' => $xaliUserStatus->getReachedPercentage(),
-			'minimum_attendance' => $obj_id ? $settings->getMinimumAttendance() : 0
+			'minimum_attendance' => $obj_id ? $xaliUserStatus->calcMinimumAttendance() : 0
 		);
 	}
 

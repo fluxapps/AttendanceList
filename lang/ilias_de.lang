@@ -19,11 +19,14 @@ table_column_comment_req#:#Kommentar erforderlich
 table_column_has_upload#:#Upload
 table_column_upload_req#:#Upload erforderlich
 table_column_absence_reason#:#Abwesenheitsbegründung
+table_column_not_relevant#:#Nicht Relevant
+table_column_present_total#:#Anwesend / Total
 table_checklist_title_today#:#Anwesenheitsliste von heute, %s
 table_checklist_title#:#Anwesenheitsliste vom %s
 label_unexcused#:#Abwesend
 label_excused#:#Abwesend Entschuldigt
 label_present#:#Anwesend
+label_not_relevant#:#Nicht relevant
 list_unsaved_today#:#Die Anwesenheitsliste wurde für den heutigen Tag noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
 list_unsaved#:#Diese Anwesenheitsliste wurde noch nicht gespeichert. Bitte füllen Sie die Liste aus und klicken Sie auf "Speichern".
 msg_checklist_saved#:#Die Anwesenheitsliste wurde gespeichert.
@@ -52,6 +55,7 @@ form_input_date#:#Datum der zu erstellenden Liste
 xali_new#:#Neue Anwesenheitsliste anlegen
 minimum_attendance#:#Mindestanwesenheit
 minimum_attendance_info#:#Wird zur Berechnung des Lernfortschritts verwendet.
+minimum_attendance_auto#:#Automatische Berechnung
 activation_from#:#Veranstaltungsbeginn
 activation_to#:#Veranstaltungsende
 obj_xali#:#Anwesenheitsliste
@@ -97,6 +101,7 @@ config_interval_reminder_email_info#:#Intervall (in Anzahl Tagen), in welchem Er
 config_sender_reminder_email#:#Absender Erinnerungs-Mail (User-ID)
 config_sender_reminder_email_info#:#Alle Erinnerungs-Mails werden von diesem Account aus gesendet. Dadurch können die versendeten Mails im Postausgang dieses Benutzers eingesehen werden.
 config_header_notification#:#Benachrichtigung
+config_header_general#:#Allgemein
 config_form_title#:#Titel
 config_form_info#:#Info
 config_form_has_comment#:#Kommentarfeld anbieten
@@ -105,3 +110,7 @@ config_form_has_upload#:#Dateiupload-Feld anbieten
 config_form_upload_req#:#Feld muss ausgefüllt werden
 subtab_notification_absence#:#Benachrichtigung Abwesenheit
 subtab_notification_absence_reminder#:#Benachrichtigung Abwesenheit Erinnerung
+config_show_not_relevant#:#'Nicht relevant' aktivieren
+config_show_not_relevant_info#:#Aktiviert einen zusätzlich Status. Nicht relevante Einträge werden bei der zu erreichenden Mindestanwesenheit ignoriert.
+config_show_present_total#:#'Anwesend / Total' anzeigen
+config_show_present_total_info#:#Zeigt eine zusätzliche Spalte in der Benutzertabelle an. Das 'Total' errechnet sich dabei aus den Anz. Anwesend + Anz. Abwesend.

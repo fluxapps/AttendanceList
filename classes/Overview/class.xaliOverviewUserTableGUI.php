@@ -89,11 +89,18 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 			$user_data["present"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT);
 			//			$user_data["excused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED);
 			$user_data["unexcused"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
+            if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
+                $user_data["not_relevant"] = $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_NOT_RELEVANT);
+            }
+            if (xaliConfig::getConfig(xaliConfig::F_SHOW_PRESENT_TOTAL)) {
+                $user_data["present_total"] = $xaliUserStatus->getPresentTotalString();
+            }
 
 			$user_data['reached_percentage'] = $xaliUserStatus->getReachedPercentage();
 
 			$user_data['no_status'] = $xaliUserStatus->getUnedited();
-			$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $this->settings->getMinimumAttendance() . '%';
+            $user_data['minimum_attendance'] = $xaliUserStatus->calcMinimumAttendance();
+			$user_data['percentage'] = $user_data['reached_percentage'] . '% / ' . $user_data['minimum_attendance'] . '%';
 			$data[] = $user_data;
 		}
 		$this->setData($data);
@@ -105,7 +112,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	 */
 	protected function fillRow($a_set) {
 		parent::fillRow($a_set);
-		$color = ($a_set['reached_percentage'] < $this->settings->getMinimumAttendance()) ? 'red' : 'green';
+		$color = ($a_set['reached_percentage'] < $a_set['minimum_attendance']) ? 'red' : 'green';
 		if ($color == 'green') {
 			$this->has_passed_students = true;
 		}
@@ -153,8 +160,14 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->addColumn($this->pl->txt('table_column_present'), 'present');
 		//		$this->addColumn($this->pl->txt('table_column_excused'), 'excused');
 		$this->addColumn($this->pl->txt('table_column_unexcused'), 'unexcused');
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_NOT_RELEVANT)) {
+            $this->addColumn($this->pl->txt('table_column_not_relevant'), 'not_relevant');
+        }
 		$this->addColumn($this->pl->txt('table_column_no_status'), 'no_status');
 		$this->addColumn($this->pl->txt('table_column_percentage'), 'reached_percentage');
+        if (xaliConfig::getConfig(xaliConfig::F_SHOW_PRESENT_TOTAL)) {
+            $this->addColumn($this->pl->txt('table_column_present_total'), 'present_total');
+        }
 	}
 
 
@@ -168,6 +181,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 			case 'present':
 			case 'excused':
 			case 'unexcused':
+            case 'not_relevant':
 			case 'no_status':
 			case 'reached_percentage':
 				return true;

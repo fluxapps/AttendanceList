@@ -77,6 +77,7 @@ class xaliChecklist extends ActiveRecord {
 		$entry = new xaliChecklistEntry();
 		$entry->setChecklistId($this->id);
 		$entry->setUserId($user_id);
+        $entry->save();
 
 		return $entry;
 	}

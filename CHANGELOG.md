@@ -1,6 +1,9 @@
 # Changelog
 
 ## [x]
+* Not relevant status
+* Absent / Total column
+* Calc auto minimum_attendance
 * Notifications4Plugin library
 * PHP7Backport for libraries
 * Fix en `Weekdays` lang key
