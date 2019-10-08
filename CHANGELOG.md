@@ -1,6 +1,6 @@
 # Changelog
 
-## [x]
+## [1.3.0]
 * Not relevant status
 * Absent / Total column
 * Calc auto minimum_attendance
