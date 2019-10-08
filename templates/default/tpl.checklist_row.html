@@ -19,6 +19,10 @@
 		<!--<label for="absent_excused_{VAL_ID}" style="margin-right:15px">{LABEL_EXCUSED}</label>-->
 		<input type="radio" name="attendance_status[{VAL_ID}]" id="absent_unexcused_{VAL_ID}" value="1" {VAL_CHECKED_1}>
 		<label for="absent_unexcused_{VAL_ID}" style="margin-right:15px">{LABEL_UNEXCUSED}</label>
+		<!-- BEGIN not_relevant -->
+		<input type="radio" name="attendance_status[{VAL_ID}]" id="absent_not_relevant_{VAL_ID}" value="4" {VAL_CHECKED_4}>
+		<label for="absent_not_relevant_{VAL_ID}" style="margin-right:15px">{LABEL_NOT_RELEVANT}</label>
+		<!-- END not_relevant -->
 		<font color="red">{VAL_WARNING}</font>
 	</td>
 	<td class='std small'>
@@ -30,5 +34,10 @@
 		<!-- BEGIN absence_without_link -->
 		{VAL_ABSENCE_REASON}
 		<!-- END absence_without_link -->
+		<!-- BEGIN absence_reason_select -->
+		<select name="absence_reason[{VAL_ABSENCE_REASON_ID}]">
+			{ABSENCE_REASON_OPTIONS}
+		</select>
+		<!-- END absence_reason_select -->
 	</td>
 </tr>

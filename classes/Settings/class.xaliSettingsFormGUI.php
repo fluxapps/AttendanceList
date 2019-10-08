@@ -84,6 +84,7 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 
 		$input = new ilSelectInputGUI($this->pl->txt(self::F_MINIMUM_ATTENDANCE), self::F_MINIMUM_ATTENDANCE);
 		$options = array();
+        $options[xaliSetting::CALC_AUTO_MINIMUM_ATTENDANCE] = $this->pl->txt(self::F_MINIMUM_ATTENDANCE . '_auto');
 		for ($i = 0; $i <= 100; $i++) {
 			$options[$i] = $i . '%';
 		}

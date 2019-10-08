@@ -1,10 +1,10 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Notifications4Plugin\Notifications4Plugins\Exception\Notifications4PluginException;
-use srag\Notifications4Plugin\Notifications4Plugins\Utils\Notifications4PluginTrait;
-use srag\Plugins\Notifications4Plugins\Notification\Language\NotificationLanguage;
-use srag\Plugins\Notifications4Plugins\Notification\Notification;
+use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
+use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
+use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
+use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 
 /**
  * Class xaliChecklistEntry
@@ -18,6 +18,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	const STATUS_ABSENT_UNEXCUSED = 1;
 	const STATUS_ABSENT_EXCUSED = 2; // DEPRECATED
 	const STATUS_PRESENT = 3;
+    const STATUS_NOT_RELEVANT = 4;
 	const NOTIFICATION_NAME = "absence";
 
 

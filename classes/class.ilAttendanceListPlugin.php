@@ -1,7 +1,11 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . "/../../../../UIComponent/UserInterfaceHook/Notifications4Plugins/vendor/autoload.php";
+
+use srag\DIC\AttendanceList\DICTrait;
+use srag\DIC\AttendanceList\Util\LibraryLanguageInstaller;
+use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
+use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 
 /**
  * Class ilAttendanceListPlugin
@@ -12,8 +16,10 @@ require_once __DIR__ . "/../../../../UIComponent/UserInterfaceHook/Notifications
  */
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
+	use DICTrait;
 	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
+	const PLUGIN_CLASS_NAME = self::class;
 	const CMD_ADD_USER_AUTO_COMPLETE = 'addUserAutoComplete';
 	/**
 	 * @var ilAttendanceListPlugin
@@ -70,6 +76,17 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 
 	/**
+	 * @inheritdoc
+	 */
+	public function updateLanguages($a_lang_keys = null) {
+		parent::updateLanguages($a_lang_keys);
+
+		LibraryLanguageInstaller::getInstance()->withPlugin(self::plugin())->withLibraryLanguageDirectory(__DIR__
+			. "/../vendor/srag/notifications4plugin/lang")->updateLanguages();
+	}
+
+
+	/**
 	 *
 	 */
 	protected function uninstallCustom() {
@@ -81,6 +98,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		$this->db->dropTable(xaliChecklist::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliChecklistEntry::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliUserStatus::TABLE_NAME, false);
+		Notification::dropDB_();
+		NotificationLanguage::dropDB_();
 
 		return true;
 	}
@@ -199,7 +218,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 			'absent' => $xaliUserStatus->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED),
 			'unedited' => $xaliUserStatus->getUnedited(),
 			'percentage' => $xaliUserStatus->getReachedPercentage(),
-			'minimum_attendance' => $obj_id ? $settings->getMinimumAttendance() : 0
+			'minimum_attendance' => $obj_id ? $xaliUserStatus->calcMinimumAttendance() : 0
 		);
 	}
 

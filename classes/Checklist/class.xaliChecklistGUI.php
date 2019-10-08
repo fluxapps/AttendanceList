@@ -74,7 +74,7 @@ class xaliChecklistGUI extends xaliGUI {
 	 *
 	 */
 	public function saveList() {
-		if (count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
+		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
 			$this->show();
 			return;
@@ -90,6 +90,14 @@ class xaliChecklistGUI extends xaliGUI {
 			$entry->setStatus($status);
 			$entry->setUserId($usr_id);
 			$entry->store();
+            if (intval($status) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
+                if (($reason_id = $_POST['absence_reason'][$entry->getId()]) !== null) {
+                    /** @var xaliAbsenceStatement $stm */
+                    $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
+                    $stm->setReasonId($reason_id);
+                    $stm->store();
+                }
+            }
 		}
 
 		// update LP
