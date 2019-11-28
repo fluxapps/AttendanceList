@@ -18,13 +18,16 @@ srAttendanceList = {
 						"status": status
 					}
 				}).done(function () {
-					$(row).find('input[type=radio] ~ font.xali_warning').hide();
+					$(row).find('input[type=radio] ~ font.xali_warning').empty();
 					$(row).find('input[type=radio] ~ span.xali_saving').hide();
 					if ($('a.xali_absence_reason ~ select').length > 0) {
 						if (status != 1) {
-							$(row).find('a.xali_absence_reason ~ select, a.xali_absence_reason ~ a.xali_link_save').hide();
+							$(row).find('a.xali_absence_reason ~ select, a.xali_absence_reason ~ a.xali_link_save, a.xali_absence_reason ~ font.xali_warning').hide();
 						} else {
-							$(row).find('a.xali_absence_reason ~ select').show();
+							$(row).find('a.xali_absence_reason ~ select, a.xali_absence_reason ~ font.xali_warning').show();
+							if ($(row).find('a.xali_absence_reason ~ font.xali_warning').text()) {
+								$(row).find('a.xali_absence_reason ~ a.xali_link_save').show();
+							}
 						}
 					} else {
 						if (status != 1) {
@@ -62,7 +65,7 @@ srAttendanceList = {
 						"absence_reason": absence_reason
 					}
 				}).done(function () {
-					$(row).find('a.xali_absence_reason ~ font.xali_warning').hide();
+					$(row).find('a.xali_absence_reason ~ font.xali_warning').empty();
 					$(row).find('a.xali_absence_reason ~ span.xali_saving').hide();
 				});
 			});
