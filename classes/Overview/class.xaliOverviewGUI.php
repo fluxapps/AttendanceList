@@ -389,7 +389,7 @@ class xaliOverviewGUI extends xaliGUI {
 
 
     /**
-     * 
+     *
      */
     protected function saveAbsenceReason()
     {
