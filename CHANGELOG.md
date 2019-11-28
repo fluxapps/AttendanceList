@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+* Fix anonym access plugin commands
+
 ## [1.3.0]
 * Not relevant status
 * Absent / Total column
