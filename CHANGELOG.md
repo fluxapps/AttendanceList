@@ -1,7 +1,7 @@
 # Changelog
 
 ## [x]
-* Save absence reason async
+* Possibility to save absence reason async
 * Fix anonym access plugin commands
 
 ## [1.3.0]
