@@ -22,6 +22,7 @@ class xaliOverviewGUI extends xaliGUI {
 	const CMD_RESET_FILTER_LISTS = 'resetFilterLists';
 	const CMD_SAVE_ENTRY = 'saveEntry';
 	const CMD_SAVE_USER = 'saveUser';
+    const CMD_ADD_USER_AUTO_COMPLETE = 'addUserAutoComplete';
 
 	const SUBTAB_USERS = 'subtab_users';
 	const SUBTAB_LISTS = 'subtab_lists';
@@ -354,4 +355,34 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
+
+    /**
+     * async auto complete method for user filter in overview
+     */
+    public function addUserAutoComplete() {
+        $auto = new ilUserAutoComplete();
+        $auto->setSearchFields(array( 'login', 'firstname', 'lastname' ));
+        $auto->setResultField('login');
+        $auto->enableFieldSearchableCheck(false);
+        $auto->setMoreLinkAvailable(true);
+
+        if (($_REQUEST['fetchall'])) {
+            $auto->setLimit(ilUserAutoComplete::MAX_ENTRIES);
+        }
+
+        $list = $auto->getList($_REQUEST['term']);
+
+        $array = json_decode($list, true);
+        $members = $this->pl->getMembers();
+
+        foreach ($array['items'] as $key => $item) {
+            if (!in_array($item['id'], $members)) {
+                unset($array['items'][$key]);
+            }
+        }
+
+        $list = json_encode($array);
+        echo $list;
+        exit();
+    }
 }

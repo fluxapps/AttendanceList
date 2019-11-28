@@ -11,8 +11,6 @@ use srag\Plugins\AttendanceList\Notification\Notification\Notification;
  * Class ilAttendanceListPlugin
  *
  * @author            Theodor Truffer <tt@studer-raimann.ch>
- *
- * @ilCtrl_isCalledBy ilAttendanceListPlugin: ilUIPluginRouterGUI
  */
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
@@ -20,7 +18,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
 	const PLUGIN_CLASS_NAME = self::class;
-	const CMD_ADD_USER_AUTO_COMPLETE = 'addUserAutoComplete';
 	/**
 	 * @var ilAttendanceListPlugin
 	 */
@@ -37,21 +34,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		global $DIC;
 
 		$this->db = $DIC->database();
-	}
-
-
-	/**
-	 *
-	 */
-	public function executeCommand() {
-		global $DIC;
-		$ilCtrl = $DIC['ilCtrl'];
-		$cmd = $ilCtrl->getCmd();
-		switch ($cmd) {
-			default:
-				$this->{$cmd}();
-				break;
-		}
 	}
 
 
@@ -115,37 +97,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 */
 	static function lookupRefId($obj_id) {
 		return array_shift(ilObject2::_getAllReferences($obj_id));
-	}
-
-
-	/**
-	 * async auto complete method for user filter in overview
-	 */
-	public function addUserAutoComplete() {
-		$auto = new ilUserAutoComplete();
-		$auto->setSearchFields(array( 'login', 'firstname', 'lastname' ));
-		$auto->setResultField('login');
-		$auto->enableFieldSearchableCheck(false);
-		$auto->setMoreLinkAvailable(true);
-
-		if (($_REQUEST['fetchall'])) {
-			$auto->setLimit(ilUserAutoComplete::MAX_ENTRIES);
-		}
-
-		$list = $auto->getList($_REQUEST['term']);
-
-		$array = json_decode($list, true);
-		$members = $this->getMembers();
-
-		foreach ($array['items'] as $key => $item) {
-			if (!in_array($item['id'], $members)) {
-				unset($array['items'][$key]);
-			}
-		}
-
-		$list = json_encode($array);
-		echo $list;
-		exit();
 	}
 
 

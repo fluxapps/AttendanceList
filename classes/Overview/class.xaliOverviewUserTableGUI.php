@@ -141,10 +141,7 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	public function initFilter() {
 		$user_filter = new ilTextInputGUI($this->lng->txt('login'), 'name');
 		$this->ctrl->saveParameterByClass(ilAttendanceListPlugin::class, 'ref_id', $_GET['ref_id']);
-		$user_filter->setDataSource($this->ctrl->getLinkTargetByClass(array(
-			ilUIPluginRouterGUI::class,
-			ilAttendanceListPlugin::class
-		), ilAttendanceListPlugin::CMD_ADD_USER_AUTO_COMPLETE, "", true));
+		$user_filter->setDataSource($this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_ADD_USER_AUTO_COMPLETE, "", true));
 		$this->addFilterItem($user_filter);
 		$user_filter->readFromSession();
 		$this->filter['login'] = $user_filter->getValue();
