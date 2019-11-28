@@ -22,6 +22,7 @@ class xaliOverviewGUI extends xaliGUI {
 	const CMD_RESET_FILTER_LISTS = 'resetFilterLists';
 	const CMD_SAVE_ENTRY = 'saveEntry';
 	const CMD_SAVE_USER = 'saveUser';
+	const CMD_SAVE_ABSENCE_REASON = 'saveAbsenceReason';
 
 	const SUBTAB_USERS = 'subtab_users';
 	const SUBTAB_LISTS = 'subtab_lists';
@@ -354,4 +355,22 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
+
+	protected function saveAbsenceReason() {
+        /** @var xaliChecklist $checklist */
+        $checklist = xaliChecklist::find($_GET['checklist_id']);
+
+        $entry = $checklist->getEntryOfUser($_GET['user_id']);
+
+        if (intval($entry->getStatus()) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
+            if (($reason_id = $_GET['absence_reason']) !== null) {
+                /** @var xaliAbsenceStatement $stm */
+                $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
+                $stm->setReasonId($reason_id);
+                $stm->store();
+            }
+        }
+
+        exit;
+    }
 }
