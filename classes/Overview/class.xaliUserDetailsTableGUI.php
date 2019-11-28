@@ -133,10 +133,12 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 				$checklist_data["warning"] = $this->pl->txt('warning_not_filled_out');
 			}
 
+            $checklist_data["link_save_absence_reason_hidden"] = 'hidden';
 			if (!xaliAbsenceStatement::find($checklist_entry->getId())) {
                 $checklist_data["warning_absence_reason"] = $this->pl->txt('warning_absence_reason_not_filled_out');
-            } else {
-                $checklist_data["link_save_absence_reason_hidden"] = 'hidden';
+                if (intval($status) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
+                    $checklist_data["link_save_absence_reason_hidden"] = '';
+                }
             }
 
 			$data[] = $checklist_data;
