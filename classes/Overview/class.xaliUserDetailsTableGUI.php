@@ -134,7 +134,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 			}
 
 			if (!xaliAbsenceStatement::find($checklist_entry->getId())) {
-                $checklist_data["warning_absence_reason"] = $this->pl->txt('warning_not_filled_out');
+                $checklist_data["warning_absence_reason"] = $this->pl->txt('warning_absence_reason_not_filled_out');
             }
 
 			$data[] = $checklist_data;
