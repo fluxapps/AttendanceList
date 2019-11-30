@@ -60,7 +60,10 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 */
 	public function getReason() {
 		if ($this->getReasonId()) {
-			return xaliAbsenceReason::find($this->getReasonId())->getTitle();
+		    $reason = xaliAbsenceReason::find($this->getReasonId());
+		    if ($reason) {
+                return $reason->getTitle();
+            }
 		}
 
 		return NULL;

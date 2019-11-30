@@ -169,4 +169,14 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$button->setCaption($this->pl->txt('config_add_new_absence_reason'), false);
 		$this->toolbar->addButtonInstance($button);
 	}
+
+
+    /**
+     *
+     */
+	protected function deleteReason() {
+        (new xaliAbsenceReason($_GET['ar_id']))->delete();
+        ilUtil::sendSuccess($this->pl->txt('msg_deleted'), true);
+        $this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
+    }
 }
