@@ -2,6 +2,7 @@
 
 ## [x]
 * Possibility to save absence reason async
+* Fix delete absence reasons
 * Fix anonym access plugin commands
 
 ## [1.3.0]
