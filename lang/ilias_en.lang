@@ -42,6 +42,7 @@ msg_saved#:#Changes saved successfully.
 msg_deleted#:#Deleted.
 warning_list_incomplete#:#Could not save: a status must be chosen for every member.
 warning_not_filled_out#:#Status not saved yet.
+warning_absence_reason_not_filled_out#:#Reason not saved yet.
 table_title_users#:#Users
 subtab_users#:#Users
 table_title_lists#:#Lists

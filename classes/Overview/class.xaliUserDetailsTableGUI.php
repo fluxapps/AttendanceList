@@ -77,7 +77,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->ctrl->setParameter($this->parent_obj, 'user_id', $this->user->getId());
 		foreach ($this->getData() as $data_set) {
 			$this->ctrl->setParameter($this->parent_obj, 'checklist_id',$data_set['id']);
-			$async_links[] = $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ENTRY, "", true);
+			$async_links[] = [ "save_status" => $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ENTRY, "", true), "save_absence_reason" => $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_SAVE_ABSENCE_REASON, "", true)];
 		}
 		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/js/srAttendanceList.js');
 		$tpl->addOnLoadCode('srAttendanceList.initUserDetails(' . json_encode($async_links).');');
@@ -132,6 +132,14 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 				$checklist_data["checked_" . xaliChecklistEntry::STATUS_PRESENT] = 'checked';
 				$checklist_data["warning"] = $this->pl->txt('warning_not_filled_out');
 			}
+
+            $checklist_data["link_save_absence_reason_hidden"] = 'hidden';
+			if (!xaliAbsenceStatement::find($checklist_entry->getId())) {
+                $checklist_data["warning_absence_reason"] = $this->pl->txt('warning_absence_reason_not_filled_out');
+                if (intval($status) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
+                    $checklist_data["link_save_absence_reason_hidden"] = '';
+                }
+            }
 
 			$data[] = $checklist_data;
 		}

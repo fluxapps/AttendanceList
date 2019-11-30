@@ -42,6 +42,7 @@ msg_saved#:#Änderungen wurden erfolgreich gespeichert.
 msg_deleted#:#Gelöscht.
 warning_list_incomplete#:#Speichern fehlgeschlagen: Es muss für jeden Teilnehmer ein Status ausgewählt werden.
 warning_not_filled_out#:#Status noch nicht gespeichert.
+warning_absence_reason_not_filled_out#:#Begründung noch nicht gespeichert.
 table_title_users#:#Benutzer
 subtab_users#:#Benutzer
 table_title_lists#:#Listen
