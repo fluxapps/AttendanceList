@@ -39,6 +39,7 @@ msg_incomplete_lists#:#There are one or several incomplete lists with a passed d
 msg_creation_failed#:#Creation failed: attendance lists can only be created in courses or groups.
 msg_list_not_editable#:#No further lists can be created since the activation time range is over.
 msg_saved#:#Changes saved successfully.
+msg_deleted#:#Deleted.
 warning_list_incomplete#:#Could not save: a status must be chosen for every member.
 warning_not_filled_out#:#Status not saved yet.
 table_title_users#:#Users
