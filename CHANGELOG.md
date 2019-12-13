@@ -3,6 +3,7 @@
 ## [x]
 * Possibility to save absence reason async
 * Fix delete absence reasons
+* Fix calc reached attendance (not relevant)
 * Fix anonym access plugin commands
 
 ## [1.3.0]
