@@ -5,7 +5,9 @@
 * Fix delete absence reasons
 * Fix calc reached attendance (not relevant)
 * Fix anonym access plugin commands
+* Fix bug in cronjob with ILIAS 5.3
 * catch error when user is non-existent
+* Fixed division by zero bug
 
 ## [1.3.0]
 * Not relevant status

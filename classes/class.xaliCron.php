@@ -81,9 +81,14 @@ class xaliCron {
 	public function initILIAS() {
 		require_once 'include/inc.ilias_version.php';
 		require_once 'Services/Component/classes/class.ilComponent.php';
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
+		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.3.999')) {
+            require_once './Services/Cron/classes/class.ilCronStartUp.php';
+            $ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
+            $ilCronStartup->authenticate();
+        } elseif (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
 			require_once './Services/Cron/classes/class.ilCronStartUp.php';
 			$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
+			$ilCronStartup->initIlias();
 			$ilCronStartup->authenticate();
 		} else {
 			require_once 'Services/Context/classes/class.ilContext.php';
