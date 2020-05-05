@@ -327,11 +327,13 @@ class xaliUserStatus extends ActiveRecord {
 //			* 100
 //		);
 		$nr_of_checklists = count($this->getChecklistIds());
-		if (!$nr_of_checklists) {
-			return 0;
-		}
-		return round(
-			$this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) / count($this->getChecklistIds()) * 100
+        $all = $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) + $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED)
+            + $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED);
+        if (!$nr_of_checklists || !$all) {
+            return 0;
+        }
+        return round(
+			$this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) / $all * 100
 		);
 	}
 

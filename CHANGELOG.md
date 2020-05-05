@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0]
+* Possibility to save absence reason async
+* Fix delete absence reasons
+* Fix calc reached attendance (not relevant)
+* Fix anonym access plugin commands
+* catch error when user is non-existent
+
 ## [1.3.0]
 * Not relevant status
 * Absent / Total column
