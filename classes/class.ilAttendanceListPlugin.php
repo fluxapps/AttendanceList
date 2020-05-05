@@ -112,6 +112,9 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 			$parent = $this->getParentCourseOrGroup($ref_id);
 			$member_role = $parent->getDefaultMemberRole();
 			$members = $rbacreview->assignedUsers($member_role);
+			$members = array_filter($members, function($usr_id) {
+			    return ilObjUser::_exists($usr_id);
+            });
 		}
 
 		return $members;
