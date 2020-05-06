@@ -7,6 +7,8 @@ use ilMailError;
 use ilObjUser;
 use srag\DIC\AttendanceList\DICTrait;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
+use ilException;
+use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
 
 /**
  * Class InternalMailSender
@@ -95,8 +97,14 @@ class InternalMailSender implements Sender {
 		$errors = $this->mailer->sendMail($this->getUserTo(), $this->getCc(), $this->getBcc(), $this->getSubject(), $this->getMessage(), [], [ "normal" ]);
 
 		if (count($errors) > 0) {
-			// Throw first exception
-			throw $errors[0];
+		    $error = $errors[0];
+		    if ($error instanceof ilException) {
+		        throw $error;
+            } elseif (is_string($error)) {
+		        throw new Notifications4PluginException($error);
+            } else {
+		        throw new Notifications4PluginException('Unknown exception when sending mail.');
+            }
 		}
 	}
 
