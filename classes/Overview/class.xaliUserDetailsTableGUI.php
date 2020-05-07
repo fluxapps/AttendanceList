@@ -194,6 +194,12 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
                 $this->tpl->setVariable('VAL_ABSENCE_REASON_HIDDEN', 'hidden');
             }
             $this->tpl->setVariable('VAL_ABSENCE_REASON_ID', $a_set["entry_id"]);
+            if ($a_set['link_save_absence_reason_hidden']) {
+                $this->tpl->setVariable('VAL_ABSENCE_LINK_SAVE_ABSENCE_REASON_HIDDEN', $a_set['link_save_absence_reason_hidden']);
+            }
+            if ($a_set['warning_absence_reason']) {
+                $this->tpl->setVariable('VAL_ABSENCE_WARNING_ABSENCE_REASON', $a_set['warning_absence_reason']);
+            }
         }
 
 		//		$this->tpl->setVariable('VAL_LINK_ABSENCE', )
