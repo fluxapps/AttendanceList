@@ -1,7 +1,7 @@
 # Changelog
 
-## [x]
-- Fix may empty reason dropdown
+## [1.4.1]
+* Fix display of empty dropdown for absences
 
 ## [1.4.0]
 * Possibility to save absence reason async
