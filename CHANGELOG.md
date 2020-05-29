@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.4.2]
+* Fixed calculated percentage
+
 ## [1.4.1]
 * Fix display of empty dropdown for absences
 
