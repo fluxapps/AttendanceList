@@ -3,14 +3,14 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
-use srag\Plugins\AttendanceList\Notification\Ctrl\Notifications4PluginCtrl;
-use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
-use srag\Plugins\AttendanceList\Notification\Notification\Notification;
+use srag\Notifications4Plugin\AttendanceList\Notification\NotificationCtrl;
+use srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl;
 
 /**
  * Class ilAttendanceListConfigGUI
  *
  * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilObjComponentSettingsGUIs
+ * @ilCtrl_isCalledBy srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl: ilAttendanceListConfigGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
@@ -19,8 +19,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	use Notifications4PluginTrait;
 	const SUBTAB_CONFIG = 'config';
 	const SUBTAB_ABSENCE_REASONS = 'absence_reasons';
-	const SUBTAB_NOTIFICATION_ABSENCE = Notifications4PluginCtrl::TAB_NOTIFICATION . '_absence';
-	const SUBTAB_NOTIFICATION_ABSENCE_REMINDER = Notifications4PluginCtrl::TAB_NOTIFICATION . '_absence_reminder';
+	const SUBTAB_NOTIFICATION_ABSENCE = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence';
+	const SUBTAB_NOTIFICATION_ABSENCE_REMINDER = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence_reminder';
 
 	const CMD_STANDARD = 'configure';
 	const CMD_ADD_REASON = 'addReason';
@@ -81,19 +81,48 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tabs->addSubTab(self::SUBTAB_ABSENCE_REASONS, $this->pl->txt('subtab_'
 			. self::SUBTAB_ABSENCE_REASONS), $this->ctrl->getLinkTarget($this, self::CMD_SHOW_REASONS));
 
-		$this->ctrl->setParameterByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::GET_PARAM, self::notification(Notification::class, NotificationLanguage::class)
+		$this->ctrl->setParameterByClass(NotificationCtrl::class, NotificationCtrl::GET_PARAM_NOTIFICATION_ID, self::notifications4plugin()->notifications()
 			->getNotificationByName(xaliChecklistEntry::NOTIFICATION_NAME)->getId());
 		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE, $this->pl->txt('subtab_'
-			. self::SUBTAB_NOTIFICATION_ABSENCE), $this->ctrl->getLinkTargetByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::CMD_EDIT_NOTIFICATION));
+			. self::SUBTAB_NOTIFICATION_ABSENCE), $this->ctrl->getLinkTargetByClass([NotificationsCtrl::class, NotificationCtrl::class], NotificationCtrl::CMD_EDIT_NOTIFICATION));
 
-		$this->ctrl->setParameterByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::GET_PARAM, self::notification(Notification::class, NotificationLanguage::class)
+		$this->ctrl->setParameterByClass(NotificationCtrl::class, NotificationCtrl::GET_PARAM_NOTIFICATION_ID, self::notifications4plugin()->notifications()
 			->getNotificationByName(xaliCron::NOTIFICATION_NAME)->getId());
 		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER, $this->pl->txt('subtab_'
-			. self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER), $this->ctrl->getLinkTargetByClass(Notifications4PluginCtrl::class, Notifications4PluginCtrl::CMD_EDIT_NOTIFICATION));
+			. self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER), $this->ctrl->getLinkTargetByClass([NotificationsCtrl::class, NotificationCtrl::class], NotificationCtrl::CMD_EDIT_NOTIFICATION));
 
 		switch ($this->ctrl->getNextClass($this)) {
-			case strtolower(Notifications4PluginCtrl::class):
-				$this->ctrl->forwardCommand(new Notifications4PluginCtrl());
+			case strtolower(NotificationsCtrl::class):
+                if ($this->ctrl->getCmd() === NotificationsCtrl::CMD_LIST_NOTIFICATIONS) {
+                    $this->ctrl->redirect($this, self::CMD_STANDARD);
+
+                    return;
+                }
+			    $notification = self::notifications4plugin()->notifications()->getNotificationById(intval(filter_input(INPUT_GET, NotificationCtrl::GET_PARAM_NOTIFICATION_ID)));
+                if ($notification !== null) {
+                    switch ($notification->getName()) {
+                        case xaliChecklistEntry::NOTIFICATION_NAME:
+                            $this->tabs->activateSubTab(self::SUBTAB_NOTIFICATION_ABSENCE);
+                            self::notifications4plugin()->withPlaceholderTypes([
+                                'user'    => 'object ' . ilObjUser::class,
+                                'absence' => 'string'
+                            ]);
+                            break;
+
+                        case xaliCron::NOTIFICATION_NAME:
+                            $this->tabs->activateSubTab(self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER);
+                            self::notifications4plugin()->withPlaceholderTypes([
+                                'user'          => 'object ' . ilObjUser::class,
+                                'open_absences' => 'string'
+                            ]);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                $this->ctrl->forwardCommand(new NotificationsCtrl());
 				break;
 			default:
 				switch ($cmd) {

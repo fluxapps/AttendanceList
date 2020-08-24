@@ -24,13 +24,12 @@ xaliAbsenceStatement::updateDB();
 ?>
 <#4>
 <?php
-\srag\Plugins\AttendanceList\Notification\Notification\Notification::updateDB_();
-\srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::updateDB_();
+\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()->installTables();
 
-if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->migrateFromOldGlobalPlugin(\xaliChecklistEntry::NOTIFICATION_NAME) === null) {
 
-	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->factory()->newInstance();
 
 	$notification->setName(\xaliChecklistEntry::NOTIFICATION_NAME);
@@ -47,14 +46,14 @@ if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstan
 	          
 	    Please click on the link and specify a reason for your absence.", "en");
 
-	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
-		->storeInstance($notification);
+	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
+		->storeNotification($notification);
 }
 
-if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->migrateFromOldGlobalPlugin(\xaliCron::NOTIFICATION_NAME) === null) {
 
-	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->factory()->newInstance();
 
 	$notification->setName(\xaliCron::NOTIFICATION_NAME);
@@ -71,7 +70,11 @@ if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstan
 	          
 	    Please click on the link(s) and specify a reason for your absence.", "en");
 
-	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
-		->storeInstance($notification);
+	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
+		->storeNotification($notification);
 }
+?>
+<#5>
+<?php
+\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()->installTables();
 ?>
