@@ -90,31 +90,31 @@ interface DICInterface
     /**
      * @return ilAccessHandler
      */
-    public function access();
+    public function access() : ilAccessHandler;
 
 
     /**
      * @return ilAppEventHandler
      */
-    public function appEventHandler();
+    public function appEventHandler() : ilAppEventHandler;
 
 
     /**
      * @return ilAuthSession
      */
-    public function authSession();
+    public function authSession() : ilAuthSession;
 
 
     /**
      * @return BackgroundTaskServices
      */
-    public function backgroundTasks();
+    public function backgroundTasks() : BackgroundTaskServices;
 
 
     /**
      * @return ilBenchmark
      */
-    public function benchmark();
+    public function benchmark() : ilBenchmark;
 
 
     /**
@@ -124,7 +124,7 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function bookingManager();
+    public function bookingManager() : ilBookingManagerService;
 
 
     /**
@@ -134,7 +134,7 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function bookingObjUseBook();
+    public function bookingObjUseBook() : ilObjUseBookDBRepository;
 
 
     /**
@@ -144,49 +144,49 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function bookingReservation();
+    public function bookingReservation() : ilBookingReservationDBRepositoryFactory;
 
 
     /**
      * @return ilBrowser
      */
-    public function browser();
+    public function browser() : ilBrowser;
 
 
     /**
      * @return ilCertificateActiveValidator
      */
-    public function certificateActiveValidator();
+    public function certificateActiveValidator() : ilCertificateActiveValidator;
 
 
     /**
      * @return ilIniFile
      */
-    public function clientIni();
+    public function clientIni() : ilIniFile;
 
 
     /**
      * @return Collator
      */
-    public function collator();
+    public function collator() : Collator;
 
 
     /**
      * @return ilConditionService
      */
-    public function conditions();
+    public function conditions() : ilConditionService;
 
 
     /**
      * @return ilCtrl
      */
-    public function ctrl();
+    public function ctrl() : ilCtrl;
 
 
     /**
      * @return ilCtrlStructureReader
      */
-    public function ctrlStructureReader();
+    public function ctrlStructureReader() : ilCtrlStructureReader;
 
 
     /**
@@ -194,19 +194,19 @@ interface DICInterface
      *
      * @throws DICException DatabaseDetector only supports ilDBPdoInterface!
      */
-    public function database();
+    public function database() : DatabaseInterface;
 
 
     /**
      * @return ilDBInterface
      */
-    public function databaseCore();
+    public function databaseCore() : ilDBInterface;
 
 
     /**
      * @return ilErrorHandling
      */
-    public function error();
+    public function error() : ilErrorHandling;
 
 
     /**
@@ -216,7 +216,7 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function exercise();
+    public function exercise() : ilExerciseFactory;
 
 
     /**
@@ -226,79 +226,79 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function favourites();
+    public function favourites() : ilFavouritesDBRepository;
 
 
     /**
      * @return Filesystems
      */
-    public function filesystem();
+    public function filesystem() : Filesystems;
 
 
     /**
      * @return GlobalScreenService
      */
-    public function globalScreen();
+    public function globalScreen() : GlobalScreenService;
 
 
     /**
      * @return ilHelpGUI
      */
-    public function help();
+    public function help() : ilHelpGUI;
 
 
     /**
      * @return ilNavigationHistory
      */
-    public function history();
+    public function history() : ilNavigationHistory;
 
 
     /**
      * @return HTTPServices
      */
-    public function http();
+    public function http() : HTTPServices;
 
 
     /**
      * @return ILIAS
      */
-    public function ilias();
+    public function ilias() : ILIAS;
 
 
     /**
      * @return ilIniFile
      */
-    public function iliasIni();
+    public function iliasIni() : ilIniFile;
 
 
     /**
      * @return JavaScriptBinding
      */
-    public function javaScriptBinding();
+    public function javaScriptBinding() : JavaScriptBinding;
 
 
     /**
      * @return ilLanguage
      */
-    public function language();
+    public function language() : ilLanguage;
 
 
     /**
      * @return ilLearningHistoryService
      */
-    public function learningHistory();
+    public function learningHistory() : ilLearningHistoryService;
 
 
     /**
      * @return ilLocatorGUI
      */
-    public function locator();
+    public function locator() : ilLocatorGUI;
 
 
     /**
      * @return ilComponentLogger
      */
-    public function log();
+    public function log() : ilComponentLogger;
 
 
     /**
@@ -306,37 +306,37 @@ interface DICInterface
      *
      * @since ILIAS 5.2
      */
-    public function logger();
+    public function logger() : LoggingServices;
 
 
     /**
      * @return ilLoggerFactory
      */
-    public function loggerFactory();
+    public function loggerFactory() : ilLoggerFactory;
 
 
     /**
      * @return ilMailMimeSenderFactory
      */
-    public function mailMimeSenderFactory();
+    public function mailMimeSenderFactory() : ilMailMimeSenderFactory;
 
 
     /**
      * @return ilMailMimeTransportFactory
      */
-    public function mailMimeTransportFactory();
+    public function mailMimeTransportFactory() : ilMailMimeTransportFactory;
 
 
     /**
      * @return ilMainMenuGUI
      */
-    public function mainMenu();
+    public function mainMenu() : ilMainMenuGUI;
 
 
     /**
      * @return ilMMItemRepository
      */
-    public function mainMenuItem();
+    public function mainMenuItem() : ilMMItemRepository;
 
 
     /**
@@ -349,25 +349,25 @@ interface DICInterface
     /**
      * @return ilNewsService
      */
-    public function news();
+    public function news() : ilNewsService;
 
 
     /**
      * @return ilObjectDataCache
      */
-    public function objDataCache();
+    public function objDataCache() : ilObjectDataCache;
 
 
     /**
      * @return ilObjectDefinition
      */
-    public function objDefinition();
+    public function objDefinition() : ilObjectDefinition;
 
 
     /**
      * @return ilObjectService
      */
-    public function object();
+    public function object() : ilObjectService;
 
 
     /**
@@ -377,19 +377,19 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function question();
+    public function question() : ilAsqFactory;
 
 
     /**
      * @return ilPluginAdmin
      */
-    public function pluginAdmin();
+    public function pluginAdmin() : ilPluginAdmin;
 
 
     /**
      * @return RBACServices
      */
-    public function rbac();
+    public function rbac() : RBACServices;
 
 
     /**
@@ -397,7 +397,7 @@ interface DICInterface
      *
      * @deprecated Please use `self::dic()->rba()->admin()`
      */
-    public function rbacadmin();
+    public function rbacadmin() : ilRbacAdmin;
 
 
     /**
@@ -405,7 +405,7 @@ interface DICInterface
      *
      * @deprecated Please use `self::dic()->rba()->review()`
      */
-    public function rbacreview();
+    public function rbacreview() : ilRbacReview;
 
 
     /**
@@ -413,7 +413,7 @@ interface DICInterface
      *
      * @deprecated Please use `self::dic()->rba()->system()`
      */
-    public function rbacsystem();
+    public function rbacsystem() : ilRbacSystem;
 
 
     /**
@@ -423,49 +423,49 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function refinery();
+    public function refinery() : RefineryFactory;
 
 
     /**
      * @return Loader
      */
-    public function rendererLoader();
+    public function rendererLoader() : Loader;
 
 
     /**
      * @return ilTree
      */
-    public function repositoryTree();
+    public function repositoryTree() : ilTree;
 
 
     /**
      * @return ResourceRegistry
      */
-    public function resourceRegistry();
+    public function resourceRegistry() : ResourceRegistry;
 
 
     /**
      * @return Session
      */
-    public function session();
+    public function session() : Session;
 
 
     /**
      * @return ilSetting
      */
-    public function settings();
+    public function settings() : ilSetting;
 
 
     /**
      * @return ilStyleDefinition
      */
-    public function systemStyle();
+    public function systemStyle() : ilStyleDefinition;
 
 
     /**
      * @return ilTabsGUI
      */
-    public function tabs();
+    public function tabs() : ilTabsGUI;
 
 
     /**
@@ -475,19 +475,19 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function task();
+    public function task() : ilTaskService;
 
 
     /**
      * @return TemplateFactory
      */
-    public function templateFactory();
+    public function templateFactory() : TemplateFactory;
 
 
     /**
      * @return ilToolbarGUI
      */
-    public function toolbar();
+    public function toolbar() : ilToolbarGUI;
 
 
     /**
@@ -495,7 +495,7 @@ interface DICInterface
      *
      * @deprecated Please use `self::dic()->repositoryTree()`
      */
-    public function tree();
+    public function tree() : ilTree;
 
 
     /**
@@ -503,7 +503,7 @@ interface DICInterface
      *
      * @since ILIAS 5.2
      */
-    public function ui();
+    public function ui() : UIServices;
 
 
     /**
@@ -513,23 +513,23 @@ interface DICInterface
      *
      * @since ILIAS 6
      */
-    public function uiService();
+    public function uiService() : ilUIService;
 
 
     /**
      * @return FileUpload
      */
-    public function upload();
+    public function upload() : FileUpload;
 
 
     /**
      * @return ilObjUser
      */
-    public function user();
+    public function user() : ilObjUser;
 
 
     /**
      * @return Container
      */
-    public function &dic();
+    public function &dic() : Container;
 }

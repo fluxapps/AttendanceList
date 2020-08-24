@@ -18,7 +18,7 @@ class PdfFormat extends HtmlFormat
     /**
      * @inheritDoc
      */
-    public function getFormatId()
+    public function getFormatId() : string
     {
         return self::FORMAT_PDF;
     }
@@ -27,7 +27,7 @@ class PdfFormat extends HtmlFormat
     /**
      * @inheritDoc
      */
-    protected function getFileExtension()
+    protected function getFileExtension() : string
     {
         return "pdf";
     }
@@ -36,7 +36,7 @@ class PdfFormat extends HtmlFormat
     /**
      * @inheritDoc
      */
-    protected function renderTemplate(Table $component)
+    protected function renderTemplate(Table $component) : string
     {
         $html = parent::renderTemplate($component);
 

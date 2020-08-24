@@ -17,11 +17,11 @@ interface Factory
     /**
      * @return BrowserFormat
      */
-    public function default();
+    public function default() : BrowserFormat;
 
 
     /**
      * @return FilterFactory
      */
-    public function filter();
+    public function filter() : FilterFactory;
 }

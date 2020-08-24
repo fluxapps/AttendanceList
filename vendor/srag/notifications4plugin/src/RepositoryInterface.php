@@ -20,49 +20,49 @@ interface RepositoryInterface extends Pluginable
     /**
      *
      */
-    public function dropTables();
+    public function dropTables()/* : void*/;
 
 
     /**
      * @return array
      */
-    public function getPlaceholderTypes();
+    public function getPlaceholderTypes() : array;
 
 
     /**
      * @return string
      */
-    public function getTableNamePrefix();
+    public function getTableNamePrefix() : string;
 
 
     /**
      *
      */
-    public function installLanguages();
+    public function installLanguages()/* : void*/;
 
 
     /**
      *
      */
-    public function installTables();
+    public function installTables()/* : void*/;
 
 
     /**
      * @return NotificationRepositoryInterface
      */
-    public function notifications();
+    public function notifications() : NotificationRepositoryInterface;
 
 
     /**
      * @return ParserRepositoryInterface
      */
-    public function parser();
+    public function parser() : ParserRepositoryInterface;
 
 
     /**
      * @return SenderRepositoryInterface
      */
-    public function sender();
+    public function sender() : SenderRepositoryInterface;
 
 
     /**
@@ -70,7 +70,7 @@ interface RepositoryInterface extends Pluginable
      *
      * @return self
      */
-    public function withPlaceholderTypes(array $placeholder_types);
+    public function withPlaceholderTypes(array $placeholder_types) : self;
 
 
     /**
@@ -78,5 +78,5 @@ interface RepositoryInterface extends Pluginable
      *
      * @return self
      */
-    public function withTableNamePrefix($table_name_prefix);
+    public function withTableNamePrefix(string $table_name_prefix) : self;
 }

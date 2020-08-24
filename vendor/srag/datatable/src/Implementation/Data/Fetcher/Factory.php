@@ -29,7 +29,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -51,7 +51,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function staticData(array $data, $id_key)
+    public function staticData(array $data, string $id_key) : DataFetcher
     {
         return new StaticDataFetcher($data, $id_key);
     }

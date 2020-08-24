@@ -21,17 +21,17 @@ interface Factory
      *
      * @return Settings
      */
-    public function settings(Pagination $pagination);
+    public function settings(Pagination $pagination) : Settings;
 
 
     /**
      * @return SortFactory
      */
-    public function sort();
+    public function sort() : SortFactory;
 
 
     /**
      * @return StorageFactory
      */
-    public function storage();
+    public function storage() : StorageFactory;
 }

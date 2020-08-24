@@ -59,7 +59,7 @@ final class Repository implements RepositoryInterface
     /**
      * @return RepositoryInterface
      */
-    public static function getInstance()
+    public static function getInstance() : RepositoryInterface
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -72,7 +72,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function dropTables()
+    public function dropTables()/* : void*/
     {
         $this->notifications()->dropTables();
         $this->parser()->dropTables();
@@ -83,7 +83,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getPlaceholderTypes()
+    public function getPlaceholderTypes() : array
     {
         if (empty($this->placeholder_types)) {
             throw new LogicException("placeholder types is empty - please call withPlaceholderTypes earlier!");
@@ -96,7 +96,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getPlugin()
+    public function getPlugin() : PluginInterface
     {
         if (empty($this->plugin)) {
             throw new LogicException("plugin is empty - please call withPlugin earlier!");
@@ -109,7 +109,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getTableNamePrefix()
+    public function getTableNamePrefix() : string
     {
         if (empty($this->table_name_prefix)) {
             throw new LogicException("table name prefix is empty - please call withTableNamePrefix earlier!");
@@ -122,7 +122,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installLanguages()
+    public function installLanguages()/* : void*/
     {
         LibraryLanguageInstaller::getInstance()->withPlugin($this->getPlugin())->withLibraryLanguageDirectory(__DIR__
             . "/../lang")->updateLanguages();
@@ -134,7 +134,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installTables()
+    public function installTables()/* : void*/
     {
         $this->notifications()->installTables();
         $this->parser()->installTables();
@@ -145,7 +145,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function notifications()
+    public function notifications() : NotificationsRepositoryInterface
     {
         return NotificationsRepository::getInstance();
     }
@@ -154,7 +154,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function parser()
+    public function parser() : ParserRepositoryInterface
     {
         return ParserRepository::getInstance();
     }
@@ -163,7 +163,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function sender()
+    public function sender() : SenderRepositoryInterface
     {
         return SenderRepository::getInstance();
     }
@@ -172,7 +172,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function withPlaceholderTypes(array $placeholder_types)
+    public function withPlaceholderTypes(array $placeholder_types) : RepositoryInterface
     {
         $this->placeholder_types = $placeholder_types;
 
@@ -183,7 +183,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function withPlugin(PluginInterface $plugin)
+    public function withPlugin(PluginInterface $plugin) : RepositoryInterface
     {
         $this->plugin = $plugin;
 
@@ -194,7 +194,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function withTableNamePrefix($table_name_prefix)
+    public function withTableNamePrefix(string $table_name_prefix) : RepositoryInterface
     {
         $this->table_name_prefix = $table_name_prefix;
 

@@ -49,7 +49,7 @@ interface Format
     /**
      * @return string
      */
-    public function getFormatId();
+    public function getFormatId() : string;
 
 
     /**
@@ -57,19 +57,19 @@ interface Format
      *
      * @return string
      */
-    public function getDisplayTitle(Table $component);
+    public function getDisplayTitle(Table $component) : string;
 
 
     /**
      * @return int
      */
-    public function getOutputType();
+    public function getOutputType() : int;
 
 
     /**
      * @return object
      */
-    public function getTemplate();
+    public function getTemplate()/* : object*/;
 
 
     /**
@@ -79,12 +79,12 @@ interface Format
      *
      * @return string
      */
-    public function render(Table $component, ?Data $data, Settings $settings);
+    public function render(Table $component, /*?Data*/ $data, Settings $settings) : string;
 
 
     /**
      * @param string $data
      * @param Table  $component
      */
-    public function deliverDownload($data, Table $component);
+    public function deliverDownload(string $data, Table $component)/* : void*/;
 }

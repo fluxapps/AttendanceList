@@ -60,7 +60,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getFilterFieldValues()
+    public function getFilterFieldValues() : array
     {
         return $this->filter_field_values;
     }
@@ -69,16 +69,16 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getFilterFieldValue($key)
+    public function getFilterFieldValue(string $key)
     {
-        return isset($this->filter_field_values[$key]) ? $this->filter_field_values[$key] : null;
+        return $this->filter_field_values[$key] ?? null;
     }
 
 
     /**
      * @inheritDoc
      */
-    public function withFilterFieldValues(array $filter_field_values)
+    public function withFilterFieldValues(array $filter_field_values) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -91,7 +91,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getSortFields()
+    public function getSortFields() : array
     {
         return $this->sort_fields;
     }
@@ -100,10 +100,11 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getSortField($sort_field)
+    public function getSortField(string $sort_field)/* : ?SortField*/
     {
-        $sort_field = current(array_filter($this->sort_fields, function (SortField $sort_field_) use($sort_field) {    return $sort_field_->getSortField() === $sort_field;
-}));
+        $sort_field = current(array_filter($this->sort_fields, function (SortField $sort_field_) use ($sort_field) : bool {
+            return ($sort_field_->getSortField() === $sort_field);
+        }));
 
         if ($sort_field !== false) {
             return $sort_field;
@@ -116,7 +117,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function withSortFields(array $sort_fields)
+    public function withSortFields(array $sort_fields) : SettingsInterface
     {
         $classes = [SortField::class];
         $this->checkArgListElements("sort_fields", $sort_fields, $classes);
@@ -132,18 +133,20 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function addSortField(SortField $sort_field)
+    public function addSortField(SortField $sort_field) : SettingsInterface
     {
         $clone = clone $this;
 
         if ($this->getSortField($sort_field->getSortField()) !== null) {
-            $clone->sort_fields = array_reduce($clone->sort_fields, function (array $sort_fields, SortField $sort_field_) use($sort_field) {
-    if ($sort_field_->getSortField() === $sort_field->getSortField()) {
-        $sort_field_ = $sort_field;
-    }
-    $sort_fields[] = $sort_field_;
-    return $sort_fields;
-}, []);
+            $clone->sort_fields = array_reduce($clone->sort_fields, function (array $sort_fields, SortField $sort_field_) use ($sort_field) : array {
+                if ($sort_field_->getSortField() === $sort_field->getSortField()) {
+                    $sort_field_ = $sort_field;
+                }
+
+                $sort_fields[] = $sort_field_;
+
+                return $sort_fields;
+            }, []);
         } else {
             $clone->sort_fields[] = $sort_field;
         }
@@ -155,13 +158,13 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function removeSortField($sort_field)
+    public function removeSortField(string $sort_field) : SettingsInterface
     {
         $clone = clone $this;
 
-        $clone->sort_fields = array_values(array_filter($clone->sort_fields, function (SortField $sort_field_) use($sort_field) {
-    return $sort_field_->getSortField() !== $sort_field;
-}));
+        $clone->sort_fields = array_values(array_filter($clone->sort_fields, function (SortField $sort_field_) use ($sort_field) : bool {
+            return ($sort_field_->getSortField() !== $sort_field);
+        }));
 
         return $clone;
     }
@@ -170,7 +173,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getSelectedColumns()
+    public function getSelectedColumns() : array
     {
         return $this->selected_columns;
     }
@@ -179,7 +182,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function withSelectedColumns(array $selected_columns)
+    public function withSelectedColumns(array $selected_columns) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -192,7 +195,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function selectColumn($selected_column)
+    public function selectColumn(string $selected_column) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -207,13 +210,13 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function deselectColumn($selected_column)
+    public function deselectColumn(string $selected_column) : SettingsInterface
     {
         $clone = clone $this;
 
-        $clone->selected_columns = array_values(array_filter($clone->selected_columns, function ($selected_column_) use($selected_column) {
-    return $selected_column_ !== $selected_column;
-}));
+        $clone->selected_columns = array_values(array_filter($clone->selected_columns, function (string $selected_column_) use ($selected_column) : bool {
+            return ($selected_column_ !== $selected_column);
+        }));
 
         return $clone;
     }
@@ -222,7 +225,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function isFilterSet()
+    public function isFilterSet() : bool
     {
         return $this->filter_set;
     }
@@ -231,7 +234,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function withFilterSet($filter_set = false)
+    public function withFilterSet(bool $filter_set = false) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -244,7 +247,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getRowsCount()
+    public function getRowsCount() : int
     {
         return $this->pagination->getPageSize();
     }
@@ -253,7 +256,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function withRowsCount($rows_count = self::DEFAULT_ROWS_COUNT)
+    public function withRowsCount(int $rows_count = self::DEFAULT_ROWS_COUNT) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -266,7 +269,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getCurrentPage()
+    public function getCurrentPage() : int
     {
         return $this->pagination->getCurrentPage();
     }
@@ -275,7 +278,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function withCurrentPage($current_page = 0)
+    public function withCurrentPage(int $current_page = 0) : SettingsInterface
     {
         $clone = clone $this;
 
@@ -288,7 +291,7 @@ class Settings implements SettingsInterface
     /**
      * @inheritDoc
      */
-    public function getOffset()
+    public function getOffset() : int
     {
         return $this->pagination->getOffset();
     }
@@ -299,7 +302,7 @@ class Settings implements SettingsInterface
      *
      * @internal
      */
-    public function getPagination(?Data $data)
+    public function getPagination(/*?Data*/ $data) : Pagination
     {
         return $this->pagination->withTotalEntries($data === null ? 0 : $data->getMaxCount());
     }

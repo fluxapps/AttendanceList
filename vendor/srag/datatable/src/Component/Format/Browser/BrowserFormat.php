@@ -21,7 +21,7 @@ interface BrowserFormat extends Format
      *
      * @return string|null
      */
-    public function getInputFormatId(Table $component);
+    public function getInputFormatId(Table $component)/* : ?string*/;
 
 
     /**
@@ -30,7 +30,7 @@ interface BrowserFormat extends Format
      *
      * @return Settings
      */
-    public function handleSettingsInput(Table $component, Settings $settings);
+    public function handleSettingsInput(Table $component, Settings $settings) : Settings;
 
 
     /**
@@ -40,7 +40,7 @@ interface BrowserFormat extends Format
      *
      * @return string
      */
-    public function getActionUrlWithParams($action_url, array $params, $table_id);
+    public function getActionUrlWithParams(string $action_url, array $params, string $table_id) : string;
 
 
     /**
@@ -49,7 +49,7 @@ interface BrowserFormat extends Format
      *
      * @return string
      */
-    public function actionParameter($key, $table_id);
+    public function actionParameter(string $key, string $table_id) : string;
 
 
     /**
@@ -57,7 +57,7 @@ interface BrowserFormat extends Format
      *
      * @return string
      */
-    public function getActionRowId($table_id);
+    public function getActionRowId(string $table_id) : string;
 
 
     /**
@@ -65,5 +65,5 @@ interface BrowserFormat extends Format
      *
      * @return string[]
      */
-    public function getMultipleActionRowIds($table_id);
+    public function getMultipleActionRowIds(string $table_id) : array;
 }

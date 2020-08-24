@@ -36,7 +36,7 @@ abstract class AbstractRenderer extends Renderer
     /**
      * @inheritDoc
      */
-    protected function getComponentInterfaceName()
+    protected function getComponentInterfaceName() : array
     {
         return [
             InputGUIWrapperUIInputComponent::class
@@ -47,7 +47,7 @@ abstract class AbstractRenderer extends Renderer
     /**
      * @inheritDoc
      */
-    protected function getTemplatePath($name)
+    protected function getTemplatePath(/*string*/ $name) : string
     {
         if ($name === "input.html") {
             return __DIR__ . "/templates/" . $name;
@@ -64,7 +64,7 @@ abstract class AbstractRenderer extends Renderer
      *
      * @return string
      */
-    protected function renderInput(Template $tpl, InputGUIWrapperUIInputComponent $input)
+    protected function renderInput(Template $tpl, InputGUIWrapperUIInputComponent $input) : string
     {
         $tpl->setVariable("INPUT", self::output()->getHTML($input->getInput()));
 

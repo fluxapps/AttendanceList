@@ -40,7 +40,7 @@ abstract class AbstractLoaderDetector implements Loader
     /**
      * @inheritDoc
      */
-    public function getRendererFor(Component $component, array $contexts)
+    public function getRendererFor(Component $component, array $contexts) : ComponentRenderer
     {
         return $this->loader->getRendererFor($component, $contexts);
     }
@@ -49,7 +49,7 @@ abstract class AbstractLoaderDetector implements Loader
     /**
      * @inheritDoc
      */
-    public function getRendererFactoryFor(Component $component)
+    public function getRendererFactoryFor(Component $component) : RendererFactory
     {
         return $this->loader->getRendererFactoryFor($component);
     }

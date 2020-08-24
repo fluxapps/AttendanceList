@@ -36,7 +36,7 @@ final class Factory implements FactoryInterface
     /**
      * @return FactoryInterface
      */
-    public static function getInstance()
+    public static function getInstance() : FactoryInterface
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -49,7 +49,7 @@ final class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function twig()
+    public function twig() : twigParser
     {
         return new twigParser();
     }

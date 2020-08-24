@@ -144,7 +144,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function __construct($a_title = "", $a_postvar = "")
+    public function __construct(string $a_title = "", string $a_postvar = "")
     {
         parent::__construct($a_title, $a_postvar);
         $this->setType("line_select");
@@ -160,7 +160,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function addCustomAttribute($key, $value, $override = false)/*: void*/
+    public function addCustomAttribute(string $key, string $value, bool $override = false)/*: void*/
     {
         if (isset($this->cust_attr[$key]) && !$override) {
             $this->cust_attr[$key] .= ' ' . $value;
@@ -176,7 +176,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function addHook($key, array $options)/*: void*/
+    public function addHook(string $key, array $options)/*: void*/
     {
         $this->hooks[$key] = $options;
     }
@@ -202,7 +202,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function checkInput()
+    public function checkInput() : bool
     {
         $valid = true;
         // escape data
@@ -264,7 +264,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getCustomAttributes()
+    public function getCustomAttributes() : array
     {
         return (array) $this->cust_attr;
     }
@@ -277,7 +277,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getHook($key)
+    public function getHook(string $key) : string
     {
         if (isset($this->hooks[$key])) {
             return $this->hooks[$key];
@@ -294,7 +294,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getInputs()
+    public function getInputs() : array
     {
         return $this->inputs;
     }
@@ -305,7 +305,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getTableFilterHTML()
+    public function getTableFilterHTML() : string
     {
         return $this->render();
     }
@@ -316,7 +316,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getTemplateDir()
+    public function getTemplateDir() : string
     {
         return $this->template_dir;
     }
@@ -327,7 +327,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function setTemplateDir($template_dir)/*: void*/
+    public function setTemplateDir(string $template_dir)/*: void*/
     {
         $this->template_dir = $template_dir;
     }
@@ -338,7 +338,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getToolbarHTML()
+    public function getToolbarHTML() : string
     {
         return $this->render("toolbar");
     }
@@ -349,7 +349,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function getValue()
+    public function getValue() : array
     {
         $out = array();
         foreach ($this->inputs as $key => $item) {
@@ -449,7 +449,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function isPositionMovable()
+    public function isPositionMovable() : bool
     {
         return $this->position_movable;
     }
@@ -460,7 +460,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function setPositionMovable($position_movable)/*: void*/
+    public function setPositionMovable(bool $position_movable)/*: void*/
     {
         $this->position_movable = $position_movable;
     }
@@ -471,7 +471,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function isShowInfo()
+    public function isShowInfo() : bool
     {
         return $this->show_info;
     }
@@ -482,7 +482,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function setShowInfo($show_info)/*: void*/
+    public function setShowInfo(bool $show_info)/*: void*/
     {
         $this->show_info = $show_info;
     }
@@ -493,7 +493,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function isShowLabel()
+    public function isShowLabel() : bool
     {
         return $this->show_label;
     }
@@ -504,7 +504,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function setShowLabel($show_label)/*: void*/
+    public function setShowLabel(bool $show_label)/*: void*/
     {
         $this->show_label = $show_label;
     }
@@ -515,7 +515,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function isShowLabelOnce()
+    public function isShowLabelOnce() : bool
     {
         return $this->show_label_once;
     }
@@ -526,7 +526,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function setShowLabelOnce($show_label_once)/*: void*/
+    public function setShowLabelOnce(bool $show_label_once)/*: void*/
     {
         $this->setShowLabel(false);
         $this->show_label_once = $show_label_once;
@@ -540,7 +540,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function removeHook($key)
+    public function removeHook(string $key) : bool
     {
         if (isset($this->hooks[$key])) {
             unset($this->hooks[$key]);
@@ -563,7 +563,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    public function render($iterator_id = 0, $clean_render = false)
+    public function render(int $iterator_id = 0, bool $clean_render = false) : string
     {
         $first_label = true;
         $tpl = new Template(__DIR__ . "/templates/tpl.multi_line_input.html", true, true);
@@ -726,7 +726,7 @@ class MultiLineInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, 
      *
      * @deprecated
      */
-    protected function createInputPostVar($iterator_id, ilFormPropertyGUI $input)
+    protected function createInputPostVar(string $iterator_id, ilFormPropertyGUI $input) : string
     {
         if ($this->getMulti()) {
             return $this->getPostVar() . '[' . $iterator_id . '][' . $input->getPostVar() . ']';

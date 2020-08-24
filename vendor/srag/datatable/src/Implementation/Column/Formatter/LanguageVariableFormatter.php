@@ -28,7 +28,7 @@ class LanguageVariableFormatter extends DefaultFormatter
      *
      * @param string $prefix
      */
-    public function __construct($prefix)
+    public function __construct(string $prefix)
     {
         parent::__construct();
 
@@ -39,7 +39,7 @@ class LanguageVariableFormatter extends DefaultFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $value, Column $column, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $value, Column $column, RowData $row, string $table_id) : string
     {
         $value = strval($value);
 

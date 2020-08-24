@@ -31,7 +31,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,7 +53,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function actions()
+    public function actions() : ActionsFactoryInterface
     {
         return ActionsFactory::getInstance();
     }
@@ -62,7 +62,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function chainGetter(array $chain)
+    public function chainGetter(array $chain) : Formatter
     {
         return new ChainGetterFormatter($chain);
     }
@@ -71,7 +71,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function check()
+    public function check() : Formatter
     {
         return new CheckFormatter();
     }
@@ -80,7 +80,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function date()
+    public function date() : Formatter
     {
         return new DateFormatter();
     }
@@ -89,7 +89,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function default()
+    public function default() : Formatter
     {
         return new DefaultFormatter();
     }
@@ -98,7 +98,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function languageVariable($prefix)
+    public function languageVariable(string $prefix) : Formatter
     {
         return new LanguageVariableFormatter($prefix);
     }
@@ -107,7 +107,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function learningProgress()
+    public function learningProgress() : Formatter
     {
         return new LearningProgressFormatter();
     }
@@ -116,7 +116,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function link()
+    public function link() : Formatter
     {
         return new LinkFormatter();
     }

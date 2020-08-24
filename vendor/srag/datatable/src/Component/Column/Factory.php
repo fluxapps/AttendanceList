@@ -20,11 +20,11 @@ interface Factory
      *
      * @return Column
      */
-    public function column($key, $title);
+    public function column(string $key, string $title) : Column;
 
 
     /**
      * @return FormatterFactory
      */
-    public function formatter();
+    public function formatter() : FormatterFactory;
 }

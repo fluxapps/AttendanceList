@@ -40,7 +40,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -62,7 +62,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function column()
+    public function column() : ColumnFactoryInterface
     {
         return ColumnFactory::getInstance();
     }
@@ -71,7 +71,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function data()
+    public function data() : DataFactoryInterface
     {
         return DataFactory::getInstance();
     }
@@ -80,7 +80,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function format()
+    public function format() : FormatFactoryInterface
     {
         return FormatFactory::getInstance();
     }
@@ -89,7 +89,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function settings()
+    public function settings() : SettingsFactoryInterface
     {
         return SettingsFactory::getInstance();
     }
@@ -98,7 +98,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function table($table_id, $action_url, $title, array $columns, DataFetcher $data_fetcher)
+    public function table(string $table_id, string $action_url, string $title, array $columns, DataFetcher $data_fetcher) : TableInterface
     {
         return new Table($table_id, $action_url, $title, $columns, $data_fetcher);
     }
@@ -107,7 +107,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function installLanguages(PluginInterface $plugin)
+    public function installLanguages(PluginInterface $plugin)/* : void*/
     {
         LibraryLanguageInstaller::getInstance()->withPlugin($plugin)->withLibraryLanguageDirectory(__DIR__
             . "/../../lang")->updateLanguages();

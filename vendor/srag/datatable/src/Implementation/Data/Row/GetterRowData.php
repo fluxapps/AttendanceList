@@ -17,7 +17,7 @@ class GetterRowData extends AbstractRowData
     /**
      * @inheritDoc
      */
-    public function __invoke($key)
+    public function __invoke(string $key)
     {
         return Items::getter($this->getOriginalData(), $key);
     }

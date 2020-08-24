@@ -44,7 +44,7 @@ interface Settings
      *
      * @return array
      */
-    public function getFilterFieldValues();
+    public function getFilterFieldValues() : array;
 
 
     /**
@@ -52,7 +52,7 @@ interface Settings
      *
      * @return mixed
      */
-    public function getFilterFieldValue($key);
+    public function getFilterFieldValue(string $key);
 
 
     /**
@@ -60,13 +60,13 @@ interface Settings
      *
      * @return self
      */
-    public function withFilterFieldValues(array $filter_field_values);
+    public function withFilterFieldValues(array $filter_field_values) : self;
 
 
     /**
      * @return SortField[]
      */
-    public function getSortFields();
+    public function getSortFields() : array;
 
 
     /**
@@ -74,7 +74,7 @@ interface Settings
      *
      * @return SortField|null
      */
-    public function getSortField($sort_field);
+    public function getSortField(string $sort_field)/* : ?SortField*/;
 
 
     /**
@@ -82,7 +82,7 @@ interface Settings
      *
      * @return self
      */
-    public function withSortFields(array $sort_fields);
+    public function withSortFields(array $sort_fields) : self;
 
 
     /**
@@ -90,7 +90,7 @@ interface Settings
      *
      * @return self
      */
-    public function addSortField(SortField $sort_field);
+    public function addSortField(SortField $sort_field) : self;
 
 
     /**
@@ -98,13 +98,13 @@ interface Settings
      *
      * @return self
      */
-    public function removeSortField($sort_field);
+    public function removeSortField(string $sort_field) : self;
 
 
     /**
      * @return string[]
      */
-    public function getSelectedColumns();
+    public function getSelectedColumns() : array;
 
 
     /**
@@ -112,7 +112,7 @@ interface Settings
      *
      * @return self
      */
-    public function withSelectedColumns(array $selected_columns);
+    public function withSelectedColumns(array $selected_columns) : self;
 
 
     /**
@@ -120,7 +120,7 @@ interface Settings
      *
      * @return self
      */
-    public function selectColumn($selected_column);
+    public function selectColumn(string $selected_column) : self;
 
 
     /**
@@ -128,13 +128,13 @@ interface Settings
      *
      * @return self
      */
-    public function deselectColumn($selected_column);
+    public function deselectColumn(string $selected_column) : self;
 
 
     /**
      * @return bool
      */
-    public function isFilterSet();
+    public function isFilterSet() : bool;
 
 
     /**
@@ -142,13 +142,13 @@ interface Settings
      *
      * @return self
      */
-    public function withFilterSet($filter_set = false);
+    public function withFilterSet(bool $filter_set = false) : self;
 
 
     /**
      * @return int
      */
-    public function getRowsCount();
+    public function getRowsCount() : int;
 
 
     /**
@@ -156,13 +156,13 @@ interface Settings
      *
      * @return self
      */
-    public function withRowsCount($rows_count = self::DEFAULT_ROWS_COUNT);
+    public function withRowsCount(int $rows_count = self::DEFAULT_ROWS_COUNT) : self;
 
 
     /**
      * @return int
      */
-    public function getCurrentPage();
+    public function getCurrentPage() : int;
 
 
     /**
@@ -170,13 +170,13 @@ interface Settings
      *
      * @return self
      */
-    public function withCurrentPage($current_page = 0);
+    public function withCurrentPage(int $current_page = 0) : self;
 
 
     /**
      * @return int
      */
-    public function getOffset();
+    public function getOffset() : int;
 
 
     /**
@@ -186,5 +186,5 @@ interface Settings
      *
      * @internal
      */
-    public function getPagination(?Data $data);
+    public function getPagination(/*?Data*/ $data) : Pagination;
 }

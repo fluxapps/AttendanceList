@@ -29,7 +29,7 @@ class Renderer extends AbstractComponentRenderer
     /**
      * @inheritDoc
      */
-    protected function getComponentInterfaceName()
+    protected function getComponentInterfaceName() : array
     {
         return [Table::class];
     }
@@ -40,7 +40,7 @@ class Renderer extends AbstractComponentRenderer
      *
      * @param Table $component
      */
-    public function render(Component $component, RendererInterface $default_renderer)
+    public function render(Component $component, RendererInterface $default_renderer) : string
     {
         self::dic()->language()->loadLanguageModule(Table::LANG_MODULE);
 
@@ -55,7 +55,7 @@ class Renderer extends AbstractComponentRenderer
      *
      * @return string
      */
-    protected function renderDataTable(Table $component)
+    protected function renderDataTable(Table $component) : string
     {
         $settings = $component->getSettingsStorage()->read($component->getTableId(), intval(self::dic()->user()->getId()));
         $settings = $component->getBrowserFormat()->handleSettingsInput($component, $settings);
@@ -74,7 +74,7 @@ class Renderer extends AbstractComponentRenderer
     /**
      * @inheritDoc
      */
-    public function registerResources(ResourceRegistry $registry)
+    public function registerResources(ResourceRegistry $registry)/* : void*/
     {
         parent::registerResources($registry);
 
@@ -90,7 +90,7 @@ class Renderer extends AbstractComponentRenderer
     /**
      * @inheritDoc
      */
-    protected function getTemplatePath($name)
+    protected function getTemplatePath(/*string*/ $name) : string
     {
         return __DIR__ . "/../../templates/" . $name;
     }
@@ -102,7 +102,7 @@ class Renderer extends AbstractComponentRenderer
      *
      * @return Data|null
      */
-    protected function handleFetchData(Table $component, Settings $settings)
+    protected function handleFetchData(Table $component, Settings $settings)/* : ?Data*/
     {
         if (!$component->getDataFetcher()->isFetchDataNeedsFilterFirstSet() || $settings->isFilterSet()) {
             $data = $component->getDataFetcher()->fetchData($settings);
@@ -121,15 +121,16 @@ class Renderer extends AbstractComponentRenderer
      *
      * @return string
      */
-    protected function handleFormat(Table $component, ?Data $data, Settings $settings)
+    protected function handleFormat(Table $component, /*?Data*/ $data, Settings $settings) : string
     {
         $input_format_id = $component->getBrowserFormat()->getInputFormatId($component);
 
         /**
          * @var Format $format
          */
-        $format = current(array_filter($component->getFormats(), function (Format $format) use($input_format_id) {    return $format->getFormatId() === $input_format_id;
-}));
+        $format = current(array_filter($component->getFormats(), function (Format $format) use ($input_format_id) : bool {
+            return ($format->getFormatId() === $input_format_id);
+        }));
 
         if ($format === false) {
             $format = $component->getBrowserFormat();

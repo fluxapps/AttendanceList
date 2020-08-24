@@ -42,13 +42,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withPlugin(PluginInterface $plugin);
+    public function withPlugin(PluginInterface $plugin) : self;
 
 
     /**
      * @return string
      */
-    public function getTableId();
+    public function getTableId() : string;
 
 
     /**
@@ -56,13 +56,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withTableId($table_id);
+    public function withTableId(string $table_id) : self;
 
 
     /**
      * @return string
      */
-    public function getActionUrl();
+    public function getActionUrl() : string;
 
 
     /**
@@ -70,13 +70,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withActionUrl($action_url);
+    public function withActionUrl(string $action_url) : self;
 
 
     /**
      * @return string
      */
-    public function getTitle();
+    public function getTitle() : string;
 
 
     /**
@@ -84,13 +84,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withTitle($title);
+    public function withTitle(string $title) : self;
 
 
     /**
      * @return Column[]
      */
-    public function getColumns();
+    public function getColumns() : array;
 
 
     /**
@@ -98,13 +98,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withColumns(array $columns);
+    public function withColumns(array $columns) : self;
 
 
     /**
      * @return DataFetcher
      */
-    public function getDataFetcher();
+    public function getDataFetcher() : DataFetcher;
 
 
     /**
@@ -112,13 +112,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withFetchData(DataFetcher $data_fetcher);
+    public function withFetchData(DataFetcher $data_fetcher) : self;
 
 
     /**
      * @return FilterInput[]|FilterInput54[]
      */
-    public function getFilterFields();
+    public function getFilterFields() : array;
 
 
     /**
@@ -126,13 +126,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withFilterFields(array $filter_fields);
+    public function withFilterFields(array $filter_fields) : self;
 
 
     /**
      * @return BrowserFormat
      */
-    public function getBrowserFormat();
+    public function getBrowserFormat() : BrowserFormat;
 
 
     /**
@@ -140,13 +140,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withBrowserFormat(BrowserFormat $browser_format);
+    public function withBrowserFormat(BrowserFormat $browser_format) : self;
 
 
     /**
      * @return Format[]
      */
-    public function getFormats();
+    public function getFormats() : array;
 
 
     /**
@@ -154,13 +154,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withFormats(array $formats);
+    public function withFormats(array $formats) : self;
 
 
     /**
      * @return string[]
      */
-    public function getMultipleActions();
+    public function getMultipleActions() : array;
 
 
     /**
@@ -168,13 +168,13 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withMultipleActions(array $multiple_actions);
+    public function withMultipleActions(array $multiple_actions) : self;
 
 
     /**
      * @return SettingsStorage
      */
-    public function getSettingsStorage();
+    public function getSettingsStorage() : SettingsStorage;
 
 
     /**
@@ -182,5 +182,5 @@ interface Table extends Component, Pluginable
      *
      * @return self
      */
-    public function withSettingsStorage(SettingsStorage $settings_storage);
+    public function withSettingsStorage(SettingsStorage $settings_storage) : self;
 }

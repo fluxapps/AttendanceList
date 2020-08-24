@@ -21,7 +21,7 @@ class ColorPickerInputGUI extends ilColorPickerInputGUI
     /**
      * @inheritDoc
      */
-    public function render($a_mode = "")
+    public function render(/*string*/ $a_mode = "") : string
     {
         $tpl = new Template("Services/Form/templates/default/tpl.property_form.html", true, true);
 

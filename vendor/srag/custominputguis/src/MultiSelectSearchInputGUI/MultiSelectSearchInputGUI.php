@@ -72,7 +72,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function __construct($title = "", $post_var = "")
+    public function __construct(string $title = "", string $post_var = "")
     {
         if (substr($post_var, -2) != "[]") {
             $post_var = $post_var . "[]";
@@ -97,7 +97,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function checkInput()
+    public function checkInput() : bool
     {
         if ($this->getRequired() && empty($this->getValue())) {
             $this->setAlert(self::dic()->language()->txt("msg_input_is_required"));
@@ -114,7 +114,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getAjaxLink()
+    public function getAjaxLink() : string
     {
         return $this->ajax_link;
     }
@@ -125,7 +125,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function setAjaxLink($ajax_link)/*: void*/
+    public function setAjaxLink(string $ajax_link)/*: void*/
     {
         $this->ajax_link = $ajax_link;
     }
@@ -136,7 +136,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getCssClass()
+    public function getCssClass() : string
     {
         return $this->css_class;
     }
@@ -147,7 +147,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function setCssClass($css_class)/*: void*/
+    public function setCssClass(string $css_class)/*: void*/
     {
         $this->css_class = $css_class;
     }
@@ -160,7 +160,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getHeight()
+    public function getHeight() : string
     {
         return $this->height;
     }
@@ -184,7 +184,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getInputTemplate()
+    public function getInputTemplate() : ilTemplate
     {
         return $this->input_template;
     }
@@ -206,7 +206,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getMinimumInputLength()
+    public function getMinimumInputLength() : int
     {
         if ($this->minimum_input_length !== null) {
             return $this->minimum_input_length;
@@ -221,7 +221,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function setMinimumInputLength(/*?*/ $minimum_input_length = null)/*: void*/
+    public function setMinimumInputLength(/*?*/ int $minimum_input_length = null)/*: void*/
     {
         $this->minimum_input_length = $minimum_input_length;
     }
@@ -232,7 +232,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getSubItems()
+    public function getSubItems() : array
     {
         return array();
     }
@@ -243,7 +243,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getTableFilterHTML()
+    public function getTableFilterHTML() : string
     {
         return $this->render();
     }
@@ -254,7 +254,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getToolbarHTML()
+    public function getToolbarHTML() : string
     {
         return $this->render();
     }
@@ -267,7 +267,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function getWidth()
+    public function getWidth() : string
     {
         return $this->width;
     }
@@ -291,7 +291,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    public function render()
+    public function render() : string
     {
         $tpl = $this->getInputTemplate();
         $values = $this->getValue();
@@ -392,7 +392,7 @@ class MultiSelectSearchInputGUI extends ilMultiSelectInputGUI implements ilTable
      *
      * @deprecated
      */
-    protected function searchPostVar()
+    protected function searchPostVar() : string
     {
         if (substr($this->getPostVar(), -2) == "[]") {
             return substr($this->getPostVar(), 0, -2);

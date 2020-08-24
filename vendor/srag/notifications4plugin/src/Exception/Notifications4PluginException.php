@@ -20,7 +20,7 @@ class Notifications4PluginException extends ilException
      * @param string $message
      * @param int    $code
      */
-    public function __construct($message, $code = 0)
+    public function __construct(string $message, int $code = 0)
     {
         parent::__construct($message, $code);
     }

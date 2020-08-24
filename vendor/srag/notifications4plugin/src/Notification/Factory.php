@@ -40,7 +40,7 @@ final class Factory implements FactoryInterface
     /**
      * @return FactoryInterface
      */
-    public static function getInstance()
+    public static function getInstance() : FactoryInterface
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,7 +53,7 @@ final class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function fromDB(stdClass $data)
+    public function fromDB(stdClass $data) : NotificationInterface
     {
         $notification = $this->newInstance();
 
@@ -62,9 +62,9 @@ final class Factory implements FactoryInterface
         $notification->setTitle($data->title);
         $notification->setDescription($data->description);
         $notification->setParser($data->parser);
-        $notification->setParserOptions(!is_null(json_decode($data->parser_options, true)) ? json_decode($data->parser_options, true) : []);
-        $notification->setSubjects(!is_null(json_decode($data->subject, true)) ? json_decode($data->subject, true) : []);
-        $notification->setTexts(!is_null(json_decode($data->text, true)) ? json_decode($data->text, true) : []);
+        $notification->setParserOptions(json_decode($data->parser_options, true) ?? []);
+        $notification->setSubjects(json_decode($data->subject, true) ?? []);
+        $notification->setTexts(json_decode($data->text, true) ?? []);
         $notification->setCreatedAt(new ilDateTime($data->created_at, IL_CAL_DATETIME));
         $notification->setUpdatedAt(new ilDateTime($data->updated_at, IL_CAL_DATETIME));
 
@@ -79,7 +79,7 @@ final class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function newFormBuilderInstance(NotificationCtrl $parent, NotificationInterface $notification)
+    public function newFormBuilderInstance(NotificationCtrl $parent, NotificationInterface $notification) : FormBuilder
     {
         $form = new FormBuilder($parent, $notification);
 
@@ -90,7 +90,7 @@ final class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function newInstance()
+    public function newInstance() : NotificationInterface
     {
         $notification = new Notification();
 
@@ -101,7 +101,7 @@ final class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function newTableBuilderInstance(NotificationsCtrl $parent)
+    public function newTableBuilderInstance(NotificationsCtrl $parent) : TableBuilder
     {
         $table = new TableBuilder($parent);
 

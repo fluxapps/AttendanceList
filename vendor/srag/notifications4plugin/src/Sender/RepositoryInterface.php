@@ -18,19 +18,19 @@ interface RepositoryInterface
     /**
      * @internal
      */
-    public function dropTables();
+    public function dropTables()/* : void*/;
 
 
     /**
      * @return FactoryInterface
      */
-    public function factory();
+    public function factory() : FactoryInterface;
 
 
     /**
      * @internal
      */
-    public function installTables();
+    public function installTables()/* : void*/;
 
 
     /**
@@ -41,5 +41,5 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], ?string $language = null);
+    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null)/* : void*/;
 }

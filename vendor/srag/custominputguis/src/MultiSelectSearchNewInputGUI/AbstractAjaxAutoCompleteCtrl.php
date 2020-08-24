@@ -51,7 +51,35 @@ abstract class AbstractAjaxAutoCompleteCtrl
                         break;
 
                     default:
-          publpublic function validateOptions(array $ids)
+                        break;
+                }
+                break;
+        }
+    }
+
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public abstract function fillOptions(array $ids) : array;
+
+
+    /**
+     * @param string|null $search
+     *
+     * @return array
+     */
+    public abstract function searchOptions(/*?*/ string $search = null) : array;
+
+
+    /**
+     * @param array $ids
+     *
+     * @return bool
+     */
+    public function validateOptions(array $ids) : bool
     {
         return (count($this->skipIds($ids)) === count($this->fillOptions($ids)));
     }
@@ -82,13 +110,14 @@ abstract class AbstractAjaxAutoCompleteCtrl
      *
      * @return array
      */
-    protected function skipIds(array $ids)
+    protected function skipIds(array $ids) : array
     {
         if (empty($this->skip_ids)) {
             return $ids;
         }
 
-        return array_filter($ids, function ($id) {    return !in_array($id, $this->skip_ids);
-}, ARRAY_FILTER_USE_KEY);
+        return array_filter($ids, function ($id) : bool {
+            return (!in_array($id, $this->skip_ids));
+        }, ARRAY_FILTER_USE_KEY);
     }
 }

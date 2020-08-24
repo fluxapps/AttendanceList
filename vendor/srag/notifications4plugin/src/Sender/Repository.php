@@ -37,7 +37,7 @@ final class Repository implements RepositoryInterface
     /**
      * @return RepositoryInterface
      */
-    public static function getInstance()
+    public static function getInstance() : RepositoryInterface
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -50,7 +50,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function dropTables()
+    public function dropTables()/* : void*/
     {
 
     }
@@ -59,7 +59,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function factory()
+    public function factory() : FactoryInterface
     {
         return Factory::getInstance();
     }
@@ -68,7 +68,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installTables()
+    public function installTables()/* : void*/
     {
 
     }
@@ -77,7 +77,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], ?string $language = null)
+    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null)/* : void*/
     {
         $parser = self::notifications4plugin()->parser()->getParserForNotification($notification);
 

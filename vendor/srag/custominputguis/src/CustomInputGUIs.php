@@ -35,7 +35,7 @@ final class CustomInputGUIs
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -48,7 +48,7 @@ final class CustomInputGUIs
     /**
      * @return ViewControlModeUI
      */
-    public function viewControlMode()
+    public function viewControlMode() : ViewControlModeUI
     {
         return new ViewControlModeUI();
     }

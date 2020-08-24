@@ -23,7 +23,7 @@ interface Formatter
      *
      * @return string
      */
-    public function formatHeaderCell(Format $format, Column $column, $table_id);
+    public function formatHeaderCell(Format $format, Column $column, string $table_id) : string;
 
 
     /**
@@ -35,5 +35,5 @@ interface Formatter
      *
      * @return string
      */
-    public function formatRowCell(Format $format, $value, Column $column, RowData $row, $table_id);
+    public function formatRowCell(Format $format, $value, Column $column, RowData $row, string $table_id) : string;
 }

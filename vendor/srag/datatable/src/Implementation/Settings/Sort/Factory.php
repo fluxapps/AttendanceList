@@ -29,7 +29,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -51,7 +51,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function sortField($sort_field, $sort_field_direction)
+    public function sortField(string $sort_field, int $sort_field_direction) : SortFieldInterface
     {
         return new SortField($sort_field, $sort_field_direction);
     }

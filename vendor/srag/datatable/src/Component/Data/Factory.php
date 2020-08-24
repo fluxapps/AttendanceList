@@ -22,17 +22,17 @@ interface Factory
      *
      * @return Data
      */
-    public function data(array $data, $max_count);
+    public function data(array $data, int $max_count) : Data;
 
 
     /**
      * @return FetcherFactory
      */
-    public function fetcher();
+    public function fetcher() : FetcherFactory;
 
 
     /**
      * @return RowFactory
      */
-    public function row();
+    public function row() : RowFactory;
 }

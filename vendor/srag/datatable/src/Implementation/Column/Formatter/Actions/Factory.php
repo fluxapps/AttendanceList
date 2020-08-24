@@ -29,7 +29,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -51,7 +51,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function actionsDropdown()
+    public function actionsDropdown() : ActionsFormatter
     {
         return new ActionsDropdownFormatter();
     }
@@ -60,7 +60,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function sort()
+    public function sort() : ActionsFormatter
     {
         return new SortFormatter();
     }

@@ -18,7 +18,7 @@ trait Notifications4PluginTrait
     /**
      * @return Notifications4PluginRepositoryInterface
      */
-    protected static function notifications4plugin()
+    protected static function notifications4plugin() : Notifications4PluginRepositoryInterface
     {
         return Notifications4PluginRepository::getInstance();
     }

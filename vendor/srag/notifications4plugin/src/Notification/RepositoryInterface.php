@@ -17,13 +17,13 @@ interface RepositoryInterface
     /**
      * @param NotificationInterface $notification
      */
-    public function deleteNotification(NotificationInterface $notification);
+    public function deleteNotification(NotificationInterface $notification)/* : void*/;
 
 
     /**
      * @internal
      */
-    public function dropTables();
+    public function dropTables()/* : void*/;
 
 
     /**
@@ -31,13 +31,13 @@ interface RepositoryInterface
      *
      * @return NotificationInterface
      */
-    public function duplicateNotification(NotificationInterface $notification);
+    public function duplicateNotification(NotificationInterface $notification) : NotificationInterface;
 
 
     /**
      * @return FactoryInterface
      */
-    public function factory();
+    public function factory() : FactoryInterface;
 
 
     /**
@@ -45,7 +45,7 @@ interface RepositoryInterface
      *
      * @return NotificationInterface|null
      */
-    public function getNotificationById($id);
+    public function getNotificationById(int $id)/* : ?NotificationInterface*/;
 
 
     /**
@@ -53,7 +53,7 @@ interface RepositoryInterface
      *
      * @return NotificationInterface|null
      */
-    public function getNotificationByName($name);
+    public function getNotificationByName(string $name)/* : ?NotificationInterface*/;
 
 
     /**
@@ -61,19 +61,19 @@ interface RepositoryInterface
      *
      * @return NotificationInterface[]
      */
-    public function getNotifications(?Settings $settings = null);
+    public function getNotifications(/*?Settings*/ $settings = null) : array;
 
 
     /**
      * @return int
      */
-    public function getNotificationsCount();
+    public function getNotificationsCount() : int;
 
 
     /**
      * @internal
      */
-    public function installTables();
+    public function installTables()/* : void*/;
 
 
     /**
@@ -83,11 +83,11 @@ interface RepositoryInterface
      *
      * @deprecated
      */
-    public function migrateFromOldGlobalPlugin($name = null);
+    public function migrateFromOldGlobalPlugin(string $name = null)/* : ?NotificationInterface*/;
 
 
     /**
      * @param NotificationInterface $notification
      */
-    public function storeNotification(NotificationInterface $notification);
+    public function storeNotification(NotificationInterface $notification)/* : void*/;
 }

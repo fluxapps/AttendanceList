@@ -33,7 +33,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -55,7 +55,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function data(array $data, $max_count)
+    public function data(array $data, int $max_count) : DataInterface
     {
         return new Data($data, $max_count);
     }
@@ -64,7 +64,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function fetcher()
+    public function fetcher() : FetcherFactoryInterface
     {
         return FetcherFactory::getInstance();
     }
@@ -73,7 +73,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function row()
+    public function row() : RowFactoryInterface
     {
         return RowFactory::getInstance();
     }

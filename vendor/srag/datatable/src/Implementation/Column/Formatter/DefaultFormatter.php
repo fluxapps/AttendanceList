@@ -20,7 +20,7 @@ class DefaultFormatter extends AbstractFormatter
     /**
      * @inheritDoc
      */
-    public function formatHeaderCell(Format $format, Column $column, $table_id)
+    public function formatHeaderCell(Format $format, Column $column, string $table_id) : string
     {
         $title = $column->getTitle();
 
@@ -49,7 +49,7 @@ class DefaultFormatter extends AbstractFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $value, Column $column, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $value, Column $column, RowData $row, string $table_id) : string
     {
         $value = strval($value);
 

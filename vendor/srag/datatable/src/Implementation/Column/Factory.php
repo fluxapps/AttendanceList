@@ -31,7 +31,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,7 +53,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function column($key, $title)
+    public function column(string $key, string $title) : ColumnInterface
     {
         return new Column($key, $title);
     }
@@ -62,7 +62,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function formatter()
+    public function formatter() : FormatterFactoryInterface
     {
         return FormatterFactory::getInstance();
     }

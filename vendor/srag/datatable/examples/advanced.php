@@ -15,7 +15,7 @@ use srag\DIC\AttendanceList\DICStatic;
 /**
  * @return string
  */
-function advanced()
+function advanced() : string
 {
     $table = new AdvancedExampleTableBuilder(new ilSystemStyleDocumentationGUI());
 
@@ -44,7 +44,7 @@ class AdvancedExampleTableBuilder extends AbstractTableBuilder
     /**
      * @inheritDoc
      */
-    protected function buildTable()
+    protected function buildTable() : Table
     {
         self::dic()->ctrl()->saveParameter($this->parent, "node_id");
         $action_url = self::dic()->ctrl()->getLinkTarget($this->parent, "", "", false, false);
@@ -76,7 +76,7 @@ class AdvancedExampleTableBuilder extends AbstractTableBuilder
     /**
      * @inheritDoc
      */
-    public function render()
+    public function render() : string
     {
         $info_text = "";
 
@@ -105,7 +105,7 @@ class AdvancedExampleFormatter extends DefaultFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $value, Column $column, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $value, Column $column, RowData $row, string $table_id) : string
     {
         $type = parent::formatRowCell($format, $value, $column, $row, $table_id);
 
@@ -143,7 +143,7 @@ class AdvancedExampleDataFetcher extends AbstractDataFetcher
      *
      * @param string $action_url
      */
-    public function __construct($action_url)
+    public function __construct(string $action_url)
     {
         $this->action_url = $action_url;
 
@@ -154,7 +154,7 @@ class AdvancedExampleDataFetcher extends AbstractDataFetcher
     /**
      * @inheritDoc
      */
-    public function fetchData(Settings $settings)
+    public function fetchData(Settings $settings) : Data
     {
         $sql = 'SELECT *' . $this->getQuery($settings);
 
@@ -189,22 +189,24 @@ class AdvancedExampleDataFetcher extends AbstractDataFetcher
      *
      * @return string
      */
-    protected function getQuery(Settings $settings, $max_count = false)
+    protected function getQuery(Settings $settings, bool $max_count = false) : string
     {
         $sql = ' FROM object_data';
 
         $field_values = array_filter($settings->getFilterFieldValues());
 
         if (!empty($field_values)) {
-            $sql .= ' WHERE ' . implode(' AND ', array_map(function ($key, $value) {    return self::dic()->database()->like($key, ilDBConstants::T_TEXT, '%' . $value . '%');
-}, array_keys($field_values), $field_values));
+            $sql .= ' WHERE ' . implode(' AND ', array_map(function (string $key, string $value) : string {
+                    return self::dic()->database()->like($key, ilDBConstants::T_TEXT, '%' . $value . '%');
+                }, array_keys($field_values), $field_values));
         }
 
         if (!$max_count) {
             if (!empty($settings->getSortFields())) {
-                $sql .= ' ORDER BY ' . implode(", ", array_map(function (SortField $sort_field) {
-    return self::dic()->database()->quoteIdentifier($sort_field->getSortField()) . ' ' . ($sort_field->getSortFieldDirection() === SortField::SORT_DIRECTION_DOWN ? 'DESC' : 'ASC');
-}, $settings->getSortFields()));
+                $sql .= ' ORDER BY ' . implode(", ", array_map(function (SortField $sort_field) : string {
+                        return self::dic()->database()->quoteIdentifier($sort_field->getSortField()) . ' ' . ($sort_field->getSortFieldDirection()
+                            === SortField::SORT_DIRECTION_DOWN ? 'DESC' : 'ASC');
+                    }, $settings->getSortFields()));
             }
 
             if (!empty($settings->getOffset()) && !empty($settings->getRowsCount())) {

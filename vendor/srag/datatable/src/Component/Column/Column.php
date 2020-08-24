@@ -18,7 +18,7 @@ interface Column
     /**
      * @return string
      */
-    public function getKey();
+    public function getKey() : string;
 
 
     /**
@@ -26,13 +26,13 @@ interface Column
      *
      * @return self
      */
-    public function withKey($key);
+    public function withKey(string $key) : self;
 
 
     /**
      * @return string
      */
-    public function getTitle();
+    public function getTitle() : string;
 
 
     /**
@@ -40,13 +40,13 @@ interface Column
      *
      * @return self
      */
-    public function withTitle($title);
+    public function withTitle(string $title) : self;
 
 
     /**
      * @return Formatter
      */
-    public function getFormatter();
+    public function getFormatter() : Formatter;
 
 
     /**
@@ -54,13 +54,13 @@ interface Column
      *
      * @return self
      */
-    public function withFormatter(Formatter $formatter);
+    public function withFormatter(Formatter $formatter) : self;
 
 
     /**
      * @return bool
      */
-    public function isSortable();
+    public function isSortable() : bool;
 
 
     /**
@@ -68,13 +68,13 @@ interface Column
      *
      * @return self
      */
-    public function withSortable($sortable = true);
+    public function withSortable(bool $sortable = true) : self;
 
 
     /**
      * @return bool
      */
-    public function isDefaultSort();
+    public function isDefaultSort() : bool;
 
 
     /**
@@ -82,13 +82,13 @@ interface Column
      *
      * @return self
      */
-    public function withDefaultSort($default_sort = false);
+    public function withDefaultSort(bool $default_sort = false) : self;
 
 
     /**
      * @return int
      */
-    public function getDefaultSortDirection();
+    public function getDefaultSortDirection() : int;
 
 
     /**
@@ -96,13 +96,13 @@ interface Column
      *
      * @return self
      */
-    public function withDefaultSortDirection($default_sort_direction = SortField::SORT_DIRECTION_UP);
+    public function withDefaultSortDirection(int $default_sort_direction = SortField::SORT_DIRECTION_UP) : self;
 
 
     /**
      * @return bool
      */
-    public function isSelectable();
+    public function isSelectable() : bool;
 
 
     /**
@@ -110,13 +110,13 @@ interface Column
      *
      * @return self
      */
-    public function withSelectable($selectable = true);
+    public function withSelectable(bool $selectable = true) : self;
 
 
     /**
      * @return bool
      */
-    public function isDefaultSelected();
+    public function isDefaultSelected() : bool;
 
 
     /**
@@ -124,13 +124,13 @@ interface Column
      *
      * @return self
      */
-    public function withDefaultSelected($default_selected = true);
+    public function withDefaultSelected(bool $default_selected = true) : self;
 
 
     /**
      * @return bool
      */
-    public function isExportable();
+    public function isExportable() : bool;
 
 
     /**
@@ -138,5 +138,5 @@ interface Column
      *
      * @return self
      */
-    public function withExportable($exportable = true);
+    public function withExportable(bool $exportable = true) : self;
 }

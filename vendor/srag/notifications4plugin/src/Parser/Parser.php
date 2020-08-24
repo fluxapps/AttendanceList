@@ -33,25 +33,25 @@ interface Parser
     /**
      * @return string
      */
-    public function getClass();
+    public function getClass() : string;
 
 
     /**
      * @return string
      */
-    public function getDocLink();
+    public function getDocLink() : string;
 
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName() : string;
 
 
     /**
      * @return Input[]
      */
-    public function getOptionsFields();
+    public function getOptionsFields() : array;
 
 
     /**
@@ -63,5 +63,5 @@ interface Parser
      *
      * @throws Notifications4PluginException
      */
-    public function parse($text, array $placeholders = [], array $options = []);
+    public function parse(string $text, array $placeholders = [], array $options = []) : string;
 }

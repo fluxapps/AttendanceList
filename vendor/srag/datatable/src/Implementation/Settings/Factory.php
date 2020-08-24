@@ -34,7 +34,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -56,7 +56,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function settings(Pagination $pagination)
+    public function settings(Pagination $pagination) : SettingsInterface
     {
         return new Settings($pagination);
     }
@@ -65,7 +65,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function sort()
+    public function sort() : SortFactoryInterface
     {
         return SortFactory::getInstance();
     }
@@ -74,7 +74,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function storage()
+    public function storage() : StorageFactoryInterface
     {
         return StorageFactory::getInstance();
     }

@@ -31,7 +31,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,7 +53,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function default()
+    public function default() : BrowserFormat
     {
         return new DefaultBrowserFormat();
     }
@@ -62,7 +62,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function filter()
+    public function filter() : FilterFactoryInterface
     {
         return FilterFactory::getInstance();
     }

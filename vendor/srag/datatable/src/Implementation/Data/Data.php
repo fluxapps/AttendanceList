@@ -38,7 +38,7 @@ class Data implements DataInterface
      * @param RowData[] $data
      * @param int       $max_count
      */
-    public function __construct(array $data, $max_count)
+    public function __construct(array $data, int $max_count)
     {
         $this->data = $data;
 
@@ -49,7 +49,7 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function getData()
+    public function getData() : array
     {
         return $this->data;
     }
@@ -58,7 +58,7 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function withData(array $data)
+    public function withData(array $data) : DataInterface
     {
         $classes = [RowData::class];
         $this->checkArgListElements("data", $data, $classes);
@@ -74,7 +74,7 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function getMaxCount()
+    public function getMaxCount() : int
     {
         return $this->max_count;
     }
@@ -83,7 +83,7 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function withMaxCount($max_count)
+    public function withMaxCount(int $max_count) : DataInterface
     {
         $clone = clone $this;
 
@@ -96,7 +96,7 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function getDataCount()
+    public function getDataCount() : int
     {
         return count($this->data);
     }

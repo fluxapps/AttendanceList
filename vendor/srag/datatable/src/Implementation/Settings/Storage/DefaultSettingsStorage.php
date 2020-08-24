@@ -31,27 +31,30 @@ class DefaultSettingsStorage extends AbstractSettingsStorage
         parent::__construct();
 
         $this->properties_storage = new ilTablePropertiesStorage();
-        $this->properties_storage->properties = array_reduce(self::VARS, function (array $properties, $property) {    $properties[$property] = ["storage" => "db"];    return $properties;
-}, []);
+        $this->properties_storage->properties = array_reduce(self::VARS, function (array $properties, string $property) : array {
+            $properties[$property] = ["storage" => "db"];
+
+            return $properties;
+        }, []);
     }
 
 
     /**
      * @inheritDoc
      */
-    public function read($table_id, $user_id)
+    public function read(string $table_id, int $user_id) : Settings
     {
         $settings = self::dataTableUI()->settings()->settings(self::dic()->ui()->factory()->viewControl()->pagination());
 
         foreach (self::VARS as $property) {
-            $value = json_decode(!is_null($this->properties_storage->getProperty($table_id, $user_id, $property)) ? $this->properties_storage->getProperty($table_id, $user_id, $property) : "", true);
+            $value = json_decode($this->properties_storage->getProperty($table_id, $user_id, $property) ?? "", true);
 
             if (!empty($value)) {
                 switch ($property) {
                     case self::VAR_SORT_FIELDS:
-                        $settings = $settings->withSortFields(array_map(function (array $sort_field) {
-    return self::dataTableUI()->settings()->sort()->sortField($sort_field[self::VAR_SORT_FIELD], $sort_field[self::VAR_SORT_FIELD_DIRECTION]);
-}, $value));
+                        $settings = $settings->withSortFields(array_map(function (array $sort_field) : SortField {
+                            return self::dataTableUI()->settings()->sort()->sortField($sort_field[self::VAR_SORT_FIELD], $sort_field[self::VAR_SORT_FIELD_DIRECTION]);
+                        }, $value));
                         break;
 
                     default:
@@ -68,7 +71,7 @@ class DefaultSettingsStorage extends AbstractSettingsStorage
     /**
      * @inheritDoc
      */
-    public function store(Settings $settings, $table_id, $user_id)
+    public function store(Settings $settings, string $table_id, int $user_id)/* : void*/
     {
         foreach (self::VARS as $property) {
             $value = Items::getter($settings, $property);

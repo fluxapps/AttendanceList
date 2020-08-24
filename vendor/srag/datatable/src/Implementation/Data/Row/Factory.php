@@ -29,7 +29,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -51,7 +51,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function getter($row_id, object $original_data)
+    public function getter(string $row_id, /*object*/ $original_data) : RowData
     {
         return new GetterRowData($row_id, $original_data);
     }
@@ -60,7 +60,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function property($row_id, object $original_data)
+    public function property(string $row_id, /*object*/ $original_data) : RowData
     {
         return new PropertyRowData($row_id, $original_data);
     }

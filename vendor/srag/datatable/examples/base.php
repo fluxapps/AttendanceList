@@ -7,7 +7,7 @@ use srag\DIC\AttendanceList\DICStatic;
 /**
  * @return string
  */
-function base()
+function base() : string
 {
     $table = new BaseTableBuilder(new ilSystemStyleDocumentationGUI());
 
@@ -36,13 +36,18 @@ class BaseTableBuilder extends AbstractTableBuilder
     /**
      * @inheritDoc
      */
-    protected function buildTable()
+    protected function buildTable() : Table
     {
         self::dic()->ctrl()->saveParameter($this->parent, "node_id");
         $action_url = self::dic()->ctrl()->getLinkTarget($this->parent, "", "", false, false);
 
-        $data = array_map(function ($index) {    return (object) ["column1" => $index, "column2" => "text {$index}", "column3" => $index % 2 === 0 ? "true" : "false"];
-}, range(0, 25));
+        $data = array_map(function (int $index) : stdClass {
+            return (object) [
+                "column1" => $index,
+                "column2" => "text $index",
+                "column3" => ($index % 2 === 0 ? "true" : "false")
+            ];
+        }, range(0, 25));
         $table = self::dataTableUI()->table("example_datatableui_base", $action_url, "Example data table", [
             self::dataTableUI()->column()->column("column1", "Column 1"),
             self::dataTableUI()->column()->column("column2", "Column 2"),

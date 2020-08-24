@@ -42,7 +42,7 @@ final class Repository implements RepositoryInterface
     /**
      * @return RepositoryInterface
      */
-    public static function getInstance()
+    public static function getInstance() : RepositoryInterface
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -55,7 +55,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function addParser(Parser $parser)
+    public function addParser(Parser $parser)/* : void*/
     {
         $this->parsers[$parser->getClass()] = $parser;
     }
@@ -64,7 +64,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function dropTables()
+    public function dropTables()/* : void*/
     {
 
     }
@@ -73,7 +73,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function factory()
+    public function factory() : FactoryInterface
     {
         return Factory::getInstance();
     }
@@ -82,7 +82,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getParserByClass($parser_class)
+    public function getParserByClass(string $parser_class) : Parser
     {
         if (isset($this->getPossibleParsers()[$parser_class])) {
             return $this->getPossibleParsers()[$parser_class];
@@ -95,7 +95,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getParserForNotification(NotificationInterface $notification)
+    public function getParserForNotification(NotificationInterface $notification) : Parser
     {
         return $this->getParserByClass($notification->getParser());
     }
@@ -104,7 +104,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getPossibleParsers()
+    public function getPossibleParsers() : array
     {
         return $this->parsers;
     }
@@ -113,7 +113,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installTables()
+    public function installTables()/* : void*/
     {
 
     }
@@ -122,7 +122,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null)
+    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string
     {
         return $parser->parse($notification->getSubject($language), $placeholders, $notification->getParserOptions());
     }
@@ -131,7 +131,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null)
+    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string
     {
         return $parser->parse($notification->getText($language), $placeholders, $notification->getParserOptions());
     }

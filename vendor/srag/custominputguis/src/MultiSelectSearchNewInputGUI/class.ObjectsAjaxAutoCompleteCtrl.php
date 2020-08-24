@@ -32,7 +32,7 @@ class ObjectsAjaxAutoCompleteCtrl extends AbstractAjaxAutoCompleteCtrl
      *
      * @param array|null $skip_ids
      */
-    public function __construct($type, $ref_id = false,/*?*/ array $skip_ids = null)
+    public function __construct(string $type, bool $ref_id = false,/*?*/ array $skip_ids = null)
     {
         parent::__construct($skip_ids);
 
@@ -44,7 +44,7 @@ class ObjectsAjaxAutoCompleteCtrl extends AbstractAjaxAutoCompleteCtrl
     /**
      * @inheritDoc
      */
-    public function fillOptions(array $ids)
+    public function fillOptions(array $ids) : array
     {
         $result = self::dic()->database()->queryF('
 SELECT ' . ($this->ref_id ? 'object_reference.ref_id' : 'object_data.obj_id') . ', title
@@ -63,7 +63,7 @@ AND ' . self::dic()
     /**
      * @inheritDoc
      */
-    public function searchOptions($search = null)
+    public function searchOptions(/*?*/ string $search = null) : array
     {
         $result = self::dic()->database()->queryF('
 SELECT ' . ($this->ref_id ? 'object_reference.ref_id' : 'object_data.obj_id') . ', title
@@ -84,7 +84,7 @@ AND object_reference.deleted IS NULL
      *
      * @return array
      */
-    protected function formatObjects(array $objects)
+    protected function formatObjects(array $objects) : array
     {
         $formatted_objects = [];
 

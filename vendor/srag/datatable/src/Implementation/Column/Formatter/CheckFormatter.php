@@ -20,7 +20,7 @@ class CheckFormatter extends DefaultFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $check, Column $image_path, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $check, Column $image_path, RowData $row, string $table_id) : string
     {
         if ($check) {
             $image_path = ilUtil::getImagePath("icon_ok.svg");

@@ -30,7 +30,7 @@ abstract class AbstractParser implements Parser
     /**
      * @inheritDoc
      */
-    public function getClass()
+    public function getClass() : string
     {
         return static::class;
     }
@@ -39,7 +39,7 @@ abstract class AbstractParser implements Parser
     /**
      * @inheritDoc
      */
-    public function getDocLink()
+    public function getDocLink() : string
     {
         return static::DOC_LINK;
     }
@@ -48,7 +48,7 @@ abstract class AbstractParser implements Parser
     /**
      * @inheritDoc
      */
-    public function getName()
+    public function getName() : string
     {
         return static::NAME;
     }
@@ -59,7 +59,7 @@ abstract class AbstractParser implements Parser
      *
      * @return string
      */
-    protected function fixLineBreaks($html)
+    protected function fixLineBreaks(string $html) : string
     {
         return str_ireplace(["&lt;br&gt;", "&lt;br/&gt;", "&lt;br /&gt;"], ["<br>", "<br/>", "<br />"], $html);
     }

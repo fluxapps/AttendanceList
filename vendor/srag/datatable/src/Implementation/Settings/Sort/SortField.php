@@ -37,7 +37,7 @@ class SortField implements SortFieldInterface
      * @param string $sort_field
      * @param int    $sort_field_direction
      */
-    public function __construct($sort_field, $sort_field_direction)
+    public function __construct(string $sort_field, int $sort_field_direction)
     {
         $this->sort_field = $sort_field;
 
@@ -48,7 +48,7 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function getSortField()
+    public function getSortField() : string
     {
         return $this->sort_field;
     }
@@ -57,7 +57,7 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function withSortField($sort_field)
+    public function withSortField(string $sort_field) : SortFieldInterface
     {
         $clone = clone $this;
 
@@ -70,7 +70,7 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function getSortFieldDirection()
+    public function getSortFieldDirection() : int
     {
         return $this->sort_field_direction;
     }
@@ -79,7 +79,7 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function withSortFieldDirection($sort_field_direction)
+    public function withSortFieldDirection(int $sort_field_direction) : SortFieldInterface
     {
         $clone = clone $this;
 
@@ -92,7 +92,7 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize() : stdClass
     {
         return (object) [
             SettingsStorage::VAR_SORT_FIELD           => $this->sort_field,

@@ -15,7 +15,7 @@ class PropertyRowData extends AbstractRowData
     /**
      * @inheritDoc
      */
-    public function __invoke($key)
+    public function __invoke(string $key)
     {
         return $this->getOriginalData()->{$key};
     }

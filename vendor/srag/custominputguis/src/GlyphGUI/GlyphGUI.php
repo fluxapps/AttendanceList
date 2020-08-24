@@ -32,7 +32,7 @@ class GlyphGUI extends ilGlyphGUI
      *
      * @deprecated
      */
-    static function get($a_glyph, $a_text = "")
+    static function get(/*string*/ $a_glyph, /*string*/ $a_text = "") : string
     {
         if ($a_glyph == 'remove') {
             self::$map[$a_glyph]['class'] = 'glyphicon glyphicon-' . $a_glyph;
@@ -52,7 +52,7 @@ class GlyphGUI extends ilGlyphGUI
      *
      * @deprecated
      */
-    static function gets($a_glyph)
+    static function gets(string $a_glyph) : string
     {
         self::$map[$a_glyph]['class'] = 'glyphicons glyphicons-' . $a_glyph;
 

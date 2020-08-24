@@ -15,5 +15,5 @@ interface FactoryInterface
     /**
      * @return twigParser
      */
-    public function twig();
+    public function twig() : twigParser;
 }

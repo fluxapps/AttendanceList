@@ -63,7 +63,7 @@ class ExternalMailSender implements Sender
      * @param string       $from E-Mail from address. If omitted, the ILIAS setting "external noreply address" is used
      * @param string|array $to   E-Mail address or array of addresses
      */
-    public function __construct($from = "", $to = "")
+    public function __construct(string $from = "", $to = "")
     {
         $this->from = $from;
         $this->to = $to;
@@ -187,7 +187,7 @@ class ExternalMailSender implements Sender
     /**
      * @inheritDoc
      */
-    public function send()
+    public function send()/* : void*/
     {
         $from = ($this->from) ? $this->from : self::dic()->ilias()->getSetting("mail_external_sender_noreply");
         $this->mailer->From(self::dic()->mailMimeSenderFactory()->userByEmailAddress($from));

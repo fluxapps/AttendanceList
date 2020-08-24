@@ -18,7 +18,7 @@ trait DataTableUITrait
     /**
      * @return FactoryInterface
      */
-    protected static function dataTableUI()
+    protected static function dataTableUI() : FactoryInterface
     {
         return Factory::getInstance();
     }
