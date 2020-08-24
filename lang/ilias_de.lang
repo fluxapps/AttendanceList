@@ -110,8 +110,8 @@ config_form_has_comment#:#Kommentarfeld anbieten
 config_form_comment_req#:#Feld muss ausgefüllt werden
 config_form_has_upload#:#Dateiupload-Feld anbieten
 config_form_upload_req#:#Feld muss ausgefüllt werden
-subtab_notification_absence#:#Benachrichtigung Abwesenheit
-subtab_notification_absence_reminder#:#Benachrichtigung Abwesenheit Erinnerung
+subtab_notifications_absence#:#Benachrichtigung Abwesenheit
+subtab_notifications_absence_reminder#:#Benachrichtigung Abwesenheit Erinnerung
 config_show_not_relevant#:#'Nicht relevant' aktivieren
 config_show_not_relevant_info#:#Aktiviert einen zusätzlich Status. Nicht relevante Einträge werden bei der zu erreichenden Mindestanwesenheit ignoriert.
 config_show_present_total#:#'Anwesend / Total' anzeigen

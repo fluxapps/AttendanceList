@@ -3,8 +3,6 @@
 
 use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
-use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
-use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 
 /**
  * Class xaliChecklistEntry
@@ -107,13 +105,13 @@ class xaliChecklistEntry extends ActiveRecord {
 
 		$placeholders = array( 'user' => $ilObjUser, 'absence' => $absence );
 
-		$notification = self::notification(Notification::class, NotificationLanguage::class)->getNotificationByName(self::NOTIFICATION_NAME);
+		$notification = self::notifications4plugin()->notifications()->getNotificationByName(self::NOTIFICATION_NAME);
 
 		$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-		$sender = self::sender()->factory()->internalMail($sender_id, $ilObjUser->getId());
+		$sender = self::notifications4plugin()->sender()->factory()->internalMail($sender_id, $ilObjUser->getId());
 
 		try {
-			self::sender()->send($sender, $notification, $placeholders);
+			self::notifications4plugin()->sender()->send($sender, $notification, $placeholders);
 
 			$interval = xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL);
 			if (!$interval) {
