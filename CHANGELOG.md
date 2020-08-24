@@ -1,5 +1,5 @@
 # Changelog
-## [1.5.0]
+## [x]
 * New Version of Notification4Plugins
 * Updated composer dependencies 
 
