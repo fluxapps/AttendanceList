@@ -1,0 +1,191 @@
+<?php
+
+namespace srag\DataTableUI\AttendanceList\Implementation\Format;
+
+use ilUtil;
+use srag\DataTableUI\AttendanceList\Component\Column\Column;
+use srag\DataTableUI\AttendanceList\Component\Data\Data;
+use srag\DataTableUI\AttendanceList\Component\Data\Row\RowData;
+use srag\DataTableUI\AttendanceList\Component\Format\Format;
+use srag\DataTableUI\AttendanceList\Component\Settings\Settings;
+use srag\DataTableUI\AttendanceList\Component\Table;
+use srag\DataTableUI\AttendanceList\Implementation\Utils\DataTableUITrait;
+use srag\DIC\AttendanceList\DICTrait;
+
+/**
+ * Class AbstractFormat
+ *
+ * @package srag\DataTableUI\AttendanceList\Implementation\Format
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
+ */
+abstract class AbstractFormat implements Format
+{
+
+    use DICTrait;
+    use DataTableUITrait;
+
+    /**
+     * @var object
+     */
+    protected $tpl;
+
+
+    /**
+     * AbstractFormat constructor
+     */
+    public function __construct()
+    {
+
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getDisplayTitle(Table $component)
+    {
+        return $component->getPlugin()->translate("format_" . $this->getFormatId(), Table::LANG_MODULE);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getOutputType()
+    {
+        return self::OUTPUT_TYPE_DOWNLOAD;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getTemplate()
+    {
+        return $this->tpl;
+    }
+
+
+    /*public function render(Table $component, ?Data $data, Settings $settings)
+    {
+        $this->initTemplate($component, $data, $settings);
+
+        $columns = $this->getColumns($component, $settings);
+
+        $this->handleColumns($component, $columns, $settings);
+
+        $this->handleRows($component, $columns, $data);
+
+        return $this->renderTemplate($component);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function deliverDownload($data, Table $component)
+    {
+        $filename = $component->getTitle() . "." . $this->getFileExtension();
+
+        ilUtil::deliverData($data, $filename);
+    }
+
+
+    /**
+     * @param Table    $component
+     * @param Settings $settings
+     *
+     * @return Column[]
+     */
+    protected function getColumnsBase(Table $component, Settings $settings)
+    {
+        return array_filter($component->getColumns(), function (Column $column) use($settings) {    if ($column->isSelectable()) {        return in_array($column->getKey(), $settings->getSelectedColumns());
+    } else {
+        return true;
+    }
+});
+    }
+
+
+    /**
+     * @param Table    $component
+     * @param Settings $settings
+     *
+     * @return Column[]
+     */
+    protected function getColumnsForExport(Table $component, Settings $settings)
+    {
+        return array_filter($this->getColumnsBase($component, $settings), function (Column $column) {
+    return $column->isExportable();
+});
+    }
+
+
+    /**
+     * @param Table    $component
+     * @param Settings $settings
+     *
+     * @return Column[]
+     */
+    protected function getColumns(Table $component, Settings $settings)
+    {
+        return $this->getColumnsForExport($component, $settings);
+    }
+
+
+    /**
+     * @param Table     $component
+     * @param Data|null $data
+     * @param Settings  $settings
+     */
+  protected function handleColumns(Table $component, array $columns, Settings $settings)
+    {
+        foreach ($columns as $column) {
+            $this->handleColumn($column->getFormatter()->formatHeaderCell($this, $column, $component->getTableId()), $component, $column, $settings);
+        }
+    }
+
+
+    /**
+     * @param string   $formatted_column
+     * @param Table    $component
+     * @param Column   $column
+     * @param Settings $settings
+     */
+    protected abstract function haprotected function handleRows(Table $component, array $columns, ?Data $data)
+    {
+        if ($data !== null) {
+            foreach ($data->getData() as $row) {
+                $this->handleRow($component, $columns, $row);
+            }
+        }
+    }
+
+
+    /**
+     * @param Table    $component
+     * @param Column[] $columns
+     * @param RowData  $row
+     */
+    protected function handleRow(Table $component, array $columns, RowData $row)
+    {
+        foreach ($columns as $column) {
+            $this->handleRowColumn($column->getFormatter()->formatRowCell($this, $row($column->getKey()), $column, $row, $component->getTableId()));
+        }
+    }
+
+
+    /**
+     * @param string $formatted_row_column
+     */
+    protected abstract function handleRowColumn($formatted_row_column);
+
+
+    /**
+     * @param Table $component
+     *
+     * @return string
+     */
+    protected abstract function renderTemplate(Table $component);
+}

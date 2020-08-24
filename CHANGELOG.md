@@ -1,4 +1,7 @@
 # Changelog
+## [1.5.0]
+* New Version of Notification4Plugins
+* Updated composer dependencies 
 
 ## [1.4.2]
 * Fixed calculated percentage

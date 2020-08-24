@@ -3,7 +3,7 @@
 namespace srag\Notifications4Plugin\AttendanceList\Parser;
 
 use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
-use srag\Notifications4Plugin\AttendanceList\Notification\Notification;
+use srag\Notifications4Plugin\AttendanceList\Notification\NotificationInterface;
 
 /**
  * Interface RepositoryInterface
@@ -12,68 +12,81 @@ use srag\Notifications4Plugin\AttendanceList\Notification\Notification;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface RepositoryInterface {
+interface RepositoryInterface
+{
 
-	/**
-	 * @param Parser $parser
-	 */
-	public function addParser(Parser $parser);
-
-
-	/**
-	 * @return FactoryInterface
-	 */
-	public function factory();
+    /**
+     * @param Parser $parser
+     */
+    public function addParser(Parser $parser);
 
 
-	/**
-	 * @return Parser[]
-	 */
-	public function getPossibleParsers();
+    /**
+     * @internal
+     */
+    public function dropTables();
 
 
-	/**
-	 * @param string $parser_class
-	 *
-	 * @return Parser
-	 *
-	 * @throws Notifications4PluginException
-	 */
-	public function getParserByClass($parser_class);
+    /**
+     * @return FactoryInterface
+     */
+    public function factory();
 
 
-	/**
-	 * @param Notification $notification
-	 *
-	 * @return Parser
-	 *
-	 * @throws Notifications4PluginException
-	 */
-	public function getParserForNotification(Notification $notification);
+    /**
+     * @param string $parser_class
+     *
+     * @return Parser
+     *
+     * @throws Notifications4PluginException
+     */
+    public function getParserByClass($parser_class);
 
 
-	/**
-	 * @param Parser       $parser
-	 * @param Notification $notification
-	 * @param array        $placeholders
-	 * @param string       $language
-	 *
-	 * @return string
-	 *
-	 * @throws Notifications4PluginException
-	 */
-	public function parseSubject(Parser $parser, Notification $notification, array $placeholders = [], $language = "");
+    /**
+     * @param NotificationInterface $notification
+     *
+     * @return Parser
+     *
+     * @throws Notifications4PluginException
+     */
+    public function getParserForNotification(NotificationInterface $notification);
 
 
-	/**
-	 * @param Parser       $parser
-	 * @param Notification $notification
-	 * @param array        $placeholders
-	 * @param string       $language
-	 *
-	 * @return string
-	 *
-	 * @throws Notifications4PluginException
-	 */
-	public function parseText(Parser $parser, Notification $notification, array $placeholders = [], $language = "");
+    /**
+     * @return Parser[]
+     */
+    public function getPossibleParsers();
+
+
+    /**
+     * @internal
+     */
+    public function installTables();
+
+
+    /**
+     * @param Parser                $parser
+     * @param NotificationInterface $notification
+     * @param array                 $placeholders
+     * @param string|null           $language
+     *
+     * @return string
+     *
+     * @throws Notifications4PluginException
+     */
+    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null);
+
+
+    /**
+     * @param Parser                $parser
+     * @param NotificationInterface $notification
+     * @param array                 $placeholders
+     * @param string|null           $language
+     *
+     * @return string
+     *
+     * @throws Notifications4PluginException
+     */
+    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null);
 }

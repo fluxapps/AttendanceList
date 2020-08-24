@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "srag/custominputguis",
-            "version": "v0.23.4",
+            "version": "v0.38.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/CustomInputGUIs.git",
-                "reference": "3d03b9fa3a960a5da5026080e73b761ceb74cdf2"
+                "reference": "76dc3588b2a41f14c62c12a5af57f077c75f7555"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/3d03b9fa3a960a5da5026080e73b761ceb74cdf2",
-                "reference": "3d03b9fa3a960a5da5026080e73b761ceb74cdf2",
+                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/76dc3588b2a41f14c62c12a5af57f077c75f7555",
+                "reference": "76dc3588b2a41f14c62c12a5af57f077c75f7555",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6",
+                "php": ">=7.0",
                 "srag/dic": ">=0.1.0"
             },
             "type": "library",
@@ -37,9 +37,9 @@
             "authors": [
                 {
                     "name": "studer + raimann ag - Team Custom 1",
-                    "role": "Developer",
                     "email": "support-custom1@studer-raimann.ch",
-                    "homepage": "https://studer-raimann.ch"
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
                 }
             ],
             "description": "Custom Input-GUI's",
@@ -51,20 +51,66 @@
                 "input",
                 "table"
             ],
-            "time": "2019-07-24T07:24:41+00:00"
+            "time": "2020-08-07T07:15:06+00:00"
         },
         {
-            "name": "srag/dic",
-            "version": "v0.18.4",
+            "name": "srag/datatable",
+            "version": "v0.28.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/studer-raimann/DIC.git",
-                "reference": "f3a3877e52e571f794e54c96d4413de20b274472"
+                "url": "https://github.com/studer-raimann/DataTableUI.git",
+                "reference": "0614c4318983d6b58292241298a8a92845e96205"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/f3a3877e52e571f794e54c96d4413de20b274472",
-                "reference": "f3a3877e52e571f794e54c96d4413de20b274472",
+                "url": "https://api.github.com/repos/studer-raimann/DataTableUI/zipball/0614c4318983d6b58292241298a8a92845e96205",
+                "reference": "0614c4318983d6b58292241298a8a92845e96205",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "srag/custominputguis": ">=0.1.0",
+                "srag/dic": ">=0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\DataTableUI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ILIAS Data Table UI Component",
+            "homepage": "https://github.com/studer-raimann/DataTableUI",
+            "keywords": [
+                "ILIAS",
+                "table",
+                "ui"
+            ],
+            "time": "2020-06-08T07:42:40+00:00"
+        },
+        {
+            "name": "srag/dic",
+            "version": "v0.25.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/DIC.git",
+                "reference": "022cb0b92b003096380055a450597a5dbdbbe831"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/022cb0b92b003096380055a450597a5dbdbbe831",
+                "reference": "022cb0b92b003096380055a450597a5dbdbbe831",
                 "shasum": ""
             },
             "require": {
@@ -96,24 +142,24 @@
                 "globals",
                 "trait"
             ],
-            "time": "2019-07-05T09:55:53+00:00"
+            "time": "2020-06-09T05:30:37+00:00"
         },
         {
             "name": "srag/librariesnamespacechanger",
-            "version": "v0.6.13",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
-                "reference": "b90172668c936568dc0b6a992a7ac046b3fc5546"
+                "reference": "8356263f5cb8d73ec05afa88712794fb0781711d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/b90172668c936568dc0b6a992a7ac046b3fc5546",
-                "reference": "b90172668c936568dc0b6a992a7ac046b3fc5546",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/8356263f5cb8d73ec05afa88712794fb0781711d",
+                "reference": "8356263f5cb8d73ec05afa88712794fb0781711d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": ">=7.0"
             },
             "type": "library",
             "autoload": {
@@ -139,25 +185,26 @@
                 "ILIAS",
                 "libraries"
             ],
-            "time": "2019-09-19T08:53:12+00:00"
+            "time": "2020-08-05T12:50:30+00:00"
         },
         {
             "name": "srag/notifications4plugin",
-            "version": "v4.5.5",
+            "version": "v5.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/Notifications4Plugin.git",
-                "reference": "c9087de72a9ca9c7a3b8a5fe02f3c600f2abad25"
+                "reference": "9fe51f46732131c6fd4370c75d2b445607fbd4ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/Notifications4Plugin/zipball/c9087de72a9ca9c7a3b8a5fe02f3c600f2abad25",
-                "reference": "c9087de72a9ca9c7a3b8a5fe02f3c600f2abad25",
+                "url": "https://api.github.com/repos/studer-raimann/Notifications4Plugin/zipball/9fe51f46732131c6fd4370c75d2b445607fbd4ab",
+                "reference": "9fe51f46732131c6fd4370c75d2b445607fbd4ab",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0",
+                "php": ">=7.2",
                 "srag/custominputguis": ">=0.1.0",
+                "srag/datatable": ">=0.1.0",
                 "srag/dic": ">=0.1.0",
                 "twig/twig": "1.18.0"
             },
@@ -185,7 +232,7 @@
                 "ILIAS",
                 "notifications"
             ],
-            "time": "2019-09-04T05:55:08+00:00"
+            "time": "2020-06-26T05:52:41+00:00"
         },
         {
             "name": "twig/twig",
