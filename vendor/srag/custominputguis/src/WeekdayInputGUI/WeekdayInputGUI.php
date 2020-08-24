@@ -35,7 +35,7 @@ class WeekdayInputGUI extends ilFormPropertyGUI implements ilTableFilterItem
      * @param string $a_title
      * @param string $a_postvar
      */
-    public function __construct($a_title, $a_postvar)
+    public function __construct(string $a_title, string $a_postvar)
     {
         parent::__construct($a_title, $a_postvar);
 
@@ -46,7 +46,7 @@ class WeekdayInputGUI extends ilFormPropertyGUI implements ilTableFilterItem
     /**
      * @inheritDoc
      */
-    public function checkInput()
+    public function checkInput() : bool
     {
         return ($_POST[$this->getPostVar()] == null) || (count($_POST[$this->getPostVar()]) <= 7);
     }
@@ -55,7 +55,7 @@ class WeekdayInputGUI extends ilFormPropertyGUI implements ilTableFilterItem
     /**
      * @inheritDoc
      */
-    public function getTableFilterHTML()
+    public function getTableFilterHTML() : string
     {
         $html = $this->render();
 
@@ -66,7 +66,7 @@ class WeekdayInputGUI extends ilFormPropertyGUI implements ilTableFilterItem
     /**
      * @return array
      */
-    public function getValue()
+    public function getValue() : array
     {
         return $this->value;
     }
@@ -97,7 +97,7 @@ class WeekdayInputGUI extends ilFormPropertyGUI implements ilTableFilterItem
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         $tpl = new Template(__DIR__ . "/templates/tpl.weekday_input.html", true, true);
 

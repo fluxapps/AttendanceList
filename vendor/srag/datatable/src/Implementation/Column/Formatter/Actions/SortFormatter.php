@@ -23,7 +23,7 @@ class SortFormatter extends DefaultFormatter implements ActionsFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $actions, Column $column, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $actions, Column $column, RowData $row, string $table_id) : string
     {
         if (self::version()->is6()) {
             $glyph_factory = self::dic()->ui()->factory()->symbol()->glyph();
@@ -32,7 +32,10 @@ class SortFormatter extends DefaultFormatter implements ActionsFormatter
         }
 
         return self::output()->getHTML([
-            $glyph_factory->sortAscending()->withAdditionalOnLoadCode(function ($id) use($format, $row, $column, $table_id) {    Waiter::init(Waiter::TYPE_WAITER);    return '
+            $glyph_factory->sortAscending()->withAdditionalOnLoadCode(function (string $id) use ($format, $row, $column, $table_id) : string {
+                Waiter::init(Waiter::TYPE_WAITER);
+
+                return '
             $("#' . $id . '").click(function () {
                 il.waiter.show();
                 var row = $(this).parent().parent();
@@ -45,9 +48,9 @@ class SortFormatter extends DefaultFormatter implements ActionsFormatter
                     row.insertBefore(row.prev());
                 });
             });';
-}),
-            $glyph_factory->sortDescending()->withAdditionalOnLoadCode(function ($id) use($format, $row, $column, $table_id) {
-    return '
+            }),
+            $glyph_factory->sortDescending()->withAdditionalOnLoadCode(function (string $id) use ($format, $row, $column, $table_id) : string {
+                return '
             $("#' . $id . '").click(function () {
                 il.waiter.show();
                 var row = $(this).parent().parent();
@@ -60,7 +63,7 @@ class SortFormatter extends DefaultFormatter implements ActionsFormatter
                     row.insertAfter(row.next());
                 });
         });';
-})
+            })
         ]);
     }
 }

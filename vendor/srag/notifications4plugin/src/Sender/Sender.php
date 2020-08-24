@@ -28,7 +28,7 @@ interface Sender
      *
      * @throws Notifications4PluginException
      */
-    public function send();
+    public function send()/* : void*/;
 
 
     /**

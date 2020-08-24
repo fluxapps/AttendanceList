@@ -34,7 +34,7 @@ class TableBuilder extends AbstractTableBuilder
     /**
      * @inheritDoc
      */
-    public function render()
+    public function render() : string
     {
         self::dic()->toolbar()->addComponent(self::dic()->ui()->factory()->button()->standard(self::notifications4plugin()->getPlugin()->translate("add_notification", NotificationsCtrl::LANG_MODULE),
             self::dic()->ctrl()->getLinkTargetByClass(NotificationCtrl::class, NotificationCtrl::CMD_ADD_NOTIFICATION, "", false, false)));
@@ -46,7 +46,7 @@ class TableBuilder extends AbstractTableBuilder
     /**
      * @inheritDoc
      */
-    protected function buildTable()
+    protected function buildTable() : Table
     {
         $table = self::dataTableUI()->table("notifications4plugin_" . self::notifications4plugin()->getPlugin()->getPluginObject()->getId(),
             self::dic()->ctrl()->getLinkTarget($this->parent, NotificationsCtrl::CMD_LIST_NOTIFICATIONS, "", false, false),

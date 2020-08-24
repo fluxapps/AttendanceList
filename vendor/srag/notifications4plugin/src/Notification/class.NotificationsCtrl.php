@@ -35,7 +35,7 @@ class NotificationsCtrl
     /**
      *
      */
-    public function executeCommand()
+    public function executeCommand()/* : void*/
     {
         $this->setTabs();
 
@@ -65,7 +65,7 @@ class NotificationsCtrl
     /**
      *
      */
-    protected function listNotifications()
+    protected function listNotifications()/* : void*/
     {
         $table = self::notifications4plugin()->notifications()->factory()->newTableBuilderInstance($this);
 
@@ -76,7 +76,7 @@ class NotificationsCtrl
     /**
      *
      */
-    protected function setTabs()
+    protected function setTabs()/* : void*/
     {
 
     }

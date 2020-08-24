@@ -61,8 +61,9 @@ final class GeneratePluginPhpAndXml
      */
     public static function generatePluginPhpAndXml(Event $event)/*: void*/
     {
-        self::$plugin_root = rtrim(Closure::bind(function () {    return $this->baseDir;
-}, $event->getComposer()->getConfig(), Config::class)(), "/");
+        self::$plugin_root = rtrim(Closure::bind(function () : string {
+            return $this->baseDir;
+        }, $event->getComposer()->getConfig(), Config::class)(), "/");
 
         self::getInstance($event)->doGeneratePluginPhpAndXml();
     }
@@ -73,7 +74,7 @@ final class GeneratePluginPhpAndXml
      *
      * @return self
      */
-    private static function getInstance(Event $event)
+    private static function getInstance(Event $event) : self
     {
         if (self::$instance === null) {
             self::$instance = new self($event);
@@ -152,9 +153,9 @@ final class GeneratePluginPhpAndXml
 require_once __DIR__ . "/vendor/autoload.php";
 
 ' . implode('
-', array_map(function ($name, $value) {
-    return '$' . $name . ' = ' . json_encode($value, JSON_UNESCAPED_SLASHES) . ';';
-}, array_keys($plugins_vars), $plugins_vars)) . '
+', array_map(function (string $name, $value) : string {
+                return '$' . $name . ' = ' . json_encode($value, JSON_UNESCAPED_SLASHES) . ';';
+            }, array_keys($plugins_vars), $plugins_vars)) . '
 ');
     }
 
@@ -172,9 +173,9 @@ require_once __DIR__ . "/vendor/autoload.php";
 <plugin id="' . htmlspecialchars(strval($this->plugin_composer_json->ilias_plugin->id)) . '">
 	' . (!empty($this->plugin_composer_json->ilias_plugin->events) ? '<events>
 		' . implode('
-		', array_map(function (stdClass $event) {
-    return '<event id="' . htmlspecialchars($event->id) . '" type="' . htmlspecialchars($event->type) . '" />';
-}, (array) $this->plugin_composer_json->ilias_plugin->events)) . '
+		', array_map(function (stdClass $event) : string {
+                    return '<event id="' . htmlspecialchars($event->id) . '" type="' . htmlspecialchars($event->type) . '" />';
+                }, (array) $this->plugin_composer_json->ilias_plugin->events)) . '
 	</events>' : '') . '
 </plugin>
 ');
@@ -186,7 +187,7 @@ require_once __DIR__ . "/vendor/autoload.php";
      *
      * @return string
      */
-    private function getOldPluginVar($variable)
+    private function getOldPluginVar(string $variable) : string
     {
         $plugin_php = file_get_contents(self::$plugin_root . "/" . self::PLUGIN_PHP);
 
@@ -215,7 +216,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 
         $old_version = $this->getOldPluginVar("version");
         if (empty($this->plugin_composer_json->version) || (!empty($old_version) && version_compare($old_version, $this->plugin_composer_json->version, ">"))) {
-            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > version (" . (isset($this->plugin_composer_json->version) ? $this->plugin_composer_json->version : null) . ") from " . self::PLUGIN_PHP . " > version ("
+            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > version (" . ($this->plugin_composer_json->version ?? null) . ") from " . self::PLUGIN_PHP . " > version ("
                 . $old_version . ")
 ";
 
@@ -232,7 +233,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 
         $id = $this->getOldPluginVar("id");
         if (empty($this->plugin_composer_json->ilias_plugin->id)) {
-            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > id (" . (isset($this->plugin_composer_json->ilias_plugin->id) ? $this->plugin_composer_json->ilias_plugin->id : null) . ") from " . self::PLUGIN_PHP . " > id (" . $id . ")
+            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > id (" . ($this->plugin_composer_json->ilias_plugin->id ?? null) . ") from " . self::PLUGIN_PHP . " > id (" . $id . ")
 ";
 
             $this->plugin_composer_json->ilias_plugin->id = $id;
@@ -242,7 +243,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 
         $name = basename(self::$plugin_root);
         if (empty($this->plugin_composer_json->ilias_plugin->name)) {
-            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > name (" . (isset($this->plugin_composer_json->ilias_plugin->name) ? $this->plugin_composer_json->ilias_plugin->name : null) . ") from current folder ("
+            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > name (" . ($this->plugin_composer_json->ilias_plugin->name ?? null) . ") from current folder ("
                 . $name . ")
 ";
 
@@ -256,7 +257,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             || (!empty($old_ilias_min_version)
                 && version_compare($old_ilias_min_version, $this->plugin_composer_json->ilias_plugin->ilias_min_version, ">"))
         ) {
-            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > ilias_min_version (" . (isset($this->plugin_composer_json->ilias_plugin->ilias_min_version) ? $this->plugin_composer_json->ilias_plugin->ilias_min_version : null)
+            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > ilias_min_version (" . ($this->plugin_composer_json->ilias_plugin->ilias_min_version ?? null)
                 . ") from " . self::PLUGIN_PHP . " > ilias_min_version ("
                 . $old_ilias_min_version . ")
 ";
@@ -271,7 +272,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             || (!empty($old_ilias_max_version)
                 && version_compare($old_ilias_max_version, $this->plugin_composer_json->ilias_plugin->ilias_max_version, ">"))
         ) {
-            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > ilias_max_version (" . (isset($this->plugin_composer_json->ilias_plugin->ilias_max_version) ? $this->plugin_composer_json->ilias_plugin->ilias_max_version : null)
+            echo "Update missing or older " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > ilias_max_version (" . ($this->plugin_composer_json->ilias_plugin->ilias_max_version ?? null)
                 . ") from " . self::PLUGIN_PHP . " > ilias_max_version ("
                 . $old_ilias_max_version . ")
 ";
@@ -304,7 +305,7 @@ require_once __DIR__ . "/vendor/autoload.php";
                 $hook
             ]);
 
-            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > slot (" . (isset($this->plugin_composer_json->ilias_plugin->slot) ? $this->plugin_composer_json->ilias_plugin->slot : null) . ") from " . $plugin_class . " (" . $hook
+            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > slot (" . ($this->plugin_composer_json->ilias_plugin->slot ?? null) . ") from " . $plugin_class . " (" . $hook
                 . ") and "
                 . self::PLUGIN_README . " ("
                 . $component . ")
@@ -319,7 +320,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             $learning_progress = $this->getOldPluginVar("learning_progress");
 
             if ($learning_progress === "true") {
-                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > learning_progress (" . (isset($this->plugin_composer_json->ilias_plugin->learning_progress) ? $this->plugin_composer_json->ilias_plugin->learning_progress : null) . ") from "
+                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > learning_progress (" . ($this->plugin_composer_json->ilias_plugin->learning_progress ?? null) . ") from "
                     . self::PLUGIN_PHP . " > learning_progress (" . $learning_progress . ")
 ";
 
@@ -333,7 +334,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             $lucene_search = json_encode(file_exists(self::$plugin_root . "/" . self::LUCENE_OBJECT_DEFINITION_XML));
 
             if ($lucene_search === "true") {
-                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > lucene_search (" . (isset($this->plugin_composer_json->ilias_plugin->lucene_search) ? $this->plugin_composer_json->ilias_plugin->lucene_search : null) . ") from "
+                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > lucene_search (" . ($this->plugin_composer_json->ilias_plugin->lucene_search ?? null) . ") from "
                     . self::LUCENE_OBJECT_DEFINITION_XML . " (" . $lucene_search . ")
 ";
 
@@ -347,7 +348,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             $supports_export = $this->getOldPluginVar("supports_export");
 
             if ($supports_export === "true") {
-                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > supports_export (" . (isset($this->plugin_composer_json->ilias_plugin->supports_export) ? $this->plugin_composer_json->ilias_plugin->supports_export : null) . ") from "
+                echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > supports_export (" . ($this->plugin_composer_json->ilias_plugin->supports_export ?? null) . ") from "
                     . self::PLUGIN_PHP . " > supports_export (" . $supports_export . ")
 ";
 
@@ -361,7 +362,7 @@ require_once __DIR__ . "/vendor/autoload.php";
             $responsible = $this->getOldPluginVar("responsible");
             $responsible_mail = $this->getOldPluginVar("responsible_mail");
 
-            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > authors (" . (isset($this->plugin_composer_json->authors) ? $this->plugin_composer_json->authors : null) . ") from " . self::PLUGIN_PHP . " > responsible (" . $responsible
+            echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > authors (" . ($this->plugin_composer_json->authors ?? null) . ") from " . self::PLUGIN_PHP . " > responsible (" . $responsible
                 . ") and " . self::PLUGIN_PHP . " > responsible_mail ("
                 . $responsible_mail . ")
 ";
@@ -383,12 +384,15 @@ require_once __DIR__ . "/vendor/autoload.php";
                 $plugin_xml = json_decode(json_encode(simpleXML_load_file(self::$plugin_root . "/" . self::PLUGIN_XML)));
 
                 if (!empty($plugin_xml->events) && !empty($plugin_xml->events->event)) {
-                    echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > events (" . (isset($this->plugin_composer_json->ilias_plugin->events) ? $this->plugin_composer_json->ilias_plugin->events : null) . ") from " . self::PLUGIN_XML . " > events
+                    echo "Update missing " . self::PLUGIN_COMPOSER_JSON . " > ilias_plugin > events (" . ($this->plugin_composer_json->ilias_plugin->events ?? null) . ") from " . self::PLUGIN_XML . " > events
 ";
 
-                    $this->plugin_composer_json->ilias_plugin->events = array_map(function (stdClass $event) {
-    return (object) ["id" => $event->{"@attributes"}->id, "type" => $event->{"@attributes"}->type];
-}, $plugin_xml->events->event);
+                    $this->plugin_composer_json->ilias_plugin->events = array_map(function (stdClass $event) : stdClass {
+                        return (object) [
+                            "id"   => $event->{"@attributes"}->id,
+                            "type" => $event->{"@attributes"}->type
+                        ];
+                    }, $plugin_xml->events->event);
 
                     $updated_composer_json = true;
                 }
@@ -399,9 +403,10 @@ require_once __DIR__ . "/vendor/autoload.php";
             echo "Store updated changes in " . self::PLUGIN_COMPOSER_JSON . "
 ";
 
-            file_put_contents(self::$plugin_root . "/" . self::PLUGIN_COMPOSER_JSON, preg_replace_callback("/\n( +)/", function (array $matches) {
-    return "\n" . str_repeat(" ", strlen($matches[1]) / 2);
-}, json_encode($this->plugin_composer_json, JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT)) . "
+            file_put_contents(self::$plugin_root . "/" . self::PLUGIN_COMPOSER_JSON, preg_replace_callback("/\n( +)/", function (array $matches) : string {
+                    return "
+" . str_repeat(" ", (strlen($matches[1]) / 2));
+                }, json_encode($this->plugin_composer_json, JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT)) . "
 ");
         }
     }

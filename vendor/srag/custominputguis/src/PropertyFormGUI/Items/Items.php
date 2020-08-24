@@ -183,7 +183,7 @@ final class Items
      *
      * @return mixed
      */
-    public static function getter(/*object*/ $object, $property)
+    public static function getter(/*object*/ $object, string $property)
     {
         if (method_exists($object, $method = "get" . self::strToCamelCase($property))) {
             return $object->{$method}();
@@ -218,7 +218,7 @@ final class Items
      *
      * @return string
      */
-    public static function renderInputs(array $inputs)
+    public static function renderInputs(array $inputs) : string
     {
         self::init();
 
@@ -311,7 +311,7 @@ final class Items
      *
      * @return mixed
      */
-    public static function setter(/*object*/ $object, $property, $value)
+    public static function setter(/*object*/ $object, string $property, $value)
     {
         $res = null;
 
@@ -336,7 +336,7 @@ final class Items
      *
      * @return string
      */
-    public static function strToCamelCase($string)
+    public static function strToCamelCase(string $string) : string
     {
         return str_replace("_", "", ucwords($string, "_"));
     }

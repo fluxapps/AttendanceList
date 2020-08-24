@@ -24,7 +24,7 @@ if (DICStatic::version()->is6()) {
         /**
          * @inheritDoc
          */
-        public function render(Component $component, RendererInterface $default_renderer)
+        public function render(Component $component, RendererInterface $default_renderer) : string
         {
             if ($component->getInput() instanceof ilHiddenInputGUI) {
                 return "";
@@ -41,7 +41,7 @@ if (DICStatic::version()->is6()) {
         /**
          * @inheritDoc
          */
-        protected function renderInputField(Template $tpl, Input $input, $id, RendererInterface $default_renderer)
+        protected function renderInputField(Template $tpl, Input $input, $id, RendererInterface $default_renderer) : string
         {
             return $this->renderInput($tpl, $input);
         }
@@ -60,7 +60,7 @@ if (DICStatic::version()->is6()) {
         /**
          * @inheritDoc
          */
-        protected function renderNoneGroupInput(InputInterface $input, RendererInterface $default_renderer)
+        protected function renderNoneGroupInput(InputInterface $input, RendererInterface $default_renderer) : string
         {
             if ($input->getInput() instanceof ilHiddenInputGUI) {
                 return "";
@@ -77,7 +77,7 @@ if (DICStatic::version()->is6()) {
         /**
          * @inheritDoc
          */
-        protected function renderInputField(Template $tpl, Input $input, $id)
+        protected function renderInputField(Template $tpl, Input $input, $id) : string
         {
             return $this->renderInput($tpl, $input);
         }

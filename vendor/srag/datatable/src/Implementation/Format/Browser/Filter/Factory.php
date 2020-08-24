@@ -32,7 +32,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -54,7 +54,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function formBuilder(BrowserFormat $parent, Table $component, Settings $settings)
+    public function formBuilder(BrowserFormat $parent, Table $component, Settings $settings) : FormBuilderInterface
     {
         return new FormBuilder($parent, $component, $settings);
     }

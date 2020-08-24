@@ -21,7 +21,7 @@ interface DataFetcher
      *
      * @return Data
      */
-    public function fetchData(Settings $settings);
+    public function fetchData(Settings $settings) : Data;
 
 
     /**
@@ -29,11 +29,11 @@ interface DataFetcher
      *
      * @return string
      */
-    public function getNoDataText(Table $component);
+    public function getNoDataText(Table $component) : string;
 
 
     /**
      * @return bool
      */
-    public function isFetchDataNeedsFilterFirstSet();
+    public function isFetchDataNeedsFilterFirstSet() : bool;
 }

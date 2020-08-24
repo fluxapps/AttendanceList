@@ -28,7 +28,7 @@ class OrgUnitAjaxAutoCompleteCtrl extends AbstractAjaxAutoCompleteCtrl
     /**
      * @inheritDoc
      */
-    public function fillOptions(array $ids)
+    public function fillOptions(array $ids) : array
     {
         if (!empty($ids)) {
             return $this->skipIds(ilOrgUnitPathStorage::where([
@@ -43,7 +43,7 @@ class OrgUnitAjaxAutoCompleteCtrl extends AbstractAjaxAutoCompleteCtrl
     /**
      * @inheritDoc
      */
-    public function searchOptions($search = null)
+    public function searchOptions(/*?*/ string $search = null) : array
     {
         if (!empty($search)) {
             $where = ilOrgUnitPathStorage::where([

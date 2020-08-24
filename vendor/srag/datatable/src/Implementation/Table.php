@@ -84,7 +84,7 @@ class Table implements TableInterface
      * @param Column[]    $columns
      * @param DataFetcher $data_fetcher
      */
-    public function __construct($table_id, $action_url, $title, array $columns, DataFetcher $data_fetcher)
+    public function __construct(string $table_id, string $action_url, string $title, array $columns, DataFetcher $data_fetcher)
     {
         $this->table_id = $table_id;
 
@@ -103,7 +103,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getPlugin()
+    public function getPlugin() : PluginInterface
     {
         return $this->plugin;
     }
@@ -112,7 +112,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withPlugin(PluginInterface $plugin)
+    public function withPlugin(PluginInterface $plugin) : TableInterface
     {
         $clone = clone $this;
 
@@ -125,7 +125,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getTableId()
+    public function getTableId() : string
     {
         return $this->table_id;
     }
@@ -134,7 +134,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withTableId($table_id)
+    public function withTableId(string $table_id) : TableInterface
     {
         $clone = clone $this;
 
@@ -147,7 +147,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getActionUrl()
+    public function getActionUrl() : string
     {
         return $this->action_url;
     }
@@ -156,7 +156,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withActionUrl($action_url)
+    public function withActionUrl(string $action_url) : TableInterface
     {
         $clone = clone $this;
 
@@ -169,7 +169,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -178,7 +178,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withTitle($title)
+    public function withTitle(string $title) : TableInterface
     {
         $clone = clone $this;
 
@@ -191,7 +191,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getColumns()
+    public function getColumns() : array
     {
         return $this->columns;
     }
@@ -200,7 +200,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withColumns(array $columns)
+    public function withColumns(array $columns) : TableInterface
     {
         $classes = [Column::class];
         $this->checkArgListElements("columns", $columns, $classes);
@@ -216,7 +216,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getDataFetcher()
+    public function getDataFetcher() : DataFetcher
     {
         return $this->data_fetcher;
     }
@@ -225,7 +225,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withFetchData(DataFetcher $data_fetcher)
+    public function withFetchData(DataFetcher $data_fetcher) : TableInterface
     {
         $clone = clone $this;
 
@@ -238,7 +238,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getFilterFields()
+    public function getFilterFields() : array
     {
         return $this->filter_fields;
     }
@@ -247,7 +247,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withFilterFields(array $filter_fields)
+    public function withFilterFields(array $filter_fields) : TableInterface
     {
         if (self::version()->is6()) {
             $classes = [FilterInput::class];
@@ -268,7 +268,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getBrowserFormat()
+    public function getBrowserFormat() : BrowserFormat
     {
         if ($this->browser_format === null) {
             $this->browser_format = self::dataTableUI()->format()->browser()->default();
@@ -281,7 +281,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withBrowserFormat(BrowserFormat $browser_format)
+    public function withBrowserFormat(BrowserFormat $browser_format) : TableInterface
     {
         $clone = clone $this;
 
@@ -294,7 +294,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getFormats()
+    public function getFormats() : array
     {
         return $this->formats;
     }
@@ -303,7 +303,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withFormats(array $formats)
+    public function withFormats(array $formats) : TableInterface
     {
         $classes = [Format::class];
         $this->checkArgListElements("formats", $formats, $classes);
@@ -319,7 +319,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getMultipleActions()
+    public function getMultipleActions() : array
     {
         return $this->multiple_actions;
     }
@@ -328,7 +328,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withMultipleActions(array $multiple_actions)
+    public function withMultipleActions(array $multiple_actions) : TableInterface
     {
         $clone = clone $this;
 
@@ -341,7 +341,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getSettingsStorage()
+    public function getSettingsStorage() : SettingsStorage
     {
         if ($this->settings_storage === null) {
             $this->settings_storage = self::dataTableUI()->settings()->storage()->default();
@@ -354,7 +354,7 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withSettingsStorage(SettingsStorage $settings_storage)
+    public function withSettingsStorage(SettingsStorage $settings_storage) : TableInterface
     {
         $clone = clone $this;
 

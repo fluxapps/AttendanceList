@@ -129,7 +129,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public static function getTableName()
+    public static function getTableName() : string
     {
         return self::notifications4plugin()->getTableNamePrefix() . "_" . self::TABLE_NAME_SUFFIX;
     }
@@ -140,7 +140,7 @@ class Notification extends ActiveRecord implements NotificationInterface
      *
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName() : string
     {
         return self::getTableName();
     }
@@ -149,7 +149,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @return Component[]
      */
-    public function getActions()
+    public function getActions() : array
     {
         self::dic()->ctrl()->setParameterByClass(NotificationCtrl::class, NotificationCtrl::GET_PARAM_NOTIFICATION_ID, $this->id);
 
@@ -167,7 +167,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName() : string
     {
         return self::getTableName();
     }
@@ -176,7 +176,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getCreatedAt()
+    public function getCreatedAt() : ilDateTime
     {
         return $this->created_at;
     }
@@ -185,7 +185,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setCreatedAt(ilDateTime $created_at)
+    public function setCreatedAt(ilDateTime $created_at)/* : void*/
     {
         $this->created_at = $created_at;
     }
@@ -194,7 +194,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->description;
     }
@@ -203,7 +203,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setDescription($description)
+    public function setDescription(string $description)/* : void*/
     {
         $this->description = $description;
     }
@@ -212,7 +212,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -221,7 +221,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setId($id)
+    public function setId(int $id)/* : void*/
     {
         $this->id = $id;
     }
@@ -230,7 +230,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -239,7 +239,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setName($name)
+    public function setName(string $name)/* : void*/
     {
         $this->name = $name;
     }
@@ -248,7 +248,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getParser()
+    public function getParser() : string
     {
         return $this->parser;
     }
@@ -257,7 +257,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setParser($parser)
+    public function setParser(string $parser)/* : void*/
     {
         $this->parser = $parser;
     }
@@ -266,7 +266,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getParserOption($key)
+    public function getParserOption(string $key)
     {
         return $this->parser_options[$key];
     }
@@ -275,7 +275,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getParserOptions()
+    public function getParserOptions() : array
     {
         return $this->parser_options;
     }
@@ -284,7 +284,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setParserOptions(array $parser_options = self::DEFAULT_PARSER_OPTIONS)
+    public function setParserOptions(array $parser_options = self::DEFAULT_PARSER_OPTIONS)/* : void*/
     {
         if (empty($parser_options)) {
             $parser_options = self::DEFAULT_PARSER_OPTIONS;
@@ -297,7 +297,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getSubject(?string $lang_key = null, $use_default_if_not_set = true)
+    public function getSubject(/*?string*/ $lang_key = null, bool $use_default_if_not_set = true) : string
     {
         return strval(MultilangualTabsInputGUI::getValueForLang($this->subject, $lang_key, "subject", $use_default_if_not_set));
     }
@@ -306,7 +306,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setSubject($subject, $lang_key)
+    public function setSubject(string $subject, string $lang_key)/* : void*/
     {
         MultilangualTabsInputGUI::setValueForLang($this->subject, $subject, $lang_key, "subject");
     }
@@ -315,7 +315,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getSubjects()
+    public function getSubjects() : array
     {
         return $this->subject;
     }
@@ -324,7 +324,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getText(?string $lang_key = null, $use_default_if_not_set = true)
+    public function getText(/*?string*/ $lang_key = null, bool $use_default_if_not_set = true) : string
     {
         return strval(MultilangualTabsInputGUI::getValueForLang($this->text, $lang_key, "text", $use_default_if_not_set));
     }
@@ -333,7 +333,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setText($text, $lang_key)
+    public function setText(string $text, string $lang_key)/* : void*/
     {
         MultilangualTabsInputGUI::setValueForLang($this->text, $text, $lang_key, "text");
     }
@@ -342,7 +342,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getTexts()
+    public function getTexts() : array
     {
         return $this->text;
     }
@@ -351,7 +351,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -360,7 +360,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setTitle($title)
+    public function setTitle(string $title)/* : void*/
     {
         $this->title = $title;
     }
@@ -369,7 +369,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt() : ilDateTime
     {
         return $this->updated_at;
     }
@@ -378,7 +378,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setUpdatedAt(ilDateTime $updated_at)
+    public function setUpdatedAt(ilDateTime $updated_at)/* : void*/
     {
         $this->updated_at = $updated_at;
     }
@@ -387,7 +387,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setParserOption($key, $value)
+    public function setParserOption(string $key, $value)/* : void*/
     {
         $this->parser_options[$key] = $value;
     }
@@ -396,7 +396,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setSubjects(array $subjects)
+    public function setSubjects(array $subjects)/* : void*/
     {
         $this->subject = $subjects;
     }
@@ -405,7 +405,7 @@ class Notification extends ActiveRecord implements NotificationInterface
     /**
      * @inheritDoc
      */
-    public function setTexts(array $texts)
+    public function setTexts(array $texts)/* : void*/
     {
         $this->text = $texts;
     }

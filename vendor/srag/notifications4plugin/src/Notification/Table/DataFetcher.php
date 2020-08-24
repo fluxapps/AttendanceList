@@ -24,10 +24,12 @@ class DataFetcher extends AbstractDataFetcher
     /**
      * @inheritDoc
      */
-    public function fetchData(Settings $settings)
+    public function fetchData(Settings $settings) : Data
     {
-        return self::dataTableUI()->data()->data(array_map(function (NotificationInterface $notification) {    return self::dataTableUI()->data()->row()->getter($notification->getId(), $notification);
-}, self::notifications4plugin()->notifications()->getNotifications($settings)),
+        return self::dataTableUI()->data()->data(array_map(function (NotificationInterface $notification
+        ) : RowData {
+            return self::dataTableUI()->data()->row()->getter($notification->getId(), $notification);
+        }, self::notifications4plugin()->notifications()->getNotifications($settings)),
             self::notifications4plugin()->notifications()->getNotificationsCount());
     }
 }

@@ -36,7 +36,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    public function getFormatId()
+    public function getFormatId() : string
     {
         return self::FORMAT_EXCEL;
     }
@@ -45,7 +45,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function getFileExtension()
+    protected function getFileExtension() : string
     {
         return "xlsx";
     }
@@ -54,7 +54,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function initTemplate(Table $component, ?Data $data, Settings $settings)
+    protected function initTemplate(Table $component, /*?Data*/ $data, Settings $settings)/* : void*/
     {
         $this->tpl = new ilExcel();
 
@@ -65,7 +65,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    public function getTemplate()
+    public function getTemplate()/* : object*/
     {
         return (object) [
             "tpl"         => $this->tpl,
@@ -78,7 +78,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumns(Table $component, array $columns, Settings $settings)
+    protected function handleColumns(Table $component, array $columns, Settings $settings)/* : void*/
     {
         $this->current_col = 0;
 
@@ -91,7 +91,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumn($formatted_column, Table $component, Column $column, Settings $settings)
+    protected function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings)/* : void*/
     {
         $this->tpl->setCell($this->current_row, $this->current_col, $formatted_column);
 
@@ -102,7 +102,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRow(Table $component, array $columns, RowData $row)
+    protected function handleRow(Table $component, array $columns, RowData $row)/* : void*/
     {
         $this->current_col = 0;
 
@@ -115,7 +115,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRowColumn($formatted_row_column)
+    protected function handleRowColumn(string $formatted_row_column)/* : void*/
     {
         $this->tpl->setCell($this->current_row, $this->current_col, $formatted_row_column);
 
@@ -126,7 +126,7 @@ class ExcelFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function renderTemplate(Table $component)
+    protected function renderTemplate(Table $component) : string
     {
         $tmp_file = $this->tpl->writeToTmpFile();
 

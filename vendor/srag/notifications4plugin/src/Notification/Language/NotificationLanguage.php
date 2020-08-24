@@ -127,7 +127,7 @@ class NotificationLanguage extends ActiveRecord
      *
      * @deprecated
      */
-    public static function getTableName()
+    public static function getTableName() : string
     {
         return self::notifications4plugin()->getTableNamePrefix() . "_" . self::TABLE_NAME_SUFFIX;
     }
@@ -138,7 +138,7 @@ class NotificationLanguage extends ActiveRecord
      *
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName() : string
     {
         return self::getTableName();
     }
@@ -149,7 +149,7 @@ class NotificationLanguage extends ActiveRecord
      *
      * @deprecated
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName() : string
     {
         return self::getTableName();
     }
@@ -160,7 +160,7 @@ class NotificationLanguage extends ActiveRecord
      *
      * @deprecated
      */
-    public function getSubject()
+    public function getSubject() : string
     {
         return $this->subject;
     }
@@ -171,7 +171,7 @@ class NotificationLanguage extends ActiveRecord
      *
      * @deprecated
      */
-    public function getText()
+    public function getText() : string
     {
         return $this->text;
     }

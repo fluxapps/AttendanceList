@@ -34,7 +34,7 @@ abstract class AbstractTableBuilder implements TableBuilder
      *
      * @param object $parent
      */
-    public function __construct(object $parent)
+    public function __construct(/*object*/ $parent)
     {
         $this->parent = $parent;
     }
@@ -43,7 +43,13 @@ abstract class AbstractTableBuilder implements TableBuilder
     /**
      * @return Table
      */
-    protecpublic function getTable()
+    protected abstract function buildTable() : Table;
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getTable() : Table
     {
         if ($this->table === null) {
             $this->table = $this->buildTable();
@@ -56,7 +62,7 @@ abstract class AbstractTableBuilder implements TableBuilder
     /**
      * @inheritDoc
      */
-    public function render()
+    public function render() : string
     {
         return self::output()->getHTML($this->getTable());
     }

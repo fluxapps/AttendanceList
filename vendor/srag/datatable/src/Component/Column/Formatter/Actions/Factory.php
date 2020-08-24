@@ -15,11 +15,11 @@ interface Factory
     /**
      * @return ActionsFormatter
      */
-    public function actionsDropdown();
+    public function actionsDropdown() : ActionsFormatter;
 
 
     /**
      * @return ActionsFormatter
      */
-    public function sort();
+    public function sort() : ActionsFormatter;
 }

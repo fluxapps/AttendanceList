@@ -28,7 +28,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    public function getFormatId()
+    public function getFormatId() : string
     {
         return self::FORMAT_CSV;
     }
@@ -37,7 +37,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function getFileExtension()
+    protected function getFileExtension() : string
     {
         return "csv";
     }
@@ -46,7 +46,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function initTemplate(Table $component, ?Data $data, Settings $settings)
+    protected function initTemplate(Table $component, /*?Data*/ $data, Settings $settings)/* : void*/
     {
         $this->tpl = new ilCSVWriter();
 
@@ -57,7 +57,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumns(Table $component, array $columns, Settings $settings)
+    protected function handleColumns(Table $component, array $columns, Settings $settings)/* : void*/
     {
         parent::handleColumns($component, $columns, $settings);
 
@@ -68,7 +68,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumn($formatted_column, Table $component, Column $column, Settings $settings)
+    protected function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings)/* : void*/
     {
         $this->tpl->addColumn($formatted_column);
     }
@@ -77,7 +77,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRow(Table $component, array $columns, RowData $row)
+    protected function handleRow(Table $component, array $columns, RowData $row)/* : void*/
     {
         parent::handleRow($component, $columns, $row);
 
@@ -88,7 +88,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRowColumn($formatted_row_column)
+    protected function handleRowColumn(string $formatted_row_column)/* : void*/
     {
         $this->tpl->addColumn($formatted_row_column);
     }
@@ -97,7 +97,7 @@ class CsvFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function renderTemplate(Table $component)
+    protected function renderTemplate(Table $component) : string
     {
         return $this->tpl->getCSVString();
     }

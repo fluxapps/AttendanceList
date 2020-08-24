@@ -43,7 +43,7 @@ abstract class AbstractFormat implements Format
     /**
      * @inheritDoc
      */
-    public function getDisplayTitle(Table $component)
+    public function getDisplayTitle(Table $component) : string
     {
         return $component->getPlugin()->translate("format_" . $this->getFormatId(), Table::LANG_MODULE);
     }
@@ -52,7 +52,7 @@ abstract class AbstractFormat implements Format
     /**
      * @inheritDoc
      */
-    public function getOutputType()
+    public function getOutputType() : int
     {
         return self::OUTPUT_TYPE_DOWNLOAD;
     }
@@ -61,13 +61,22 @@ abstract class AbstractFormat implements Format
     /**
      * @inheritDoc
      */
-    public function getTemplate()
+    public function getTemplate()/* : object*/
     {
         return $this->tpl;
     }
 
 
-    /*public function render(Table $component, ?Data $data, Settings $settings)
+    /**
+     * @return string
+     */
+    protected abstract function getFileExtension() : string;
+
+
+    /**
+     * @inheritDoc
+     */
+    public function render(Table $component, /*?Data*/ $data, Settings $settings) : string
     {
         $this->initTemplate($component, $data, $settings);
 
@@ -84,7 +93,7 @@ abstract class AbstractFormat implements Format
     /**
      * @inheritDoc
      */
-    public function deliverDownload($data, Table $component)
+    public function deliverDownload(string $data, Table $component)/* : void*/
     {
         $filename = $component->getTitle() . "." . $this->getFileExtension();
 
@@ -98,13 +107,15 @@ abstract class AbstractFormat implements Format
      *
      * @return Column[]
      */
-    protected function getColumnsBase(Table $component, Settings $settings)
+    protected function getColumnsBase(Table $component, Settings $settings) : array
     {
-        return array_filter($component->getColumns(), function (Column $column) use($settings) {    if ($column->isSelectable()) {        return in_array($column->getKey(), $settings->getSelectedColumns());
-    } else {
-        return true;
-    }
-});
+        return array_filter($component->getColumns(), function (Column $column) use ($settings) : bool {
+            if ($column->isSelectable()) {
+                return in_array($column->getKey(), $settings->getSelectedColumns());
+            } else {
+                return true;
+            }
+        });
     }
 
 
@@ -114,11 +125,11 @@ abstract class AbstractFormat implements Format
      *
      * @return Column[]
      */
-    protected function getColumnsForExport(Table $component, Settings $settings)
+    protected function getColumnsForExport(Table $component, Settings $settings) : array
     {
-        return array_filter($this->getColumnsBase($component, $settings), function (Column $column) {
-    return $column->isExportable();
-});
+        return array_filter($this->getColumnsBase($component, $settings), function (Column $column) : bool {
+            return $column->isExportable();
+        });
     }
 
 
@@ -128,7 +139,7 @@ abstract class AbstractFormat implements Format
      *
      * @return Column[]
      */
-    protected function getColumns(Table $component, Settings $settings)
+    protected function getColumns(Table $component, Settings $settings) : array
     {
         return $this->getColumnsForExport($component, $settings);
     }
@@ -139,7 +150,15 @@ abstract class AbstractFormat implements Format
      * @param Data|null $data
      * @param Settings  $settings
      */
-  protected function handleColumns(Table $component, array $columns, Settings $settings)
+    protected abstract function initTemplate(Table $component, /*?Data*/ $data, Settings $settings)/* : void*/;
+
+
+    /**
+     * @param Table    $component
+     * @param Column[] $columns
+     * @param Settings $settings
+     */
+    protected function handleColumns(Table $component, array $columns, Settings $settings)/* : void*/
     {
         foreach ($columns as $column) {
             $this->handleColumn($column->getFormatter()->formatHeaderCell($this, $column, $component->getTableId()), $component, $column, $settings);
@@ -153,7 +172,15 @@ abstract class AbstractFormat implements Format
      * @param Column   $column
      * @param Settings $settings
      */
-    protected abstract function haprotected function handleRows(Table $component, array $columns, ?Data $data)
+    protected abstract function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings)/* : void*/;
+
+
+    /**
+     * @param Table     $component
+     * @param Column[]  $columns
+     * @param Data|null $data
+     */
+    protected function handleRows(Table $component, array $columns, /*?Data*/ $data)/* : void*/
     {
         if ($data !== null) {
             foreach ($data->getData() as $row) {
@@ -168,7 +195,7 @@ abstract class AbstractFormat implements Format
      * @param Column[] $columns
      * @param RowData  $row
      */
-    protected function handleRow(Table $component, array $columns, RowData $row)
+    protected function handleRow(Table $component, array $columns, RowData $row)/* : void*/
     {
         foreach ($columns as $column) {
             $this->handleRowColumn($column->getFormatter()->formatRowCell($this, $row($column->getKey()), $column, $row, $component->getTableId()));
@@ -179,7 +206,7 @@ abstract class AbstractFormat implements Format
     /**
      * @param string $formatted_row_column
      */
-    protected abstract function handleRowColumn($formatted_row_column);
+    protected abstract function handleRowColumn(string $formatted_row_column);
 
 
     /**
@@ -187,5 +214,5 @@ abstract class AbstractFormat implements Format
      *
      * @return string
      */
-    protected abstract function renderTemplate(Table $component);
+    protected abstract function renderTemplate(Table $component) : string;
 }

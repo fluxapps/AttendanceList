@@ -18,5 +18,5 @@ interface Factory
      *
      * @return SortField
      */
-    public function sortField($sort_field, $sort_field_direction);
+    public function sortField(string $sort_field, int $sort_field_direction) : SortField;
 }

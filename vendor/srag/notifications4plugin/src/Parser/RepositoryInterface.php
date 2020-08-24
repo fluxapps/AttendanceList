@@ -18,19 +18,19 @@ interface RepositoryInterface
     /**
      * @param Parser $parser
      */
-    public function addParser(Parser $parser);
+    public function addParser(Parser $parser)/* : void*/;
 
 
     /**
      * @internal
      */
-    public function dropTables();
+    public function dropTables()/* : void*/;
 
 
     /**
      * @return FactoryInterface
      */
-    public function factory();
+    public function factory() : FactoryInterface;
 
 
     /**
@@ -40,7 +40,7 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function getParserByClass($parser_class);
+    public function getParserByClass(string $parser_class) : Parser;
 
 
     /**
@@ -50,19 +50,19 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function getParserForNotification(NotificationInterface $notification);
+    public function getParserForNotification(NotificationInterface $notification) : Parser;
 
 
     /**
      * @return Parser[]
      */
-    public function getPossibleParsers();
+    public function getPossibleParsers() : array;
 
 
     /**
      * @internal
      */
-    public function installTables();
+    public function installTables()/* : void*/;
 
 
     /**
@@ -75,7 +75,7 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null);
+    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string;
 
 
     /**
@@ -88,5 +88,5 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null);
+    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string;
 }

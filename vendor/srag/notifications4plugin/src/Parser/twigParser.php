@@ -36,7 +36,7 @@ class twigParser extends AbstractParser
     /**
      * @inheritDoc
      */
-    public function getOptionsFields()
+    public function getOptionsFields() : array
     {
         return [
             "autoescape" => self::dic()
@@ -60,7 +60,7 @@ class twigParser extends AbstractParser
      *
      * @throws Twig_Error
      */
-    public function parse($text, array $placeholders = [], array $options = [])
+    public function parse(string $text, array $placeholders = [], array $options = []) : string
     {
         $loader = new Twig_Loader_String();
 

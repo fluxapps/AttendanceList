@@ -17,29 +17,29 @@ interface Factory
     /**
      * @return BrowserFactory
      */
-    public function browser();
+    public function browser() : BrowserFactory;
 
 
     /**
      * @return Format
      */
-    public function csv();
+    public function csv() : Format;
 
 
     /**
      * @return Format
      */
-    public function excel();
+    public function excel() : Format;
 
 
     /**
      * @return Format
      */
-    public function html();
+    public function html() : Format;
 
 
     /**
      * @return Format
      */
-    public function pdf();
+    public function pdf() : Format;
 }

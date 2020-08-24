@@ -53,7 +53,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    public function render()
+    public function render() : string
     {
         $this->messages[] = self::dic()->ui()->factory()->messageBox()->info(self::output()->getHTML([
             htmlspecialchars(self::notifications4plugin()->getPlugin()->translate("placeholder_types_info", NotificationsCtrl::LANG_MODULE)),
@@ -68,7 +68,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function getButtons()
+    protected function getButtons() : array
     {
         $buttons = [];
 
@@ -87,7 +87,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function getData()
+    protected function getData() : array
     {
         $data = [];
 
@@ -113,7 +113,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function getFields()
+    protected function getFields() : array
     {
         $fields = [];
 
@@ -138,13 +138,18 @@ class FormBuilder extends AbstractFormBuilder
         }
 
         if (self::version()->is6()) {
-            $parser = self::dic()->ui()->factory()->input()->field()->switchableGroup(array_map(function (Parser $parser) {    return self::dic()->ui()->factory()->input()->field()->group($parser->getOptionsFields(), $parser->getName() . "<br>" . self::output()->getHTML(self::dic()->ui()->factory()->link()->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true)))->withByline(self::output()->getHTML(self::dic()->ui()->factory()->link()->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true)));
-}, self::notifications4plugin()->parser()->getPossibleParsers()), self::notifications4plugin()->getPlugin()->translate("parser", NotificationsCtrl::LANG_MODULE))->withRequired(true);
+            $parser = self::dic()->ui()->factory()->input()->field()->switchableGroup(array_map(function (Parser $parser) : Group {
+                return self::dic()->ui()->factory()->input()->field()->group($parser->getOptionsFields(), $parser->getName() . "<br>" . self::output()->getHTML(self::dic()->ui()->factory()->link()
+                        ->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true)))->withByline(self::output()->getHTML(self::dic()->ui()->factory()->link()
+                    ->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true))); // TODO `withByline` not work in ILIAS 6 group (radio), so temporary in label
+            }, self::notifications4plugin()->parser()->getPossibleParsers()), self::notifications4plugin()->getPlugin()->translate("parser", NotificationsCtrl::LANG_MODULE))->withRequired(true);
         } else {
-            $parser = array_reduce(self::notifications4plugin()->parser()->getPossibleParsers(), function (Radio $radio, Parser $parser) {
-    $radio = $radio->withOption(get_class($parser), $parser->getName(), self::output()->getHTML(self::dic()->ui()->factory()->link()->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true)), $parser->getOptionsFields());
-    return $radio;
-}, self::dic()->ui()->factory()->input()->field()->radio(self::notifications4plugin()->getPlugin()->translate("parser", NotificationsCtrl::LANG_MODULE))->withRequired(true));
+            $parser = array_reduce(self::notifications4plugin()->parser()->getPossibleParsers(), function (Radio $radio, Parser $parser) : Radio {
+                $radio = $radio->withOption(get_class($parser), $parser->getName(), self::output()->getHTML(self::dic()->ui()->factory()->link()
+                    ->standard($parser->getDocLink(), $parser->getDocLink())->withOpenInNewViewport(true)), $parser->getOptionsFields());
+
+                return $radio;
+            }, self::dic()->ui()->factory()->input()->field()->radio(self::notifications4plugin()->getPlugin()->translate("parser", NotificationsCtrl::LANG_MODULE))->withRequired(true));
         }
 
         $fields += [
@@ -172,7 +177,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function getTitle()
+    protected function getTitle() : string
     {
         if (!empty($this->notification->getId())) {
             return self::notifications4plugin()->getPlugin()->translate("edit_notification", NotificationsCtrl::LANG_MODULE);
@@ -185,7 +190,7 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function storeData(array $data)
+    protected function storeData(array $data)/* : void*/
     {
         foreach (array_keys($this->getFields()) as $key) {
             switch ($key) {

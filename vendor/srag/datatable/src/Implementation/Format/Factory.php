@@ -31,7 +31,7 @@ class Factory implements FactoryInterface
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,7 +53,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function browser()
+    public function browser() : BrowserFactoryInterface
     {
         return BrowserFactory::getInstance();
     }
@@ -62,7 +62,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function csv()
+    public function csv() : Format
     {
         return new CsvFormat();
     }
@@ -71,7 +71,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function excel()
+    public function excel() : Format
     {
         return new ExcelFormat();
     }
@@ -80,7 +80,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function html()
+    public function html() : Format
     {
         return new HtmlFormat();
     }
@@ -89,7 +89,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function pdf()
+    public function pdf() : Format
     {
         return new PdfFormat();
     }

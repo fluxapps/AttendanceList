@@ -24,5 +24,5 @@ interface Factory
      *
      * @return FormBuilder
      */
-    public function formBuilder(BrowserFormat $parent, Table $component, Settings $settings);
+    public function formBuilder(BrowserFormat $parent, Table $component, Settings $settings) : FormBuilder;
 }

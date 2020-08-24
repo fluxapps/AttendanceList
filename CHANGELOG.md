@@ -1,5 +1,7 @@
 # Changelog
 ## [x]
+* Min. PHP 7.0
+* Remove core autoload, incompatible since min. ILIAS 5.3
 * New Version of Notification4Plugins
 * Updated composer dependencies 
 

@@ -63,7 +63,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function __construct($key, $title)
+    public function __construct(string $key, string $title)
     {
         $this->key = $key;
 
@@ -74,7 +74,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function getKey()
+    public function getKey() : string
     {
         return $this->key;
     }
@@ -83,7 +83,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withKey($key)
+    public function withKey(string $key) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -96,7 +96,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -105,7 +105,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withTitle($title)
+    public function withTitle(string $title) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -118,7 +118,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function getFormatter()
+    public function getFormatter() : Formatter
     {
         if ($this->formatter === null) {
             $this->formatter = self::dataTableUI()->column()->formatter()->default();
@@ -131,7 +131,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withFormatter(Formatter $formatter)
+    public function withFormatter(Formatter $formatter) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -150,7 +150,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function isSortable()
+    public function isSortable() : bool
     {
         return $this->sortable;
     }
@@ -159,7 +159,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withSortable($sortable = true)
+    public function withSortable(bool $sortable = true) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -172,7 +172,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function isDefaultSort()
+    public function isDefaultSort() : bool
     {
         return $this->default_sort;
     }
@@ -181,7 +181,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withDefaultSort($default_sort = false)
+    public function withDefaultSort(bool $default_sort = false) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -194,7 +194,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function getDefaultSortDirection()
+    public function getDefaultSortDirection() : int
     {
         return $this->default_sort_direction;
     }
@@ -203,7 +203,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withDefaultSortDirection($default_sort_direction = SortField::SORT_DIRECTION_UP)
+    public function withDefaultSortDirection(int $default_sort_direction = SortField::SORT_DIRECTION_UP) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -216,7 +216,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function isSelectable()
+    public function isSelectable() : bool
     {
         return $this->selectable;
     }
@@ -225,7 +225,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withSelectable($selectable = true)
+    public function withSelectable(bool $selectable = true) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -238,7 +238,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function isDefaultSelected()
+    public function isDefaultSelected() : bool
     {
         return $this->default_selected;
     }
@@ -247,7 +247,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withDefaultSelected($default_selected = true)
+    public function withDefaultSelected(bool $default_selected = true) : ColumnInterface
     {
         $clone = clone $this;
 
@@ -260,7 +260,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function isExportable()
+    public function isExportable() : bool
     {
         return $this->exportable;
     }
@@ -269,7 +269,7 @@ class Column implements ColumnInterface
     /**
      * @inheritDoc
      */
-    public function withExportable($exportable = true)
+    public function withExportable(bool $exportable = true) : ColumnInterface
     {
         $clone = clone $this;
 

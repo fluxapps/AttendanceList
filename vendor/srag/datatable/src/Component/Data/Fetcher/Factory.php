@@ -18,5 +18,5 @@ interface Factory
      *
      * @return DataFetcher
      */
-    public function staticData(array $data, $id_key);
+    public function staticData(array $data, string $id_key) : DataFetcher;
 }

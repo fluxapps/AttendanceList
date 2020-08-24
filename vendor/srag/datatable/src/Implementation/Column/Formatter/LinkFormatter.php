@@ -19,7 +19,7 @@ class LinkFormatter extends DefaultFormatter
     /**
      * @inheritDoc
      */
-    public function formatRowCell(Format $format, $title, Column $column, RowData $row, $table_id)
+    public function formatRowCell(Format $format, $title, Column $column, RowData $row, string $table_id) : string
     {
         $link = $row($column->getKey() . "_link");
 

@@ -60,7 +60,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function getFormatId()
+    public function getFormatId() : string
     {
         return self::FORMAT_BROWSER;
     }
@@ -69,7 +69,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function getOutputType()
+    public function getOutputType() : int
     {
         return self::OUTPUT_TYPE_PRINT;
     }
@@ -78,7 +78,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function deliverDownload($data, Table $component)
+    public function deliverDownload(string $data, Table $component)/* : void*/
     {
         throw new LogicException("Seperate deliver download browser format not possible!");
     }
@@ -89,7 +89,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return string|null
      */
-    public function getInputFormatId(Table $component)
+    public function getInputFormatId(Table $component)/* : ?string*/
     {
         return filter_input(INPUT_GET, $this->actionParameter(SettingsStorage::VAR_EXPORT_FORMAT_ID, $component->getTableId()));
     }
@@ -98,7 +98,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    protected function getColumns(Table $component, Settings $settings)
+    protected function getColumns(Table $component, Settings $settings) : array
     {
         return $this->getColumnsBase($component, $settings);
     }
@@ -107,7 +107,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    protected function initTemplate(Table $component, ?Data $data, Settings $settings)
+    protected function initTemplate(Table $component, /*?Data*/ $data, Settings $settings)/* : void*/
     {
         parent::initTemplate($component, $data, $settings);
 
@@ -124,7 +124,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumns(Table $component, array $columns, Settings $settings)
+    protected function handleColumns(Table $component, array $columns, Settings $settings)/* : void*/
     {
         if (count($component->getMultipleActions()) > 0) {
             $this->tpl->setCurrentBlock("header");
@@ -141,7 +141,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    protected function handleColumn($formatted_column, Table $component, Column $column, Settings $settings)
+    protected function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings)/* : void*/
     {
         $deselect_button = self::dic()->ui()->factory()->legacy("");
         $sort_button = $formatted_column;
@@ -200,7 +200,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    protected function handleRowTemplate(Table $component, RowData $row)
+    protected function handleRowTemplate(Table $component, RowData $row)/* : void*/
     {
         parent::handleRowTemplate($component, $row);
 
@@ -220,7 +220,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      * @param Table    $component
      * @param Settings $settings
      */
-    protected function initFilterForm(Table $component, Settings $settings)
+    protected function initFilterForm(Table $component, Settings $settings)/* : void*/
     {
         if ($this->filter_form === null) {
             $filter_fields = $component->getFilterFields();
@@ -241,7 +241,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function handleSettingsInput(Table $component, Settings $settings)
+    public function handleSettingsInput(Table $component, Settings $settings) : Settings
     {
         $sort_field = strval(filter_input(INPUT_GET, $this->actionParameter(SettingsStorage::VAR_SORT_FIELD, $component->getTableId())));
         $sort_field_direction = intval(filter_input(INPUT_GET, $this->actionParameter(SettingsStorage::VAR_SORT_FIELD_DIRECTION, $component->getTableId())));
@@ -293,7 +293,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
 
                 if (self::version()->is6()) {
                     try {
-                        $settings->withFilterFieldValues(!is_null(self::dic()->uiService()->filter()->getData($this->filter_form)) ? self::dic()->uiService()->filter()->getData($this->filter_form) : []);
+                        $settings->withFilterFieldValues(self::dic()->uiService()->filter()->getData($this->filter_form) ?? []);
 
                         $this->filter_form = null;
                     } catch (Throwable $ex) {
@@ -333,7 +333,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      * @param Table    $component
      * @param Settings $settings
      */
-    protected function handleFilterForm(Table $component, Settings $settings)
+    protected function handleFilterForm(Table $component, Settings $settings)/* : void*/
     {
         if (empty($component->getFilterFields())) {
             return;
@@ -356,7 +356,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      * @param Settings  $settings
      * @param Data|null $data
      */
-    protected function handleActionsPanel(Table $component, Settings $settings, ?Data $data)
+    protected function handleActionsPanel(Table $component, Settings $settings, /*?Data*/ $data)/* : void*/
     {
         $this->tpl->setCurrentBlock("actions");
 
@@ -378,7 +378,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return Component
      */
-    protected function getPagesSelector(Table $component, Settings $settings, ?Data $data)
+    protected function getPagesSelector(Table $component, Settings $settings, /*?Data*/ $data) : Component
     {
         return $settings->getPagination($data)
             ->withTargetURL($component->getActionUrl(), $this->actionParameter(SettingsStorage::VAR_CURRENT_PAGE, $component->getTableId()));
@@ -391,13 +391,17 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return Component
      */
-    protected function getColumnsSelector(Table $component, Settings $settings)
+    protected function getColumnsSelector(Table $component, Settings $settings) : Component
     {
         return self::dic()->ui()->factory()->dropdown()
-            ->standard(array_map(function (Column $column) use($component, $settings) {    return self::dic()->ui()->factory()->link()->standard(self::output()->getHTML([str_replace(["<a ", "</a>"], ["<span ", "</span>"], self::output()->getHTML($this->glyph_factory->add())), self::dic()->ui()->factory()->legacy($column->getTitle())]), $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_SELECT_COLUMN => $column->getKey()], $component->getTableId()));
-}, array_filter($component->getColumns(), function (Column $column) use($settings) {
-    return $column->isSelectable() && !in_array($column->getKey(), $settings->getSelectedColumns());
-})))->withLabel($component->getPlugin()->translate("add_columns", Table::LANG_MODULE));
+            ->standard(array_map(function (Column $column) use ($component, $settings) : Component {
+                return self::dic()->ui()->factory()->link()->standard(self::output()->getHTML([
+                    str_replace(["<a ", "</a>"], ["<span ", "</span>"], self::output()->getHTML($this->glyph_factory->add())),
+                    self::dic()->ui()->factory()->legacy($column->getTitle())
+                ]), $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_SELECT_COLUMN => $column->getKey()], $component->getTableId()));
+            }, array_filter($component->getColumns(), function (Column $column) use ($settings) : bool {
+                return ($column->isSelectable() && !in_array($column->getKey(), $settings->getSelectedColumns()));
+            })))->withLabel($component->getPlugin()->translate("add_columns", Table::LANG_MODULE));
     }
 
 
@@ -407,16 +411,22 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return Component
      */
-    protected function getRowsPerPageSelector(Table $component, Settings $settings)
+    protected function getRowsPerPageSelector(Table $component, Settings $settings) : Component
     {
         return self::dic()->ui()->factory()->dropdown()
-            ->standard(array_map(function ($count) use($component, $settings) {
-    if ($settings->getRowsCount() === $count) {
-        return self::dic()->ui()->factory()->legacy(self::output()->getHTML([$this->glyph_factory->apply(), self::dic()->ui()->factory()->legacy(strval($count))]));
-    } else {
-        return self::dic()->ui()->factory()->link()->standard(strval($count), $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_ROWS_COUNT => $count], $component->getTableId()));
-    }
-}, Settings::ROWS_COUNT))->withLabel($component->getPlugin()
+            ->standard(array_map(function (int $count) use ($component, $settings) : Component {
+                if ($settings->getRowsCount() === $count) {
+                    return self::dic()->ui()->factory()->legacy(self::output()->getHTML([
+                        $this->glyph_factory->apply(),
+                        self::dic()->ui()->factory()->legacy(strval($count))
+                    ]));
+                } else {
+                    return self::dic()->ui()
+                        ->factory()
+                        ->link()
+                        ->standard(strval($count), $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_ROWS_COUNT => $count], $component->getTableId()));
+                }
+            }, Settings::ROWS_COUNT))->withLabel($component->getPlugin()
                 ->translate("rows_per_page", Table::LANG_MODULE, [$settings->getRowsCount()]));
     }
 
@@ -426,11 +436,12 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return Component
      */
-    protected function getExportsSelector(Table $component)
+    protected function getExportsSelector(Table $component) : Component
     {
-        return self::dic()->ui()->factory()->dropdown()->standard(array_map(function (Format $format) use($component) {
-    return self::dic()->ui()->factory()->link()->standard($format->getDisplayTitle($component), $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_EXPORT_FORMAT_ID => $format->getFormatId()], $component->getTableId()));
-}, $component->getFormats()))->withLabel($component->getPlugin()->translate("export", Table::LANG_MODULE));
+        return self::dic()->ui()->factory()->dropdown()->standard(array_map(function (Format $format) use ($component) : Component {
+            return self::dic()->ui()->factory()->link()->standard($format->getDisplayTitle($component),
+                $this->getActionUrlWithParams($component->getActionUrl(), [SettingsStorage::VAR_EXPORT_FORMAT_ID => $format->getFormatId()], $component->getTableId()));
+        }, $component->getFormats()))->withLabel($component->getPlugin()->translate("export", Table::LANG_MODULE));
     }
 
 
@@ -439,7 +450,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      * @param Settings  $settings
      * @param Data|null $data
      */
-    protected function handleDisplayCount(Table $component, Settings $settings, ?Data $data)
+    protected function handleDisplayCount(Table $component, Settings $settings, /*?Data*/ $data)/* : void*/
     {
         $count = $component->getPlugin()->translate("count", Table::LANG_MODULE, [
             ($data !== null && $data->getDataCount() > 0 ? ($settings->getOffset() + 1) : 0),
@@ -459,7 +470,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @param Table $component
      */
-    protected function handleMultipleActions(Table $component)
+    protected function handleMultipleActions(Table $component)/* : void*/
     {
         if (empty($component->getMultipleActions())) {
             return;
@@ -472,9 +483,9 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
         $multiple_actions = [
             self::dic()->ui()->factory()->legacy(self::output()->getHTML($tpl_checkbox)),
             self::dic()->ui()->factory()->legacy($component->getPlugin()->translate("select_all", Table::LANG_MODULE)),
-            self::dic()->ui()->factory()->dropdown()->standard(array_map(function ($title, $action) {
-    return self::dic()->ui()->factory()->link()->standard($title, $action);
-}, array_keys($component->getMultipleActions()), $component->getMultipleActions()))->withLabel($component->getPlugin()
+            self::dic()->ui()->factory()->dropdown()->standard(array_map(function (string $title, string $action) : Component {
+                return self::dic()->ui()->factory()->link()->standard($title, $action);
+            }, array_keys($component->getMultipleActions()), $component->getMultipleActions()))->withLabel($component->getPlugin()
                 ->translate("multiple_actions", Table::LANG_MODULE))
         ];
 
@@ -494,19 +505,19 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
      *
      * @return bool
      */
-    protected function validateColumnKey(Table $component, $key)
+    protected function validateColumnKey(Table $component, string $key) : bool
     {
         return (!empty($key)
-            && !empty(array_filter($component->getColumns(), function (Column $column) use($key) {
-    return $column->getKey() === $key;
-})));
+            && !empty(array_filter($component->getColumns(), function (Column $column) use ($key) : bool {
+                return ($column->getKey() === $key);
+            })));
     }
 
 
     /**
      * @inheritDoc
      */
-    public function getActionUrlWithParams($action_url, array $params, $table_id)
+    public function getActionUrlWithParams(string $action_url, array $params, string $table_id) : string
     {
         foreach ($params as $key => $value) {
             $action_url = ilUtil::appendUrlParameterString($action_url, $this->actionParameter($key, $table_id) . "=" . $value);
@@ -519,7 +530,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function actionParameter($key, $table_id)
+    public function actionParameter(string $key, string $table_id) : string
     {
         return $key . "_" . $table_id;
     }
@@ -528,7 +539,7 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function getActionRowId($table_id)
+    public function getActionRowId(string $table_id) : string
     {
         return strval(filter_input(INPUT_GET, $this->actionParameter(Table::ACTION_GET_VAR, $table_id)));
     }
@@ -537,8 +548,9 @@ class DefaultBrowserFormat extends HtmlFormat implements BrowserFormat
     /**
      * @inheritDoc
      */
-    public function getMultipleActionRowIds($table_id)
+    public function getMultipleActionRowIds(string $table_id) : array
     {
-        return (!is_null(filter_input(INPUT_POST, $this->actionParameter(Table::MULTIPLE_SELECT_POST_VAR, $table_id), FILTER_DEFAULT, FILTER_FORCE_ARRAY)) ? filter_input(INPUT_POST, $this->actionParameter(Table::MULTIPLE_SELECT_POST_VAR, $table_id), FILTER_DEFAULT, FILTER_FORCE_ARRAY) : []);
+        return (filter_input(INPUT_POST, $this->actionParameter(Table::MULTIPLE_SELECT_POST_VAR, $table_id), FILTER_DEFAULT, FILTER_FORCE_ARRAY)
+            ?? []);
     }
 }

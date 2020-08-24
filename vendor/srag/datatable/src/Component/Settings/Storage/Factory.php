@@ -15,5 +15,5 @@ interface Factory
     /**
      * @return SettingsStorage
      */
-    public function default();
+    public function default() : SettingsStorage;
 }

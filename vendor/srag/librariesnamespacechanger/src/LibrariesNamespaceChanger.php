@@ -66,8 +66,9 @@ final class LibrariesNamespaceChanger
      */
     public static function rewriteLibrariesNamespaces(Event $event)/*: void*/
     {
-        self::$plugin_root = rtrim(Closure::bind(function () {    return $this->baseDir;
-}, $event->getComposer()->getConfig(), Config::class)(), "/");
+        self::$plugin_root = rtrim(Closure::bind(function () : string {
+            return $this->baseDir;
+        }, $event->getComposer()->getConfig(), Config::class)(), "/");
 
         self::getInstance($event)->doRewriteLibrariesNamespaces();
     }
@@ -78,7 +79,7 @@ final class LibrariesNamespaceChanger
      *
      * @return self
      */
-    private static function getInstance(Event $event)
+    private static function getInstance(Event $event) : self
     {
         if (self::$instance === null) {
             self::$instance = new self($event);
@@ -101,9 +102,9 @@ final class LibrariesNamespaceChanger
 
         $libraries = [];
         foreach (
-            array_filter(scandir(self::$plugin_root . "/vendor/srag"), function ($folder) {
-    return !in_array($folder, [".", "..", "librariesnamespacechanger"]);
-}) as $folder
+            array_filter(scandir(self::$plugin_root . "/vendor/srag"), function (string $folder) : bool {
+                return (!in_array($folder, [".", "..", "librariesnamespacechanger"]));
+            }) as $folder
         ) {
             $folder = self::$plugin_root . "/vendor/srag/" . $folder;
 
@@ -115,15 +116,17 @@ final class LibrariesNamespaceChanger
                 continue;
             }
 
-            $namespaces = array_map(function ($namespace) use($plugin_name) {
-    if (substr($namespace, -1) === "\\") {
-        $namespace = substr($namespace, 0, -1);
-    }
-    if (substr($namespace, -strlen("\\" . $plugin_name)) === "\\" . $plugin_name) {
-        $namespace = substr($namespace, 0, -strlen("\\" . $plugin_name));
-    }
-    return $namespace;
-}, $namespaces);
+            $namespaces = array_map(function (string $namespace) use ($plugin_name): string {
+                if (substr($namespace, -1) === "\\") {
+                    $namespace = substr($namespace, 0, -1);
+                }
+
+                if (substr($namespace, -strlen("\\" . $plugin_name)) === ("\\" . $plugin_name)) {
+                    $namespace = substr($namespace, 0, -strlen("\\" . $plugin_name));
+                }
+
+                return $namespace;
+            }, $namespaces);
 
             $libraries[$folder] = $namespaces;
         }
@@ -163,7 +166,7 @@ final class LibrariesNamespaceChanger
      * @param string $folder
      * @param array  $files
      */
-    private function getFiles($folder, array &$files = [])/*: void*/
+    private function getFiles(string $folder, array &$files = [])/*: void*/
     {
         $paths = scandir($folder);
 
@@ -187,7 +190,7 @@ final class LibrariesNamespaceChanger
     /**
      * @return string
      */
-    private function getPluginName()
+    private function getPluginName() : string
     {
         $matches = [];
         preg_match(self::PLUGIN_NAME_REG_EXP, __DIR__, $matches);

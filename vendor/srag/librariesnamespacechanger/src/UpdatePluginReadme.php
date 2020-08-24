@@ -61,8 +61,9 @@ final class UpdatePluginReadme
      */
     public static function updatePluginReadme(Event $event)/*: void*/
     {
-        self::$plugin_root = rtrim(Closure::bind(function () {    return $this->baseDir;
-}, $event->getComposer()->getConfig(), Config::class)(), "/");
+        self::$plugin_root = rtrim(Closure::bind(function () : string {
+            return $this->baseDir;
+        }, $event->getComposer()->getConfig(), Config::class)(), "/");
 
         self::getInstance($event)->doUpdatePluginReadme();
     }
@@ -73,7 +74,7 @@ final class UpdatePluginReadme
      *
      * @return self
      */
-    private static function getInstance(Event $event)
+    private static function getInstance(Event $event) : self
     {
         if (self::$instance === null) {
             self::$instance = new self($event);

@@ -23,7 +23,7 @@ class HiddenInputGUI extends ilHiddenInputGUI
      *
      * @param string $a_postvar
      */
-    public function __construct($a_postvar = "")
+    public function __construct(string $a_postvar = "")
     {
         parent::__construct($a_postvar);
     }
@@ -32,7 +32,7 @@ class HiddenInputGUI extends ilHiddenInputGUI
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         $tpl = new Template("Services/Form/templates/default/tpl.property_form.html", true, true);
 

@@ -28,7 +28,7 @@ interface SortField extends JsonSerializable
     /**
      * @return string
      */
-    public function getSortField();
+    public function getSortField() : string;
 
 
     /**
@@ -36,13 +36,13 @@ interface SortField extends JsonSerializable
      *
      * @return self
      */
-    public function withSortField($sort_field);
+    public function withSortField(string $sort_field) : self;
 
 
     /**
      * @return int
      */
-    public function getSortFieldDirection();
+    public function getSortFieldDirection() : int;
 
 
     /**
@@ -50,7 +50,7 @@ interface SortField extends JsonSerializable
      *
      * @return self
      */
-    public function withSortFieldDirection($sort_field_direction);
+    public function withSortFieldDirection(int $sort_field_direction) : self;
 
 
     /**
@@ -58,5 +58,5 @@ interface SortField extends JsonSerializable
      *
      * @return stdClass
      */
-    public function jsonSerialize();
+    public function jsonSerialize() : stdClass;
 }

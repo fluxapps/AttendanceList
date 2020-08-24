@@ -17,11 +17,11 @@ interface TableBuilder
     /**
      * @return Table
      */
-    public function getTable();
+    public function getTable() : Table;
 
 
     /**
      * @return string
      */
-    public function render();
+    public function render() : string;
 }

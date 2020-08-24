@@ -23,25 +23,25 @@ interface Factory
     /**
      * @return ColumnFactory
      */
-    public function column();
+    public function column() : ColumnFactory;
 
 
     /**
      * @return DataFactory
      */
-    public function data();
+    public function data() : DataFactory;
 
 
     /**
      * @return FormatFactory
      */
-    public function format();
+    public function format() : FormatFactory;
 
 
     /**
      * @return SettingsFactory
      */
-    public function settings();
+    public function settings() : SettingsFactory;
 
 
     /**
@@ -53,11 +53,11 @@ interface Factory
      *
      * @return Table
      */
-    public function table($table_id, $action_url, $title, array $columns, DataFetcher $data_fetcher);
+    public function table(string $table_id, string $action_url, string $title, array $columns, DataFetcher $data_fetcher) : Table;
 
 
     /**
      * @param PluginInterface $plugin
      */
-    public function installLanguages(PluginInterface $plugin);
+    public function installLanguages(PluginInterface $plugin)/* : void*/;
 }

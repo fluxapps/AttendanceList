@@ -32,7 +32,7 @@ abstract class AbstractDataFetcher implements DataFetcher
     /**
      * @inheritDoc
      */
-    public function getNoDataText(Table $component)
+    public function getNoDataText(Table $component) : string
     {
         return $component->getPlugin()->translate("no_data", Table::LANG_MODULE);
     }
@@ -41,7 +41,7 @@ abstract class AbstractDataFetcher implements DataFetcher
     /**
      * @inheritDoc
      */
-    public function isFetchDataNeedsFilterFirstSet()
+    public function isFetchDataNeedsFilterFirstSet() : bool
     {
         return false;
     }

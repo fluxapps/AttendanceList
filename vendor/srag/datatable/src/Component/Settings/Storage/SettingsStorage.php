@@ -82,7 +82,7 @@ interface SettingsStorage
      *
      * @return Settings
      */
-    public function read($table_id, $user_id);
+    public function read(string $table_id, int $user_id) : Settings;
 
 
     /**
@@ -91,7 +91,7 @@ interface SettingsStorage
      *
      * @return Settings
      */
-    public function handleDefaultSettings(Settings $settings, Table $component);
+    public function handleDefaultSettings(Settings $settings, Table $component) : Settings;
 
 
     /**
@@ -99,5 +99,5 @@ interface SettingsStorage
      * @param string   $table_id
      * @param int      $user_id
      */
-    public function store(Settings $settings, $table_id, $user_id);
+    public function store(Settings $settings, string $table_id, int $user_id)/* : void*/;
 }

@@ -23,7 +23,7 @@ class DateDurationInputGUI extends ilDateDurationInputGUI
     /**
      * @inheritDoc
      */
-    public function checkInput()
+    public function checkInput() : bool
     {
         if ($this->getDisabled()) {
             return true;
@@ -113,7 +113,7 @@ class DateDurationInputGUI extends ilDateDurationInputGUI
     /**
      * @inheritDoc
      */
-    public function getValue()
+    public function getValue() : array
     {
         $start = $this->getStart() ? $this->getStart()->get(IL_CAL_UNIX) : 0;
         $end = $this->getEnd() ? $this->getEnd()->get(IL_CAL_UNIX) : 0;

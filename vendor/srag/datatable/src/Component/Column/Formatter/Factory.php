@@ -17,7 +17,7 @@ interface Factory
     /**
      * @return ActionsFactory
      */
-    public function actions();
+    public function actions() : ActionsFactory;
 
 
     /**
@@ -25,25 +25,25 @@ interface Factory
      *
      * @return Formatter
      */
-    public function chainGetter(array $chain);
+    public function chainGetter(array $chain) : Formatter;
 
 
     /**
      * @return Formatter
      */
-    public function check();
+    public function check() : Formatter;
 
 
     /**
      * @return Formatter
      */
-    public function date();
+    public function date() : Formatter;
 
 
     /**
      * @return Formatter
      */
-    public function default();
+    public function default() : Formatter;
 
 
     /**
@@ -51,17 +51,17 @@ interface Factory
      *
      * @return Formatter
      */
-    public function languageVariable($prefix);
+    public function languageVariable(string $prefix) : Formatter;
 
 
     /**
      * @return Formatter
      */
-    public function learningProgress();
+    public function learningProgress() : Formatter;
 
 
     /**
      * @return Formatter
      */
-    public function link();
+    public function link() : Formatter;
 }

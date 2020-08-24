@@ -31,7 +31,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
      *
      * @param string $title
      */
-    public function __construct($title = "")
+    public function __construct(string $title = "")
     {
         parent::__construct($title, "");
     }
@@ -40,7 +40,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
     /**
      * @inheritDoc
      */
-    public function checkInput()
+    public function checkInput() : bool
     {
         return true;
     }
@@ -49,7 +49,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
     /**
      * @return string
      */
-    public function getHtml()
+    public function getHtml() : string
     {
         return $this->html;
     }
@@ -60,7 +60,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
      *
      * @return self
      */
-    public function setHtml($html)
+    public function setHtml(string $html) : self
     {
         $this->html = $html;
 
@@ -71,7 +71,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue() : string
     {
         return "";
     }
@@ -93,7 +93,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         $iframe_tpl = new Template(__DIR__ . "/templates/iframe.html");
 
@@ -108,7 +108,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
      *
      * @return self
      */
-    public function setTitle($title)
+    public function setTitle(/*string*/ $title) : self
     {
         $this->title = $title;
 
@@ -141,7 +141,7 @@ class StaticHTMLPresentationInputGUI extends ilFormPropertyGUI
     /**
      * @return string
      */
-    protected function getDataUrl()
+    protected function getDataUrl() : string
     {
         return "data:text/html;charset=UTF-8;base64," . base64_encode($this->html);
     }
