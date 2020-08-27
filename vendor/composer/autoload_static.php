@@ -10,11 +10,11 @@ class ComposerStaticInite537835033ce26afdbd2b3985a41ff62
         's' => 
         array (
             'srag\\Plugins\\AttendanceList\\' => 28,
-            'srag\\Notifications4Plugin\\' => 26,
+            'srag\\Notifications4Plugin\\AttendanceList\\' => 41,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DataTableUI\\' => 17,
-            'srag\\DIC\\' => 9,
-            'srag\\CustomInputGUIs\\' => 21,
+            'srag\\DataTableUI\\AttendanceList\\' => 32,
+            'srag\\DIC\\AttendanceList\\' => 24,
+            'srag\\CustomInputGUIs\\AttendanceList\\' => 36,
         ),
     );
 
@@ -23,7 +23,7 @@ class ComposerStaticInite537835033ce26afdbd2b3985a41ff62
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'srag\\Notifications4Plugin\\' => 
+        'srag\\Notifications4Plugin\\AttendanceList\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/notifications4plugin/src',
         ),
@@ -31,15 +31,15 @@ class ComposerStaticInite537835033ce26afdbd2b3985a41ff62
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DataTableUI\\' => 
+        'srag\\DataTableUI\\AttendanceList\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/datatable/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\AttendanceList\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\' => 
+        'srag\\CustomInputGUIs\\AttendanceList\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
@@ -239,7 +239,6 @@ class ComposerStaticInite537835033ce26afdbd2b3985a41ff62
         'ilObjAttendanceListAccess' => __DIR__ . '/../..' . '/classes/class.ilObjAttendanceListAccess.php',
         'ilObjAttendanceListGUI' => __DIR__ . '/../..' . '/classes/class.ilObjAttendanceListGUI.php',
         'ilObjAttendanceListListGUI' => __DIR__ . '/../..' . '/classes/class.ilObjAttendanceListListGUI.php',
-        'ilSessionMock' => __DIR__ . '/../..' . '/classes/class.xaliCron.php',
         'srWeekdayInputGUI' => __DIR__ . '/../..' . '/classes/Helper/class.srWeekdayInputGUI.php',
         'srag\\CustomInputGUIs\\AttendanceList\\CheckboxInputGUI\\AjaxCheckbox' => __DIR__ . '/..' . '/srag/custominputguis/src/AjaxCheckbox/AjaxCheckbox.php',
         'srag\\CustomInputGUIs\\AttendanceList\\CheckboxInputGUI\\CheckboxInputGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/CheckboxInputGUI/CheckboxInputGUI.php',
@@ -421,6 +420,7 @@ class ComposerStaticInite537835033ce26afdbd2b3985a41ff62
         'srag\\Notifications4Plugin\\AttendanceList\\Sender\\Sender' => __DIR__ . '/..' . '/srag/notifications4plugin/src/Sender/Sender.php',
         'srag\\Notifications4Plugin\\AttendanceList\\Sender\\vcalendarSender' => __DIR__ . '/..' . '/srag/notifications4plugin/src/Sender/vcalendarSender.php',
         'srag\\Notifications4Plugin\\AttendanceList\\Utils\\Notifications4PluginTrait' => __DIR__ . '/..' . '/srag/notifications4plugin/src/Utils/Notifications4PluginTrait.php',
+        'srag\\Plugins\\AttendanceList\\Cron\\AttendanceListJob' => __DIR__ . '/../..' . '/src/Cron/AttendanceListJob.php',
         'xaliAbsenceReason' => __DIR__ . '/../..' . '/classes/Config/class.xaliAbsenceReason.php',
         'xaliAbsenceStatement' => __DIR__ . '/../..' . '/classes/Absences/class.xaliAbsenceStatement.php',
         'xaliAbsenceStatementFormGUI' => __DIR__ . '/../..' . '/classes/Absences/class.xaliAbsenceStatementFormGUI.php',

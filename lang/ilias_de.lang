@@ -116,3 +116,5 @@ config_show_not_relevant#:#'Nicht relevant' aktivieren
 config_show_not_relevant_info#:#Aktiviert einen zusätzlich Status. Nicht relevante Einträge werden bei der zu erreichenden Mindestanwesenheit ignoriert.
 config_show_present_total#:#'Anwesend / Total' anzeigen
 config_show_present_total_info#:#Zeigt eine zusätzliche Spalte in der Benutzertabelle an. Das 'Total' errechnet sich dabei aus den Anz. Anwesend + Anz. Abwesend.
+cron_title#:#Abwesenheit-Erinnerungen senden
+cron_description#:#Abwesenheit-Erinnerungen senden

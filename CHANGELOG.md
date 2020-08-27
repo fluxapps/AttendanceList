@@ -1,6 +1,9 @@
 # Changelog
 ## [x]
+* ILIAS 6 support
+* Remove ILIAS 5.3 support
 * Min. PHP 7.0
+- Separate legacy cron job to `AttendanceListCron` wrapper plugin
 * Remove core autoload, incompatible since min. ILIAS 5.3
 * New Version of Notification4Plugins
 * Updated composer dependencies 
