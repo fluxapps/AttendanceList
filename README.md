@@ -17,16 +17,7 @@ cd Customizing/global/plugins/Services/Repository/RepositoryObject
 git clone https://github.com/studer-raimann/AttendanceList.git
 ```
 
-#### Dependencies
-
-#### Cronjob
-The AttendanceList-Plugin includes a cronjob which sends reminder emails to all course participants which still need to fill out the reason for one or multiple of their absences.
-
-To install the cronjob, open or create the file /etc/cron.d/ilias on your server and add the following line:
-```bash
-* 7 * * * www-data /usr/bin/php /var/www/ilias/Customizing/global/plugins/Services/Repository/RepositoryObject/AttendanceList/cron.php $USER $PASSWORD $ILIAS_CLIENT_ID > /dev/null
-```
-Change the $USER and $PASSWORD to the login and password of an ilias user and $ILIAS_CLIENT_ID to your ilias client id.
+Please also install and enable [AttendanceListCron](https://github.com/studer-raimann/AttendanceListCron).
 
 ### Adjustment suggestions
 * Adjustment suggestions by pull requests

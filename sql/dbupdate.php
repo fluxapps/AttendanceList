@@ -24,54 +24,55 @@ xaliAbsenceStatement::updateDB();
 ?>
 <#4>
 <?php
-\srag\Plugins\AttendanceList\Notification\Notification\Notification::updateDB_();
-\srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::updateDB_();
+\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
 
-if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->migrateFromOldGlobalPlugin(\xaliChecklistEntry::NOTIFICATION_NAME) === null) {
 
-	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->factory()->newInstance();
 
 	$notification->setName(\xaliChecklistEntry::NOTIFICATION_NAME);
 	$notification->setTitle("Absence");
 	$notification->setDescription("Mail which will be sent directly after a user has been defined as absent");
-	$notification->setDefaultLanguage("en");
 
-	$notification->setSubject("Absence", "en");
+	$notification->setSubject("Absence", "default");
 	$notification->setText("Hello {{user.getFirstname}} {{user.getLastname}},
 	          
 	    You were absent in one of your courses:
 	         
 	    {{absence}}
 	          
-	    Please click on the link and specify a reason for your absence.", "en");
+	    Please click on the link and specify a reason for your absence.", "default");
 
-	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
-		->storeInstance($notification);
+	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
+		->storeNotification($notification);
 }
 
-if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->migrateFromOldGlobalPlugin(\xaliCron::NOTIFICATION_NAME) === null) {
 
-	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
+	$notification = \srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->factory()->newInstance();
 
 	$notification->setName(\xaliCron::NOTIFICATION_NAME);
 	$notification->setTitle("Absence Reminder");
 	$notification->setDescription("Reminder email listing all open absence reasons");
-	$notification->setDefaultLanguage("en");
 
-	$notification->setSubject("Reminder: reasons for absence still open", "en");
+	$notification->setSubject("Reminder: reasons for absence still open", "default");
 	$notification->setText("Hello {{user.getFirstname}} {{user.getLastname}},
 	          
 	    You haven't yet specified the reason for your absence in the following courses:
 	         
 	    {{open_absences}}
 	          
-	    Please click on the link(s) and specify a reason for your absence.", "en");
+	    Please click on the link(s) and specify a reason for your absence.", "default");
 
-	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance(\srag\Plugins\AttendanceList\Notification\Notification\Notification::class, \srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage::class)
-		->storeInstance($notification);
+	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
+		->storeNotification($notification);
 }
+?>
+<#5>
+<?php
+\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
 ?>

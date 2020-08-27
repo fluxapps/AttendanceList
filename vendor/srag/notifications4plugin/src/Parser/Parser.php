@@ -2,6 +2,7 @@
 
 namespace srag\Notifications4Plugin\AttendanceList\Parser;
 
+use ILIAS\UI\Component\Input\Field\Input;
 use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
 
 /**
@@ -12,22 +13,55 @@ use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginExcep
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  */
-interface Parser {
+interface Parser
+{
 
-	/**
-	 * @var string
-	 *
-	 * @abstract
-	 */
-	//const NAME = "";
+    /**
+     * @var string
+     *
+     * @abstract
+     */
+    const DOC_LINK = "";
+    /**
+     * @var string
+     *
+     * @abstract
+     */
+    const NAME = "";
 
-	/**
-	 * @param string $text
-	 * @param array  $placeholders
-	 *
-	 * @return string
-	 *
-	 * @throws Notifications4PluginException
-	 */
-	public function parse($text, array $placeholders = []);
+
+    /**
+     * @return string
+     */
+    public function getClass() : string;
+
+
+    /**
+     * @return string
+     */
+    public function getDocLink() : string;
+
+
+    /**
+     * @return string
+     */
+    public function getName() : string;
+
+
+    /**
+     * @return Input[]
+     */
+    public function getOptionsFields() : array;
+
+
+    /**
+     * @param string $text
+     * @param array  $placeholders
+     * @param array  $options
+     *
+     * @return string
+     *
+     * @throws Notifications4PluginException
+     */
+    public function parse(string $text, array $placeholders = [], array $options = []) : string;
 }

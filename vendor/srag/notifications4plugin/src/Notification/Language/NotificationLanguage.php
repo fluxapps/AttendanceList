@@ -2,105 +2,177 @@
 
 namespace srag\Notifications4Plugin\AttendanceList\Notification\Language;
 
+use ActiveRecord;
+use arConnector;
 use ilDateTime;
+use srag\DIC\AttendanceList\DICTrait;
+use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
 /**
- * Interface NotificationLanguage
+ * Class NotificationLanguage
  *
  * @package srag\Notifications4Plugin\AttendanceList\Notification\Language
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @deprecated
  */
-interface NotificationLanguage {
+class NotificationLanguage extends ActiveRecord
+{
 
-	/**
-	 * @var string
-	 *
-	 * @abstract
-	 */
-	const TABLE_NAME = "";
+    use DICTrait;
+    use Notifications4PluginTrait;
+
+    /**
+     * @var string
+     *
+     * @deprecated
+     */
+    const TABLE_NAME_SUFFIX = "not_lan";
+    /**
+     * @var ilDateTime
+     *
+     * @con_has_field    true
+     * @con_fieldtype    timestamp
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $created_at;
+    /**
+     * @var int
+     *
+     * @con_has_field    true
+     * @con_fieldtype    integer
+     * @con_length       8
+     * @con_is_notnull   true
+     * @con_is_primary   true
+     *
+     * @deprecated
+     */
+    protected $id = 0;
+    /**
+     * @var string
+     *
+     * @con_has_field    true
+     * @con_fieldtype    text
+     * @con_length       2
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $language = "";
+    /**
+     * @var int
+     *
+     * @con_has_field    true
+     * @con_fieldtype    integer
+     * @con_length       8
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $notification_id;
+    /**
+     * @var string
+     *
+     * @con_has_field    true
+     * @con_fieldtype    clob
+     * @con_length       256
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $subject = "";
+    /**
+     * @var string
+     *
+     * @con_has_field    true
+     * @con_fieldtype    clob
+     * @con_length       4000
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $text = "";
+    /**
+     * @var ilDateTime
+     *
+     * @con_has_field    true
+     * @con_fieldtype    timestamp
+     * @con_is_notnull   true
+     *
+     * @deprecated
+     */
+    protected $updated_at;
 
 
-	/**
-	 * @return int
-	 */
-	public function getId();
+    /**
+     * NotificationLanguage constructor
+     *
+     * @param int              $primary_key_value
+     * @param arConnector|null $connector
+     *
+     * @deprecated
+     */
+    public function __construct(/*int*/ $primary_key_value = 0, /*?*/ arConnector $connector = null)
+    {
+        //parent::__construct($primary_key_value, $connector);
+    }
 
 
-	/**
-	 * @param int $id
-	 */
-	public function setId($id)/*: void*/ ;
+    /**
+     * @inheritDoc
+     *
+     * @deprecated
+     */
+    public static function getTableName() : string
+    {
+        return self::notifications4plugin()->getTableNamePrefix() . "_" . self::TABLE_NAME_SUFFIX;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getNotificationId();
+    /**
+     * @inheritDoc
+     *
+     * @deprecated
+     */
+    public static function returnDbTableName() : string
+    {
+        return self::getTableName();
+    }
 
 
-	/**
-	 * @param int $notification_id
-	 */
-	public function setNotificationId($notification_id)/*: void*/ ;
+    /**
+     * @inheritDoc
+     *
+     * @deprecated
+     */
+    public function getConnectorContainerName() : string
+    {
+        return self::getTableName();
+    }
 
 
-	/**
-	 * @return string
-	 */
-	public function getLanguage();
+    /**
+     * @inheritDoc
+     *
+     * @deprecated
+     */
+    public function getSubject() : string
+    {
+        return $this->subject;
+    }
 
 
-	/**
-	 * @param string $language
-	 */
-	public function setLanguage($language)/*: void*/ ;
-
-
-	/**
-	 * @return string
-	 */
-	public function getSubject();
-
-
-	/**
-	 * @param string $subject
-	 */
-	public function setSubject($subject)/*: void*/ ;
-
-
-	/**
-	 * @return string
-	 */
-	public function getText();
-
-
-	/**
-	 * @param string $text
-	 */
-	public function setText($text)/*: void*/ ;
-
-
-	/**
-	 * @return ilDateTime
-	 */
-	public function getCreatedAt();
-
-
-	/**
-	 * @param ilDateTime $created_at
-	 */
-	public function setCreatedAt(ilDateTime $created_at)/*: void*/ ;
-
-
-	/**
-	 * @return ilDateTime
-	 */
-	public function getUpdatedAt();
-
-
-	/**
-	 * @param ilDateTime $updated_at
-	 */
-	public function setUpdatedAt(ilDateTime $updated_at)/*: void*/ ;
+    /**
+     * @inheritDoc
+     *
+     * @deprecated
+     */
+    public function getText() : string
+    {
+        return $this->text;
+    }
 }

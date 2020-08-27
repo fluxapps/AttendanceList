@@ -2,10 +2,10 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use ILIAS\DI\Container;
+use srag\CustomInputGUIs\AttendanceList\Loader\CustomInputGUIsLoaderDetector;
 use srag\DIC\AttendanceList\DICTrait;
-use srag\DIC\AttendanceList\Util\LibraryLanguageInstaller;
-use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
-use srag\Plugins\AttendanceList\Notification\Notification\Notification;
+use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
 /**
  * Class ilAttendanceListPlugin
@@ -15,10 +15,32 @@ use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 	use DICTrait;
+	use Notifications4PluginTrait;
 	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
 	const PLUGIN_CLASS_NAME = self::class;
-	/**
+
+
+    /**
+     * @var bool
+     */
+    protected static $init_notifications = false;
+
+
+    /**
+     *
+     */
+    public static function initNotifications()/*:void*/
+    {
+        if (!self::$init_notifications) {
+            self::$init_notifications = true;
+
+            self::notifications4plugin()->withTableNamePrefix(self::PLUGIN_ID)->withPlugin(self::plugin());
+        }
+    }
+
+
+    /**
 	 * @var ilAttendanceListPlugin
 	 */
 	protected static $instance;
@@ -49,7 +71,16 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	}
 
 
-	/**
+    /**
+     * @inheritDoc
+     */
+	protected function init()/*:void*/
+    {
+       self::initNotifications();
+    }
+
+
+    /**
 	 * @return string
 	 */
 	function getPluginName() {
@@ -63,8 +94,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	public function updateLanguages($a_lang_keys = null) {
 		parent::updateLanguages($a_lang_keys);
 
-		LibraryLanguageInstaller::getInstance()->withPlugin(self::plugin())->withLibraryLanguageDirectory(__DIR__
-			. "/../vendor/srag/notifications4plugin/lang")->updateLanguages();
+        self::notifications4plugin()->installLanguages();
 	}
 
 
@@ -80,8 +110,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		$this->db->dropTable(xaliChecklist::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliChecklistEntry::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliUserStatus::TABLE_NAME, false);
-		Notification::dropDB_();
-		NotificationLanguage::dropDB_();
+        self::notifications4plugin()->dropTables();
 
 		return true;
 	}
@@ -195,4 +224,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 		return ilObjAttendanceList::_lookupObjectId($ref_id);
 	}
+
+
+    /**
+     * @inheritDoc
+     */
+    public function exchangeUIRendererAfterInitialization(Container $dic) : Closure
+    {
+        return CustomInputGUIsLoaderDetector::exchangeUIRendererAfterInitialization();
+    }
 }

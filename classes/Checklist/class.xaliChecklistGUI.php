@@ -1,12 +1,13 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+use srag\DIC\AttendanceList\DICTrait;
 /**
  * Class xaliChecklistGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliChecklistGUI extends xaliGUI {
-
+    use DICTrait;
 	/**
 	 * @var xaliChecklist
 	 */
@@ -76,7 +77,11 @@ class xaliChecklistGUI extends xaliGUI {
 	public function saveList() {
 		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
+            if (self::version()->is6()) {
+                $this->tpl->printToStdout();
+            } else {
 			$this->show();
+			}
 			return;
 		}
 

@@ -4,6 +4,8 @@ namespace srag\Notifications4Plugin\AttendanceList\Notification;
 
 use ilDateTime;
 use srag\DIC\AttendanceList\DICTrait;
+use srag\Notifications4Plugin\AttendanceList\Notification\Form\FormBuilder;
+use srag\Notifications4Plugin\AttendanceList\Notification\Table\TableBuilder;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 use stdClass;
 
@@ -14,71 +16,95 @@ use stdClass;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-final class Factory implements FactoryInterface {
+final class Factory implements FactoryInterface
+{
 
-	use DICTrait;
-	use Notifications4PluginTrait;
-	/**
-	 * @var FactoryInterface[]
-	 */
-	protected static $instances = [];
+    use DICTrait;
+    use Notifications4PluginTrait;
 
-
-	/**
-	 * @param string $notification_class
-	 *
-	 * @return FactoryInterface
-	 */
-	public static function getInstance($notification_class) {
-		if (!isset(self::$instances[$notification_class])) {
-			self::$instances[$notification_class] = new self($notification_class);
-		}
-
-		return self::$instances[$notification_class];
-	}
+    /**
+     * @var FactoryInterface|null
+     */
+    protected static $instance = null;
 
 
-	/**
-	 * @var string|Notification
-	 */
-	protected $notification_class;
+    /**
+     * Factory constructor
+     */
+    private function __construct()
+    {
+
+    }
 
 
-	/**
-	 * Factory constructor
-	 *
-	 * @param string $notification_class
-	 */
-	private function __construct($notification_class) {
-		$this->notification_class = $notification_class;
-	}
+    /**
+     * @return FactoryInterface
+     */
+    public static function getInstance() : FactoryInterface
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function fromDB(stdClass $data) {
-		$language = $this->newInstance();
+    /**
+     * @inheritDoc
+     */
+    public function fromDB(stdClass $data) : NotificationInterface
+    {
+        $notification = $this->newInstance();
 
-		$language->setId($data->id);
-		$language->setName($data->name);
-		$language->setTitle($data->title);
-		$language->setDescription($data->description);
-		$language->setDefaultLanguage($data->default_language);
-		$language->setParser($data->parser);
-		$language->setCreatedAt(new ilDateTime($data->created_at, IL_CAL_DATETIME));
-		$language->setUpdatedAt(new ilDateTime($data->updated_at, IL_CAL_DATETIME));
+        $notification->setId($data->id);
+        $notification->setName($data->name);
+        $notification->setTitle($data->title);
+        $notification->setDescription($data->description);
+        $notification->setParser($data->parser);
+        $notification->setParserOptions(json_decode($data->parser_options, true) ?? []);
+        $notification->setSubjects(json_decode($data->subject, true) ?? []);
+        $notification->setTexts(json_decode($data->text, true) ?? []);
+        $notification->setCreatedAt(new ilDateTime($data->created_at, IL_CAL_DATETIME));
+        $notification->setUpdatedAt(new ilDateTime($data->updated_at, IL_CAL_DATETIME));
 
-		return $language;
-	}
+        if (isset($data->default_language)) {
+            $notification->default_language = $data->default_language;
+        }
+
+        return $notification;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function newInstance() {
-		$notification = new $this->notification_class();
+    /**
+     * @inheritDoc
+     */
+    public function newFormBuilderInstance(NotificationCtrl $parent, NotificationInterface $notification) : FormBuilder
+    {
+        $form = new FormBuilder($parent, $notification);
 
-		return $notification;
-	}
+        return $form;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function newInstance() : NotificationInterface
+    {
+        $notification = new Notification();
+
+        return $notification;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function newTableBuilderInstance(NotificationsCtrl $parent) : TableBuilder
+    {
+        $table = new TableBuilder($parent);
+
+        return $table;
+    }
 }

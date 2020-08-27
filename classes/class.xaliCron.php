@@ -2,8 +2,6 @@
 
 use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
-use srag\Plugins\AttendanceList\Notification\Notification\Language\NotificationLanguage;
-use srag\Plugins\AttendanceList\Notification\Notification\Notification;
 
 /**
  * Class xaliCron
@@ -47,14 +45,9 @@ class xaliCron {
 
 
 	/**
-	 * @param array $data
+	 *
 	 */
-	function __construct($data) {
-		$_COOKIE['ilClientId'] = $data[3];
-		$_POST['username'] = $data[1];
-		$_POST['password'] = $data[2];
-		$this->initILIAS();
-
+	function __construct() {
 		global $DIC;
 		$ilDB = $DIC['ilDB'];
 		$ilUser = $DIC['ilUser'];
@@ -78,51 +71,12 @@ class xaliCron {
 	}
 
 
-	public function initILIAS() {
-		require_once 'include/inc.ilias_version.php';
-		require_once 'Services/Component/classes/class.ilComponent.php';
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.3.999')) {
-            require_once './Services/Cron/classes/class.ilCronStartUp.php';
-            $ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
-            $ilCronStartup->authenticate();
-        } elseif (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
-			require_once './Services/Cron/classes/class.ilCronStartUp.php';
-			$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
-			$ilCronStartup->initIlias();
-			$ilCronStartup->authenticate();
-		} else {
-			require_once 'Services/Context/classes/class.ilContext.php';
-			ilContext::init(ilContext::CONTEXT_CRON);
-			require_once 'Services/Authentication/classes/class.ilAuthFactory.php';
-			ilAuthFactory::setContext(ilAuthFactory::CONTEXT_CRON);
-			require_once './include/inc.header.php';
-		}
-
-		// fix for some stupid ilias init....
-		global $DIC;
-		$ilSetting = $DIC['ilSetting'];
-		if (!$ilSetting) {
-			$ilSetting = new ilSessionMock();
-		}
-	}
-
-
 	/**
 	 *
 	 */
 	public function run() {
 		$this->sendAbsenceReminders();
 		$this->updateLearningProgress();
-	}
-
-
-	/**
-	 *
-	 */
-	public function logout() {
-		global $DIC;
-		$ilAuth = $DIC["ilAuthSession"];
-		$ilAuth->logout();
 	}
 
 	/**
@@ -203,7 +157,7 @@ class xaliCron {
 
 			$ilObjUser = new ilObjUser($user_id);
 			$sender_id = xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL);
-			$sender = self::sender()->factory()->internalMail($sender_id, $user_id);
+			$sender = self::notifications4plugin()->sender()->factory()->internalMail($sender_id, $user_id);
 
 			$open_absences = '';
 			foreach ($array as $ref_id => $entry_array) {
@@ -230,8 +184,8 @@ class xaliCron {
 			$placeholders = array( 'user' => $ilObjUser, 'open_absences' => $open_absences );
 
 			try {
-				$notification = self::notification(Notification::class, NotificationLanguage::class)->getNotificationByName(self::NOTIFICATION_NAME);
-				self::sender()->send($sender, $notification, $placeholders);
+				$notification = self::notifications4plugin()->notifications()->getNotificationByName(self::NOTIFICATION_NAME);
+				self::notifications4plugin()->sender()->send($sender, $notification, $placeholders);
 
 				$last_reminder->setLastReminder(date('Y-m-d'));
 				$last_reminder->update();
@@ -251,13 +205,5 @@ class xaliCron {
 			xaliUserStatus::updateUserStatuses($setting->getId());
 		}
 
-	}
-}
-
-
-class ilSessionMock {
-
-	public function get($what, $default) {
-		return $default;
 	}
 }

@@ -1,5 +1,88 @@
 # Changelog
 
+## [5.5.5]
+- Update `migrateFromOldGlobalPlugin`
+
+## [5.5.4]
+- Fix ILIAS 6 internal mail
+
+## [5.5.3]
+- Fix
+
+## [5.5.2]
+- Fix escaped html line breaks
+
+## [5.5.1]
+- Fix
+
+## [5.5.0]
+- New form
+- ILIAS 6 support
+- Remove ILIAS 5.3 support
+
+## [5.4.4]
+- Fixed exceptions in internal mail sender
+
+## [5.4.3]
+- Fix
+
+## [5.4.2]
+- Fix
+
+## [5.4.1]
+- Fix
+
+## [5.4.0]
+- Use `srag/datatable`
+
+## [5.3.0]
+- Min. PHP 7.2
+
+## [5.2.1]
+- Fix multiple notification tabs
+
+## [5.2.0]
+- Auto escape twig parser option
+
+## [5.1.7]
+- Show parser links dynamic
+
+## [5.1.6]
+- Fix
+
+## [5.1.5]
+- Fix
+
+## [5.1.4]
+- Fix
+
+## [5.1.3]
+- Improve
+
+## [5.1.2]
+- Fix dropdown usability
+
+## [5.1.1]
+- Fix
+
+## [5.1.0]
+- Improvments
+
+## [5.0.0]
+- Improvments - new structur
+
+## [4.6.1]
+- Adjust `default_language_info`
+
+## [4.6.0]
+- Optimize subject and text input/edit - Add an inline tab for all available languages (No need to enter manually needed)
+
+## [4.5.7]
+- Fix
+
+## [4.5.6]
+- Fix install (Fix Call to a member function getName() on null (Because not use ILIAS sequence))
+
 ## [4.5.5]
 - Allows template selection is not required
 

@@ -110,9 +110,11 @@ config_form_has_comment#:#Show comment field
 config_form_comment_req#:#Mandatory field
 config_form_has_upload#:#Show file upload field
 config_form_upload_req#:#Mandatory field
-subtab_notification_absence#:#Notification absence
-subtab_notification_absence_reminder#:#Notification absence reminder
+subtab_notifications_absence#:#Notification absence
+subtab_notifications_absence_reminder#:#Notification absence reminder
 config_show_not_relevant#:#Activate 'Not relevant'
 config_show_not_relevant_info#:#Activates an additional status. Not relevant entries will be ignored in the computation of the minimum attendance.
 config_show_present_total#:#Show 'Present / Total'
 config_show_present_total_info#:#Shows an additional column in the user overview table. The total is hereby the sum of all Present and all Absent status.
+cron_title#:#Send absence reminders
+cron_description#:#Send absence reminders
