@@ -116,3 +116,5 @@ config_show_not_relevant#:#Activate 'Not relevant'
 config_show_not_relevant_info#:#Activates an additional status. Not relevant entries will be ignored in the computation of the minimum attendance.
 config_show_present_total#:#Show 'Present / Total'
 config_show_present_total_info#:#Shows an additional column in the user overview table. The total is hereby the sum of all Present and all Absent status.
+cron_title#:#Send absence reminders
+cron_description#:#Send absence reminders

@@ -2,6 +2,8 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use ILIAS\DI\Container;
+use srag\CustomInputGUIs\AttendanceList\Loader\CustomInputGUIsLoaderDetector;
 use srag\DIC\AttendanceList\DICTrait;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
@@ -222,4 +224,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
 		return ilObjAttendanceList::_lookupObjectId($ref_id);
 	}
+
+
+    /**
+     * @inheritDoc
+     */
+    public function exchangeUIRendererAfterInitialization(Container $dic) : Closure
+    {
+        return CustomInputGUIsLoaderDetector::exchangeUIRendererAfterInitialization();
+    }
 }

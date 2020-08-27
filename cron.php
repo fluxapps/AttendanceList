@@ -1,6 +1,6 @@
 <?php
-chdir(substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], '/Customizing')));
-require_once __DIR__ . '/vendor/autoload.php';
-$cron = new xaliCron($_SERVER['argv']);
-$cron->run();
-$cron->logout();
+
+echo "Please remove legacy 'xaliCron' from contab, because it is incompatible / give conflict - It's now on a separate 'AttendanceListCron' plugin and direct configurable in ILIAS gui
+";
+
+exit(1);
