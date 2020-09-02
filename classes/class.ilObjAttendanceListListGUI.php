@@ -27,7 +27,7 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 		// Should be overwritten according to status
 		$this->cut_enabled = false;
-		$this->copy_enabled = false;
+		$this->copy_enabled = true;
 
 		$commands = array(
 			array(
