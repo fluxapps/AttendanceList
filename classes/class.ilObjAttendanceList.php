@@ -134,4 +134,24 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 
 		return ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM;
 	}
+
+
+    /**
+     * @inheritDoc
+     *
+     * @param ilObjAttendanceList $new_obj
+     */
+    protected function doCloneObject(/*ilObjAttendanceList*/ $new_obj, /*int*/ $a_target_id, /*?int*/ $a_copy_id = null)/* : void*/
+    {
+        $xaliSetting = xaliSetting::findOrGetInstance($this->id);
+        $xaliSettingClone = $xaliSetting->copy();
+        $xaliSettingClone->setId($new_obj->id);
+        $xaliSettingClone->store();
+
+        foreach (xaliChecklist::where(array( 'obj_id' => $this->id ))->get() as $checklist) {
+            $checklistClone = $checklist->copy();
+            $checklistClone->setObjId($new_obj->id);
+            $checklistClone->store();
+        }
+    }
 }

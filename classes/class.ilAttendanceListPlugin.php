@@ -233,4 +233,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
     {
         return CustomInputGUIsLoaderDetector::exchangeUIRendererAfterInitialization();
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function allowCopy() : bool
+    {
+        return true;
+    }
 }

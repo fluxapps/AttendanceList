@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.6.0]
+- Copy objects
+
 ## [1.5.0]
 * ILIAS 6 support
 * Remove ILIAS 5.3 support
