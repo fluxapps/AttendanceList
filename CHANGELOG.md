@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.6.1]
+- Apply changes on calculate reached percentage
+
 ## [1.6.0]
 - Copy objects
 
