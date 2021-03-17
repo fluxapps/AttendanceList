@@ -171,10 +171,10 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	public function getParentCourseOrGroupId($ref_id) {
 		global $DIC;
 		$tree = $DIC['tree'];
-		$ilLog = $DIC['ilLog'];
+		$orig_ref_id = $ref_id;
 		while (!in_array(ilObject2::_lookupType($ref_id, true), array( 'crs', 'grp' ))) {
 			if ($ref_id == 1 || !$ref_id) {
-				throw new Exception("Parent of ref id {$ref_id} is neither course nor group.");
+				throw new Exception("Parent of ref id {$orig_ref_id} is neither course nor group.");
 			}
 			$ref_id = $tree->getParentId($ref_id);
 		}
