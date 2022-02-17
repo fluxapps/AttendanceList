@@ -39,7 +39,8 @@
   "scripts": {
     "pre-autoload-dump": [
       "srag\\LibrariesNamespaceChanger\\LibrariesNamespaceChanger::rewriteLibrariesNamespaces",
-      "srag\\LibrariesNamespaceChanger\\PHP72Backport::PHP72Backport"
+      "srag\\LibrariesNamespaceChanger\\PHP72Backport::PHP72Backport",
+      "vendor/srag/notifications4plugin/bin/twig_php74_patch.php"
     ]
   }
 }
