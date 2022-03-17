@@ -4,7 +4,6 @@ namespace srag\DataTableUI\AttendanceList\Component;
 
 use ILIAS\UI\Component\Component;
 use ILIAS\UI\Component\Input\Field\FilterInput;
-use ILIAS\UI\Component\Input\Field\Input as FilterInput54;
 use srag\DataTableUI\AttendanceList\Component\Column\Column;
 use srag\DataTableUI\AttendanceList\Component\Data\Fetcher\DataFetcher;
 use srag\DataTableUI\AttendanceList\Component\Format\Browser\BrowserFormat;
@@ -17,8 +16,6 @@ use srag\DIC\AttendanceList\Plugin\PluginInterface;
  * Interface Table
  *
  * @package srag\DataTableUI\AttendanceList\Component
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Table extends Component, Pluginable
 {
@@ -30,19 +27,59 @@ interface Table extends Component, Pluginable
     /**
      * @var string
      */
-    const MULTIPLE_SELECT_POST_VAR = "selected_row_ids";
+    const LANG_MODULE = "datatableui";
     /**
      * @var string
      */
-    const LANG_MODULE = "datatableui";
+    const MULTIPLE_SELECT_POST_VAR = "selected_row_ids";
 
 
     /**
-     * @param PluginInterface $plugin
-     *
-     * @return self
+     * @return string
      */
-    public function withPlugin(PluginInterface $plugin) : self;
+    public function getActionUrl() : string;
+
+
+    /**
+     * @return BrowserFormat
+     */
+    public function getBrowserFormat() : BrowserFormat;
+
+
+    /**
+     * @return Column[]
+     */
+    public function getColumns() : array;
+
+
+    /**
+     * @return DataFetcher
+     */
+    public function getDataFetcher() : DataFetcher;
+
+
+    /**
+     * @return FilterInput[]
+     */
+    public function getFilterFields() : array;
+
+
+    /**
+     * @return Format[]
+     */
+    public function getFormats() : array;
+
+
+    /**
+     * @return string[]
+     */
+    public function getMultipleActions() : array;
+
+
+    /**
+     * @return SettingsStorage
+     */
+    public function getSettingsStorage() : SettingsStorage;
 
 
     /**
@@ -52,17 +89,9 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @param string $table_id
-     *
-     * @return self
-     */
-    public function withTableId(string $table_id) : self;
-
-
-    /**
      * @return string
      */
-    public function getActionUrl() : string;
+    public function getTitle() : string;
 
 
     /**
@@ -74,23 +103,11 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @return string
-     */
-    public function getTitle() : string;
-
-
-    /**
-     * @param string $title
+     * @param BrowserFormat $browser_format
      *
      * @return self
      */
-    public function withTitle(string $title) : self;
-
-
-    /**
-     * @return Column[]
-     */
-    public function getColumns() : array;
+    public function withBrowserFormat(BrowserFormat $browser_format) : self;
 
 
     /**
@@ -102,12 +119,6 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @return DataFetcher
-     */
-    public function getDataFetcher() : DataFetcher;
-
-
-    /**
      * @param DataFetcher $data_fetcher
      *
      * @return self
@@ -116,37 +127,11 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @return FilterInput[]|FilterInput54[]
-     */
-    public function getFilterFields() : array;
-
-
-    /**
-     * @param FilterInput[]|FilterInput54[] $filter_fields
+     * @param FilterInput[] $filter_fields
      *
      * @return self
      */
     public function withFilterFields(array $filter_fields) : self;
-
-
-    /**
-     * @return BrowserFormat
-     */
-    public function getBrowserFormat() : BrowserFormat;
-
-
-    /**
-     * @param BrowserFormat $browser_format
-     *
-     * @return self
-     */
-    public function withBrowserFormat(BrowserFormat $browser_format) : self;
-
-
-    /**
-     * @return Format[]
-     */
-    public function getFormats() : array;
 
 
     /**
@@ -158,12 +143,6 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @return string[]
-     */
-    public function getMultipleActions() : array;
-
-
-    /**
      * @param string[] $multiple_actions
      *
      * @return self
@@ -172,9 +151,11 @@ interface Table extends Component, Pluginable
 
 
     /**
-     * @return SettingsStorage
+     * @param PluginInterface $plugin
+     *
+     * @return self
      */
-    public function getSettingsStorage() : SettingsStorage;
+    public function withPlugin(PluginInterface $plugin) : self;
 
 
     /**
@@ -183,4 +164,20 @@ interface Table extends Component, Pluginable
      * @return self
      */
     public function withSettingsStorage(SettingsStorage $settings_storage) : self;
+
+
+    /**
+     * @param string $table_id
+     *
+     * @return self
+     */
+    public function withTableId(string $table_id) : self;
+
+
+    /**
+     * @param string $title
+     *
+     * @return self
+     */
+    public function withTitle(string $title) : self;
 }

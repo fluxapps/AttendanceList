@@ -16,8 +16,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class Factory
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Settings
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Factory implements FactoryInterface
 {
@@ -32,6 +30,15 @@ class Factory implements FactoryInterface
 
 
     /**
+     * Factory constructor
+     */
+    private function __construct()
+    {
+
+    }
+
+
+    /**
      * @return self
      */
     public static function getInstance() : self
@@ -41,15 +48,6 @@ class Factory implements FactoryInterface
         }
 
         return self::$instance;
-    }
-
-
-    /**
-     * Factory constructor
-     */
-    private function __construct()
-    {
-
     }
 
 

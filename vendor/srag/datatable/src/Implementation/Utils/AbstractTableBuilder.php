@@ -10,8 +10,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class AbstractTableBuilder
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Utils
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 abstract class AbstractTableBuilder implements TableBuilder
 {
@@ -34,16 +32,10 @@ abstract class AbstractTableBuilder implements TableBuilder
      *
      * @param object $parent
      */
-    public function __construct(/*object*/ $parent)
+    public function __construct(object $parent)
     {
         $this->parent = $parent;
     }
-
-
-    /**
-     * @return Table
-     */
-    protected abstract function buildTable() : Table;
 
 
     /**
@@ -66,4 +58,10 @@ abstract class AbstractTableBuilder implements TableBuilder
     {
         return self::output()->getHTML($this->getTable());
     }
+
+
+    /**
+     * @return Table
+     */
+    protected abstract function buildTable() : Table;
 }

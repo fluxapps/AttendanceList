@@ -8,8 +8,6 @@ use srag\DataTableUI\AttendanceList\Component\Column\Formatter\Factory as Format
  * Interface Factory
  *
  * @package srag\DataTableUI\AttendanceList\Component\Column
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Factory
 {

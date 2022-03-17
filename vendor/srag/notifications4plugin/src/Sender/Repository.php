@@ -10,8 +10,6 @@ use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
  * Class Repository
  *
  * @package srag\Notifications4Plugin\AttendanceList\Sender
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 final class Repository implements RepositoryInterface
 {
@@ -50,7 +48,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function dropTables()/* : void*/
+    public function dropTables() : void
     {
 
     }
@@ -68,7 +66,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installTables()/* : void*/
+    public function installTables() : void
     {
 
     }
@@ -77,7 +75,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null)/* : void*/
+    public function send(Sender $sender, NotificationInterface $notification, array $placeholders = [], ?string $language = null) : void
     {
         $parser = self::notifications4plugin()->parser()->getParserForNotification($notification);
 

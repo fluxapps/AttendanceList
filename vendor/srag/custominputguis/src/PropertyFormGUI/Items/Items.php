@@ -11,21 +11,21 @@ use ilPropertyFormGUI;
 use ilRadioOption;
 use ilRepositorySelector2InputGUI;
 use ilUtil;
-use srag\CustomInputGUIs\AttendanceList\MultiLineInputGUI\MultiLineInputGUI;
+use srag\CustomInputGUIs\AttendanceList\HiddenInputGUI\HiddenInputGUI;
 use srag\CustomInputGUIs\AttendanceList\PropertyFormGUI\Exception\PropertyFormGUIException;
 use srag\CustomInputGUIs\AttendanceList\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\AttendanceList\TableGUI\TableGUI;
 use srag\CustomInputGUIs\AttendanceList\Template\Template;
 use srag\CustomInputGUIs\AttendanceList\UIInputComponentWrapperInputGUI\UIInputComponentWrapperInputGUI;
 use srag\DIC\AttendanceList\DICTrait;
+use srag\DIC\AttendanceList\Plugin\PluginInterface;
+use srag\DIC\AttendanceList\Version\PluginVersionParameter;
 use TypeError;
 
 /**
  * Class Items
  *
  * @package srag\CustomInputGUIs\AttendanceList\PropertyFormGUI\Items
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  *
  * @access  namespace
  */
@@ -138,11 +138,6 @@ final class Items
      */
     public static function getValueFromItem($item)
     {
-        if ($item instanceof MultiLineInputGUI) {
-            //return filter_input(INPUT_POST,$item->getPostVar()); // Not work because MultiLineInputGUI modify $_POST
-            return $_POST[$item->getPostVar()];
-        }
-
         if (method_exists($item, "getChecked")) {
             return boolval($item->getChecked());
         }
@@ -198,17 +193,22 @@ final class Items
 
 
     /**
-     *
+     * @param PluginInterface|null $plugin
      */
-    public static function init()/*: void*/
+    public static function init(/*?*/ PluginInterface $plugin = null) : void
     {
         if (self::$init === false) {
             self::$init = true;
 
+            $version_parameter = PluginVersionParameter::getInstance();
+            if ($plugin !== null) {
+                $version_parameter = $version_parameter->withPlugin($plugin);
+            }
+
             $dir = __DIR__;
             $dir = "./" . substr($dir, strpos($dir, "/Customizing/") + 1);
 
-            self::dic()->ui()->mainTemplate()->addCss($dir . "/css/input_gui_input.css");
+            self::dic()->ui()->mainTemplate()->addCss($version_parameter->appendToUrl($dir . "/css/input_gui_input.css"));
         }
     }
 
@@ -220,13 +220,17 @@ final class Items
      */
     public static function renderInputs(array $inputs) : string
     {
-        self::init();
+        self::init(); // TODO: Pass $plugin
 
         $input_tpl = new Template(__DIR__ . "/templates/input_gui_input.html");
 
         $input_tpl->setCurrentBlock("input");
 
         foreach ($inputs as $input) {
+            if ($input instanceof HiddenInputGUI) {
+                $input_tpl->setVariableEscaped("HIDDEN", " hidden");
+            }
+
             $input_tpl->setVariableEscaped("TITLE", $input->getTitle());
 
             if ($input->getRequired()) {
@@ -266,7 +270,7 @@ final class Items
      *
      * @deprecated
      */
-    public static function setValueToItem($item, $value)/*: void*/
+    public static function setValueToItem($item, $value) : void
     {
         if ($item instanceof MultiLineInputGUI) {
             $item->setValueByArray([
@@ -348,7 +352,7 @@ final class Items
      *
      * @deprecated
      */
-    private static function setPropertiesToItem($item, array $properties)/*: void*/
+    private static function setPropertiesToItem($item, array $properties) : void
     {
         foreach ($properties as $property_key => $property_value) {
             $property = "";

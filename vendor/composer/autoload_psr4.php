@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'srag\\Plugins\\AttendanceList\\' => array($baseDir . '/src'),
     'srag\\Notifications4Plugin\\AttendanceList\\' => array($vendorDir . '/srag/notifications4plugin/src'),
+    'srag\\LibraryLanguageInstaller\\AttendanceList\\' => array($vendorDir . '/srag/librarylanguageinstaller/src'),
     'srag\\LibrariesNamespaceChanger\\' => array($vendorDir . '/srag/librariesnamespacechanger/src'),
     'srag\\DataTableUI\\AttendanceList\\' => array($vendorDir . '/srag/datatable/src'),
     'srag\\DIC\\AttendanceList\\' => array($vendorDir . '/srag/dic/src'),

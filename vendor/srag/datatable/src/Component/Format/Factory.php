@@ -8,8 +8,6 @@ use srag\DataTableUI\AttendanceList\Component\Format\Browser\Factory as BrowserF
  * Interface Factory
  *
  * @package srag\DataTableUI\AttendanceList\Component\Format
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Factory
 {

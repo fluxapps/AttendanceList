@@ -1,5 +1,54 @@
 # Changelog
 
+## [0.32.1]
+- Not use GeneratePluginReadme
+
+## [0.32.0]
+- ILIAS 7 support
+- Remove ILIAS 5.4 support
+
+## [0.31.6]
+- Change utils url
+
+## [0.31.5]
+- Update urls
+
+## [0.31.4]
+- Ignore not supported languages
+
+## [0.31.3]
+- Ignore not supported languages
+
+## [0.31.2]
+- Update readme
+
+## [0.31.1]
+- Update project url
+
+## [0.31.0]
+- `MultilineFormatter`
+
+## [0.30.3]
+- Supports arrays and raw method name in `ChainGetterFormatter`
+
+## [0.30.2]
+- Move doc/DESCRIPTION.md to src/LONG_DESCRIPTION.md
+
+## [0.30.1]
+- Generate readme
+
+## [0.30.0]
+- Generate readme
+
+## [0.29.2]
+- Move LibraryLanguageInstaller to separate package
+
+## [0.29.1]
+- Responsive image
+
+## [0.29.0]
+- `ImageFormatter`
+
 ## [0.28.5]
 - Fix double `<a>` in icons
 

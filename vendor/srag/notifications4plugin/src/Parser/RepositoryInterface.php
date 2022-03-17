@@ -9,8 +9,6 @@ use srag\Notifications4Plugin\AttendanceList\Notification\NotificationInterface;
  * Interface RepositoryInterface
  *
  * @package srag\Notifications4Plugin\AttendanceList\Parser
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface RepositoryInterface
 {
@@ -18,13 +16,13 @@ interface RepositoryInterface
     /**
      * @param Parser $parser
      */
-    public function addParser(Parser $parser)/* : void*/;
+    public function addParser(Parser $parser) : void;
 
 
     /**
      * @internal
      */
-    public function dropTables()/* : void*/;
+    public function dropTables() : void;
 
 
     /**
@@ -62,7 +60,7 @@ interface RepositoryInterface
     /**
      * @internal
      */
-    public function installTables()/* : void*/;
+    public function installTables() : void;
 
 
     /**
@@ -75,7 +73,7 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string;
+    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null) : string;
 
 
     /**
@@ -88,5 +86,5 @@ interface RepositoryInterface
      *
      * @throws Notifications4PluginException
      */
-    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string;
+    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null) : string;
 }

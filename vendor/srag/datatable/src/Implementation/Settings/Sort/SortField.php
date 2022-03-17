@@ -12,8 +12,6 @@ use stdClass;
  * Class SortField
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Settings\Sort
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class SortField implements SortFieldInterface
 {
@@ -57,6 +55,27 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
+    public function getSortFieldDirection() : int
+    {
+        return $this->sort_field_direction;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize() : stdClass
+    {
+        return (object) [
+            SettingsStorage::VAR_SORT_FIELD           => $this->sort_field,
+            SettingsStorage::VAR_SORT_FIELD_DIRECTION => $this->sort_field_direction
+        ];
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function withSortField(string $sort_field) : SortFieldInterface
     {
         $clone = clone $this;
@@ -70,15 +89,6 @@ class SortField implements SortFieldInterface
     /**
      * @inheritDoc
      */
-    public function getSortFieldDirection() : int
-    {
-        return $this->sort_field_direction;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function withSortFieldDirection(int $sort_field_direction) : SortFieldInterface
     {
         $clone = clone $this;
@@ -86,17 +96,5 @@ class SortField implements SortFieldInterface
         $clone->sort_field_direction = $sort_field_direction;
 
         return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize() : stdClass
-    {
-        return (object) [
-            SettingsStorage::VAR_SORT_FIELD           => $this->sort_field,
-            SettingsStorage::VAR_SORT_FIELD_DIRECTION => $this->sort_field_direction
-        ];
     }
 }

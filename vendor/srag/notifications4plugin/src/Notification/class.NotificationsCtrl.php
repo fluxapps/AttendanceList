@@ -2,6 +2,8 @@
 
 namespace srag\Notifications4Plugin\AttendanceList\Notification;
 
+require_once __DIR__ . "/../../../../autoload.php";
+
 use srag\DIC\AttendanceList\DICTrait;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
@@ -9,8 +11,6 @@ use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
  * Class NotificationsCtrl
  *
  * @package srag\Notifications4Plugin\AttendanceList\Notification
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class NotificationsCtrl
 {
@@ -35,7 +35,7 @@ class NotificationsCtrl
     /**
      *
      */
-    public function executeCommand()/* : void*/
+    public function executeCommand() : void
     {
         $this->setTabs();
 
@@ -65,7 +65,7 @@ class NotificationsCtrl
     /**
      *
      */
-    protected function listNotifications()/* : void*/
+    protected function listNotifications() : void
     {
         $table = self::notifications4plugin()->notifications()->factory()->newTableBuilderInstance($this);
 
@@ -76,7 +76,7 @@ class NotificationsCtrl
     /**
      *
      */
-    protected function setTabs()/* : void*/
+    protected function setTabs() : void
     {
 
     }

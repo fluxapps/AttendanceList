@@ -11,8 +11,6 @@ use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
  * Class Repository
  *
  * @package srag\Notifications4Plugin\AttendanceList\Parser
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 final class Repository implements RepositoryInterface
 {
@@ -55,7 +53,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function addParser(Parser $parser)/* : void*/
+    public function addParser(Parser $parser) : void
     {
         $this->parsers[$parser->getClass()] = $parser;
     }
@@ -64,7 +62,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function dropTables()/* : void*/
+    public function dropTables() : void
     {
 
     }
@@ -113,7 +111,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function installTables()/* : void*/
+    public function installTables() : void
     {
 
     }
@@ -122,7 +120,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string
+    public function parseSubject(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null) : string
     {
         return $parser->parse($notification->getSubject($language), $placeholders, $notification->getParserOptions());
     }
@@ -131,7 +129,7 @@ final class Repository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], /*?string*/ $language = null) : string
+    public function parseText(Parser $parser, NotificationInterface $notification, array $placeholders = [], ?string $language = null) : string
     {
         return $parser->parse($notification->getText($language), $placeholders, $notification->getParserOptions());
     }

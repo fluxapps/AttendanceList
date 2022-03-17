@@ -10,8 +10,6 @@ use srag\DataTableUI\AttendanceList\Component\Format\Format;
  * Class LinkFormatter
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class LinkFormatter extends DefaultFormatter
 {

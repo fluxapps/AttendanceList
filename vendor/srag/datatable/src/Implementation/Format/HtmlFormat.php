@@ -13,8 +13,6 @@ use srag\DataTableUI\AttendanceList\Component\Table;
  * Class HtmlFormat
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Format
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class HtmlFormat extends AbstractFormat
 {
@@ -46,33 +44,7 @@ class HtmlFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function initTemplate(Table $component, /*?Data*/ $data, Settings $settings)/* : void*/
-    {
-        $this->tpl = new Template(__DIR__ . "/../../../templates/tpl.datatableui.html");
-
-        $this->tpl->setVariableEscaped("ID", $component->getTableId());
-
-        $this->tpl->setVariableEscaped("TITLE", $component->getTitle());
-
-        $this->handleNoDataText($data, $component);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    protected function handleColumns(Table $component, array $columns, Settings $settings)/* : void*/
-    {
-        $this->tpl->setCurrentBlock("header");
-
-        parent::handleColumns($component, $columns, $settings);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    protected function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings)/* : void*/
+    protected function handleColumn(string $formatted_column, Table $component, Column $column, Settings $settings) : void
     {
         $this->tpl->setVariable("HEADER", $formatted_column);
 
@@ -83,18 +55,34 @@ class HtmlFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRows(Table $component, array $columns, /*?Data*/ $data)/* : void*/
+    protected function handleColumns(Table $component, array $columns, Settings $settings) : void
     {
-        $this->tpl->setCurrentBlock("body");
+        $this->tpl->setCurrentBlock("header");
 
-        parent::handleRows($component, $columns, $data);
+        parent::handleColumns($component, $columns, $settings);
+    }
+
+
+    /**
+     * @param Data|null $data
+     * @param Table     $component
+     */
+    protected function handleNoDataText(?Data $data, Table $component) : void
+    {
+        if ($data === null || empty($data->getDataCount())) {
+            $this->tpl->setCurrentBlock("no_data");
+
+            $this->tpl->setVariableEscaped("NO_DATA_TEXT", $component->getDataFetcher()->getNoDataText($component));
+
+            $this->tpl->parseCurrentBlock();
+        }
     }
 
 
     /**
      * @inheritDoc
      */
-    protected function handleRow(Table $component, array $columns, RowData $row)/* : void*/
+    protected function handleRow(Table $component, array $columns, RowData $row) : void
     {
         $tpl = $this->tpl;
 
@@ -117,16 +105,7 @@ class HtmlFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function handleRowTemplate(Table $component, RowData $row)/* : void*/
-    {
-
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    protected function handleRowColumn(string $formatted_row_column)/* : void*/
+    protected function handleRowColumn(string $formatted_row_column) : void
     {
         $this->tpl->setVariable("COLUMN", $formatted_row_column);
 
@@ -137,24 +116,43 @@ class HtmlFormat extends AbstractFormat
     /**
      * @inheritDoc
      */
-    protected function renderTemplate(Table $component) : string
+    protected function handleRowTemplate(Table $component, RowData $row) : void
     {
-        return self::output()->getHTML($this->tpl);
+
     }
 
 
     /**
-     * @param Data|null $data
-     * @param Table     $component
+     * @inheritDoc
      */
-    protected function handleNoDataText(/*?Data*/ $data, Table $component)/* : void*/
+    protected function handleRows(Table $component, array $columns, ?Data $data) : void
     {
-        if ($data === null || empty($data->getDataCount())) {
-            $this->tpl->setCurrentBlock("no_data");
+        $this->tpl->setCurrentBlock("body");
 
-            $this->tpl->setVariableEscaped("NO_DATA_TEXT", $component->getDataFetcher()->getNoDataText($component));
+        parent::handleRows($component, $columns, $data);
+    }
 
-            $this->tpl->parseCurrentBlock();
-        }
+
+    /**
+     * @inheritDoc
+     */
+    protected function initTemplate(Table $component, ?Data $data, Settings $settings) : void
+    {
+        $this->tpl = new Template(__DIR__ . "/../../../templates/tpl.datatableui.html");
+
+        $this->tpl->setVariableEscaped("ID", $component->getTableId());
+
+        $this->tpl->setVariableEscaped("TITLE", $component->getTitle());
+
+        $this->handleNoDataText($data, $component);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function renderTemplate(Table $component) : string
+    {
+        return self::output()->getHTML($this->tpl);
     }
 }

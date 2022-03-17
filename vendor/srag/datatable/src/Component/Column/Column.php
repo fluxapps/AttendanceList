@@ -9,38 +9,14 @@ use srag\DataTableUI\AttendanceList\Component\Settings\Sort\SortField;
  * Interface Column
  *
  * @package srag\DataTableUI\AttendanceList\Component\Column
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Column
 {
 
     /**
-     * @return string
+     * @return int
      */
-    public function getKey() : string;
-
-
-    /**
-     * @param string $key
-     *
-     * @return self
-     */
-    public function withKey(string $key) : self;
-
-
-    /**
-     * @return string
-     */
-    public function getTitle() : string;
-
-
-    /**
-     * @param string $title
-     *
-     * @return self
-     */
-    public function withTitle(string $title) : self;
+    public function getDefaultSortDirection() : int;
 
 
     /**
@@ -50,25 +26,21 @@ interface Column
 
 
     /**
-     * @param Formatter $formatter
-     *
-     * @return self
+     * @return string
      */
-    public function withFormatter(Formatter $formatter) : self;
+    public function getKey() : string;
+
+
+    /**
+     * @return string
+     */
+    public function getTitle() : string;
 
 
     /**
      * @return bool
      */
-    public function isSortable() : bool;
-
-
-    /**
-     * @param bool $sortable
-     *
-     * @return self
-     */
-    public function withSortable(bool $sortable = true) : self;
+    public function isDefaultSelected() : bool;
 
 
     /**
@@ -78,25 +50,9 @@ interface Column
 
 
     /**
-     * @param bool $default_sort
-     *
-     * @return self
+     * @return bool
      */
-    public function withDefaultSort(bool $default_sort = false) : self;
-
-
-    /**
-     * @return int
-     */
-    public function getDefaultSortDirection() : int;
-
-
-    /**
-     * @param int $default_sort_direction
-     *
-     * @return self
-     */
-    public function withDefaultSortDirection(int $default_sort_direction = SortField::SORT_DIRECTION_UP) : self;
+    public function isExportable() : bool;
 
 
     /**
@@ -106,17 +62,9 @@ interface Column
 
 
     /**
-     * @param bool $selectable
-     *
-     * @return self
-     */
-    public function withSelectable(bool $selectable = true) : self;
-
-
-    /**
      * @return bool
      */
-    public function isDefaultSelected() : bool;
+    public function isSortable() : bool;
 
 
     /**
@@ -128,9 +76,19 @@ interface Column
 
 
     /**
-     * @return bool
+     * @param bool $default_sort
+     *
+     * @return self
      */
-    public function isExportable() : bool;
+    public function withDefaultSort(bool $default_sort = false) : self;
+
+
+    /**
+     * @param int $default_sort_direction
+     *
+     * @return self
+     */
+    public function withDefaultSortDirection(int $default_sort_direction = SortField::SORT_DIRECTION_UP) : self;
 
 
     /**
@@ -139,4 +97,44 @@ interface Column
      * @return self
      */
     public function withExportable(bool $exportable = true) : self;
+
+
+    /**
+     * @param Formatter $formatter
+     *
+     * @return self
+     */
+    public function withFormatter(Formatter $formatter) : self;
+
+
+    /**
+     * @param string $key
+     *
+     * @return self
+     */
+    public function withKey(string $key) : self;
+
+
+    /**
+     * @param bool $selectable
+     *
+     * @return self
+     */
+    public function withSelectable(bool $selectable = true) : self;
+
+
+    /**
+     * @param bool $sortable
+     *
+     * @return self
+     */
+    public function withSortable(bool $sortable = true) : self;
+
+
+    /**
+     * @param string $title
+     *
+     * @return self
+     */
+    public function withTitle(string $title) : self;
 }

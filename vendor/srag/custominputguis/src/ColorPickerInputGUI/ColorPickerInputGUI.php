@@ -10,8 +10,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class ColorPickerInputGUI
  *
  * @package srag\CustomInputGUIs\AttendanceList\ColorPickerInputGUI
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class ColorPickerInputGUI extends ilColorPickerInputGUI
 {

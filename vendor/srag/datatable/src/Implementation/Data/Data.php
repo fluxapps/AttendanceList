@@ -12,8 +12,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class Data
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Data
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Data implements DataInterface
 {
@@ -58,6 +56,24 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
+    public function getDataCount() : int
+    {
+        return count($this->data);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getMaxCount() : int
+    {
+        return $this->max_count;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function withData(array $data) : DataInterface
     {
         $classes = [RowData::class];
@@ -74,15 +90,6 @@ class Data implements DataInterface
     /**
      * @inheritDoc
      */
-    public function getMaxCount() : int
-    {
-        return $this->max_count;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function withMaxCount(int $max_count) : DataInterface
     {
         $clone = clone $this;
@@ -90,14 +97,5 @@ class Data implements DataInterface
         $clone->max_count = $max_count;
 
         return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getDataCount() : int
-    {
-        return count($this->data);
     }
 }

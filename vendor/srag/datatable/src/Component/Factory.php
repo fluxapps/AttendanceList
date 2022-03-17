@@ -14,8 +14,6 @@ use srag\DIC\AttendanceList\Plugin\PluginInterface;
  * Interface Factory
  *
  * @package srag\DataTableUI\AttendanceList\Component
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Factory
 {
@@ -39,6 +37,12 @@ interface Factory
 
 
     /**
+     * @param PluginInterface $plugin
+     */
+    public function installLanguages(PluginInterface $plugin) : void;
+
+
+    /**
      * @return SettingsFactory
      */
     public function settings() : SettingsFactory;
@@ -54,10 +58,4 @@ interface Factory
      * @return Table
      */
     public function table(string $table_id, string $action_url, string $title, array $columns, DataFetcher $data_fetcher) : Table;
-
-
-    /**
-     * @param PluginInterface $plugin
-     */
-    public function installLanguages(PluginInterface $plugin)/* : void*/;
 }

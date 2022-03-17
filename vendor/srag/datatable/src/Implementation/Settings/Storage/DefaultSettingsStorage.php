@@ -11,8 +11,6 @@ use srag\DataTableUI\AttendanceList\Component\Settings\Sort\SortField;
  * Class DefaultSettingsStorage
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Settings\Storage
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class DefaultSettingsStorage extends AbstractSettingsStorage
 {
@@ -71,7 +69,7 @@ class DefaultSettingsStorage extends AbstractSettingsStorage
     /**
      * @inheritDoc
      */
-    public function store(Settings $settings, string $table_id, int $user_id)/* : void*/
+    public function store(Settings $settings, string $table_id, int $user_id) : void
     {
         foreach (self::VARS as $property) {
             $value = Items::getter($settings, $property);
