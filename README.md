@@ -22,7 +22,9 @@ Please also install and enable [AttendanceListCron](https://github.com/studer-ra
 ## ILIAS 7 core ilCtrl patch 
 
 For make this plugin work with ilCtrl in ILIAS 7, you may need to patch the core, before you update the plugin (At your own risk) 
+
 Start at the plugin directory 
+
 ```shell
 ./vendor/srag/dic/bin/ilias7_core_apply_ilctrl_patch.sh
 ```
