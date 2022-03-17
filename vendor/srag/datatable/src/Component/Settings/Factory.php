@@ -10,8 +10,6 @@ use srag\DataTableUI\AttendanceList\Component\Settings\Storage\Factory as Storag
  * Interface Factory
  *
  * @package srag\DataTableUI\AttendanceList\Component\Settings
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Factory
 {

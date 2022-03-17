@@ -11,8 +11,6 @@ use srag\DataTableUI\AttendanceList\Component\Format\Format;
  * Class ChainGetterFormatter
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class ChainGetterFormatter extends DefaultFormatter
 {
@@ -46,7 +44,15 @@ class ChainGetterFormatter extends DefaultFormatter
         $value = $row(array_shift($chains));
 
         foreach ($chains as $chain) {
-            $value = Items::getter($value, $chain);
+            if (is_array($value)) {
+                $value = $value[$chain];
+            } else {
+                if (method_exists($value, $chain)) {
+                    $value = $value->{$chain}();
+                } else {
+                    $value = Items::getter($value, $chain);
+                }
+            }
         }
 
         return parent::formatRowCell($format, $value, $column, $row, $table_id);

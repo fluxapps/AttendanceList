@@ -3,7 +3,6 @@
 namespace srag\DataTableUI\AttendanceList\Implementation;
 
 use ILIAS\UI\Component\Input\Field\FilterInput;
-use ILIAS\UI\Component\Input\Field\Input as FilterInput54;
 use ILIAS\UI\Implementation\Component\ComponentHelper;
 use srag\DataTableUI\AttendanceList\Component\Column\Column;
 use srag\DataTableUI\AttendanceList\Component\Data\Fetcher\DataFetcher;
@@ -19,8 +18,6 @@ use srag\DIC\AttendanceList\Plugin\PluginInterface;
  * Class Table
  *
  * @package srag\DataTableUI\AttendanceList\Implementation
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Table implements TableInterface
 {
@@ -30,21 +27,13 @@ class Table implements TableInterface
     use DataTableUITrait;
 
     /**
-     * @var PluginInterface
-     */
-    protected $plugin;
-    /**
-     * @var string
-     */
-    protected $table_id = "";
-    /**
      * @var string
      */
     protected $action_url = "";
     /**
-     * @var string
+     * @var BrowserFormat
      */
-    protected $title = "";
+    protected $browser_format;
     /**
      * @var Column[]
      */
@@ -54,13 +43,9 @@ class Table implements TableInterface
      */
     protected $data_fetcher;
     /**
-     * @var FilterInput[]|FilterInput54[]
+     * @var FilterInput[]
      */
     protected $filter_fields = [];
-    /**
-     * @var BrowserFormat
-     */
-    protected $browser_format;
     /**
      * @var Format[]
      */
@@ -70,9 +55,21 @@ class Table implements TableInterface
      */
     protected $multiple_actions = [];
     /**
+     * @var PluginInterface
+     */
+    protected $plugin;
+    /**
      * @var SettingsStorage
      */
     protected $settings_storage;
+    /**
+     * @var string
+     */
+    protected $table_id = "";
+    /**
+     * @var string
+     */
+    protected $title = "";
 
 
     /**
@@ -103,6 +100,73 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
+    public function getActionUrl() : string
+    {
+        return $this->action_url;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getBrowserFormat() : BrowserFormat
+    {
+        if ($this->browser_format === null) {
+            $this->browser_format = self::dataTableUI()->format()->browser()->default();
+        }
+
+        return $this->browser_format;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getColumns() : array
+    {
+        return $this->columns;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getDataFetcher() : DataFetcher
+    {
+        return $this->data_fetcher;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getFilterFields() : array
+    {
+        return $this->filter_fields;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getFormats() : array
+    {
+        return $this->formats;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getMultipleActions() : array
+    {
+        return $this->multiple_actions;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function getPlugin() : PluginInterface
     {
         return $this->plugin;
@@ -112,13 +176,13 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withPlugin(PluginInterface $plugin) : TableInterface
+    public function getSettingsStorage() : SettingsStorage
     {
-        $clone = clone $this;
+        if ($this->settings_storage === null) {
+            $this->settings_storage = self::dataTableUI()->settings()->storage()->default();
+        }
 
-        $clone->plugin = $plugin;
-
-        return $clone;
+        return $this->settings_storage;
     }
 
 
@@ -134,22 +198,9 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function withTableId(string $table_id) : TableInterface
+    public function getTitle() : string
     {
-        $clone = clone $this;
-
-        $clone->table_id = $table_id;
-
-        return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getActionUrl() : string
-    {
-        return $this->action_url;
+        return $this->title;
     }
 
 
@@ -169,31 +220,13 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getTitle() : string
-    {
-        return $this->title;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function withTitle(string $title) : TableInterface
+    public function withBrowserFormat(BrowserFormat $browser_format) : TableInterface
     {
         $clone = clone $this;
 
-        $clone->title = $title;
+        $clone->browser_format = $browser_format;
 
         return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getColumns() : array
-    {
-        return $this->columns;
     }
 
 
@@ -216,15 +249,6 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getDataFetcher() : DataFetcher
-    {
-        return $this->data_fetcher;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function withFetchData(DataFetcher $data_fetcher) : TableInterface
     {
         $clone = clone $this;
@@ -238,23 +262,9 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getFilterFields() : array
-    {
-        return $this->filter_fields;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function withFilterFields(array $filter_fields) : TableInterface
     {
-        if (self::version()->is6()) {
-            $classes = [FilterInput::class];
-        } else {
-
-            $classes = [FilterInput54::class];
-        }
+        $classes = [FilterInput::class];
         $this->checkArgListElements("filter_fields", $filter_fields, $classes);
 
         $clone = clone $this;
@@ -262,41 +272,6 @@ class Table implements TableInterface
         $clone->filter_fields = $filter_fields;
 
         return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrowserFormat() : BrowserFormat
-    {
-        if ($this->browser_format === null) {
-            $this->browser_format = self::dataTableUI()->format()->browser()->default();
-        }
-
-        return $this->browser_format;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function withBrowserFormat(BrowserFormat $browser_format) : TableInterface
-    {
-        $clone = clone $this;
-
-        $clone->browser_format = $browser_format;
-
-        return $clone;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getFormats() : array
-    {
-        return $this->formats;
     }
 
 
@@ -319,15 +294,6 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getMultipleActions() : array
-    {
-        return $this->multiple_actions;
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function withMultipleActions(array $multiple_actions) : TableInterface
     {
         $clone = clone $this;
@@ -341,13 +307,13 @@ class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function getSettingsStorage() : SettingsStorage
+    public function withPlugin(PluginInterface $plugin) : TableInterface
     {
-        if ($this->settings_storage === null) {
-            $this->settings_storage = self::dataTableUI()->settings()->storage()->default();
-        }
+        $clone = clone $this;
 
-        return $this->settings_storage;
+        $clone->plugin = $plugin;
+
+        return $clone;
     }
 
 
@@ -359,6 +325,32 @@ class Table implements TableInterface
         $clone = clone $this;
 
         $clone->settings_storage = $settings_storage;
+
+        return $clone;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function withTableId(string $table_id) : TableInterface
+    {
+        $clone = clone $this;
+
+        $clone->table_id = $table_id;
+
+        return $clone;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function withTitle(string $title) : TableInterface
+    {
+        $clone = clone $this;
+
+        $clone->title = $title;
 
         return $clone;
     }

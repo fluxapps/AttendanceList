@@ -10,8 +10,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class AbstractFormatter
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 abstract class AbstractFormatter implements Formatter
 {

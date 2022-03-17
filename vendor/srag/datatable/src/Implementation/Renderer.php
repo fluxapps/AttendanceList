@@ -17,8 +17,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class Renderer
  *
  * @package srag\DataTableUI\AttendanceList\Implementation
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Renderer extends AbstractComponentRenderer
 {
@@ -29,9 +27,16 @@ class Renderer extends AbstractComponentRenderer
     /**
      * @inheritDoc
      */
-    protected function getComponentInterfaceName() : array
+    public function registerResources(ResourceRegistry $registry) : void
     {
-        return [Table::class];
+        parent::registerResources($registry);
+
+        $dir = __DIR__;
+        $dir = "./" . substr($dir, strpos($dir, "/Customizing/") + 1) . "/../..";
+
+        $registry->register($dir . "/css/datatableui.css"); // TODO: Use PluginVersionParameter
+
+        $registry->register($dir . "/js/datatableui.min.js"); // TODO: Use PluginVersionParameter
     }
 
 
@@ -51,39 +56,11 @@ class Renderer extends AbstractComponentRenderer
 
 
     /**
-     * @param Table $component
-     *
-     * @return string
-     */
-    protected function renderDataTable(Table $component) : string
-    {
-        $settings = $component->getSettingsStorage()->read($component->getTableId(), intval(self::dic()->user()->getId()));
-        $settings = $component->getBrowserFormat()->handleSettingsInput($component, $settings);
-        $settings = $component->getSettingsStorage()->handleDefaultSettings($settings, $component);
-
-        $data = $this->handleFetchData($component, $settings);
-
-        $html = $this->handleFormat($component, $data, $settings);
-
-        $component->getSettingsStorage()->store($settings, $component->getTableId(), intval(self::dic()->user()->getId()));
-
-        return $html;
-    }
-
-
-    /**
      * @inheritDoc
      */
-    public function registerResources(ResourceRegistry $registry)/* : void*/
+    protected function getComponentInterfaceName() : array
     {
-        parent::registerResources($registry);
-
-        $dir = __DIR__;
-        $dir = "./" . substr($dir, strpos($dir, "/Customizing/") + 1) . "/../..";
-
-        $registry->register($dir . "/css/datatableui.css");
-
-        $registry->register($dir . "/js/datatableui.min.js");
+        return [Table::class];
     }
 
 
@@ -102,7 +79,7 @@ class Renderer extends AbstractComponentRenderer
      *
      * @return Data|null
      */
-    protected function handleFetchData(Table $component, Settings $settings)/* : ?Data*/
+    protected function handleFetchData(Table $component, Settings $settings) : ?Data
     {
         if (!$component->getDataFetcher()->isFetchDataNeedsFilterFirstSet() || $settings->isFilterSet()) {
             $data = $component->getDataFetcher()->fetchData($settings);
@@ -121,7 +98,7 @@ class Renderer extends AbstractComponentRenderer
      *
      * @return string
      */
-    protected function handleFormat(Table $component, /*?Data*/ $data, Settings $settings) : string
+    protected function handleFormat(Table $component, ?Data $data, Settings $settings) : string
     {
         $input_format_id = $component->getBrowserFormat()->getInputFormatId($component);
 
@@ -148,5 +125,26 @@ class Renderer extends AbstractComponentRenderer
             default:
                 return $rendered_data;
         }
+    }
+
+
+    /**
+     * @param Table $component
+     *
+     * @return string
+     */
+    protected function renderDataTable(Table $component) : string
+    {
+        $settings = $component->getSettingsStorage()->read($component->getTableId(), intval(self::dic()->user()->getId()));
+        $settings = $component->getBrowserFormat()->handleSettingsInput($component, $settings);
+        $settings = $component->getSettingsStorage()->handleDefaultSettings($settings, $component);
+
+        $data = $this->handleFetchData($component, $settings);
+
+        $html = $this->handleFormat($component, $data, $settings);
+
+        $component->getSettingsStorage()->store($settings, $component->getTableId(), intval(self::dic()->user()->getId()));
+
+        return $html;
     }
 }

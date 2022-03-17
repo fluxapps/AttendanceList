@@ -17,9 +17,6 @@ use Throwable;
  * Sends the notification internal in ILIAS. Based on the settings, the mail is also forwarded to the users external e-mail address
  *
  * @package srag\Notifications4Plugin\AttendanceList\Sender
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  */
 class InternalMailSender implements Sender
 {
@@ -264,17 +261,13 @@ class InternalMailSender implements Sender
      * @throws Throwable
      * @throws Notifications4PluginException
      */
-    public function send()/* : void*/
+    public function send() : void
     {
         $this->mailer = new ilMail($this->getUserFrom());
 
         $this->mailer->setSaveInSentbox($this->isSaveInSentBox());
 
-        if (self::version()->is6()) {
-            $errors = $this->mailer->sendMail($this->getUserTo(), $this->getCc(), $this->getBcc(), $this->getSubject(), $this->getMessage(), [], false);
-        } else {
-            $errors = $this->mailer->sendMail($this->getUserTo(), $this->getCc(), $this->getBcc(), $this->getSubject(), $this->getMessage(), [], ["normal"]);
-        }
+        $errors = $this->mailer->sendMail($this->getUserTo(), $this->getCc(), $this->getBcc(), $this->getSubject(), $this->getMessage(), [], false);
 
         if (!empty($errors)) {
             $error = $errors[0];

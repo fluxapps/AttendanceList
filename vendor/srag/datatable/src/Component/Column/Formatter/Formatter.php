@@ -10,8 +10,6 @@ use srag\DataTableUI\AttendanceList\Component\Format\Format;
  * Interface Formatter
  *
  * @package srag\DataTableUI\AttendanceList\Component\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Formatter
 {

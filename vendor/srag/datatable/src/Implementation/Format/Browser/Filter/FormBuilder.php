@@ -13,8 +13,6 @@ use srag\DataTableUI\AttendanceList\Implementation\Utils\DataTableUITrait;
  * Class FormBuilder
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Format\Browser\Filter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class FormBuilder extends AbstractFormBuilder
 {
@@ -44,6 +42,15 @@ class FormBuilder extends AbstractFormBuilder
         $this->settings = $settings;
 
         parent::__construct($parent);
+    }
+
+
+    /**
+     * @return Settings
+     */
+    public function getSettings() : Settings
+    {
+        return $this->settings;
     }
 
 
@@ -114,17 +121,8 @@ class FormBuilder extends AbstractFormBuilder
     /**
      * @inheritDoc
      */
-    protected function storeData(array $data)/* : void*/
+    protected function storeData(array $data) : void
     {
         $this->settings = $this->settings->withFilterFieldValues($data);
-    }
-
-
-    /**
-     * @return Settings
-     */
-    public function getSettings() : Settings
-    {
-        return $this->settings;
     }
 }

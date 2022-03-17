@@ -8,9 +8,6 @@ use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginExcep
  * Interface Sender
  *
  * @package srag\Notifications4Plugin\AttendanceList\Sender
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  */
 interface Sender
 {
@@ -28,7 +25,7 @@ interface Sender
      *
      * @throws Notifications4PluginException
      */
-    public function send()/* : void*/;
+    public function send() : void;
 
 
     /**

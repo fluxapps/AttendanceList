@@ -8,8 +8,6 @@ use srag\DataTableUI\AttendanceList\Component\Column\Formatter\Actions\Factory a
  * Interface Factory
  *
  * @package srag\DataTableUI\AttendanceList\Component\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Factory
 {
@@ -47,6 +45,12 @@ interface Factory
 
 
     /**
+     * @return Formatter
+     */
+    public function image() : Formatter;
+
+
+    /**
      * @param string $prefix
      *
      * @return Formatter
@@ -64,4 +68,10 @@ interface Factory
      * @return Formatter
      */
     public function link() : Formatter;
+
+
+    /**
+     * @return Formatter
+     */
+    public function multiline() : Formatter;
 }

@@ -13,8 +13,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class Factory
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Column\Formatter
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Factory implements FactoryInterface
 {
@@ -29,6 +27,15 @@ class Factory implements FactoryInterface
 
 
     /**
+     * Factory constructor
+     */
+    private function __construct()
+    {
+
+    }
+
+
+    /**
      * @return self
      */
     public static function getInstance() : self
@@ -38,15 +45,6 @@ class Factory implements FactoryInterface
         }
 
         return self::$instance;
-    }
-
-
-    /**
-     * Factory constructor
-     */
-    private function __construct()
-    {
-
     }
 
 
@@ -98,6 +96,15 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
+    public function image() : Formatter
+    {
+        return new ImageFormatter();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function languageVariable(string $prefix) : Formatter
     {
         return new LanguageVariableFormatter($prefix);
@@ -119,5 +126,14 @@ class Factory implements FactoryInterface
     public function link() : Formatter
     {
         return new LinkFormatter();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function multiline() : Formatter
+    {
+        return new MultilineFormatter();
     }
 }

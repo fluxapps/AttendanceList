@@ -8,8 +8,6 @@ use srag\CustomInputGUIs\AttendanceList\PropertyFormGUI\Items\Items;
  * Class GetterRowData
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Data\Row
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class GetterRowData extends AbstractRowData
 {

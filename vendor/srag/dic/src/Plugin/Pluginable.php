@@ -6,8 +6,6 @@ namespace srag\DIC\AttendanceList\Plugin;
  * Interface Pluginable
  *
  * @package srag\DIC\AttendanceList\Plugin
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface Pluginable
 {

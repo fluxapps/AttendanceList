@@ -11,8 +11,6 @@ use srag\DIC\AttendanceList\DICTrait;
  * Class Factory
  *
  * @package srag\DataTableUI\AttendanceList\Implementation\Data\Row
- *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Factory implements FactoryInterface
 {
@@ -24,6 +22,15 @@ class Factory implements FactoryInterface
      * @var self|null
      */
     protected static $instance = null;
+
+
+    /**
+     * Factory constructor
+     */
+    private function __construct()
+    {
+
+    }
 
 
     /**
@@ -40,18 +47,9 @@ class Factory implements FactoryInterface
 
 
     /**
-     * Factory constructor
-     */
-    private function __construct()
-    {
-
-    }
-
-
-    /**
      * @inheritDoc
      */
-    public function getter(string $row_id, /*object*/ $original_data) : RowData
+    public function getter(string $row_id, object $original_data) : RowData
     {
         return new GetterRowData($row_id, $original_data);
     }
@@ -60,7 +58,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritDoc
      */
-    public function property(string $row_id, /*object*/ $original_data) : RowData
+    public function property(string $row_id, object $original_data) : RowData
     {
         return new PropertyRowData($row_id, $original_data);
     }
