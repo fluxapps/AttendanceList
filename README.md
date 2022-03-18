@@ -14,10 +14,10 @@ Navigate into the ILIAS root directory, then use:
 ```bash
 mkdir -p Customizing/global/plugins/Services/Repository/RepositoryObject
 cd Customizing/global/plugins/Services/Repository/RepositoryObject
-git clone https://github.com/studer-raimann/AttendanceList.git
+git clone https://github.com/fluxapps/AttendanceList.git
 ```
 
-Please also install and enable [AttendanceListCron](https://github.com/studer-raimann/AttendanceListCron).
+Please also install and enable [AttendanceListCron](https://github.com/fluxapps/AttendanceListCron).
 
 ## ILIAS 7 core ilCtrl patch 
 
