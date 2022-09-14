@@ -35,4 +35,4 @@ Please create pull requests :fire:
 ## Adjustment suggestions / bug reporting :feet:
 Please ...
 1. ... ask us for a Service Level Agreement: support@fluxlabs.ch :kissing_heart:
-2. ... [Read and create issues] (https://github.com/fluxapps/AttendanceList/issues)
+2. [Read and create issues](https://github.com/fluxapps/AttendanceList/issues)
