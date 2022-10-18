@@ -36,4 +36,4 @@ fluxlabs ag, support@fluxlabs.ch
 This project needs to be rebuilt before it can be maintained.
 
 Are you interested in a rebuild and would you like to participate?
-Take advantage of the crowdfunding opportunity:
+Take advantage of the crowdfunding opportunity: https://github.com/fluxapps/AttendanceList/discussions/1
