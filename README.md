@@ -29,10 +29,11 @@ Start at the plugin directory
 ./vendor/srag/dic/bin/ilias7_core_apply_ilctrl_patch.sh
 ```
 
-## Contributing :purple_heart:
-Please create pull requests :fire:
+## Rebuild & Maintenance
 
-## Adjustment suggestions / bug reporting :feet:
-Please ...
-1. ... ask us for a Service Level Agreement: support@fluxlabs.ch :kissing_heart:
-2. ... [Read and create issues](https://github.com/fluxapps/AttendanceList/issues)
+fluxlabs ag, support@fluxlabs.ch
+
+This project needs to be rebuilt before it can be maintained.
+
+Are you interested in a rebuild and would you like to participate?
+Take advantage of the crowdfunding opportunity:
