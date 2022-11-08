@@ -37,3 +37,8 @@ This project needs to be rebuilt before it can be maintained.
 
 Are you interested in a rebuild and would you like to participate?
 Take advantage of the crowdfunding opportunity under [discussions](https://github.com/fluxapps/AttendanceList/discussions/1).
+
+## About fluxlabs plugins
+The plugins that require a rebuild and the costs are listed here: [REBUILDS](https://github.com/fluxapps/docs/blob/8ce4309b0ac64c039d29204c2d5b06723084c64b/assets/REBUILDS.png)
+
+Please also have a look at our other key projects and their [MAINTENANCE](https://github.com/fluxapps/docs/blob/8ce4309b0ac64c039d29204c2d5b06723084c64b/assets/MAINTENANCE.png).
