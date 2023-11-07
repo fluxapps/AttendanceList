@@ -34,7 +34,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected int $is_online = 0;
+	protected $is_online = 0;
 	/**
 	 * @var int
 	 *

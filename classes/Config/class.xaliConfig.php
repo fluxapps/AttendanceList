@@ -29,6 +29,10 @@ class xaliConfig extends ActiveRecord {
 
 	public static function getConfig($name): mixed
     {
+        if(!array_key_exists($name, self::$cache_loaded)) {
+            self::$cache_loaded[$name] = false;
+        }
+
 		if (!self::$cache_loaded[$name]) {
 			try {
 				$obj = new self($name);
@@ -79,7 +83,7 @@ class xaliConfig extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           4000
 	 */
-	protected string $value;
+	protected string $value = "";
 
 	public function setName(string $name): void
     {

@@ -310,7 +310,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$form->checkInput();
 
 		$this->setting = new xaliSetting();
-		$this->setting->setActivation(true);
+		$this->setting->setActivation(1);
 
 		$from = $form->getInput(xaliSettingsFormGUI::F_ACTIVATION_FROM);
 		$this->setting->setActivationFrom($from);

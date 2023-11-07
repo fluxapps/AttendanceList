@@ -36,6 +36,9 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$ilCtrl = $DIC['ilCtrl'];
 		$lng = $DIC['lng'];
 		$tpl = $DIC['tpl'];
+        if (isset($DIC["http"])) {
+            $this->http = $DIC->http();
+        }
 		$this->parent_gui = $parent_gui;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilAttendanceListPlugin::getInstance();
@@ -113,9 +116,9 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->object->setDescription($this->getInput(self::F_DESCRIPTION));
 		$this->object->update();
 
-		$this->xaliSetting->setIsOnline($this->getInput(self::F_ONLINE));
+		$this->xaliSetting->setIsOnline((int) $this->getInput(self::F_ONLINE));
 		$this->xaliSetting->setMinimumAttendance($this->getInput(self::F_MINIMUM_ATTENDANCE));
-		$this->xaliSetting->setActivation($this->getInput(self::F_ACTIVATION));
+		$this->xaliSetting->setActivation((int)$this->getInput(self::F_ACTIVATION));
 
 		$activation_from = $this->getInput(self::F_ACTIVATION_FROM);
 		$this->xaliSetting->setActivationFrom($activation_from);

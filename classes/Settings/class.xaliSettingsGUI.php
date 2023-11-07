@@ -28,7 +28,7 @@ class xaliSettingsGUI extends xaliGUI {
 			// update LP
 			xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-            $this->tpl->setOnScreenMessage('success',  self::dic()->language()->txt("saved_successfully"), true);
+            $this->tpl->setOnScreenMessage('success',  $this->lng->txt("saved_successfully"), true);
 			$this->ctrl->redirect($this, self::CMD_STANDARD);
 			return;
 		}
