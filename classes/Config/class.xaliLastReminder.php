@@ -27,7 +27,7 @@ class xaliLastReminder extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected int $user_id;
+	protected ?int $user_id;
 	/**
 	 * @var String
 	 *

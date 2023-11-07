@@ -23,7 +23,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected string $entry_id;
+	protected ?string $entry_id;
 	/**
 	 * @var int
 	 *

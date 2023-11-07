@@ -134,7 +134,11 @@ class MultilangualTabsInputGUI
         }
 
         if ($use_default_if_not_set) {
-            $value = $values["default"];
+            $value = "";
+            if(array_key_exists("default", $values)) {
+                $value = $values["default"];
+            }
+
 
             if (!empty($sub_key)) {
                 if (!is_array($value)) {
@@ -160,7 +164,7 @@ class MultilangualTabsInputGUI
     public static function setValueForLang(array &$values, $value, string $lang_key, string $sub_key = null) : void
     {
         if (!empty($sub_key)) {
-            if (!is_array($values[$lang_key])) {
+            if (!array_key_exists($lang_key, $values)) {
                 $values[$lang_key] = [];
             }
             $values[$lang_key][$sub_key] = $value;

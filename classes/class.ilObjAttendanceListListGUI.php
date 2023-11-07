@@ -61,6 +61,9 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
 		$props = parent::getCustomProperties($a_prop);
 
+        //todo
+        return $props;
+
 		try {
 			/** @var xaliSetting $settings */
 			$settings = xaliSetting::find($this->obj_id);

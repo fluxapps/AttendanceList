@@ -7,6 +7,7 @@ require_once __DIR__ . "/../../../../autoload.php";
 use ilConfirmationGUI;
 use ilUtil;
 use srag\DIC\AttendanceList\DICTrait;
+use srag\DIC\AttendanceList\Exception\DICException;
 use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
 /**
@@ -123,9 +124,11 @@ class NotificationCtrl
 
     /**
      *
+     * @throws DICException
      */
     protected function createNotification() : void
     {
+        global $DIC;
         $form = self::notifications4plugin()->notifications()->factory()->newFormBuilderInstance($this, $this->notification);
 
         if (!$form->storeForm()) {
@@ -136,7 +139,9 @@ class NotificationCtrl
 
         self::dic()->ctrl()->setParameter($this, self::GET_PARAM_NOTIFICATION_ID, $this->notification->getId());
 
-        ilUtil::sendSuccess(self::notifications4plugin()->getPlugin()->translate("added_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
+        $tpl = $DIC['tpl'];
+        $tpl->setOnScreenMessage('success', self::notifications4plugin()->getPlugin()->translate("added_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
+
 
         self::dic()->ctrl()->redirect($this, self::CMD_EDIT_NOTIFICATION);
     }
@@ -147,9 +152,12 @@ class NotificationCtrl
      */
     protected function deleteNotification() : void
     {
+        global $DIC;
+        $tpl = $DIC["tpl"];
+
         self::notifications4plugin()->notifications()->deleteNotification($this->notification);
 
-        ilUtil::sendSuccess(self::notifications4plugin()->getPlugin()->translate("deleted_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
+        $tpl->setOnScreenMessage('info',self::notifications4plugin()->getPlugin()->translate("deleted_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
 
         self::dic()->ctrl()->redirect($this, self::CMD_BACK);
     }
@@ -181,11 +189,14 @@ class NotificationCtrl
      */
     protected function duplicateNotification() : void
     {
+        global $DIC;
+        $tpl = $DIC["tpl"];
+
         $cloned_notification = self::notifications4plugin()->notifications()->duplicateNotification($this->notification);
 
         self::notifications4plugin()->notifications()->storeNotification($cloned_notification);
 
-        ilUtil::sendSuccess(self::notifications4plugin()->getPlugin()
+        $tpl->setOnScreenMessage('success',self::notifications4plugin()->getPlugin()
             ->translate("duplicated_notification", NotificationsCtrl::LANG_MODULE, [$cloned_notification->getTitle()]), true);
 
         self::dic()->ctrl()->redirect($this, self::CMD_BACK);

@@ -104,7 +104,7 @@ class xaliOverviewGUI extends xaliGUI {
 	public function saveList(): void
     {
 		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
-			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
+            $this->tpl->setOnScreenMessage('failure',  $this->pl->txt('warning_list_incomplete'), true);
 			$this->editList();
 			return;
 		}
@@ -139,8 +139,9 @@ class xaliOverviewGUI extends xaliGUI {
 		// update LP
 		xaliUserStatus::updateUserStatuses($$this->parent_gui->getObject()->getId());
 
-		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
-		$this->ctrl->redirect($this, self::CMD_LISTS);
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_checklist_saved"), true);
+
+        $this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
 	public function saveUser(): void
@@ -168,8 +169,9 @@ class xaliOverviewGUI extends xaliGUI {
 		// update LP
 		xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->getObject()->getId());
 
-		ilUtil::sendSuccess($this->pl->txt('msg_user_saved'), true);
-		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_user_saved"), true);
+
+        $this->ctrl->redirect($this, self::CMD_SHOW_USERS);
 	}
 
 	public function addList(): void
@@ -202,8 +204,9 @@ class xaliOverviewGUI extends xaliGUI {
 		// update LP
 		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-		ilUtil::sendSuccess($this->pl->txt('msg_list_created'), true);
-		$this->ctrl->setParameter($this, 'checklist_id', $checklist->getId());
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_list_created"), true);
+
+        $this->ctrl->setParameter($this, 'checklist_id', $checklist->getId());
 		$this->ctrl->redirect($this, self::CMD_EDIT_LIST);
 	}
 
@@ -212,7 +215,7 @@ class xaliOverviewGUI extends xaliGUI {
     {
 		$where = xaliChecklist::where(array('checklist_date' => $date, 'obj_id' => $this->parent_gui->getObject()->getId()));
 		if ($where->hasSets()) {
-			ilUtil::sendFailure(sprintf($this->pl->txt('msg_date_already_used'), $date), true);
+            $this->tpl->setOnScreenMessage('failure',  $this->pl->txt('msg_date_already_used'), true);
 			$this->ctrl->redirect($this, self::CMD_ADD_LIST);
 		}
 	}
@@ -232,7 +235,7 @@ class xaliOverviewGUI extends xaliGUI {
 		$users = $this->parent_gui->getMembers();
 		$checklist = xaliChecklist::find($checklist_id);
 		if (!$checklist->hasSavedEntries()) {
-			ilUtil::sendInfo($this->pl->txt('list_unsaved'), true);
+            $this->tpl->setOnScreenMessage('info',  $this->pl->txt('list_unsaved'), true);
 		}
 
 		$xaliChecklistTableGUI = new xaliChecklistTableGUI($this, $checklist, $users);
@@ -284,8 +287,9 @@ class xaliOverviewGUI extends xaliGUI {
 		// update LP
 		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-		ilUtil::sendSuccess($this->pl->txt('msg_list_deleted'), true);
-		$this->ctrl->redirect($this, self::CMD_LISTS);
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_list_deleted"), true);
+
+        $this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
 	#[NoReturn] public function saveEntry(): void

@@ -10,6 +10,7 @@ use srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl;
  * Class ilAttendanceListConfigGUI
  *
  * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilObjComponentSettingsGUIs
+ * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilAdministrationGUI
  * @ilCtrl_isCalledBy srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl: ilAttendanceListConfigGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
@@ -65,7 +66,11 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tpl = $tpl;
 		$this->toolbar = $ilToolbar;
 		$this->tabs = $ilTabs;
-		$this->pl = ilAttendanceListPlugin::getInstance();
+
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilAttendanceListPlugin */
+        $this->pl  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
 
 		// this is for the cron job, since the ILIAS_HTTP_PATH is not initialized in cron context
 		if (!xaliConfig::getConfig(xaliConfig::F_HTTP_PATH)) {
@@ -161,8 +166,10 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason());
 		$xaliConfigAbsenceFormGUI->setValuesByPost();
 		if ($xaliConfigAbsenceFormGUI->saveObject()) {
-			ilUtil::sendSuccess($this->pl->txt('msg_saved'), true);
-			$this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
+
+            $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_saved"), true);
+
+            $this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
 		}
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
 	}
@@ -182,8 +189,10 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason($_GET['ar_id']));
 		$xaliConfigAbsenceFormGUI->setValuesByPost();
 		if ($xaliConfigAbsenceFormGUI->saveObject()) {
-			ilUtil::sendSuccess($this->pl->txt('msg_saved'), true);
-			$this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
+
+            $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_saved"), true);
+
+            $this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
 		}
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
 	}
@@ -193,8 +202,10 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$xaliConfigFormGUI = new xaliConfigFormGUI($this);
 		$xaliConfigFormGUI->setValuesByPost();
 		if ($xaliConfigFormGUI->saveObject()) {
-			ilUtil::sendSuccess($this->pl->txt('msg_saved'), true);
-			$this->ctrl->redirect($this, self::CMD_STANDARD);
+
+            $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_saved"), true);
+
+            $this->ctrl->redirect($this, self::CMD_STANDARD);
 		}
 		$this->tpl->setContent($xaliConfigFormGUI->getHTML());
 	}
@@ -215,7 +226,9 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	protected function deleteReason(): void
     {
         (new xaliAbsenceReason($_GET['ar_id']))->delete();
-        ilUtil::sendSuccess($this->pl->txt('msg_deleted'), true);
+
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_deleted"), true);
+
         $this->ctrl->redirect($this, self::CMD_SHOW_REASONS);
     }
 }

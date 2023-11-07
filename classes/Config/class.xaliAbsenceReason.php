@@ -35,7 +35,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected string $id;
+	protected ?string $id;
 	/**
 	 * @var String
 	 *

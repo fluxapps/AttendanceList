@@ -10,7 +10,10 @@ class xaliSettingsGUI extends xaliGUI {
 	const CMD_STANDARD = 'showContent';
 	const CMD_SAVE = 'save';
 
-	public function showContent(): void
+    /**
+     * @throws ilCtrlException
+     */
+    public function showContent(): void
     {
 		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->getObject());
 		$this->tpl->setContent($xaliSettingsFormGUI->getHTML());
@@ -25,7 +28,7 @@ class xaliSettingsGUI extends xaliGUI {
 			// update LP
 			xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-			ilUtil::sendSuccess($this->lng->txt('saved_successfully'), true);
+            $this->tpl->setOnScreenMessage('success',  self::dic()->language()->txt("saved_successfully"), true);
 			$this->ctrl->redirect($this, self::CMD_STANDARD);
 			return;
 		}

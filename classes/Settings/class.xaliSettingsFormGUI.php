@@ -22,7 +22,7 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	protected ilCtrl $ctrl;
 	protected ilAttendanceListPlugin $pl;
 	protected ilLanguage $lng;
-	protected ?ilSetting $settings;
+	protected ?xaliSetting $xaliSetting;
 	protected ilObjAttendanceList $object;
 
     /**
@@ -41,7 +41,7 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->lng = $lng;
 		$this->object = $object;
-		$this->settings = xaliSetting::find($object->getId());
+		$this->xaliSetting = xaliSetting::find($object->getId());
 		$this->setFormAction($this->ctrl->getFormAction($parent_gui));
 		$this->initForm();
 	}
@@ -62,7 +62,7 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->addItem($input);
 
 		$input = new ilCheckboxInputGUI($this->lng->txt(self::F_ONLINE), self::F_ONLINE);
-		$input->setChecked($this->settings->getIsOnline());
+		$input->setChecked($this->xaliSetting->getIsOnline());
 		$this->addItem($input);
 
 		$input = new ilSelectInputGUI($this->pl->txt(self::F_MINIMUM_ATTENDANCE), self::F_MINIMUM_ATTENDANCE);
@@ -72,20 +72,20 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 			$options[$i] = $i . '%';
 		}
 		$input->setOptions($options);
-		$input->setValue($this->settings->getMinimumAttendance());
+		$input->setValue($this->xaliSetting->getMinimumAttendance());
 		$input->setInfo($this->pl->txt(self::F_MINIMUM_ATTENDANCE . '_info'));
 		$this->addItem($input);
 
 		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_FROM), self::F_ACTIVATION_FROM);
-		$input->setValueByArray(array(self::F_ACTIVATION_FROM => $this->settings->getActivationFrom()));
+		$input->setValueByArray(array(self::F_ACTIVATION_FROM => $this->xaliSetting->getActivationFrom()));
 		$this->addItem($input);
 
 		$input = new ilDateTimeInputGUI($this->pl->txt(self::F_ACTIVATION_TO), self::F_ACTIVATION_TO);
-		$input->setValueByArray(array(self::F_ACTIVATION_TO => $this->settings->getActivationTo()));
+		$input->setValueByArray(array(self::F_ACTIVATION_TO => $this->xaliSetting->getActivationTo()));
 		$this->addItem($input);
 
 		$input = new srWeekdayInputGUI($this->pl->txt(self::F_WEEKDAYS), self::F_WEEKDAYS);
-		$input->setValue($this->settings->getActivationWeekdays());
+		$input->setValue($this->xaliSetting->getActivationWeekdays());
 		$this->addItem($input);
 
 		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_CREATE_LISTS), self::F_CREATE_LISTS);
@@ -100,7 +100,10 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	}
 
 
-	public function saveSettings(): bool
+    /**
+     * @throws Exception
+     */
+    public function saveSettings(): bool
     {
 		if (!$this->checkInput()) {
 			return false;
@@ -110,22 +113,22 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 		$this->object->setDescription($this->getInput(self::F_DESCRIPTION));
 		$this->object->update();
 
-		$this->settings->setIsOnline($this->getInput(self::F_ONLINE));
-		$this->settings->setMinimumAttendance($this->getInput(self::F_MINIMUM_ATTENDANCE));
-		$this->settings->setActivation($this->getInput(self::F_ACTIVATION));
+		$this->xaliSetting->setIsOnline($this->getInput(self::F_ONLINE));
+		$this->xaliSetting->setMinimumAttendance($this->getInput(self::F_MINIMUM_ATTENDANCE));
+		$this->xaliSetting->setActivation($this->getInput(self::F_ACTIVATION));
 
 		$activation_from = $this->getInput(self::F_ACTIVATION_FROM);
-		$this->settings->setActivationFrom($activation_from);
+		$this->xaliSetting->setActivationFrom($activation_from);
 
 		$activation_to = $this->getInput(self::F_ACTIVATION_TO);
-		$this->settings->setActivationTo($activation_to);
+		$this->xaliSetting->setActivationTo($activation_to);
 
-		$this->settings->setActivationWeekdays($this->getInput(self::F_WEEKDAYS));
+		$this->xaliSetting->setActivationWeekdays($this->getInput(self::F_WEEKDAYS));
 
-		$this->settings->update();
+		$this->xaliSetting->update();
 
 		if ($this->getInput(self::F_CREATE_LISTS) || $this->getInput(self::F_DELETE_LISTS)) {
-			$this->settings->createOrDeleteEmptyLists($this->getInput(self::F_CREATE_LISTS), $this->getInput(self::F_DELETE_LISTS));
+			$this->xaliSetting->createOrDeleteEmptyLists($this->getInput(self::F_CREATE_LISTS), $this->getInput(self::F_DELETE_LISTS));
 		}
 
 		return true;

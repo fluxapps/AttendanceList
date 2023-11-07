@@ -62,7 +62,10 @@ class xaliCron {
 		 * @var $ilUser ilObjUser
 		 * @var $ilCtrl ilCtrl
 		 */
-		$this->pl = ilAttendanceListPlugin::getInstance();
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilAttendanceListPlugin */
+        $this->pl  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
 		$this->db = $ilDB;
 		$this->user = $ilUser;
 		$this->ctrl = $ilCtrl;

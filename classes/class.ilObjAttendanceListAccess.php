@@ -70,6 +70,9 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 */
 	static function checkOnline($a_id): bool
     {
+        //todo
+        return true;
+
 		/**
 		 * @var $xaliSettings xaliSetting
 		 */
@@ -84,6 +87,9 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 */
 	static function checkActivation($a_id): bool
     {
+        //todo
+        return true;
+
 		/** @var xaliSetting $settings */
 		$settings = xaliSetting::find($a_id);
 		$today = date('Y-m-d');

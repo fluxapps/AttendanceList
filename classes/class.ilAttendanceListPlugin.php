@@ -43,10 +43,13 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	protected ilDBInterface $db;
 
 
-	function __construct() {
-		parent::__construct();
-
-		global $DIC;
+    public function __construct(
+        ilDBInterface $db,
+        ilComponentRepositoryWrite $component_repository,
+        string $id
+    ) {
+        global $DIC;
+        parent::__construct($db, $component_repository, $id);
 
 		$this->db = $DIC->database();
 	}
@@ -58,7 +61,14 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	public static function getInstance(): ilAttendanceListPlugin
     {
 		if (!isset(self::$instance)) {
-			self::$instance = new self();
+            global $DIC;
+
+            /** @var $component_factory ilComponentFactory */
+            $component_factory = $DIC['component.factory'];
+            /** @var $plugin ilAttendanceListPlugin */
+            $plugin  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
+
+			self::$instance = $plugin;
 		}
 
 		return self::$instance;

@@ -214,4 +214,19 @@ class DatabaseDetector extends AbstractILIASDatabaseDetector
             return $primary_key_value;
         }
     }
+
+    public function primaryExistsByFields(string $table_name, array $fields): bool
+    {
+        // TODO: Implement primaryExistsByFields() method.
+    }
+
+    public function migrateTableToEngine(string $table_name, string $engine = ilDBConstants::MYSQL_ENGINE_INNODB): void
+    {
+        // TODO: Implement migrateTableToEngine() method.
+    }
+
+    public function migrateTableCollation(string $table_name, string $collation = ilDBConstants::MYSQL_COLLATION_UTF8MB4): bool
+    {
+        // TODO: Implement migrateTableCollation() method.
+    }
 }

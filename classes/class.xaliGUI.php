@@ -11,34 +11,13 @@ class xaliGUI {
 	const CMD_STANDARD = 'show';
 	const CMD_CANCEL = 'cancel';
 
-	/**
-	 * @var ilTemplate
-	 */
-	protected $tpl;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilObjAttendanceListGUI
-	 */
-	protected $parent_gui;
-	/**
-	 * @var ilTabsGUI
-	 */
-	protected $tabs;
-	/**
-	 * @var ilObjUser
-	 */
-	protected $user;
-	/**
-	 * @var ilToolbarGUI
-	 */
-	protected $toolbar;
+	protected mixed $tpl;
+	protected mixed $ctrl;
+	protected ilAttendanceListPlugin|ilPlugin $pl;
+	protected ilObjAttendanceListGUI $parent_gui;
+	protected ilTabsGUI $tabs;
+	protected mixed $user;
+	protected ilToolbarGUI $toolbar;
 
 
 	/**
@@ -60,7 +39,10 @@ class xaliGUI {
 		$this->tabs = $ilTabs;
 		$this->tpl = $tpl;
 		$this->ctrl = $ilCtrl;
-		$this->pl = ilAttendanceListPlugin::getInstance();
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilAttendanceListPlugin */
+        $this->pl  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
 		$this->parent_gui = $parent_gui;
 	}
 
@@ -68,7 +50,8 @@ class xaliGUI {
 	/**
 	 *
 	 */
-	public function executeCommand() {
+	public function executeCommand(): void
+    {
 		$this->prepareOutput();
 		if (ilObjAttendanceListAccess::hasWriteAccess()) {
 			$this->parent_gui->checkPassedIncompleteLists();
@@ -84,17 +67,11 @@ class xaliGUI {
 		}
 	}
 
-
-	/**
-	 *
-	 */
 	protected function prepareOutput() { }
 
 
-	/**
-	 *
-	 */
-	protected function cancel() {
+	protected function cancel(): void
+    {
 		$this->ctrl->redirect($this, static::CMD_STANDARD);
 	}
 }

@@ -25,7 +25,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected string $id;
+	protected ?string $id;
 	/**
 	 * @var int
 	 *
@@ -41,7 +41,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_is_unique        true
 	 * @db_fieldtype        date
 	 */
-	protected int $checklist_date;
+	protected string $checklist_date;
 	/**
 	 * @var int
 	 *
@@ -161,12 +161,12 @@ class xaliChecklist extends ActiveRecord {
 		$this->obj_id = $obj_id;
 	}
 
-	public function getChecklistDate($formatted = true): int
+	public function getChecklistDate($formatted = true): string
     {
 		return $formatted ? date('D, d.m.Y', strtotime($this->checklist_date)) : $this->checklist_date;
 	}
 
-	public function setChecklistDate($checklist_date): void
+	public function setChecklistDate(string $checklist_date): void
     {
 		$this->checklist_date = $checklist_date;
 	}

@@ -15,7 +15,7 @@ class xaliChecklistGUI extends xaliGUI {
 	/**
 	 * @var ilObjUser
 	 */
-	protected $user;
+	protected mixed $user;
 	/**
 	 * @var xaliSetting
 	 */
@@ -29,15 +29,15 @@ class xaliChecklistGUI extends xaliGUI {
 	public function __construct(ilObjAttendanceListGUI $parent_gui) {
 		parent::__construct($parent_gui);
 
-		$this->settings = xaliSetting::find($parent_gui->obj_id);
+		$this->settings = xaliSetting::find($parent_gui->getObject()->getId());
 
-		$list_query = xaliChecklist::where(array('checklist_date' => date('Y-m-d'), 'obj_id' => $parent_gui->obj_id));
+		$list_query = xaliChecklist::where(array('checklist_date' => date('Y-m-d'), 'obj_id' => $parent_gui->getObject()->getId()));
 		if ($list_query->hasSets()) {
 			$this->checklist = $list_query->first();
 		} else {
 			$this->checklist = new xaliChecklist();
 			$this->checklist->setChecklistDate(date('Y-m-d'));
-			$this->checklist->setObjId($parent_gui->obj_id);
+			$this->checklist->setObjId($parent_gui->getObject()->getId());
 		}
 	}
 
@@ -48,19 +48,19 @@ class xaliChecklistGUI extends xaliGUI {
 	public function show() {
 		// activation passed, don't show a list
 		if ((time()-(60*60*24)) > strtotime($this->settings->getActivationTo())) {
-			ilUtil::sendInfo($this->pl->txt('activation_passed'), true);
+            $this->tpl->setOnScreenMessage('info',  $this->pl->txt('activation_passed'), true);
 			return;
 		}
 
 		// activation not yet begun, don't show a list
 		if ((time()) < strtotime($this->settings->getActivationFrom())) {
-			ilUtil::sendInfo($this->pl->txt('activation_not_started_yet'), true);
+            $this->tpl->setOnScreenMessage('info',  $this->pl->txt('activation_not_started_yet'), true);
 			return;
 		}
 
 		// incomplete, display info
 		if (!$this->checklist->isComplete()) {
-			ilUtil::sendInfo($this->pl->txt('list_unsaved_today'), true);
+            $this->tpl->setOnScreenMessage('info',  $this->pl->txt('list_unsaved_today'), true);
 		}
 		$users = $this->parent_gui->getMembers();
 
@@ -76,7 +76,7 @@ class xaliChecklistGUI extends xaliGUI {
 	 */
 	public function saveList() {
 		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
-			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
+            $this->tpl->setOnScreenMessage('failure',  $this->pl->txt('warning_list_incomplete'), true);
             if (self::version()->is6()) {
                 $this->tpl->printToStdout();
             } else {
@@ -106,10 +106,11 @@ class xaliChecklistGUI extends xaliGUI {
 		}
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+        $this->tpl->setOnScreenMessage('success',  self::dic()->language()->txt("msg_checklist_saved"), true);
+
+        $this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
 }

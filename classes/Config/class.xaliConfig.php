@@ -71,7 +71,7 @@ class xaliConfig extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           250
 	 */
-	protected string $name;
+	protected ?string $name;
 	/**
 	 * @var string
 	 *

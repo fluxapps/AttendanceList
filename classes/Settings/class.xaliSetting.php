@@ -26,7 +26,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected string $id;
+	protected ?string $id;
 	/**
 	 * @var int
 	 *
@@ -57,14 +57,14 @@ class xaliSetting extends ActiveRecord {
 	 * @db_has_field        true
 	 * @db_fieldtype        date
 	 */
-	protected int $activation_from;
+	protected string $activation_from = "";
 	/**
 	 * @var int
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        date
 	 */
-	protected int $activation_to;
+	protected string $activation_to = "";
 	/**
 	 * @var array
 	 *
@@ -72,7 +72,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           128
 	 */
-	protected array $activation_weekdays;
+	protected array $activation_weekdays = [];
 
 
 	/**
@@ -119,23 +119,23 @@ class xaliSetting extends ActiveRecord {
 		$this->activation = $activation;
 	}
 
-	public function getActivationFrom(): int
+	public function getActivationFrom(): string
     {
 		return $this->activation_from;
 	}
 
 
-	public function setActivationFrom(int $activation_from): void
+	public function setActivationFrom(string $activation_from): void
     {
 		$this->activation_from = $activation_from;
 	}
 
-	public function getActivationTo(): int
+	public function getActivationTo(): string
     {
 		return $this->activation_to;
 	}
 
-	public function setActivationTo(int $activation_to): void
+	public function setActivationTo(string $activation_to): void
     {
 		$this->activation_to = $activation_to;
 	}
@@ -145,7 +145,7 @@ class xaliSetting extends ActiveRecord {
 		return $this->activation_weekdays;
 	}
 
-	public function setActivationWeekdays(int $activation_weekdays): void
+	public function setActivationWeekdays(array $activation_weekdays): void
     {
 		$this->activation_weekdays = $activation_weekdays;
 	}
@@ -172,13 +172,17 @@ class xaliSetting extends ActiveRecord {
     /**
      * @throws Exception
      */
-    public function createOrDeleteEmptyLists($create, $delete): bool
+    public function createOrDeleteEmptyLists($create, $delete): void
     {
+        global $DIC;
+
+        $currentUser = $DIC->user();
+
 		$begin = $this->getActivationFrom();
 		$end = $this->getActivationTo();
 		$weekdays = $this->getActivationWeekdays();
 		if (!$weekdays || empty($weekdays) || !$begin || !$end) {
-			return false;
+			return;
 		}
 
 		// delete empty lists outside defined dates
@@ -208,6 +212,8 @@ class xaliSetting extends ActiveRecord {
 						$checklist = new xaliChecklist();
 						$checklist->setChecklistDate($dt->format('Y-m-d'));
 						$checklist->setObjId($this->getId());
+                        $checklist->setLastEditedBy($currentUser->getId());
+                        $checklist->setLastUpdate(time());
 						$checklist->create();
 					}
 				}

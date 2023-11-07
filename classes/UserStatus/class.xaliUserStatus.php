@@ -25,7 +25,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_is_primary   true
 	 * @db_sequence     true
 	 */
-	protected int $id = 0;
+	protected ?int $id = 0;
 
 	/**
 	 * @var int

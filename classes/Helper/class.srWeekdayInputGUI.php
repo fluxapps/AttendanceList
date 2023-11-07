@@ -65,10 +65,8 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 
 	/**
 	 * Insert property html
-	 *
-	 * @return    int    Size
 	 */
-	function insert(&$a_tpl): int
+	function insert(&$a_tpl): void
     {
 		$html = $this->render();
 

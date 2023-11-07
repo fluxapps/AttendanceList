@@ -22,8 +22,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	const TAB_SETTINGS = 'tab_settings';
 	protected ilCtrl $ctrl;
 	protected ilTabsGUI $tabs;
-	protected ilAttendanceListPlugin $pl;
-	protected ilAccessHandler $access;
+	protected ilAttendanceListPlugin|ilPlugin $pl;
+	protected ilObjAttendanceListAccess $ilObjAttendanceListAccess;
 	protected ilRbacReview $rbacreview;
 	protected ilObjUser $user;
 	protected xaliSetting $setting;
@@ -47,8 +47,11 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$this->tpl = $tpl;
 		$this->ctrl = $ilCtrl;
 		$this->tabs = $ilTabs;
-		$this->access = new ilObjAttendanceListAccess();
-		$this->pl = ilAttendanceListPlugin::getInstance();
+		$this->ilObjAttendanceListAccess = new ilObjAttendanceListAccess();
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilAttendanceListPlugin */
+        $this->pl  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
 		$this->tree = $tree;
 		$this->user = $ilUser;
 		$this->rbacreview = $rbacreview;
@@ -107,7 +110,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	function &executeCommand(): void
+	function executeCommand(): void
     {
 		$this->initHeaderAndLocator();
 
@@ -209,8 +212,10 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		}
 		else if ($ilAccess->checkAccess("read", "", ROOT_FOLDER_ID))
 		{
-			ilUtil::sendFailure(sprintf($lng->txt("msg_no_perm_read_item"),
-				ilObject::_lookupTitle(ilObject::_lookupObjId($ref_id))));
+            global $DIC;
+            $tpl = $DIC["tpl"];
+            $tpl->setOnScreenMessage('failure', sprintf($lng->txt("msg_no_perm_read_item"),
+                ilObject::_lookupTitle(ilObject::_lookupObjId($ref_id))), true);
 			ilObjectGUI::_gotoRepositoryRoot();
 		}
 	}
@@ -226,7 +231,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
     {
 		$this->tabs->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xaliChecklistGUI::class, xaliChecklistGUI::CMD_STANDARD));
 		$this->addInfoTab();
-		if ($this->access->hasWriteAccess()) {
+		if ($this->ilObjAttendanceListAccess->hasWriteAccess()) {
 			$this->tabs->addTab(self::TAB_OVERVIEW, $this->pl->txt(self::TAB_OVERVIEW), $this->ctrl->getLinkTargetByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_STANDARD));
 			$this->tabs->addTab(self::TAB_SETTINGS, $this->pl->txt(self::TAB_SETTINGS), $this->ctrl->getLinkTargetByClass(xaliSettingsGUI::class, xaliSettingsGUI::CMD_STANDARD));
 		}
@@ -267,7 +272,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		try {
 			$this->getParentCourseOrGroupId($_GET['ref_id']);
 		} catch (Exception $e) {
-			ilUtil::sendFailure($this->pl->txt('msg_creation_failed'), true);
+            $this->tpl->setOnScreenMessage('failure',$this->pl->txt('msg_creation_failed'), true);
 			$this->ctrl->redirectByClass(ilRepositoryGUI::class);
 		}
 
@@ -334,7 +339,9 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 			if (date('Y-m-d') > $checklist->getChecklistDate()
 				&& ($checklist->getEntriesCount() < $members_count)) {
 				$link_to_overview = $this->ctrl->getLinkTargetByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_LISTS);
-				ilUtil::sendInfo(sprintf($this->pl->txt('msg_incomplete_lists'), $link_to_overview), true);
+
+                $this->tpl->setOnScreenMessage('info',$this->pl->txt('msg_incomplete_lists'), true);
+
 
 				return true;
 			}
@@ -358,7 +365,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 
 
 	public function getMembers() {
-		return $this->pl->getMembers($this->object->ref_id);
+		return $this->pl->getMembers($this->object->getRefId());
 	}
 
     public function performCommand(string $cmd): void

@@ -26,7 +26,10 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$ilCtrl = $DIC['ilCtrl'];
 		$this->absence_statement = $xaliAbsenceStatement;
 		$this->parent_gui = $parent_gui;
-		$this->pl = ilAttendanceListPlugin::getInstance();
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilAttendanceListPlugin */
+        $this->pl  = $component_factory->getPlugin(ilAttendanceListPlugin::PLUGIN_ID);
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
 		$this->upload = $DIC->upload();
