@@ -10,11 +10,8 @@ class xaliChecklist extends ActiveRecord {
 
 	const DB_TABLE_NAME = "xali_checklist";
 
-
-	/**
-	 * @return string
-	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -28,7 +25,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected $id;
+	protected string $id;
 	/**
 	 * @var int
 	 *
@@ -36,7 +33,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $obj_id;
+	protected int $obj_id;
 	/**
 	 * @var int
 	 *
@@ -44,7 +41,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_is_unique        true
 	 * @db_fieldtype        date
 	 */
-	protected $checklist_date;
+	protected int $checklist_date;
 	/**
 	 * @var int
 	 *
@@ -52,7 +49,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $last_edited_by;
+	protected int $last_edited_by;
 	/**
 	 * @var int
 	 *
@@ -60,7 +57,7 @@ class xaliChecklist extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $last_update;
+	protected int $last_update;
 
 
 	/**
@@ -68,7 +65,8 @@ class xaliChecklist extends ActiveRecord {
 	 *
 	 * @return xaliChecklistEntry
 	 */
-	public function getEntryOfUser($user_id) {
+	public function getEntryOfUser($user_id): xaliChecklistEntry
+    {
 		$where = xaliChecklistEntry::where(array( 'checklist_id' => $this->id, 'user_id' => $user_id ));
 		if ($where->hasSets()) {
 			return $where->first();
@@ -83,10 +81,8 @@ class xaliChecklist extends ActiveRecord {
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public function getEntriesCount() {
+	public function getEntriesCount(): int
+    {
 		$members = ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id));
 		if (empty($members)) {
 			return 0;
@@ -102,30 +98,19 @@ class xaliChecklist extends ActiveRecord {
 		), $operators)->count();
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function isComplete() {
+	public function isComplete(): bool
+    {
 		return $this->getEntriesCount() >= count(ilAttendanceListPlugin::getInstance()
 				->getMembers(ilAttendanceListPlugin::lookupRefId($this->obj_id)));
 	}
 
-
-	/**
-	 *
-	 */
-	public function hasSavedEntries() {
+	public function hasSavedEntries(): bool
+    {
 		return $this->getEntriesCount() != 0;
 	}
 
-
-	/**
-	 * @param $status
-	 *
-	 * @return int
-	 */
-	public function getStatusCount($status) {
+	public function getStatusCount($status): int
+    {
 		$members = ilAttendanceListPlugin::getInstance()->getMembers();
 		if (empty($members)) {
 			return 0;
@@ -143,78 +128,51 @@ class xaliChecklist extends ActiveRecord {
 		), $operators)->count();
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function isEmpty() {
+	public function isEmpty(): bool
+    {
 		return $this->last_edited_by == NULL;
 	}
 
-
-	/**
-	 *
-	 */
-	public function delete() {
+	public function delete(): void
+    {
 		foreach (xaliChecklistEntry::where(array( 'checklist_id' => $this->id ))->get() as $entry) {
 			$entry->delete();
 		}
 		parent::delete();
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getId() {
+	public function getId(): string
+    {
 		return $this->id;
 	}
 
-
-	/**
-	 * @param string $id
-	 */
-	public function setId($id) {
+	public function setId($id): void
+    {
 		$this->id = $id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getObjId() {
+	public function getObjId(): int
+    {
 		return $this->obj_id;
 	}
 
-
-	/**
-	 * @param int $obj_id
-	 */
-	public function setObjId($obj_id) {
+	public function setObjId($obj_id): void
+    {
 		$this->obj_id = $obj_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getChecklistDate($formatted = true) {
+	public function getChecklistDate($formatted = true): int
+    {
 		return $formatted ? date('D, d.m.Y', strtotime($this->checklist_date)) : $this->checklist_date;
 	}
 
-
-	/**
-	 * @param int $checklist_date
-	 */
-	public function setChecklistDate($checklist_date) {
+	public function setChecklistDate($checklist_date): void
+    {
 		$this->checklist_date = $checklist_date;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getLastEditedBy($as_string) {
+	public function getLastEditedBy($as_string): int|string
+    {
 		if (!$as_string) {
 			return $this->last_edited_by;
 		}
@@ -228,27 +186,18 @@ class xaliChecklist extends ActiveRecord {
 		return $name['firstname'] . ' ' . $name['lastname'];
 	}
 
-
-	/**
-	 * @param int $last_edited_by
-	 */
-	public function setLastEditedBy($last_edited_by) {
+	public function setLastEditedBy(int $last_edited_by): void
+    {
 		$this->last_edited_by = $last_edited_by;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getLastUpdate() {
+	public function getLastUpdate(): int
+    {
 		return $this->last_update;
 	}
 
-
-	/**
-	 * @param int $last_update
-	 */
-	public function setLastUpdate($last_update) {
+	public function setLastUpdate(int $last_update): void
+    {
 		$this->last_update = $last_update;
 	}
 }

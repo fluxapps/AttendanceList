@@ -10,14 +10,10 @@ class xaliAbsenceStatement extends ActiveRecord {
 
 	const TABLE_NAME = 'xali_absence_statement';
 
-
-	/**
-	 * @return string
-	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
-
 
 	/**
 	 * @var string
@@ -27,7 +23,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected $entry_id;
+	protected string $entry_id;
 	/**
 	 * @var int
 	 *
@@ -35,7 +31,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $reason_id;
+	protected int $reason_id;
 	/**
 	 * @var String
 	 *
@@ -44,7 +40,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_length           256
 	 * @db_fieldtype        text
 	 */
-	protected $comment_text;
+	protected string $comment_text;
 	/**
 	 * @var int
 	 *
@@ -52,7 +48,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $file_id;
+	protected int $file_id;
 
 
 	/**
@@ -69,67 +65,43 @@ class xaliAbsenceStatement extends ActiveRecord {
 		return NULL;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getEntryId() {
+	public function getEntryId(): string
+    {
 		return $this->entry_id;
 	}
 
-
-	/**
-	 * @param string $entry_id
-	 */
-	public function setEntryId($entry_id) {
+	public function setEntryId(string $entry_id): void
+    {
 		$this->entry_id = $entry_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getReasonId() {
+	public function getReasonId(): int
+    {
 		return $this->reason_id;
 	}
 
-
-	/**
-	 * @param int $reason_id
-	 */
-	public function setReasonId($reason_id) {
+	public function setReasonId(int $reason_id): void
+    {
 		$this->reason_id = $reason_id;
 	}
 
-
-	/**
-	 * @return String
-	 */
-	public function getComment() {
+	public function getComment(): string
+    {
 		return $this->comment_text;
 	}
 
-
-	/**
-	 * @param String $comment
-	 */
-	public function setComment($comment) {
+	public function setComment(string $comment): void
+    {
 		$this->comment_text = $comment;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getFileId() {
+	public function getFileId(): int
+    {
 		return $this->file_id;
 	}
 
-
-	/**
-	 * @param int $file_id
-	 */
-	public function setFileId($file_id) {
+	public function setFileId(int $file_id): void
+    {
 		$this->file_id = $file_id;
 	}
 }

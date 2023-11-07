@@ -6,27 +6,18 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliOverviewListTableGUI extends ilTable2GUI {
-
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var int
-	 */
-	protected $obj_id;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
+	protected ilAttendanceListPlugin $pl;
+	protected string|int $obj_id;
+	protected ilCtrl $ctrl;
 
 
-	/**
-	 * xaliOverviewListTableGUI constructor.
-	 *
-	 * @param xaliOverviewGUI $a_parent_obj
-	 * @param string          $obj_id
-	 */
+    /**
+     * xaliOverviewListTableGUI constructor.
+     *
+     * @param xaliOverviewGUI $a_parent_obj
+     * @param string $obj_id
+     * @throws ilException
+     */
 	public function __construct(xaliOverviewGUI $a_parent_obj, $obj_id) {
 		global $DIC;
 		$lng = $DIC['lng'];
@@ -58,10 +49,8 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	}
 
 
-	/**
-	 *
-	 */
-	public function parseData() {
+	public function parseData(): void
+    {
 		$data = array();
 		foreach (xaliChecklist::where(array('obj_id' => $this->obj_id))->get() as $checklist) {
 			/** @var $checklist xaliChecklist */
@@ -101,11 +90,12 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->setData($data);
 	}
 
-
-	/**
-	 * @param array $a_set
-	 */
-	public function fillRow($a_set) {
+    /**
+     * @throws ilCtrlException
+     * @throws JsonException
+     */
+    public function fillRow($a_set): void
+    {
 		parent::fillRow($a_set);
 		$this->ctrl->setParameter($this->parent_obj, 'checklist_id', $a_set['id']);
 		$this->tpl->setVariable('VAL_EDIT_LINK', $this->ctrl->getLinkTarget($this->parent_obj, 'editList'));
@@ -113,10 +103,12 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function buildAction() {
+    /**
+     * @throws ilCtrlException
+     * @throws JsonException
+     */
+    public function buildAction(): string
+    {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
 		$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_EDIT_LIST));
@@ -124,20 +116,18 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		return $actions->getHTML();
 	}
 
-	/**
-	 *
-	 */
-	public function initFilter() {
+    /**
+     * @throws Exception
+     */
+    public function initFilter(): void
+    {
 		$date_filter = $this->addFilterItemByMetaType('date', self::FILTER_DATE_RANGE);
 		$date_filter->readFromSession();
 		$this->filter['date'] = $date_filter->getDate();
 	}
 
-
-	/**
-	 *
-	 */
-	protected function initColumns() {
+	protected function initColumns(): void
+    {
 		$this->addColumn("", "", "1", true);
 		$this->addColumn($this->pl->txt('table_column_date'), 'sort_date');
 		$this->addColumn($this->pl->txt('table_column_tutor'), 'tutor');
@@ -150,27 +140,18 @@ class xaliOverviewListTableGUI extends ilTable2GUI {
 		$this->addColumn("", "", '30px', true);
 	}
 
-
-	/**
-	 * @param object $a_csv
-	 * @param array  $a_set
-	 */
-	protected function fillRowCSV($a_csv, $a_set) {
+	protected function fillRowCSV($a_csv, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);
 		parent::fillRowCSV($a_csv, $a_set);
 	}
 
-
-	/**
-	 * @param ilExcel $a_worksheet
-	 * @param int    $a_row
-	 * @param array  $a_set
-	 */
-	protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set) {
+	protected function fillRowExcel(ilExcel $a_excel, int &$a_row, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['sort_date']);
-		parent::fillRowExcel($a_worksheet, $a_row, $a_set);
+		parent::fillRowExcel($a_excel, $a_row, $a_set);
 	}
 
 }

@@ -20,40 +20,20 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	const TAB_CONTENT = 'tab_content';
 	const TAB_OVERVIEW = 'tab_overview';
 	const TAB_SETTINGS = 'tab_settings';
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilTabsGUI
-	 */
-	protected $tabs;
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilObjAttendanceListAccess
-	 */
-	protected $access;
-	/**
-	 * @var ilRbacReview
-	 */
-	protected $rbacreview;
-	/**
-	 * @var ilObjUser
-	 */
-	protected $user;
-	/**
-	 * @var xaliSetting
-	 */
-	protected $setting;
+	protected ilCtrl $ctrl;
+	protected ilTabsGUI $tabs;
+	protected ilAttendanceListPlugin $pl;
+	protected ilAccessHandler $access;
+	protected ilRbacReview $rbacreview;
+	protected ilObjUser $user;
+	protected xaliSetting $setting;
 
 
 	/**
 	 *
 	 */
-	protected function afterConstructor() {
+	protected function afterConstructor(): void
+    {
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		$ilCtrl = $DIC['ilCtrl'];
@@ -74,19 +54,14 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$this->rbacreview = $rbacreview;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	function getType() {
+	function getType(): string
+    {
 		return ilAttendanceListPlugin::PLUGIN_ID;
 	}
 
 
-	/**
-	 *
-	 */
-	protected function initHeaderAndLocator() {
+	protected function initHeaderAndLocator(): void
+    {
 		global $DIC;
 		$ilNavigationHistory = $DIC['ilNavigationHistory'];
 
@@ -132,10 +107,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	/**
-	 *
-	 */
-	function &executeCommand() {
+	function &executeCommand(): void
+    {
 		$this->initHeaderAndLocator();
 
 		$cmd = $this->ctrl->getCmd(self::CMD_STANDARD);
@@ -194,10 +167,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	/**
-	 * @param $a_target
-	 */
-	public static function _goto($a_target) {
+	public static function _goto($a_target): void
+    {
 		global $DIC;
 
 		$ilCtrl = $DIC->ctrl();
@@ -244,21 +215,15 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		}
 	}
 
-
-	/**
-	 * show information screen
-	 */
-	function infoScreen() {
+	function infoScreen(): void
+    {
 		$this->ctrl->setCmd('showSummary');
 		$this->ctrl->setCmdClass("ilinfoscreengui");
 		parent::infoScreen();
 	}
 
-
-	/**
-	 *
-	 */
-	protected function setTabs() {
+	protected function setTabs(): void
+    {
 		$this->tabs->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xaliChecklistGUI::class, xaliChecklistGUI::CMD_STANDARD));
 		$this->addInfoTab();
 		if ($this->access->hasWriteAccess()) {
@@ -269,52 +234,36 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	/**
-	 *
-	 */
-	public function showContent() {
+	public function showContent(): void
+    {
 		$this->ctrl->redirectByClass(xaliChecklistGUI::class, xaliChecklistGUI::CMD_STANDARD);
 	}
 
 
-	/**
-	 *
-	 */
-	public function showOverview() {
+	public function showOverview(): void
+    {
 		$this->ctrl->redirectByClass(xaliOverviewGUI::class, xaliOverviewGUI::CMD_STANDARD);
 	}
 
 
-	/**
-	 *
-	 */
-	public function editSettings() {
+	public function editSettings(): void
+    {
 		$this->ctrl->redirectByClass(xaliSettingsGUI::class, xaliSettingsGUI::CMD_STANDARD);
 	}
 
-
-	/**
-	 * @return string
-	 */
-	function getAfterCreationCmd() {
+	function getAfterCreationCmd(): string
+    {
 		return self::CMD_EDIT_SETTINGS;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	function getStandardCmd() {
+	function getStandardCmd(): string
+    {
 		return self::CMD_STANDARD;
 	}
 
 
-	/**
-	 * @param string $a_new_type
-	 *
-	 * @return array
-	 */
-	protected function initCreationForms($a_new_type) {
+	protected function initCreationForms($a_new_type): array
+    {
 		try {
 			$this->getParentCourseOrGroupId($_GET['ref_id']);
 		} catch (Exception $e) {
@@ -330,7 +279,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	public function initCreateForm($a_new_type) {
+	public function initCreateForm($a_new_type): ilPropertyFormGUI
+    {
 		$form = parent::initCreateForm($a_new_type);
 
 		$from = new ilDateTimeInputGUI($this->pl->txt(xaliSettingsFormGUI::F_ACTIVATION_FROM), xaliSettingsFormGUI::F_ACTIVATION_FROM);
@@ -348,7 +298,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	public function save() {
+	public function save(): void
+    {
 		$form = $this->initCreateForm($this->getType());
 		$form->setValuesByPost();
 		$form->checkInput();
@@ -367,11 +318,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		$this->saveObject();
 	}
 
-
-	/**
-	 * @param ilObject $newObj
-	 */
-	function afterSave(ilObject $newObj) {
+	function afterSave(ilObject $newObj): void
+    {
 		$this->setting->setId($newObj->getId());
 		$this->setting->create();
 		$this->setting->createOrDeleteEmptyLists(true, false);
@@ -379,11 +327,8 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		parent::afterSave($newObj);
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function checkPassedIncompleteLists() {
+	public function checkPassedIncompleteLists(): bool
+    {
 		$members_count = count($this->getMembers());
 		foreach (xaliChecklist::where(array( 'obj_id' => $this->obj_id ))->get() as $checklist) {
 			if (date('Y-m-d') > $checklist->getChecklistDate()
@@ -397,7 +342,6 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 
 		return false;
 	}
-
 
 	public function getParentCourseOrGroupId($ref_id) {
 		global $DIC;
@@ -413,10 +357,12 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 	}
 
 
-	/**
-	 * @return array
-	 */
 	public function getMembers() {
 		return $this->pl->getMembers($this->object->ref_id);
 	}
+
+    public function performCommand(string $cmd): void
+    {
+        // TODO: Implement performCommand() method.
+    }
 }

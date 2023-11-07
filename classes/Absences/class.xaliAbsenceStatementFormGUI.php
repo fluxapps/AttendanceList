@@ -7,26 +7,11 @@
  */
 class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var \ILIAS\FileUpload\FileUpload $upload
-	 */
-	protected $upload;
-	/**
-	 * @var xaliAbsenceStatement
-	 */
-	protected $absence_statement;
+	protected ilAttendanceListPlugin $pl;
+	protected ilLanguage $lng;
+	protected ilCtrl $ctrl;
+	protected \ILIAS\FileUpload\FileUpload $upload;
+	protected ?xaliAbsenceStatement $absence_statement;
 
 
 	/**
@@ -60,10 +45,8 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 	}
 
 
-	/**
-	 *
-	 */
-	protected function initForm() {
+	protected function initForm(): void
+    {
 		$input = new ilRadioGroupInputGUI($this->pl->txt('absence_reason'), 'reason_id');
 
 		/** @var xaliAbsenceReason $reason */
@@ -96,11 +79,8 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		$this->addCommandButton(xaliAbsenceStatementGUI::CMD_CANCEL,$this->lng->txt('cancel'));
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function saveForm() {
+	public function saveForm(): bool
+    {
 		if (!$this->checkInput()) {
 			return false;
 		}
@@ -156,7 +136,8 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 		return true;
 	}
 
-	public function fillForm() {
+	public function fillForm(): void
+    {
 		if ($file_id = $this->absence_statement->getFileId()) {
 			$filename = ilObjFile::_lookupFileName($file_id);
 		}

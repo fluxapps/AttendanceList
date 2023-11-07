@@ -30,7 +30,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
     /**
      *
      */
-    public static function initNotifications()/*:void*/
+    public static function initNotifications(): void
     {
         if (!self::$init_notifications) {
             self::$init_notifications = true;
@@ -39,15 +39,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
         }
     }
 
-
-    /**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected static $instance;
-	/**
-	 * @var ilDB
-	 */
-	protected $db;
+	protected static ilAttendanceListPlugin $instance;
+	protected ilDBInterface $db;
 
 
 	function __construct() {
@@ -62,7 +55,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	/**
 	 * @return ilAttendanceListPlugin
 	 */
-	public static function getInstance() {
+	public static function getInstance(): ilAttendanceListPlugin
+    {
 		if (!isset(self::$instance)) {
 			self::$instance = new self();
 		}
@@ -74,7 +68,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
     /**
      * @inheritDoc
      */
-	protected function init()/*:void*/
+	protected function init(): void
     {
        self::initNotifications();
     }
@@ -83,7 +77,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
     /**
 	 * @return string
 	 */
-	function getPluginName() {
+	function getPluginName(): string
+    {
 		return self::PLUGIN_NAME;
 	}
 
@@ -91,7 +86,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	/**
 	 * @inheritdoc
 	 */
-	public function updateLanguages($a_lang_keys = null) {
+	public function updateLanguages($a_lang_keys = null): void
+    {
 		parent::updateLanguages($a_lang_keys);
 
         self::notifications4plugin()->installLanguages();
@@ -101,7 +97,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	/**
 	 *
 	 */
-	protected function uninstallCustom() {
+	protected function uninstallCustom(): void
+    {
 		$this->db->dropTable(xaliConfig::TABLE_NAME, false);
 		$this->db->dropTable(xaliLastReminder::TABLE_NAME, false);
 		$this->db->dropTable(xaliAbsenceReason::TABLE_NAME, false);
@@ -111,9 +108,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		$this->db->dropTable(xaliChecklistEntry::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliUserStatus::TABLE_NAME, false);
         self::notifications4plugin()->dropTables();
-
-		return true;
-	}
+    }
 
 
 	/**
@@ -122,17 +117,20 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 *
 	 * @param $obj_id
 	 *
-	 * @return mixed
-	 */
-	static function lookupRefId($obj_id) {
-		return array_shift(ilObject2::_getAllReferences($obj_id));
+	 * @return int|null
+     */
+	static function lookupRefId($obj_id): ?int
+    {
+        $allReferences = ilObject2::_getAllReferences($obj_id);
+        return array_shift($allReferences);
 	}
 
 
 	/**
 	 * @return array
 	 */
-	public function getMembers($ref_id = 0) {
+	public function getMembers($ref_id = 0): array
+    {
 		global $DIC;
 		$rbacreview = $DIC['rbacreview'];
 		static $members;
@@ -154,7 +152,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @return ilObjCourse|ilObjGroup
 	 * @throws Exception
 	 */
-	public function getParentCourseOrGroup($ref_id = 0) {
+	public function getParentCourseOrGroup($ref_id = 0): ilObjGroup|ilObjCourse
+    {
 		$ref_id = $ref_id ? $ref_id : $_GET['ref_id'];
 		$parent = ilObjectFactory::getInstanceByRefId($this->getParentCourseOrGroupId($ref_id));
 
@@ -168,7 +167,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 * @return int
 	 * @throws Exception
 	 */
-	public function getParentCourseOrGroupId($ref_id) {
+	public function getParentCourseOrGroupId($ref_id): int
+    {
 		global $DIC;
 		$tree = $DIC['tree'];
 		$orig_ref_id = $ref_id;
@@ -189,7 +189,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 *
 	 * @return array
 	 */
-	public function getAttendancesForUserAndCourse($user_id, $crs_ref_id) {
+	public function getAttendancesForUserAndCourse($user_id, $crs_ref_id): array
+    {
 		$obj_id = $this->getAttendanceListIdForCourse($crs_ref_id);
 		$settings = new xaliSetting($obj_id);
 
@@ -212,7 +213,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	 *
 	 * @return int
 	 */
-	public function getAttendanceListIdForCourse($crs_ref_id, $get_ref_id = false) {
+	public function getAttendanceListIdForCourse($crs_ref_id, $get_ref_id = false): int
+    {
 		global $DIC;
 		/** @var ilTree $tree */
 		$tree = $DIC['tree'];

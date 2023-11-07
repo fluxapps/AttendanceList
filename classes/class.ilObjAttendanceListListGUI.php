@@ -9,12 +9,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 
-	function getGuiClass() {
+	function getGuiClass(): string
+    {
 		return ilObjAttendanceListGUI::class;
 	}
 
 
-	function initCommands() {
+	function initCommands(): array
+    {
 		// Always set
 		$this->timings_enabled = false;
 		$this->subscribe_enabled = true;
@@ -54,7 +56,8 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 	 *                        'property' (string) => property name
 	 *                        'value' (string) => property value
 	 */
-	public function getCustomProperties($a_prop = array()) {
+	public function getCustomProperties($a_prop = array()): array
+    {
 
 		$props = parent::getCustomProperties($a_prop);
 
@@ -91,12 +94,8 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 	}
 
 
-	/**
-	 * get all alert properties
-	 *
-	 * @return array
-	 */
-	public function getAlertProperties() {
+	public function getAlertProperties(): array
+    {
 		$alert = array();
 		foreach ((array)$this->getCustomProperties() as $prop) {
 			if ($prop['alert'] == true) {
@@ -108,7 +107,8 @@ class ilObjAttendanceListListGUI extends \ilObjectPluginListGUI {
 	}
 
 
-	function initType() {
+	function initType(): void
+    {
 		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
 	}
 }

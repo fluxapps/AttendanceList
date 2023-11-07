@@ -20,7 +20,8 @@ class xaliChecklistEntry extends ActiveRecord {
 	const NOTIFICATION_NAME = "absence";
 
 
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -34,7 +35,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected $id;
+	protected string $id;
 	/**
 	 * @var int
 	 *
@@ -42,7 +43,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $checklist_id;
+	protected int $checklist_id;
 	/**
 	 * @var int
 	 *
@@ -50,7 +51,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $user_id;
+	protected int $user_id;
 	/**
 	 * @var int
 	 *
@@ -58,35 +59,25 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $status;
-	protected $status_changed = false;
+	protected int $status;
+	protected bool $status_changed = false;
 
-
-	/**
-	 *
-	 */
-	public function create() {
+	public function create(): void
+    {
 		parent::create();
 		if ($this->status == self::STATUS_ABSENT_UNEXCUSED) {
 		    $this->sendAbsenceNotification();
 		}
 	}
 
-
-	/**
-	 *
-	 */
-	public function update() {
+	public function update(): void
+    {
 		if (($this->status == self::STATUS_ABSENT_UNEXCUSED) && $this->status_changed) {
 			$this->sendAbsenceNotification();
 		}
 		parent::update();
 	}
 
-
-	/**
-	 *
-	 */
 	protected function sendAbsenceNotification() {
 		/** ilCtrl $ilCtrl */
 		global $DIC;
@@ -136,66 +127,43 @@ class xaliChecklistEntry extends ActiveRecord {
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function getId() {
+	public function getId(): string
+    {
 		return $this->id;
 	}
 
-
-	/**
-	 * @param string $id
-	 */
-	public function setId($id) {
+	public function setId($id): void
+    {
 		$this->id = $id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getChecklistId() {
+	public function getChecklistId(): int
+    {
 		return $this->checklist_id;
 	}
 
-
-	/**
-	 * @param int $checklist_id
-	 */
-	public function setChecklistId($checklist_id) {
+	public function setChecklistId(int $checklist_id): void
+    {
 		$this->checklist_id = $checklist_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getUserId() {
+	public function getUserId(): int
+    {
 		return $this->user_id;
 	}
 
-
-	/**
-	 * @param int $user_id
-	 */
-	public function setUserId($user_id) {
+	public function setUserId(int $user_id): void
+    {
 		$this->user_id = $user_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getStatus() {
+	public function getStatus(): int
+    {
 		return $this->status;
 	}
 
-
-	/**
-	 * @param int $status
-	 */
-	public function setStatus($status) {
+	public function setStatus(int $status): void
+    {
 		if ($this->status != $status) {
 			$this->status_changed = true;
 		}

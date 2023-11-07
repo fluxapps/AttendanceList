@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use JetBrains\PhpStorm\NoReturn;
+
 /**
  * Class xaliOverviewGUI
  *
@@ -29,102 +31,78 @@ class xaliOverviewGUI extends xaliGUI {
 	const SUBTAB_LISTS = 'subtab_lists';
 
 
-	/**
-	 *
-	 */
-	public function initUserOverview() {
+	public function initUserOverview(): void
+    {
 		$this->setSubtabs(self::SUBTAB_USERS);
 		$users = $this->parent_gui->getMembers();
-		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->getObject()->getId());
 		$this->tpl->setContent($xaliOverviewUserTableGUI->getHTML());
 	}
 
-	/**
-	 *
-	 */
-	public function showUsers() {
+	public function showUsers(): void
+    {
 		$this->setSubtabs(self::SUBTAB_USERS);
 		$users = $this->parent_gui->getMembers();
-		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->getObject()->getId());
 		$xaliOverviewUserTableGUI->parseData();
 		$this->tpl->setContent($xaliOverviewUserTableGUI->getHTML());
 	}
 
-
-	/**
-	 *
-	 */
-	public function showListsOverview() {
+	public function showListsOverview(): void
+    {
 		$this->setSubtabs(self::SUBTAB_LISTS);
 		$add_button = ilLinkButton::getInstance();
 		$add_button->setPrimary(true);
 		$add_button->setCaption($this->pl->txt('button_add_list'), false);
 		$add_button->setUrl($this->ctrl->getLinkTarget($this, self::CMD_ADD_LIST));
 		$this->toolbar->addButtonInstance($add_button);
-		$xaliOverviewListTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
+		$xaliOverviewListTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->getObject()->getId());
 		$this->tpl->setContent($xaliOverviewListTableGUI->getHTML());
 	}
 
-
-	/**
-	 *
-	 */
-	public function applyFilterUsers() {
+	public function applyFilterUsers(): void
+    {
 		$users = $this->parent_gui->getMembers();
-		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->getObject()->getId());
 		$xaliOverviewUserTableGUI->writeFilterToSession();
 		$xaliOverviewUserTableGUI->resetOffset();
 		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
 	}
 
-
-	/**
-	 *
-	 */
-	public function resetFilterUsers() {
+	public function resetFilterUsers(): void
+    {
 		$users = $this->parent_gui->getMembers();
-		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users, $this->parent_gui->obj_id);
+		$xaliOverviewUserTableGUI = new xaliOverviewUserTableGUI($this, $users,$this->parent_gui->getObject()->getId());
 		$xaliOverviewUserTableGUI->resetFilter();
 		$xaliOverviewUserTableGUI->resetOffset();
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
-
-	/**
-	 *
-	 */
-	public function applyFilterLists() {
-		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
+	public function applyFilterLists(): void
+    {
+		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->getObject()->getId());
 		$xaliOverviewUserTableGUI->writeFilterToSession();
 		$xaliOverviewUserTableGUI->resetOffset();
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
-
-	/**
-	 *
-	 */
-	public function resetFilterLists() {
-		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->obj_id);
+	public function resetFilterLists(): void
+    {
+		$xaliOverviewUserTableGUI = new xaliOverviewListTableGUI($this, $this->parent_gui->getObject()->getId());
 		$xaliOverviewUserTableGUI->resetFilter();
 		$xaliOverviewUserTableGUI->resetOffset();
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
-	/**
-	 * @param $active
-	 */
-	public function setSubtabs($active) {
+	public function setSubtabs($active): void
+    {
 		$this->tabs->addSubTab(self::SUBTAB_USERS, $this->pl->txt(self::SUBTAB_USERS), $this->ctrl->getLinkTarget($this, self::CMD_STANDARD));
 		$this->tabs->addSubTab(self::SUBTAB_LISTS, $this->pl->txt(self::SUBTAB_LISTS), $this->ctrl->getLinkTarget($this, self::CMD_LISTS));
 		$this->tabs->setSubTabActive($active);
 	}
 
-
-	/**
-	 *
-	 */
-	public function saveList() {
+	public function saveList(): void
+    {
 		if (!is_array($_POST['attendance_status']) || count($this->parent_gui->getMembers()) != count($_POST['attendance_status'])) {
 			ilUtil::sendFailure($this->pl->txt('warning_list_incomplete'), true);
 			$this->editList();
@@ -135,7 +113,7 @@ class xaliOverviewGUI extends xaliGUI {
 			$checklist = xaliChecklist::find($checklist_id);
 		} else {
 			$checklist = new xaliChecklist();
-			$checklist->setObjId($this->parent_gui->obj_id);
+			$checklist->setObjId($this->parent_gui->getObject()->getId());
 		}
 
 		$checklist->setLastEditedBy($this->user->getId());
@@ -159,16 +137,14 @@ class xaliOverviewGUI extends xaliGUI {
 		}
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatuses($$this->parent_gui->getObject()->getId());
 
 		ilUtil::sendSuccess($this->pl->txt('msg_checklist_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
-	/**
-	 *
-	 */
-	public function saveUser() {
+	public function saveUser(): void
+    {
 		$user_id = $_GET['user_id'];
 		foreach ($_POST['attendance_status'] as $checklist_id => $status) {
 			$checklist = xaliChecklist::find($checklist_id);
@@ -190,17 +166,14 @@ class xaliOverviewGUI extends xaliGUI {
 		}
 
 		// update LP
-		xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->getObject()->getId());
 
 		ilUtil::sendSuccess($this->pl->txt('msg_user_saved'), true);
 		$this->ctrl->redirect($this, self::CMD_SHOW_USERS);
 	}
 
-
-	/**
-	 *
-	 */
-	public function addList() {
+	public function addList(): void
+    {
 		$form = new ilPropertyFormGUI();
 
 		$date_input = new ilDateTimeInputGUI($this->pl->txt('form_input_date'), 'checklist_date');
@@ -215,22 +188,19 @@ class xaliOverviewGUI extends xaliGUI {
 		return;
 	}
 
-
-	/**
-	 *
-	 */
-	public function createList() {
+	public function createList(): void
+    {
 		$date = date('Y-m-d', strtotime($_POST['checklist_date']));
 		$this->checkDate($date);
 		$checklist = new xaliChecklist();
-		$checklist->setObjId($this->parent_gui->obj_id);
+		$checklist->setObjId($this->parent_gui->getObject()->getId());
 		$checklist->setChecklistDate($date);
 		$checklist->setLastEditedBy($this->user->getId());
 		$checklist->setLastUpdate(time());
 		$checklist->create();
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
 		ilUtil::sendSuccess($this->pl->txt('msg_list_created'), true);
 		$this->ctrl->setParameter($this, 'checklist_id', $checklist->getId());
@@ -238,22 +208,17 @@ class xaliOverviewGUI extends xaliGUI {
 	}
 
 
-	/**
-	 * @param $date
-	 */
-	protected function checkDate($date) {
-		$where = xaliChecklist::where(array('checklist_date' => $date, 'obj_id' => $this->parent_gui->obj_id));
+	protected function checkDate($date): void
+    {
+		$where = xaliChecklist::where(array('checklist_date' => $date, 'obj_id' => $this->parent_gui->getObject()->getId()));
 		if ($where->hasSets()) {
 			ilUtil::sendFailure(sprintf($this->pl->txt('msg_date_already_used'), $date), true);
 			$this->ctrl->redirect($this, self::CMD_ADD_LIST);
 		}
 	}
 
-
-	/**
-	 *
-	 */
-	public function editList() {
+	public function editList(): void
+    {
 		$checklist_id = $_GET['checklist_id'];
 		if (!$checklist_id) {
 			if ($_GET['entry_id']) {
@@ -276,10 +241,8 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->tpl->setContent($xaliChecklistTableGUI->getHTML());
 	}
 
-	/**
-	 *
-	 */
-	public function editUser() {
+	public function editUser(): void
+    {
 		$user_id = $_GET['user_id'];
 
 		if (!$user_id) {
@@ -290,15 +253,12 @@ class xaliOverviewGUI extends xaliGUI {
 			}
 		}
 
-		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $user_id, $this->parent_gui->obj_id);
+		$xaliUserDetailsGUI = new xaliUserDetailsTableGUI($this, $user_id, $this->parent_gui->getObject()->getId());
 		$this->tpl->setContent($xaliUserDetailsGUI->getHTML());
 	}
 
-
-	/**
-	 *
-	 */
-	public function confirmDeleteLists() {
+	public function confirmDeleteLists(): void
+    {
 		$conf = new ilConfirmationGUI();
 		$conf->setFormAction($this->ctrl->getFormAction($this));
 		$conf->setHeaderText($this->pl->txt('msg_confirm_delete_list'));
@@ -313,11 +273,8 @@ class xaliOverviewGUI extends xaliGUI {
 		$this->tpl->setContent($conf->getHTML());
 	}
 
-
-	/**
-	 *
-	 */
-	public function deleteLists() {
+	public function deleteLists(): void
+    {
 		$checklist_ids = is_array($_POST['checklist_id']) ? $_POST['checklist_id'] : array($_POST['checklist_id']);
 		foreach ($checklist_ids as $id) {
 			$checklist = xaliChecklist::find($id);
@@ -325,17 +282,14 @@ class xaliOverviewGUI extends xaliGUI {
 		}
 
 		// update LP
-		xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
 		ilUtil::sendSuccess($this->pl->txt('msg_list_deleted'), true);
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
-
-	/**
-	 * async ajax
-	 */
-	public function saveEntry() {
+	#[NoReturn] public function saveEntry(): void
+    {
 		/** @var xaliChecklist $checklist */
 		$checklist = xaliChecklist::find($_GET['checklist_id']);
 		$checklist_entry = $checklist->getEntryOfUser($_GET['user_id']);
@@ -343,16 +297,17 @@ class xaliOverviewGUI extends xaliGUI {
 		$checklist_entry->store();
 
 		// update LP
-		xaliUserStatus::updateUserStatus($_GET['user_id'], $this->parent_gui->obj_id);
+		xaliUserStatus::updateUserStatus($_GET['user_id'], $this->parent_gui->getObject()->getId());
 
 		exit;
 	}
 
 
-	/**
-	 *
-	 */
-	protected function cancel() {
+    /**
+     * @throws ilCtrlException
+     */
+	protected function cancel(): void
+    {
 		$this->ctrl->redirect($this, self::CMD_LISTS);
 	}
 
@@ -360,7 +315,8 @@ class xaliOverviewGUI extends xaliGUI {
     /**
      * async auto complete method for user filter in overview
      */
-    public function addUserAutoComplete() {
+    #[NoReturn] public function addUserAutoComplete(): void
+    {
         $auto = new ilUserAutoComplete();
         $auto->setSearchFields(array( 'login', 'firstname', 'lastname' ));
         $auto->setResultField('login');
@@ -387,11 +343,7 @@ class xaliOverviewGUI extends xaliGUI {
         exit();
     }
 
-
-    /**
-     *
-     */
-    protected function saveAbsenceReason()
+    #[NoReturn] protected function saveAbsenceReason(): void
     {
         /** @var xaliChecklist $checklist */
         $checklist = xaliChecklist::find($_GET['checklist_id']);

@@ -18,38 +18,20 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	const F_CREATE_LISTS = 'create_lists';
 	const F_DELETE_LISTS = 'delete_lists';
 	const F_WEEKDAYS = 'weekdays';
+	protected xaliSettingsGUI $parent_gui;
+	protected ilCtrl $ctrl;
+	protected ilAttendanceListPlugin $pl;
+	protected ilLanguage $lng;
+	protected ?ilSetting $settings;
+	protected ilObjAttendanceList $object;
 
-	/**
-	 * @var xaliSettingsGUI
-	 */
-	protected $parent_gui;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var xaliSetting
-	 */
-	protected $settings;
-	/**
-	 * @var ilObjAttendanceList
-	 */
-	protected $object;
-
-	/**
-	 * xaliSettingsFormGUI constructor.
-	 *
-	 * @param $parent_gui xaliSettingsGUI
-	 */
-	public function __construct(xaliSettingsGUI $parent_gui, ilObjAttendanceList $object) {
+    /**
+     * xaliSettingsFormGUI constructor.
+     *
+     * @param $parent_gui xaliSettingsGUI
+     * @throws ilCtrlException
+     */
+	public function __construct(xaliSettingsGUI $parent_gui, ilObjAttendanceList|ilObject $object) {
 		global $DIC;
 		$ilCtrl = $DIC['ilCtrl'];
 		$lng = $DIC['lng'];
@@ -68,7 +50,8 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	/**
 	 *
 	 */
-	public function initForm() {
+	public function initForm(): void
+    {
 		$input = new ilTextInputGUI($this->lng->txt(self::F_TITLE), self::F_TITLE);
 		$input->setRequired(true);
 		$input->setValue($this->object->getTitle());
@@ -117,10 +100,8 @@ class xaliSettingsFormGUI extends ilPropertyFormGUI {
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	public function saveSettings() {
+	public function saveSettings(): bool
+    {
 		if (!$this->checkInput()) {
 			return false;
 		}

@@ -6,27 +6,11 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
+	protected ilAttendanceListPlugin $pl;
+	protected ilLanguage $lng;
+	protected ilCtrl $ctrl;
+	protected xaliAbsenceReason $absence_reason;
 
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var xaliAbsenceReason
-	 */
-	protected $absence_reason;
-
-	/**
-	 * xaliConfigFormGUI constructor.
-	 */
 	public function __construct($parent_gui, xaliAbsenceReason $absence_reason) {
 		global $DIC;
 		$lng = $DIC['lng'];
@@ -44,11 +28,8 @@ class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
 		$this->initForm();
 	}
 
-
-	/**
-	 *
-	 */
-	protected function initForm() {
+	protected function initForm(): void
+    {
 		$input = new ilTextInputGUI($this->pl->txt('config_form_' . xaliAbsenceReason::F_ABSENCE_REASONS_TITLE), xaliAbsenceReason::F_ABSENCE_REASONS_TITLE);
 		$input->setRequired(true);
 		$this->addItem($input);
@@ -75,11 +56,8 @@ class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
 		$this->addCommandButton(ilAttendanceListConfigGUI::CMD_SHOW_REASONS,$this->lng->txt('cancel'));
 	}
 
-
-	/**
-	 *
-	 */
-	public function fillForm() {
+	public function fillForm(): void
+    {
 		$values = array(
 			xaliAbsenceReason::F_ABSENCE_REASONS_TITLE => $this->absence_reason->getTitle(),
 			xaliAbsenceReason::F_ABSENCE_REASONS_INFO => $this->absence_reason->getInfo(),
@@ -91,11 +69,8 @@ class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
 		$this->setValuesByArray($values);
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function saveObject() {
+	public function saveObject(): bool
+    {
 		if (!$this->checkInput()) {
 			return false;
 		}
@@ -110,6 +85,4 @@ class xaliConfigAbsenceFormGUI extends ilPropertyFormGUI {
 
 		return true;
 	}
-
-
 }

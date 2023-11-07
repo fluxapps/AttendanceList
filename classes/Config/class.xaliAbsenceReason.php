@@ -20,7 +20,8 @@ class xaliAbsenceReason extends ActiveRecord {
 	/**
 	 * @return string
 	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
 
@@ -34,7 +35,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected $id;
+	protected string $id;
 	/**
 	 * @var String
 	 *
@@ -42,7 +43,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           256
 	 */
-	protected $title;
+	protected string $title;
 	/**
 	 * @var String
 	 *
@@ -50,7 +51,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           256
 	 */
-	protected $info;
+	protected string $info;
 	/**
 	 * @var int
 	 *
@@ -58,7 +59,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $has_comment;
+	protected int $has_comment;
 	/**
 	 * @var int
 	 *
@@ -66,7 +67,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $comment_req;
+	protected int $comment_req;
 	/**
 	 * @var int
 	 *
@@ -74,7 +75,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $has_upload;
+	protected int $has_upload;
 	/**
 	 * @var int
 	 *
@@ -82,117 +83,75 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $upload_req;
+	protected int $upload_req;
 
-
-	/**
-	 * @return string
-	 */
-	public function getId() {
+	public function getId(): string
+    {
 		return $this->id;
 	}
 
-
-	/**
-	 * @param string $id
-	 */
-	public function setId($id) {
+	public function setId(string $id): void
+    {
 		$this->id = $id;
 	}
 
-
-	/**
-	 * @return String
-	 */
-	public function getTitle() {
+	public function getTitle(): string
+    {
 		return $this->title;
 	}
 
-
-	/**
-	 * @param String $title
-	 */
-	public function setTitle($title) {
+	public function setTitle(string $title): void
+    {
 		$this->title = $title;
 	}
 
-
-	/**
-	 * @return String
-	 */
-	public function getInfo() {
+	public function getInfo(): string
+    {
 		return $this->info;
 	}
 
-
-	/**
-	 * @param String $info
-	 */
-	public function setInfo($info) {
+	public function setInfo(string $info): void
+    {
 		$this->info = $info;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function hasComment() {
+	public function hasComment(): int
+    {
 		return $this->has_comment;
 	}
 
-
-	/**
-	 * @param int $has_comment
-	 */
-	public function setHasComment($has_comment) {
+	public function setHasComment($has_comment): void
+    {
 		$this->has_comment = $has_comment;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function hasUpload() {
+	public function hasUpload(): bool
+    {
 		return $this->has_upload;
 	}
 
-
-	/**
-	 * @param int $has_upload
-	 */
-	public function setHasUpload($has_upload) {
+	public function setHasUpload(bool $has_upload): void
+    {
 		$this->has_upload = $has_upload;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getCommentReq() {
+	public function getCommentReq(): bool
+    {
 		return $this->comment_req;
 	}
 
-
-	/**
-	 * @param int $comment_req
-	 */
-	public function setCommentReq($comment_req) {
+	public function setCommentReq(bool $comment_req): void
+    {
 		$this->comment_req = $comment_req;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getUploadReq() {
+	public function getUploadReq(): bool
+    {
 		return $this->upload_req;
 	}
 
-
-	/**
-	 * @param int $upload_req
-	 */
-	public function setUploadReq($upload_req) {
+	public function setUploadReq(bool $upload_req): void
+    {
 		$this->upload_req = $upload_req;
 	}
 }

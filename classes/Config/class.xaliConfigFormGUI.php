@@ -7,24 +7,10 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliConfigFormGUI extends ilPropertyFormGUI {
+	protected ilAttendanceListPlugin $pl;
+	protected ilLanguage $lng;
+	protected ilCtrl $ctrl;
 
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-
-
-	/**
-	 * xaliConfigFormGUI constructor.
-	 */
 	public function __construct($parent_gui) {
 		global $DIC;
 		$lng = $DIC['lng'];
@@ -37,10 +23,8 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 		$this->initForm();
 	}
 
-	/**
-	 *
-	 */
-	protected function initForm() {
+	protected function initForm(): void
+    {
 	    $section = new ilFormSectionHeaderGUI();
         $section->setTitle($this->pl->txt('config_header_general'));
         $this->addItem($section);
@@ -71,7 +55,8 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 
 	}
 
-	public function fillForm() {
+	public function fillForm(): void
+    {
 		$this->setValuesByArray(array(
             xaliConfig::F_INTERVAL_REMINDER_EMAIL => xaliConfig::getConfig(xaliConfig::F_INTERVAL_REMINDER_EMAIL),
             xaliConfig::F_SENDER_REMINDER_EMAIL   => xaliConfig::getConfig(xaliConfig::F_SENDER_REMINDER_EMAIL),
@@ -80,7 +65,8 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 		));
 	}
 
-	public function saveObject() {
+	public function saveObject(): bool
+    {
 		if (!$this->checkInput()) {
 			return false;
 		}

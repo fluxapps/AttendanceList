@@ -9,12 +9,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
-	protected function initType() {
+	protected function initType(): void
+    {
 		$this->setType(ilAttendanceListPlugin::PLUGIN_ID);
 	}
 
 
-	protected function doDelete() {
+	protected function doDelete(): void
+    {
 		foreach (xaliChecklist::where(array( 'obj_id' => $this->id ))->get() as $checklist) {
 			$checklist->delete();
 		}
@@ -25,7 +27,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	}
 
 
-	public function getOfflineStatus() {
+	public function getOfflineStatus(): bool
+    {
 		return !xaliSetting::find($this->getId())->getIsOnline();
 	}
 
@@ -35,7 +38,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return mixed
 	 */
-	public function getOpenAbsenceStatementsForUser($user_id) {
+	public function getOpenAbsenceStatementsForUser($user_id): mixed
+    {
 		global $DIC;
 		$ilDB = $DIC['ilDB'];
 		$sql = "SELECT 
@@ -63,7 +67,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return array
 	 */
-	public function getLPCompleted() {
+	public function getLPCompleted(): array
+    {
 		return xaliUserStatus::where(array(
 			'status' => ilLPStatus::LP_STATUS_COMPLETED_NUM,
 			'attendancelist_id' => $this->getId()
@@ -76,7 +81,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return array
 	 */
-	public function getLPNotAttempted() {
+	public function getLPNotAttempted(): array
+    {
 		$operators = array(
 			'status' => '!=',
 			'attendancelist_id' => '='
@@ -95,7 +101,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return array
 	 */
-	public function getLPFailed() {
+	public function getLPFailed(): array
+    {
 		return xaliUserStatus::where(array(
 			'status' => ilLPStatus::LP_STATUS_FAILED_NUM,
 			'attendancelist_id' => $this->getId()
@@ -108,7 +115,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return array
 	 */
-	public function getLPInProgress() {
+	public function getLPInProgress(): array
+    {
 		return xaliUserStatus::where(array(
 			'status' => ilLPStatus::LP_STATUS_IN_PROGRESS_NUM,
 			'attendancelist_id' => $this->getId()
@@ -123,7 +131,8 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
 	 *
 	 * @return int
 	 */
-	public function getLPStatusForUser($a_user_id) {
+	public function getLPStatusForUser($a_user_id): int
+    {
 		$user_status = xaliUserStatus::where(array(
 			'user_id' => $a_user_id,
 			'attendancelist_id' => $this->getId()
@@ -141,7 +150,7 @@ class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInte
      *
      * @param ilObjAttendanceList $new_obj
      */
-    protected function doCloneObject(/*ilObjAttendanceList*/ $new_obj, /*int*/ $a_target_id, /*?int*/ $a_copy_id = null)/* : void*/
+    protected function doCloneObject(/*ilObjAttendanceList*/ $new_obj, /*int*/ $a_target_id, /*?int*/ $a_copy_id = null): void
     {
         $xaliSetting = xaliSetting::findOrGetInstance($this->id);
         $xaliSettingClone = $xaliSetting->copy();

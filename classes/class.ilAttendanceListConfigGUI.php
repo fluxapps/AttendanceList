@@ -74,7 +74,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	}
 
 
-	function performCommand($cmd) {
+	function performCommand($cmd): void
+    {
 		$this->tabs->addSubTab(self::SUBTAB_CONFIG, $this->pl->txt('subtab_'
 			. self::SUBTAB_CONFIG), $this->ctrl->getLinkTarget($this, self::CMD_STANDARD));
 
@@ -134,25 +135,29 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		}
 	}
 
-	protected function configure() {
+	protected function configure(): void
+    {
 		$this->tabs->activateSubTab(self::SUBTAB_CONFIG);
 		$xaliConfigFormGUI = new xaliConfigFormGUI($this);
 		$xaliConfigFormGUI->fillForm();
 		$this->tpl->setContent($xaliConfigFormGUI->getHTML());
 	}
 
-	protected function showReasons() {
+	protected function showReasons(): void
+    {
 		$this->tabs->activateSubTab(self::SUBTAB_ABSENCE_REASONS);
 		$xaliConfigAbsencesTableGUI = new xaliConfigAbsencesTableGUI($this);
 		$this->tpl->setContent($xaliConfigAbsencesTableGUI->getHTML());
 	}
 
-	protected function addReason() {
+	protected function addReason(): void
+    {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason());
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
 	}
 
-	protected function createReason() {
+	protected function createReason(): void
+    {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason());
 		$xaliConfigAbsenceFormGUI->setValuesByPost();
 		if ($xaliConfigAbsenceFormGUI->saveObject()) {
@@ -162,7 +167,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
 	}
 
-	protected function editReason() {
+	protected function editReason(): void
+    {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason($_GET['ar_id']));
 		$xaliConfigAbsenceFormGUI->fillForm();
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
@@ -171,7 +177,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	/**
 	 *
 	 */
-	protected function updateReason() {
+	protected function updateReason(): void
+    {
 		$xaliConfigAbsenceFormGUI = new xaliConfigAbsenceFormGUI($this, new xaliAbsenceReason($_GET['ar_id']));
 		$xaliConfigAbsenceFormGUI->setValuesByPost();
 		if ($xaliConfigAbsenceFormGUI->saveObject()) {
@@ -181,7 +188,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tpl->setContent($xaliConfigAbsenceFormGUI->getHTML());
 	}
 
-	protected function updateConfig() {
+	protected function updateConfig(): void
+    {
 		$xaliConfigFormGUI = new xaliConfigFormGUI($this);
 		$xaliConfigFormGUI->setValuesByPost();
 		if ($xaliConfigFormGUI->saveObject()) {
@@ -192,7 +200,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	}
 
 
-	protected function addToolbarButton() {
+	protected function addToolbarButton(): void
+    {
 		$button = ilLinkButton::getInstance();
 		$button->setUrl($this->ctrl->getLinkTarget($this, self::CMD_ADD_REASON));
 		$button->setCaption($this->pl->txt('config_add_new_absence_reason'), false);
@@ -203,7 +212,8 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
     /**
      *
      */
-	protected function deleteReason() {
+	protected function deleteReason(): void
+    {
         (new xaliAbsenceReason($_GET['ar_id']))->delete();
         ilUtil::sendSuccess($this->pl->txt('msg_deleted'), true);
         $this->ctrl->redirect($this, self::CMD_SHOW_REASONS);

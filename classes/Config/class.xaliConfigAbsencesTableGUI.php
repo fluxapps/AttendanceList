@@ -6,19 +6,9 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliConfigAbsencesTableGUI extends ilTable2GUI {
-
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var int
-	 */
-	protected $obj_id;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
+	protected ilAttendanceListPlugin $pl;
+	protected int $obj_id;
+	protected ilCtrl $ctrl;
 
 
 	/**
@@ -48,10 +38,8 @@ class xaliConfigAbsencesTableGUI extends ilTable2GUI {
 		$this->parseData();
 	}
 
-	/**
-	 *
-	 */
-	protected function initColumns() {
+	protected function initColumns(): void
+    {
 		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_TITLE));
 		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_INFO));
 		$this->addColumn($this->pl->txt('table_column_' . xaliAbsenceReason::F_ABSENCE_REASONS_HAS_COMMENT));
@@ -61,30 +49,23 @@ class xaliConfigAbsencesTableGUI extends ilTable2GUI {
 		$this->addColumn("", "", '30px', true);
 	}
 
-
-	/**
-	 *
-	 */
-	protected function parseData() {
+	protected function parseData(): void
+    {
 		$this->setData(xaliAbsenceReason::getArray());
 	}
 
-
-	/**
-	 * @param array $a_set
-	 */
-	protected function fillRow($a_set) {
+	protected function fillRow(array $a_set): void
+    {
 		$a_set['action'] = $this->buildAction($a_set);
 		parent::fillRow($a_set);
 	}
 
-
-	/**
-	 * @param $a_set
-	 *
-	 * @return string
-	 */
-	protected function buildAction($a_set) {
+    /**
+     * @throws ilCtrlException
+     * @throws JsonException
+     */
+    protected function buildAction($a_set): string
+    {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
 

@@ -7,37 +7,13 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliOverviewUserTableGUI extends ilTable2GUI {
+	protected ilAttendanceListPlugin $pl;
+	protected array $users;
+	protected string|int $obj_id;
+	protected ActiveRecord|null|xaliSetting $settings;
+	protected bool $has_passed_students = false;
 
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var array
-	 */
-	protected $users;
-	/**
-	 * @var int
-	 */
-	protected $obj_id;
-	/**
-	 * @var xaliSetting
-	 */
-	protected $settings;
-	/**
-	 * @var bool
-	 */
-	protected $has_passed_students = false;
-
-
-	/**
-	 * xaliOverviewUserTableGUI constructor.
-	 *
-	 * @param xaliOverviewGUI $a_parent_obj
-	 * @param array           $users
-	 * @param string          $obj_id
-	 */
-	public function __construct(xaliOverviewGUI $a_parent_obj, array $users, $obj_id) {
+	public function __construct(xaliOverviewGUI $a_parent_obj, array $users, int $obj_id) {
 		global $DIC;
 		$lng = $DIC['lng'];
 		$ilCtrl = $DIC['ilCtrl'];
@@ -67,11 +43,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		}
 	}
 
-
-	/**
-	 *
-	 */
-	public function parseData() {
+	public function parseData(): void
+    {
 		$data = array();
 		foreach ($this->users as $usr_id) {
 			$user = new ilObjUser($usr_id);
@@ -106,11 +79,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->setData($data);
 	}
 
-
-	/**
-	 * @param array $a_set
-	 */
-	protected function fillRow($a_set) {
+	protected function fillRow(array $a_set): void
+    {
 		parent::fillRow($a_set);
 		$color = ($a_set['reached_percentage'] < $a_set['minimum_attendance']) ? 'red' : 'green';
 		if ($color == 'green') {
@@ -121,11 +91,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->tpl->setVariable('COLOR', $color);
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getChecklistIds() {
+	protected function getChecklistIds(): array
+    {
 		$ids = array();
 		foreach (xaliChecklist::where(array( 'obj_id' => $this->obj_id ))->get() as $checklist) {
 			$ids[] = $checklist->getId();
@@ -134,11 +101,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		return $ids;
 	}
 
-
-	/**
-	 *
-	 */
-	public function initFilter() {
+	public function initFilter(): void
+    {
 		$user_filter = new ilTextInputGUI($this->lng->txt('login'), 'name');
 		$this->ctrl->saveParameterByClass(ilAttendanceListPlugin::class, 'ref_id', $_GET['ref_id']);
 		$user_filter->setDataSource($this->ctrl->getLinkTarget($this->parent_obj, xaliOverviewGUI::CMD_ADD_USER_AUTO_COMPLETE, "", true));
@@ -147,11 +111,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 		$this->filter['login'] = $user_filter->getValue();
 	}
 
-
-	/**
-	 *
-	 */
-	protected function initColumns() {
+	protected function initColumns(): void
+    {
 		$this->addColumn($this->pl->txt('table_column_name'), 'name');
 		$this->addColumn($this->pl->txt('table_column_login'), 'login');
 		$this->addColumn($this->pl->txt('table_column_present'), 'present');
@@ -168,12 +129,8 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
-	/**
-	 * @param $a_field
-	 *
-	 * @return bool
-	 */
-	function numericOrdering($a_field) {
+	function numericOrdering($a_field): bool
+    {
 		switch ($a_field) {
 			case 'present':
 			case 'excused':
@@ -188,33 +145,24 @@ class xaliOverviewUserTableGUI extends ilTable2GUI {
 	}
 
 
-	/**
-	 * @param object $a_csv
-	 * @param array  $a_set
-	 */
-	protected function fillRowCSV($a_csv, $a_set) {
+	protected function fillRowCSV($a_csv, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['reached_percentage']);
 		parent::fillRowCSV($a_csv, $a_set);
 	}
 
 
-	/**
-	 * @param ilExcel $a_worksheet
-	 * @param int    $a_row
-	 * @param array  $a_set
-	 */
-	protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set) {
+	protected function fillRowExcel(ilExcel $a_excel, int &$a_row, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['reached_percentage']);
-		parent::fillRowExcel($a_worksheet, $a_row, $a_set);
+		parent::fillRowExcel($a_excel, $a_row, $a_set);
 	}
 
 
-	/**
-	 * @return boolean
-	 */
-	public function hasPassedStudents() {
+	public function hasPassedStudents(): bool
+    {
 		return $this->has_passed_students;
 	}
 }

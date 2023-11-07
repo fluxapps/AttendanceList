@@ -19,27 +19,16 @@ class xaliConfig extends ActiveRecord {
 	/**
 	 * @return string
 	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
 
+	protected static array $cache = array();
+	protected static array $cache_loaded = array();
 
-	/**
-	 * @var array
-	 */
-	protected static $cache = array();
-	/**
-	 * @var array
-	 */
-	protected static $cache_loaded = array();
-
-
-	/**
-	 * @param $name
-	 *
-	 * @return mixed
-	 */
-	public static function getConfig($name) {
+	public static function getConfig($name): mixed
+    {
 		if (!self::$cache_loaded[$name]) {
 			try {
 				$obj = new self($name);
@@ -54,12 +43,8 @@ class xaliConfig extends ActiveRecord {
 		return self::$cache[$name];
 	}
 
-
-	/**
-	 * @param $name
-	 * @param $value
-	 */
-	public static function set($name, $value) {
+	public static function set($name, $value): void
+    {
 		try {
 			$obj = new self($name);
 		} catch (Exception $e) {
@@ -86,7 +71,7 @@ class xaliConfig extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           250
 	 */
-	protected $name;
+	protected string $name;
 	/**
 	 * @var string
 	 *
@@ -94,37 +79,25 @@ class xaliConfig extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           4000
 	 */
-	protected $value;
+	protected string $value;
 
-
-	/**
-	 * @param string $name
-	 */
-	public function setName($name) {
+	public function setName(string $name): void
+    {
 		$this->name = $name;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getName() {
+	public function getName(): string
+    {
 		return $this->name;
 	}
 
-
-	/**
-	 * @param string $value
-	 */
-	public function setValue($value) {
+	public function setValue(string $value): void
+    {
 		$this->value = $value;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getValue() {
+	public function getValue(): string
+    {
 		return $this->value;
 	}
 }

@@ -10,18 +10,20 @@ class xaliSettingsGUI extends xaliGUI {
 	const CMD_STANDARD = 'showContent';
 	const CMD_SAVE = 'save';
 
-	public function showContent() {
-		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->object);
+	public function showContent(): void
+    {
+		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->getObject());
 		$this->tpl->setContent($xaliSettingsFormGUI->getHTML());
 	}
 
-	public function save() {
-		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->object);
+	public function save(): void
+    {
+		$xaliSettingsFormGUI = new xaliSettingsFormGUI($this, $this->parent_gui->getObject());
 		$xaliSettingsFormGUI->setValuesByPost();
 		if ($xaliSettingsFormGUI->saveSettings()) {
 
 			// update LP
-			xaliUserStatus::updateUserStatuses($this->parent_gui->obj_id);
+			xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
 			ilUtil::sendSuccess($this->lng->txt('saved_successfully'), true);
 			$this->ctrl->redirect($this, self::CMD_STANDARD);

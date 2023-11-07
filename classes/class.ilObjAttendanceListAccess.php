@@ -18,7 +18,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id = NULL, $a_user_id = '') {
+	public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id = NULL, $a_user_id = ''): bool
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 		$ilAccess = $DIC['ilAccess'];
@@ -56,7 +57,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return mixed
 	 */
-	function checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type = "", $a_obj_id = "", $a_tree_id = "") {
+	function checkAccess($a_permission, $a_cmd, $a_ref_id, string $a_type = "", string $a_obj_id = "", string $a_tree_id = ""): mixed
+    {
 		return $this->access->checkAccess($a_permission, $a_cmd, $a_ref_id, $a_type, $a_obj_id, $a_tree_id);
 	}
 
@@ -66,7 +68,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	static function checkOnline($a_id) {
+	static function checkOnline($a_id): bool
+    {
 		/**
 		 * @var $xaliSettings xaliSetting
 		 */
@@ -79,7 +82,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	/**
 	 * @return bool
 	 */
-	static function checkActivation($a_id) {
+	static function checkActivation($a_id): bool
+    {
 		/** @var xaliSetting $settings */
 		$settings = xaliSetting::find($a_id);
 		$today = date('Y-m-d');
@@ -94,7 +98,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	public static function hasReadAccess($ref_id = NULL, $user_id = NULL) {
+	public static function hasReadAccess($ref_id = NULL, $user_id = NULL): bool
+    {
 		return self::hasAccess('read', $ref_id, $user_id);
 	}
 
@@ -105,7 +110,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	public static function hasWriteAccess($ref_id = NULL, $user_id = NULL) {
+	public static function hasWriteAccess($ref_id = NULL, $user_id = NULL): bool
+    {
 		return self::hasAccess('write', $ref_id, $user_id);
 	}
 
@@ -117,7 +123,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	protected static function hasAccess($permission, $ref_id = NULL, $user_id = NULL) {
+	protected static function hasAccess($permission, $ref_id = NULL, $user_id = NULL): bool
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 		$ilAccess = $DIC['ilAccess'];
@@ -134,8 +141,8 @@ class ilObjAttendanceListAccess extends ilObjectPluginAccess {
 	/**
 	 * check whether goto script will succeed
 	 */
-	static function _checkGoto($a_target)
-	{
+	static function _checkGoto($a_target): bool
+    {
 		global $DIC;
 
 		$ilAccess = $DIC->access();

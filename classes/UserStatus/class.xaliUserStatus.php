@@ -10,11 +10,8 @@ class xaliUserStatus extends ActiveRecord {
 
 	const TABLE_NAME = 'xali_user_status';
 
-
-	/**
-	 * @return string
-	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
 
@@ -28,7 +25,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_is_primary   true
 	 * @db_sequence     true
 	 */
-	protected $id = 0;
+	protected int $id = 0;
 
 	/**
 	 * @var int
@@ -37,7 +34,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_fieldtype    integer
 	 * @db_length       8
 	 */
-	protected $attendancelist_id = 0;
+	protected int $attendancelist_id = 0;
 
 	/**
 	 * @var int
@@ -46,7 +43,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_fieldtype    integer
 	 * @db_length       8
 	 */
-	protected $user_id = 0;
+	protected int $user_id = 0;
 
 	/**
 	 * @var string
@@ -54,7 +51,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_has_field    true
 	 * @db_fieldtype    timestamp
 	 */
-	protected $created_at;
+	protected string $created_at;
 
 	/**
 	 * @var string
@@ -62,7 +59,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_has_field    true
 	 * @db_fieldtype    timestamp
 	 */
-	protected $updated_at;
+	protected string $updated_at;
 
 	/**
 	 * @var int
@@ -71,7 +68,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_fieldtype    integer
 	 * @db_length       8
 	 */
-	protected $created_user_id = 0;
+	protected int $created_user_id = 0;
 
 	/**
 	 * @var int
@@ -80,7 +77,7 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_fieldtype    integer
 	 * @db_length       8
 	 */
-	protected $updated_user_id = 0;
+	protected int $updated_user_id = 0;
 
 	/**
 	 * @var int
@@ -89,152 +86,104 @@ class xaliUserStatus extends ActiveRecord {
 	 * @db_fieldtype    integer
 	 * @db_length       8
 	 */
-	protected $status = ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM;
+	protected int $status = ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM;
 
 
 	/**
 	 * @var bool
 	 */
-	protected $status_changed = false;
+	protected bool $status_changed = false;
 
 	/**
 	 * @var int
 	 */
-	protected $old_status;
+	protected int $old_status;
 	/**
 	 * @var array
 	 */
-	protected $checklist_ids;
+	protected array $checklist_ids;
 	/**
 	 * @var array
 	 */
-	protected $attendance_statuses = array();
+	protected array $attendance_statuses = array();
 
-	/**
-	 * @return int
-	 */
-	public function getId() {
+	public function getId(): int
+    {
 		return $this->id;
 	}
 
-
-	/**
-	 * @param int $id
-	 */
-	public function setId($id) {
+	public function setId(int $id): void
+    {
 		$this->id = $id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getAttendancelistId() {
+	public function getAttendancelistId(): int
+    {
 		return $this->attendancelist_id;
 	}
-
-
-	/**
-	 * @param int $attendancelist_id
-	 */
-	public function setAttendancelistId($attendancelist_id) {
+	public function setAttendancelistId(int $attendancelist_id): void
+    {
 		$this->attendancelist_id = $attendancelist_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getUserId() {
+	public function getUserId(): int
+    {
 		return $this->user_id;
 	}
 
-
-	/**
-	 * @param int $user_id
-	 */
-	public function setUserId($user_id) {
+	public function setUserId(int $user_id): void
+    {
 		$this->user_id = $user_id;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getCreatedAt() {
+	public function getCreatedAt(): string
+    {
 		return $this->created_at;
 	}
 
-
-	/**
-	 * @param string $created_at
-	 */
-	public function setCreatedAt($created_at) {
+	public function setCreatedAt(string $created_at): void
+    {
 		$this->created_at = $created_at;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getUpdatedAt() {
+	public function getUpdatedAt(): string
+    {
 		return $this->updated_at;
 	}
 
 
-	/**
-	 * @param string $updated_at
-	 */
-	public function setUpdatedAt($updated_at) {
+	public function setUpdatedAt(string $updated_at): void
+    {
 		$this->updated_at = $updated_at;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getCreatedUserId() {
+	public function getCreatedUserId(): int
+    {
 		return $this->created_user_id;
 	}
 
-
-	/**
-	 * @param int $created_user_id
-	 */
-	public function setCreatedUserId($created_user_id) {
+	public function setCreatedUserId(int $created_user_id): void
+    {
 		$this->created_user_id = $created_user_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getUpdatedUserId() {
+	public function getUpdatedUserId(): int
+    {
 		return $this->updated_user_id;
 	}
 
-
-	/**
-	 * @param int $updated_user_id
-	 */
-	public function setUpdatedUserId($updated_user_id) {
+	public function setUpdatedUserId(int $updated_user_id): void
+    {
 		$this->updated_user_id = $updated_user_id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getStatus() {
+	public function getStatus(): int
+    {
 		return $this->status;
 	}
 
-
-	/**
-	 * @param int $status
-	 */
-	public function setStatus($status)
-	{
+	public function setStatus(int $status): void
+    {
 		if ($status != $this->status) {
 			$this->old_status = $this->status;
 			$this->status_changed = true;
@@ -242,20 +191,13 @@ class xaliUserStatus extends ActiveRecord {
 		$this->status = $status;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function hasStatusChanged()
-	{
+	public function hasStatusChanged(): bool
+    {
 		return $this->status_changed;
 	}
 
-
-	/**
-	 *
-	 */
-	public function create()
-	{
+	public function create(): void
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 
@@ -271,12 +213,8 @@ class xaliUserStatus extends ActiveRecord {
             'xali');
 	}
 
-
-	/**
-	 *
-	 */
-	public function update()
-	{
+	public function update(): void
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 
@@ -287,13 +225,8 @@ class xaliUserStatus extends ActiveRecord {
 		ilLPStatusWrapper::_updateStatus($this->attendancelist_id, $this->user_id);
 	}
 
-
-	/**
-	 * @param $status
-	 *
-	 * @return mixed
-	 */
-	public function getAttendanceStatuses($status) {
+	public function getAttendanceStatuses($status): mixed
+    {
 		if (!isset($this->attendance_statuses[$status])) {
 			$checklist_ids = $this->getChecklistIds();
 			if (!$checklist_ids) {
@@ -315,11 +248,8 @@ class xaliUserStatus extends ActiveRecord {
 		return $this->attendance_statuses[$status];
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getReachedPercentage() {
+	public function getReachedPercentage(): int
+    {
 		$nr_of_checklists = count($this->getChecklistIds());
         if (!$nr_of_checklists) {
             return 0;
@@ -337,11 +267,8 @@ class xaliUserStatus extends ActiveRecord {
 		);
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getUnedited() {
+	public function getUnedited(): int
+    {
 		return count($this->getChecklistIds())
 			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
 //			- $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_EXCUSED)
@@ -352,25 +279,24 @@ class xaliUserStatus extends ActiveRecord {
 
 	/**
 	 * @param $user_id
-	 * @param $attendancelist_id
+	 * @param $attendance_list_id
 	 *
 	 * @return ActiveRecord|xaliUserStatus
 	 */
-	public static function getInstance($user_id, $attendancelist_id) {
-		$xaliUserStatus = xaliUserStatus::where(array('user_id' => $user_id, 'attendancelist_id' => $attendancelist_id))->first();
+	public static function getInstance($user_id, $attendance_list_id): xaliUserStatus|ActiveRecord
+    {
+		$xaliUserStatus = xaliUserStatus::where(array('user_id' => $user_id, 'attendancelist_id' => $attendance_list_id))->first();
 		if (!$xaliUserStatus) {
 			$xaliUserStatus = new self();
 			$xaliUserStatus->setUserId($user_id);
-			$xaliUserStatus->setAttendancelistId($attendancelist_id);
+			$xaliUserStatus->setAttendancelistId($attendance_list_id);
 		}
 		return $xaliUserStatus;
 	}
 
 
-	/**
-	 *
-	 */
-	public function updateLPStatus() {
+	public function updateLPStatus(): void
+    {
 		$ilObjAttendanceList = new ilObjAttendanceList(ilAttendanceListPlugin::lookupRefId($this->getAttendancelistId()));
 
 		/** @var xaliSetting $xaliSetting */
@@ -387,30 +313,22 @@ class xaliUserStatus extends ActiveRecord {
 		}
 	}
 
-
-	/**
-	 * @param $attendancelist_id
-	 */
-	public static function updateUserStatuses($attendancelist_id) {
+	public static function updateUserStatuses($attendancelist_id): void
+    {
 		foreach (ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($attendancelist_id)) as $user_id) {
 			self::updateUserStatus($user_id, $attendancelist_id);
 		}
 	}
 
-    /**
-     * @param $user_id
-     * @param $attendancelist_id
-     */
-    public static function updateUserStatus($user_id, $attendancelist_id) {
+    public static function updateUserStatus($user_id, $attendancelist_id): void
+    {
         $user_status = self::getInstance($user_id, $attendancelist_id);
         $user_status->updateLPStatus();
         $user_status->store();
 	}
 
-	/**
-	 * @return array
-	 */
-	protected function getChecklistIds() {
+	protected function getChecklistIds(): array
+    {
 		if (!$this->checklist_ids) {
 			$this->checklist_ids = array();
 			foreach (xaliChecklist::where(array('obj_id' => $this->attendancelist_id))->get() as $checklist) {
@@ -420,20 +338,14 @@ class xaliUserStatus extends ActiveRecord {
 		return $this->checklist_ids;
 	}
 
-
-    /**
-     * @return string
-     */
-    public function getPresentTotalString() {
+    public function getPresentTotalString(): string
+    {
         return $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT) . ' / ' . ($this->getAttendanceStatuses(xaliChecklistEntry::STATUS_PRESENT)
                 + $this->getAttendanceStatuses(xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED));
     }
 
-
-    /**
-     * @return int
-     */
-    public function calcMinimumAttendance() {
+    public function calcMinimumAttendance(): float|int
+    {
         /** @var xaliSetting $xaliSetting */
         $xaliSetting = xaliSetting::find($this->attendancelist_id);
 

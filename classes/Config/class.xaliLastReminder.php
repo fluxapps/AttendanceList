@@ -13,7 +13,8 @@ class xaliLastReminder extends ActiveRecord {
 	const TABLE_NAME = 'xali_last_reminder';
 
 
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
 
@@ -26,44 +27,31 @@ class xaliLastReminder extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected $user_id;
+	protected int $user_id;
 	/**
 	 * @var String
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        date
 	 */
-	protected $last_reminder;
+	protected string $last_reminder;
 
-
-	/**
-	 * @return int
-	 */
-	public function getUserId() {
+	public function getUserId(): int
+    {
 		return $this->user_id;
 	}
 
-
-	/**
-	 * @param int $user_id
-	 */
-	public function setUserId($user_id) {
+	public function setUserId(int $user_id): void
+    {
 		$this->user_id = $user_id;
 	}
-
-
-	/**
-	 * @return String
-	 */
-	public function getLastReminder() {
+	public function getLastReminder(): string
+    {
 		return $this->last_reminder;
 	}
 
-
-	/**
-	 * @param String $last_reminder
-	 */
-	public function setLastReminder($last_reminder) {
+	public function setLastReminder(string $last_reminder): void
+    {
 		$this->last_reminder = $last_reminder;
 	}
 }

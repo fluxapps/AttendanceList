@@ -12,7 +12,8 @@ class xaliSetting extends ActiveRecord {
 	const CALC_AUTO_MINIMUM_ATTENDANCE = -1;
 
 
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -25,7 +26,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_length           8
 	 * @db_is_primary       true
 	 */
-	protected $id;
+	protected string $id;
 	/**
 	 * @var int
 	 *
@@ -33,7 +34,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $is_online = 0;
+	protected int $is_online = 0;
 	/**
 	 * @var int
 	 *
@@ -41,7 +42,7 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected $minimum_attendance = 80;
+	protected int $minimum_attendance = 80;
 	/**
 	 * @var int
 	 *
@@ -49,21 +50,21 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $activation = 0;
+	protected int $activation = 0;
 	/**
 	 * @var int
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        date
 	 */
-	protected $activation_from;
+	protected int $activation_from;
 	/**
 	 * @var int
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        date
 	 */
-	protected $activation_to;
+	protected int $activation_to;
 	/**
 	 * @var array
 	 *
@@ -71,127 +72,87 @@ class xaliSetting extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           128
 	 */
-	protected $activation_weekdays;
+	protected array $activation_weekdays;
 
 
 	/**
 	 * @return string
 	 */
-	public function getId() {
+	public function getId(): string
+    {
 		return $this->id;
 	}
 
-
-	/**
-	 * @param string $id
-	 */
-	public function setId($id) {
+	public function setId(string $id): void
+    {
 		$this->id = $id;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getIsOnline() {
+	public function getIsOnline(): int
+    {
 		return $this->is_online;
 	}
 
-
-	/**
-	 * @param int $is_online
-	 */
-	public function setIsOnline($is_online) {
+	public function setIsOnline(int $is_online): void
+    {
 		$this->is_online = $is_online;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getMinimumAttendance() {
+	public function getMinimumAttendance(): int
+    {
 		return $this->minimum_attendance;
 	}
 
-
-	/**
-	 * @param int $minimum_attendance
-	 */
-	public function setMinimumAttendance($minimum_attendance) {
+	public function setMinimumAttendance(int $minimum_attendance): void
+    {
 		$this->minimum_attendance = $minimum_attendance;
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public function getActivation() {
+	public function getActivation(): int
+    {
 		return $this->activation;
 	}
 
-
-	/**
-	 * @param int $activation
-	 */
-	public function setActivation($activation) {
+	public function setActivation(int $activation): void
+    {
 		$this->activation = $activation;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getActivationFrom() {
+	public function getActivationFrom(): int
+    {
 		return $this->activation_from;
 	}
 
 
-	/**
-	 * @param int $activation_from
-	 */
-	public function setActivationFrom($activation_from) {
+	public function setActivationFrom(int $activation_from): void
+    {
 		$this->activation_from = $activation_from;
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public function getActivationTo() {
+	public function getActivationTo(): int
+    {
 		return $this->activation_to;
 	}
 
-
-	/**
-	 * @param int $activation_to
-	 */
-	public function setActivationTo($activation_to) {
+	public function setActivationTo(int $activation_to): void
+    {
 		$this->activation_to = $activation_to;
 	}
 
-
-	/**
-	 * @return array
-	 */
-	public function getActivationWeekdays() {
+	public function getActivationWeekdays(): array
+    {
 		return $this->activation_weekdays;
 	}
 
-
-	/**
-	 * @param int $activation_weekdays
-	 */
-	public function setActivationWeekdays($activation_weekdays) {
+	public function setActivationWeekdays(int $activation_weekdays): void
+    {
 		$this->activation_weekdays = $activation_weekdays;
 	}
 
 
-	/**
-	 * @param $field_name
-	 *
-	 * @return mixed|string
-	 */
-	public function sleep($field_name) {
+	public function sleep($field_name): string|bool|null
+    {
 		if ($field_name == 'activation_weekdays') {
 			return json_encode($this->getActivationWeekdays());
 		}
@@ -199,14 +160,8 @@ class xaliSetting extends ActiveRecord {
 		return parent::sleep($field_name);
 	}
 
-
-	/**
-	 * @param $field_name
-	 * @param $field_value
-	 *
-	 * @return mixed
-	 */
-	public function wakeUp($field_name, $field_value) {
+	public function wakeUp($field_name, $field_value): mixed
+    {
 		if ($field_name == 'activation_weekdays' && $field_value) {
 			return json_decode($field_value, true);
 		}
@@ -214,11 +169,11 @@ class xaliSetting extends ActiveRecord {
 		return parent::wakeUp($field_name, $field_value);
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function createOrDeleteEmptyLists($create, $delete) {
+    /**
+     * @throws Exception
+     */
+    public function createOrDeleteEmptyLists($create, $delete): bool
+    {
 		$begin = $this->getActivationFrom();
 		$end = $this->getActivationTo();
 		$weekdays = $this->getActivationWeekdays();

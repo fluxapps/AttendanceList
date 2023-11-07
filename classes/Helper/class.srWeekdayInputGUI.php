@@ -9,18 +9,9 @@
 class srWeekdayInputGUI extends ilFormPropertyGUI {
 
 	const TYPE = 'weekday';
-	/**
-	 * @var array
-	 */
-	protected $value = array();
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
+    protected array $value = array();
+    protected ilLanguage $lng;
+	protected ilAttendanceListPlugin $pl;
 
 
 	public function __construct($a_title, $a_postvar) {
@@ -38,7 +29,8 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	 *
 	 * @param    string $a_value Value
 	 */
-	function setValue($a_value) {
+	function setValue($a_value): void
+    {
 		$this->value = $a_value;
 	}
 
@@ -48,7 +40,8 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	 *
 	 * @return    array    Value
 	 */
-	function getValue() {
+	function getValue(): array
+    {
 		return $this->value;
 	}
 
@@ -58,12 +51,14 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	 *
 	 * @param    object $a_item Item
 	 */
-	function setValueByArray($a_values) {
+	function setValueByArray($a_values): void
+    {
 		$this->setValue($a_values[$this->getPostVar()]);
 	}
 
 
-	function checkInput() {
+	function checkInput(): bool
+    {
 		return ($_POST[$this->getPostVar()] == NULL) || (count($_POST[$this->getPostVar()]) <= 7);
 	}
 
@@ -73,7 +68,8 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	 *
 	 * @return    int    Size
 	 */
-	function insert(&$a_tpl) {
+	function insert(&$a_tpl): int
+    {
 		$html = $this->render();
 
 		$a_tpl->setCurrentBlock("prop_generic");
@@ -82,7 +78,11 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	}
 
 
-	protected function render() {
+    /**
+     * @throws ilTemplateException
+     */
+    protected function render(): string
+    {
 		$tpl = $this->pl->getTemplate("default/tpl.weekday_input.html");
 
 		$days = array( 1 => 'Mon', 2 => 'Tue', 3 => 'Wed', 4 => 'Thu', 5 => 'Fri', 6 => 'Sat', 7 => 'Sun' );
@@ -104,12 +104,12 @@ class srWeekdayInputGUI extends ilFormPropertyGUI {
 	}
 
 
-	/**
-	 * Get HTML for table filter
-	 */
-	function getTableFilterHTML() {
-		$html = $this->render();
-
-		return $html;
+    /**
+     * Get HTML for table filter
+     * @throws ilTemplateException
+     */
+	function getTableFilterHTML(): string
+    {
+        return $this->render();
 	}
 }

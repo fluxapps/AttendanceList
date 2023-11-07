@@ -7,31 +7,12 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliUserDetailsTableGUI extends ilTable2GUI {
-
-	/**
-	 * @var ilObjUser
-	 */
-	protected $user;
-	/**
-	 * @var string
-	 */
-	protected $obj_id;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilAttendanceListPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
-	/**
-	 * @var xaliOverviewGUI
-	 */
-	protected $parent_obj;
+	protected ilObjUser $user;
+	protected string $obj_id;
+	protected ilCtrl $ctrl;
+	protected ilAttendanceListPlugin $pl;
+	protected ilLanguage $lng;
+	protected ?object $parent_obj;
 
 
 	/**
@@ -83,30 +64,22 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$tpl->addOnLoadCode('srAttendanceList.initUserDetails(' . json_encode($async_links).');');
 	}
 
-
-	/**
-	 *
-	 */
-	protected function initCommands() {
+	protected function initCommands(): void
+    {
 		$this->addCommandButton(xaliOverviewGUI::CMD_SAVE_USER, $this->pl->txt('save_all'));
 		$this->addCommandButton(xaliOverviewGUI::CMD_SHOW_USERS, $this->lng->txt('cancel'));
 	}
 
-
-	/**
-	 *
-	 */
-	protected function initColumns() {
+	protected function initColumns(): void
+    {
 		$this->addColumn($this->pl->txt('table_column_date'), "", "200px");
 		$this->addColumn($this->pl->txt('table_column_tutor'), "","200px");
 		$this->addColumn($this->pl->txt('table_column_status'), "", "550px");
 		$this->addColumn($this->pl->txt('table_column_absence_reason'), "", "300px");
 	}
 
-	/**
-	 *  parse user ids to data for the table
-	 */
-	protected function parseData() {
+	protected function parseData(): void
+    {
 		$data = array();
 		/** @var xaliChecklist $checklist */
 		foreach (xaliChecklist::where(array(
@@ -147,10 +120,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$this->setData($data);
 	}
 
-	/**
-	 * @param array $a_set
-	 */
-	protected function fillRow($a_set) {
+	protected function fillRow(array $a_set): void
+    {
 		parent::fillRow($a_set);
 
 		$this->ctrl->setParameter($this->parent_obj, 'checklist_id', $a_set['id']);
@@ -213,12 +184,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
         }
 	}
 
-
-	/**
-	 * @param object $a_csv
-	 * @param array  $a_set
-	 */
-	public function fillRowCSV($a_csv, $a_set) {
+	public function fillRowCSV($a_csv, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['link_save_hidden']);
 		foreach ($a_set as $key => $value)
@@ -238,12 +205,8 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 	}
 
 
-	/**
-	 * @param ilExcel $a_worksheet
-	 * @param int    $a_row
-	 * @param array  $a_set
-	 */
-	protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set) {
+	protected function fillRowExcel(ilExcel $a_excel, int &$a_row, array $a_set): void
+    {
 		unset($a_set['id']);
 		unset($a_set['link_save_hidden']);
 		$col = 0;
@@ -261,22 +224,17 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 				$value = implode(', ', $value);
 			}
 
-			if (method_exists($a_worksheet, 'write')) {
-				$a_worksheet->write($a_row, $col, strip_tags($value));
+			if (method_exists($a_excel, 'write')) {
+				$a_excel->write($a_row, $col, strip_tags($value));
 			} else {
-				$a_worksheet->setCell($a_row, $col, strip_tags($value));
+				$a_excel->setCell($a_row, $col, strip_tags($value));
 			}
 			$col++;
 		}
 	}
 
-	/**
-	 * Export and optionally send current table data
-	 *
-	 * @param	int	$format
-	 */
-	public function exportData($format, $send = false)
-	{
+	public function exportData(int $format, $send = false): void
+    {
 		if($this->dataExists())
 		{
 			// #9640: sort
