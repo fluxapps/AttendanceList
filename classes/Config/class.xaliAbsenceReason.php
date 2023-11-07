@@ -35,7 +35,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_is_primary       true
 	 * @con_sequence        true
 	 */
-	protected ?string $id;
+	protected ?string $id = "";
 	/**
 	 * @var String
 	 *
@@ -43,7 +43,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           256
 	 */
-	protected string $title;
+	protected string $title = "";
 	/**
 	 * @var String
 	 *
@@ -51,7 +51,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        text
 	 * @db_length           256
 	 */
-	protected string $info;
+	protected string $info = "";
 	/**
 	 * @var int
 	 *
@@ -59,7 +59,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected int $has_comment;
+	protected int $has_comment = 0;
 	/**
 	 * @var int
 	 *
@@ -67,7 +67,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected int $comment_req;
+	protected int $comment_req = 0;
 	/**
 	 * @var int
 	 *
@@ -75,7 +75,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected int $has_upload;
+	protected int $has_upload = 0;
 	/**
 	 * @var int
 	 *
@@ -83,7 +83,7 @@ class xaliAbsenceReason extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected int $upload_req;
+	protected int $upload_req = 0;
 
 	public function getId(): string
     {

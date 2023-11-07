@@ -9,8 +9,7 @@ use srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl;
 /**
  * Class ilAttendanceListConfigGUI
  *
- * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilObjComponentSettingsGUIs
- * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilAdministrationGUI
+ * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilObjComponentSettingsGUI
  * @ilCtrl_isCalledBy srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl: ilAttendanceListConfigGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
@@ -87,7 +86,9 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tabs->addSubTab(self::SUBTAB_ABSENCE_REASONS, $this->pl->txt('subtab_'
 			. self::SUBTAB_ABSENCE_REASONS), $this->ctrl->getLinkTarget($this, self::CMD_SHOW_REASONS));
 
-		$this->ctrl->setParameterByClass(NotificationCtrl::class, NotificationCtrl::GET_PARAM_NOTIFICATION_ID, self::notifications4plugin()->notifications()
+        //todo
+		/*
+        $this->ctrl->setParameterByClass(NotificationCtrl::class, NotificationCtrl::GET_PARAM_NOTIFICATION_ID, self::notifications4plugin()->notifications()
 			->getNotificationByName(xaliChecklistEntry::NOTIFICATION_NAME)->getId());
 		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE, $this->pl->txt('subtab_'
 			. self::SUBTAB_NOTIFICATION_ABSENCE), $this->ctrl->getLinkTargetByClass([NotificationsCtrl::class, NotificationCtrl::class], NotificationCtrl::CMD_EDIT_NOTIFICATION));
@@ -96,6 +97,7 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 			->getNotificationByName(xaliCron::NOTIFICATION_NAME)->getId());
 		$this->tabs->addSubTab(self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER, $this->pl->txt('subtab_'
 			. self::SUBTAB_NOTIFICATION_ABSENCE_REMINDER), $this->ctrl->getLinkTargetByClass([NotificationsCtrl::class, NotificationCtrl::class], NotificationCtrl::CMD_EDIT_NOTIFICATION));
+        */
 
 		switch ($this->ctrl->getNextClass($this)) {
 			case strtolower(NotificationsCtrl::class):
@@ -131,6 +133,7 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
                 $this->ctrl->forwardCommand(new NotificationsCtrl());
 				break;
 			default:
+                // this is redirect-abuse and should be somehow
 				switch ($cmd) {
 					case self::CMD_SHOW_REASONS:
 						$this->addToolbarButton();

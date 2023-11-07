@@ -19,6 +19,9 @@ class xaliConfigFormGUI extends ilPropertyFormGUI {
 		$this->pl = ilAttendanceListPlugin::getInstance();
 		$this->lng = $lng;
 		$this->ctrl = $ilCtrl;
+        if (isset($DIC["http"])) {
+            $this->http = $DIC->http();
+        }
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 		$this->initForm();
 	}
