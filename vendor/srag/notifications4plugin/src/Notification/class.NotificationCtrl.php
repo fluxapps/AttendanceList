@@ -236,7 +236,9 @@ class NotificationCtrl
             return;
         }
 
-        ilUtil::sendSuccess(self::notifications4plugin()->getPlugin()->translate("saved_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
+        global $DIC;
+        $tpl = $DIC["tpl"];
+        $tpl->setOnScreenMessage('success',self::notifications4plugin()->getPlugin()->translate("saved_notification", NotificationsCtrl::LANG_MODULE, [$this->notification->getTitle()]), true);
 
         self::dic()->ctrl()->redirect($this, self::CMD_EDIT_NOTIFICATION);
     }
