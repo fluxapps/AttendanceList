@@ -24,7 +24,7 @@ xaliAbsenceStatement::updateDB();
 ?>
 <#4>
 <?php
-\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
+/*\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
 
 if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->migrateFromOldGlobalPlugin(\xaliChecklistEntry::NOTIFICATION_NAME) === null) {
@@ -71,8 +71,9 @@ if (\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstan
 	\srag\Notifications4Plugin\AttendanceList\Notification\Repository::getInstance()
 		->storeNotification($notification);
 }
+*/
 ?>
 <#5>
 <?php
-\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
+//\srag\Notifications4Plugin\AttendanceList\Repository::getInstance()->installTables();
 ?>

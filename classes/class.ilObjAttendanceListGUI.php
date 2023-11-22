@@ -1,7 +1,5 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
-use srag\DIC\AttendanceList\DICTrait;
 /**
  * Class ilObjAttendanceListGUI
  *
@@ -10,10 +8,9 @@ use srag\DIC\AttendanceList\DICTrait;
  * @ilCtrl_Calls        ilObjAttendanceListGUI: xaliAbsenceStatementGUI
  * @ilCtrl_Calls        ilObjAttendanceListGUI: ilInfoScreenGUI, ilPermissionGUI, ilCommonActionDispatcherGUI
  *
- * @author              Theodor Truffer <tt@studer-raimann.ch>
  */
 class ilObjAttendanceListGUI extends ilObjectPluginGUI {
-    use DICTrait;
+
 	const CMD_STANDARD = 'showContent';
 	const CMD_OVERVIEW = 'showOverview';
 	const CMD_EDIT_SETTINGS = 'editSettings';
@@ -68,12 +65,6 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 		global $DIC;
 		$ilNavigationHistory = $DIC['ilNavigationHistory'];
 
-		// get standard template (includes main menu and general layout)
-        if (self::version()->is6()) {
-            $this->tpl->loadStandardTemplate();
-        } else {
-		$this->tpl->getStandardTemplate();
-		}
 		$this->setTitleAndDescription();
 		// set title
 		if (!$this->getCreationMode()) {
@@ -161,11 +152,7 @@ class ilObjAttendanceListGUI extends ilObjectPluginGUI {
 				break;
 		}
 		if ($cmd != 'create') {
-            if (self::version()->is6()) {
-                $this->tpl->printToStdout();
-            } else {
-			$this->tpl->show();
-			}
+            $this->tpl->printToStdout();
 		}
 	}
 

@@ -2,25 +2,22 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
-use srag\Notifications4Plugin\AttendanceList\Notification\NotificationCtrl;
-use srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl;
+
 
 /**
  * Class ilAttendanceListConfigGUI
  *
  * @ilCtrl_IsCalledBy  ilAttendanceListConfigGUI: ilObjComponentSettingsGUI
- * @ilCtrl_isCalledBy srag\Notifications4Plugin\AttendanceList\Notification\NotificationsCtrl: ilAttendanceListConfigGUI
+ * @ilCtrl_isCalledBy srag\Plugins\AttendanceList\Notification\Notification\NotificationsCtrl: ilAttendanceListConfigGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 
-	use Notifications4PluginTrait;
 	const SUBTAB_CONFIG = 'config';
 	const SUBTAB_ABSENCE_REASONS = 'absence_reasons';
-	const SUBTAB_NOTIFICATION_ABSENCE = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence';
-	const SUBTAB_NOTIFICATION_ABSENCE_REMINDER = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence_reminder';
+	//const SUBTAB_NOTIFICATION_ABSENCE = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence';
+	//const SUBTAB_NOTIFICATION_ABSENCE_REMINDER = NotificationsCtrl::TAB_NOTIFICATIONS . '_absence_reminder';
 
 	const CMD_STANDARD = 'configure';
 	const CMD_ADD_REASON = 'addReason';
@@ -51,8 +48,9 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 	 * @var ilTabsGUI
 	 */
 	protected $tabs;
+    private \ILIAS\HTTP\Services $http;
 
-	/**
+    /**
 	 * ilAttendanceListConfigGUI constructor.
 	 */
 	public function __construct() {
@@ -65,6 +63,7 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
 		$this->tpl = $tpl;
 		$this->toolbar = $ilToolbar;
 		$this->tabs = $ilTabs;
+        $this->http = $DIC->http();
 
         /** @var $component_factory ilComponentFactory */
         $component_factory = $DIC['component.factory'];
@@ -100,7 +99,7 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
         */
 
 		switch ($this->ctrl->getNextClass($this)) {
-			case strtolower(NotificationsCtrl::class):
+			/*case strtolower(NotificationsCtrl::class):
                 if ($this->ctrl->getCmd() === NotificationsCtrl::CMD_LIST_NOTIFICATIONS) {
                     $this->ctrl->redirect($this, self::CMD_STANDARD);
 
@@ -131,7 +130,7 @@ class ilAttendanceListConfigGUI extends ilPluginConfigGUI {
                 }
 
                 $this->ctrl->forwardCommand(new NotificationsCtrl());
-				break;
+				break;*/
 			default:
                 // this is redirect-abuse and should be somehow
 				switch ($cmd) {

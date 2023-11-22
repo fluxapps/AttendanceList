@@ -1,11 +1,4 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-
-/**
- * Class xaliAbsenceStatement
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliAbsenceStatement extends ActiveRecord {
 
 	const TABLE_NAME = 'xali_absence_statement';
@@ -31,7 +24,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected int $reason_id;
+	protected int $reason_id = 0;
 	/**
 	 * @var String
 	 *
@@ -40,7 +33,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_length           256
 	 * @db_fieldtype        text
 	 */
-	protected string $comment_text;
+	protected string $comment_text = "";
 	/**
 	 * @var int
 	 *
@@ -48,7 +41,7 @@ class xaliAbsenceStatement extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected int $file_id;
+	protected int $file_id = 0;
 
 
 	/**

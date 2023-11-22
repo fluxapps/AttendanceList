@@ -1,17 +1,7 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
-use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
-
-/**
- * Class xaliChecklistEntry
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliChecklistEntry extends ActiveRecord {
 
-	use Notifications4PluginTrait;
 	const DB_TABLE_NAME = "xali_entry";
 	const STATUS_ABSENT_UNEXCUSED = 1;
 	const STATUS_ABSENT_EXCUSED = 2; // DEPRECATED
@@ -43,7 +33,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected int $checklist_id;
+	protected int $checklist_id = 0;
 	/**
 	 * @var int
 	 *
@@ -51,7 +41,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected int $user_id;
+	protected int $user_id = 0;
 	/**
 	 * @var int
 	 *
@@ -59,7 +49,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           8
 	 */
-	protected int $status;
+	protected int $status = 0;
 	protected bool $status_changed = false;
 
 	public function create(): void
@@ -79,6 +69,7 @@ class xaliChecklistEntry extends ActiveRecord {
 	}
 
 	protected function sendAbsenceNotification() {
+        return;
 		/** ilCtrl $ilCtrl */
 		global $DIC;
 		$ilCtrl = $DIC['ilCtrl'];

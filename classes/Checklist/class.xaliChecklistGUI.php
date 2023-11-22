@@ -1,13 +1,12 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-use srag\DIC\AttendanceList\DICTrait;
 /**
  * Class xaliChecklistGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xaliChecklistGUI extends xaliGUI {
-    use DICTrait;
+
 	/**
 	 * @var xaliChecklist
 	 */
@@ -96,7 +95,7 @@ class xaliChecklistGUI extends xaliGUI {
 			$entry->setUserId($usr_id);
 			$entry->store();
             if (intval($status) === xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED) {
-                if (($reason_id = $_POST['absence_reason'][$entry->getId()]) !== null) {
+                if (is_array($_POST['absence_reason']) && key_exists($entry->getId(), $_POST['absence_reason']) && $reason_id = $_POST['absence_reason'][$entry->getId()] !== null) {
                     /** @var xaliAbsenceStatement $stm */
                     $stm = xaliAbsenceStatement::findOrGetInstance($entry->getId());
                     $stm->setReasonId($reason_id);
@@ -108,7 +107,7 @@ class xaliChecklistGUI extends xaliGUI {
 		// update LP
 		xaliUserStatus::updateUserStatuses($this->parent_gui->getObject()->getId());
 
-        $this->tpl->setOnScreenMessage('success',  self::dic()->language()->txt("msg_checklist_saved"), true);
+        $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_checklist_saved"), true);
 
         $this->ctrl->redirect($this, self::CMD_STANDARD);
 	}

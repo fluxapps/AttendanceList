@@ -1,13 +1,4 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-
-use JetBrains\PhpStorm\NoReturn;
-
-/**
- * Class xaliAbsenceStatementGUI
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliAbsenceStatementGUI extends xaliGUI {
 
 	const CMD_UPDATE = 'update';
@@ -37,7 +28,7 @@ class xaliAbsenceStatementGUI extends xaliGUI {
 		if ($xaliAbsenceFormGUI->saveForm()) {
 			$user_id = xaliChecklistEntry::find($_GET['entry_id'])->getUserId();
 			xaliUserStatus::updateUserStatus($user_id, $this->parent_gui->getObject()->getId());
-            $this->tpl->setOnScreenMessage('success',  self::dic()->language()->txt("msg_saved"), true);
+            $this->tpl->setOnScreenMessage('success',  $this->pl->txt("msg_saved"), true);
 
 			$this->cancel();
 		}

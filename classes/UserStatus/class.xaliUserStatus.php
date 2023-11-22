@@ -101,11 +101,11 @@ class xaliUserStatus extends ActiveRecord {
 	/**
 	 * @var array
 	 */
-	protected array $checklist_ids;
+	protected array $checklist_ids = [];
 	/**
 	 * @var array
 	 */
-	protected array $attendance_statuses = array();
+	protected array $attendance_statuses =  [];
 
 	public function getId(): int
     {
@@ -209,7 +209,7 @@ class xaliUserStatus extends ActiveRecord {
         ilLPStatusWrapper::_updateStatus($this->attendancelist_id, $this->user_id);
         ilLearningProgress::_tracProgress($this->user_id,
             $this->attendancelist_id,
-            $this->getRefId(),
+            ilAttendanceListPlugin::lookupRefId($this->attendancelist_id),
             'xali');
 	}
 

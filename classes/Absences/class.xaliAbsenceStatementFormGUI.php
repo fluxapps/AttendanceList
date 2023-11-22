@@ -1,13 +1,7 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-/**
- * Class xaliAbsenceStatementFormGUI
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 
-	protected ilAttendanceListPlugin $pl;
+	protected ilAttendanceListPlugin|ilPlugin $pl;
 	protected ilLanguage $lng;
 	protected ilCtrl $ctrl;
 	protected \ILIAS\FileUpload\FileUpload $upload;
@@ -113,8 +107,8 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 			if ($fileupload['size']) {
 				$file_obj = new ilObjFile();
 				$file_obj->setTitle($fileupload['name']);
-				$file_obj->setFileSize($fileupload['size']);
-				$file_obj->setFileName($fileupload['name']);
+				//$file_obj->setFileSize($fileupload['size']);
+				//$file_obj->setFileName($fileupload['name']);
 				$file_obj->setType('file');
 				$file_obj->setMode("object");
 				$file_obj->create();
@@ -141,8 +135,9 @@ class xaliAbsenceStatementFormGUI extends ilPropertyFormGUI {
 
 	public function fillForm(): void
     {
+        $filename = "";
 		if ($file_id = $this->absence_statement->getFileId()) {
-			$filename = ilObjFile::_lookupFileName($file_id);
+			$filename = ilObjFile::_lookupTitle($file_id);
 		}
 		$reason_id = $this->absence_statement->getReasonId();
 		$values = array(

@@ -109,7 +109,7 @@ class xaliChecklistTableGUI extends ilTable2GUI {
         /** @var xaliAbsenceStatement $stm */
         $stm = xaliAbsenceStatement::findOrGetInstance($a_set['entry_id']);
 
-		if ($a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED] == 'checked') {
+		if (key_exists('checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED, $a_set) && $a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED] === 'checked') {
 			if (ilObjAttendanceListAccess::hasWriteAccess()) {
                 if (xaliAbsenceReason::where("has_comment=true OR has_upload=true")->count() === 0) {
                     $this->tpl->setCurrentBlock('absence_reason_select');

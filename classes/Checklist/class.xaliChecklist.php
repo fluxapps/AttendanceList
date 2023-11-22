@@ -1,11 +1,4 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
-
-/**
- * Class xaliChecklist
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliChecklist extends ActiveRecord {
 
 	const DB_TABLE_NAME = "xali_checklist";

@@ -1,16 +1,8 @@
 <?php
 
-use srag\Notifications4Plugin\AttendanceList\Exception\Notifications4PluginException;
-use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
-/**
- * Class xaliCron
- *
- * @author Theodor Truffer <tt@studer-raimann.ch>
- */
 class xaliCron {
-
-	use Notifications4PluginTrait;
+//use Notifications4PluginTrait;
 
 	const DEBUG = false;
 	const NOTIFICATION_NAME = "absence_reminder";

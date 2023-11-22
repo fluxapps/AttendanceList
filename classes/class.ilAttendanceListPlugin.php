@@ -3,9 +3,6 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use ILIAS\DI\Container;
-use srag\CustomInputGUIs\AttendanceList\Loader\CustomInputGUIsLoaderDetector;
-use srag\DIC\AttendanceList\DICTrait;
-use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
 
 /**
  * Class ilAttendanceListPlugin
@@ -14,8 +11,6 @@ use srag\Notifications4Plugin\AttendanceList\Utils\Notifications4PluginTrait;
  */
 class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 
-	use DICTrait;
-	use Notifications4PluginTrait;
 	const PLUGIN_ID = 'xali';
 	const PLUGIN_NAME = 'AttendanceList';
 	const PLUGIN_CLASS_NAME = self::class;
@@ -34,8 +29,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
     {
         if (!self::$init_notifications) {
             self::$init_notifications = true;
-
-            self::notifications4plugin()->withTableNamePrefix(self::PLUGIN_ID)->withPlugin(self::plugin());
+            //self::notifications4plugin()->withTableNamePrefix(self::PLUGIN_ID)->withPlugin(self::plugin());
         }
     }
 
@@ -93,16 +87,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 	}
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function updateLanguages($a_lang_keys = null): void
-    {
-		parent::updateLanguages($a_lang_keys);
-
-        self::notifications4plugin()->installLanguages();
-	}
-
 
 	/**
 	 *
@@ -117,7 +101,7 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		$this->db->dropTable(xaliChecklist::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliChecklistEntry::DB_TABLE_NAME, false);
 		$this->db->dropTable(xaliUserStatus::TABLE_NAME, false);
-        self::notifications4plugin()->dropTables();
+       // self::notifications4plugin()->dropTables();
     }
 
 
@@ -228,7 +212,8 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		global $DIC;
 		/** @var ilTree $tree */
 		$tree = $DIC['tree'];
-		$attendancelist = array_shift($tree->getSubTree($tree->getNodeData($crs_ref_id), true, $this->getId()));
+        $subTree = $tree->getSubTree($tree->getNodeData($crs_ref_id), true, [$this->getId()]);
+        $attendancelist = array_shift($subTree);
 		$ref_id = $attendancelist['child'];
 		if ($get_ref_id) {
 			return $ref_id;
@@ -237,14 +222,6 @@ class ilAttendanceListPlugin extends ilRepositoryObjectPlugin {
 		return ilObjAttendanceList::_lookupObjectId($ref_id);
 	}
 
-
-    /**
-     * @inheritDoc
-     */
-    public function exchangeUIRendererAfterInitialization(Container $dic) : Closure
-    {
-        return CustomInputGUIsLoaderDetector::exchangeUIRendererAfterInitialization();
-    }
 
 
     /**

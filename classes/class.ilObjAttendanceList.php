@@ -1,12 +1,6 @@
 <?php
-/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-/**
- * Class ilObjAttendanceList
- *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
- */
 class ilObjAttendanceList extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 	protected function initType(): void

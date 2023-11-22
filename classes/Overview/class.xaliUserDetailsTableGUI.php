@@ -145,7 +145,7 @@ class xaliUserDetailsTableGUI extends ilTable2GUI {
 		$reason = $stm->getReason();
 		$this->tpl->setVariable('VAL_ABSENCE_REASON', $reason ? $reason : $this->pl->txt('no_absence_reason'));
 
-		if (!$a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED]) {
+		if (key_exists('checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED, $a_set) && !$a_set['checked_' . xaliChecklistEntry::STATUS_ABSENT_UNEXCUSED]) {
 			$this->tpl->setVariable('VAL_LINK_ABSENCE_HIDDEN', 'hidden');
 		}
 
